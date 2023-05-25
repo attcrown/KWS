@@ -1,4 +1,4 @@
-package com.otc.kws.core.gateway.web.controller.candidate;
+package com.otc.kws.core.gateway.web.controller.interview;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,12 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.otc.kws.core.gateway.web.controller.workspace.KwsCoreWorkspaceController;
 @Controller
-@RequestMapping(KwsCoreWorkspaceController.PREFIX_PATH + "/hr/candidate")
+@RequestMapping(KwsCoreWorkspaceController.PREFIX_PATH + "/hr/interview")
+public class InterviewController extends KwsCoreWorkspaceController{
 
-public class CandidateUserController extends KwsCoreWorkspaceController{
 	@Override
-	protected void setupModel(HttpServletRequest request, HttpServletResponse response, Model model) 
-	{
+	protected void setupModel(HttpServletRequest request, HttpServletResponse response, Model model) {
+		// TODO Auto-generated method stub
 		
 	}
+
 }
