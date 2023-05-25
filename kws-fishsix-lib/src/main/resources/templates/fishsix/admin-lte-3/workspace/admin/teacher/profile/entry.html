@@ -1,0 +1,479 @@
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title text-maroon">เพิ่ม/แก้ไขข้อมูลผู้สอน</h3>
+    </div>
+
+    <div class="card-body p-2">
+        
+        <!-- general-info -->
+        <div class="card card-navy">
+            <div class="card-header">
+                <h3 class="card-title">ข้อมูลทั่วไป</h3>
+            </div>
+        
+            <div class="card-body p-2">
+                <form name="teacherForm" class="form row" novalidate>
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowFirstNameError()">ชื่อ</span>
+                                <span class="text-danger" ng-show="isShowFirstNameError()">กรุณาระบุชื่อ</span>
+                            </label>
+                            <input 
+                                name="firstName" 
+                                type="text" 
+                                class="form-control" 
+                                ng-class="{'is-invalid': isShowFirstNameError()}" 
+                                placeholder="ระบุชื่อ" 
+                                ng-model="selectedTeacherProfile.teacher.firstName" 
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowLastNameError()">นามสกุล</span>
+                                <span class="text-danger" ng-show="isShowLastNameError()">กรุณาระบุนามสกุล</span>
+                            </label>
+                            <input 
+                                name="lastName" 
+                                type="text" 
+                                class="form-control" 
+                                ng-class="{'is-invalid': isShowLastNameError()}" 
+                                placeholder="ระบุนามสกุล" 
+                                ng-model="selectedTeacherProfile.teacher.lastName" 
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowNickNameError()">ชื่อเล่น</span>
+                                <span class="text-danger" ng-show="isShowNickNameError()">กรุณาระบุชื่อเล่น</span>
+                            </label>
+                            <input 
+                                name="nickName" 
+                                type="text" 
+                                class="form-control" 
+                                ng-class="{'is-invalid': isShowNickNameError()}" 
+                                placeholder="ระบุชื่อเล่น" 
+                                ng-model="selectedTeacherProfile.teacher.nickName" 
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowMobileNoError()">เบอร์มือถือ</span>
+                                <span class="text-danger" ng-show="isShowMobileNoError()">กรุณาระบุเบอร์มือถือ</span>
+                            </label>
+                            <input 
+                                name="mobileNo" 
+                                type="text" 
+                                class="form-control" 
+                                ng-class="{'is-invalid': isShowMobileNoError()}" 
+                                placeholder="ระบุเบอร์มือถือ" 
+                                ng-model="selectedTeacherProfile.teacher.mobileNo" 
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowEmailError()">อีเมล์</span>
+                                <span class="text-danger" ng-show="isShowEmailError()">กรุณาระบุอีเมล์</span>
+                            </label>
+                            <input 
+                                name="email" 
+                                type="text" 
+                                class="form-control" 
+                                ng-class="{'is-invalid': isShowEmailError()}" 
+                                placeholder="ระบุอีเมล์" 
+                                ng-model="selectedTeacherProfile.userAccount.email" 
+                                ng-disabled="entryMode === 'edit'" 
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowOccupationError()">อาชีพปัจจุบัน</span>
+                                <span class="text-danger" ng-show="isShowOccupationError()">กรุณาระบุอาชีพปัจจุบัน</span>
+                            </label>
+                            <input 
+                                name="occupation" 
+                                type="text" 
+                                class="form-control" 
+                                ng-class="{'is-invalid': isShowOccupationError()}" 
+                                placeholder="ระบุอาชีพปัจจุบัน" 
+                                ng-model="selectedTeacherProfile.teacher.occupation" 
+                                ng-enabled="entryMode === 'add'" 
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowRegistAddressError()">ที่อยู่ในบัตรปชช.</span>
+                                <span class="text-danger" ng-show="isShowRegistAddressError()">กรุณาระบุที่อยู่ในบัตรปชช.</span>
+                            </label>
+                            <textarea 
+                                    name="registAddress" 
+                                    class="form-control" 
+                                    rows="3" 
+                                    ng-class="{'is-invalid': isShowRegistAddressError()}" 
+                                    ng-model="selectedTeacherProfile.teacher.registAddress" 
+                                    required>
+                            </textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowContactAddressError()">ที่อยู่ปัจจุบัน</span>
+                                <span class="text-danger" ng-show="isShowContactAddressError()">กรุณาระบุที่อยู่ปัจจุบัน</span>
+                            </label>
+                            <textarea 
+                                    name="contactAddress" 
+                                    class="form-control" 
+                                    rows="3" 
+                                    ng-class="{'is-invalid': isShowContactAddressError()}" 
+                                    ng-model="selectedTeacherProfile.teacher.contactAddress" 
+                                    required>
+                            </textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowIdCardNoError()">เลขบัตรประชาชน</span>
+                                <span class="text-danger" ng-show="isShowIdCardNoError()">กรุณาระบุเลขบัตรประชาชน</span>
+                            </label>
+                            <input 
+                                name="idcardNo" 
+                                type="text" 
+                                class="form-control" 
+                                ng-class="{'is-invalid': isShowIdCardNoError()}" 
+                                placeholder="ระบุเลขบัตรประชาชน" 
+                                ng-model="selectedTeacherProfile.teacher.idcardNo" 
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <!-- <span class="text-danger">*</span> -->
+                                <span ng-show="!isShowError()">สำเนาบัตรปชช.</span>
+                                <span class="text-danger" ng-show="isShowIdCardFileError()">กรุณาอัพโหลดไฟล์สำเนาบัตรปชช.</span>
+                            </label>
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input idcard-file">
+                                    <label ng-show="!attachment.idCardFile" class="custom-file-label">--- อัพโหลดไฟล์ไฟล์สำเนาบัตรปชช. ---</label>
+                                    <label ng-show="attachment.idCardFile" class="custom-file-label">{{ attachment.idCardFile.name }}</label>
+                                </div>
+                                <div class="input-group-append">
+                                    <button ng-show="attachment.idCardFile" class="btn btn-danger" ng-click="removeIdCardFile()">
+                                        <i class="fas fa-trash"></i> ลบ
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="p-2" ng-show="attachment.idCardFile || (selectedTeacherProfile.attachment && selectedTeacherProfile.attachment.idCardFileURL)">
+                                <img ng-show="attachment.idCardFile" id="idCardImage" class="img-fluid">
+                                <img ng-show="!attachment.idCardFile && selectedTeacherProfile.attachment.idCardFileURL" id="idCardImage" class="img-fluid" ng-src="{{ selectedTeacherProfile.attachment.idCardFileURL }}">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- general-info -->
+
+        <!-- employ-info -->
+        <div class="card card-navy">
+            <div class="card-header">
+                <h3 class="card-title">ข้อมูลการจ้างงาน</h3>
+            </div>
+        
+            <div class="card-body p-2">
+                <form name="employInfoForm" class="form row" novalidate>
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowHireTypeError()">สัญญาจ้าง</span>
+                                <span class="text-danger" ng-show="isShowHireTypeError()">กรุณาเลือกสัญญาจ้าง</span>
+                            </label>
+                            <select name="hireType" class="form-control" ng-class="{'is-invalid': isShowHireTypeError()}" style="width: 100%;" ng-model="selectedTeacherProfile.teacher.hireTypeId" required>
+                                <option value="" selected disabled>--- กรุณาเลือกสัญญาจ้าง ---</option>
+                                <option ng-repeat="hireType in hireTypes | orderBy: 'seqNo'" ng-value="hireType.id">{{ hireType.name }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowWorktimeTypeError()">ประเภทเวลางาน</span>
+                                <span class="text-danger" ng-show="isShowWorktimeTypeError()">กรุณาเลือกประเภทเวลางาน</span>
+                            </label>
+                            <select name="worktimeType" class="form-control" ng-class="{'is-invalid': isShowWorktimeTypeError()}" style="width: 100%;" ng-model="selectedTeacherProfile.teacher.worktimeTypeId" required>
+                                <option value="" selected disabled>--- กรุณาประเภทเลือกเวลางาน ---</option>
+                                <option ng-repeat="worktimeType in worktimeTypes | orderBy: 'seqNo'" ng-value="worktimeType.id">{{ worktimeType.name }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowStartWorkDateError()">วันที่เริ่มงาน (ปี ค.ศ.)</span>
+                                <span class="text-danger" ng-show="isShowStartWorkDateError()">กรุณาระบุวันที่เริ่มงาน (ปี ค.ศ.)</span>
+                            </label>
+                            <input 
+                                name="startWorkDate" 
+                                type="text" 
+                                class="form-control" 
+                                data-inputmask-alias="datetime" 
+                                data-inputmask-inputformat="yyyy-mm-dd" 
+                                data-mask
+                                ng-class="{'is-invalid': isShowStartWorkDateError()}" 
+                                placeholder="ระบุวันที่เริ่มงาน (ปี ค.ศ.)" 
+                                ng-model="selectedTeacherProfile.teacher.startWorkDate" 
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger" ng-show="getTeacherWageType(selectedTeacherProfile) === 'Salary'">*</span>
+                                <span ng-show="!isShowWorkHourMonthError(selectedTeacherProfile)">ชั่วโมงทำงาน/เดือน</span>
+                                <span class="text-danger" ng-show="isShowWorkHourMonthError(selectedTeacherProfile)">กรุณาระบุชั่วโมงทำงาน/เดือน</span>
+                            </label>
+                            <input 
+                                name="workHourMonth" 
+                                type="number" 
+                                class="form-control" 
+                                ng-class="{'is-invalid': isShowWorkHourMonthError(selectedTeacherProfile)}" 
+                                placeholder="ระบุชั่วโมงทำงาน/เดือน" 
+                                ng-model="selectedTeacherProfile.teacher.workHourMonth" 
+                                ng-required="getTeacherWageType(selectedTeacherProfile) === 'Salary'">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger" ng-show="getTeacherWageType(selectedTeacherProfile) === 'Salary'">*</span>
+                                <span ng-show="!isShowSalaryError(selectedTeacherProfile)">ฐานเงินเดือน</span>
+                                <span class="text-danger" ng-show="isShowSalaryError(selectedTeacherProfile)">กรุณาระบุฐานเงินเดือน</span>
+                            </label>
+                            <input 
+                                name="salary" 
+                                type="number" 
+                                class="form-control" 
+                                ng-class="{'is-invalid': isShowSalaryError(selectedTeacherProfile)}" 
+                                placeholder="ระบุเงินเดือน" 
+                                ng-model="selectedTeacherProfile.teacher.salary" 
+                                ng-required="getTeacherWageType(selectedTeacherProfile) === 'Salary'">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger" ng-show="getTeacherWageType(selectedTeacherProfile) === 'WorkHour'">*</span>
+                                <span ng-show="!isShowWageHourRateError(selectedTeacherProfile)">เรทค่าสอน/ชม.</span>
+                                <span class="text-danger" ng-show="isShowWageHourRateError(selectedTeacherProfile)">กรุณาระบุเรทค่าสอน/ชม.</span>
+                            </label>
+                            <input 
+                                name="wageHourRate" 
+                                type="number" 
+                                class="form-control" 
+                                ng-class="{'is-invalid': isShowWageHourRateError(selectedTeacherProfile)}" 
+                                placeholder="ระบุเรทค่าสอน/ชม." 
+                                ng-model="selectedTeacherProfile.teacher.wageHourRate" 
+                                ng-required="getTeacherWageType(selectedTeacherProfile) === 'WorkHour'">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowBankAccountNameError()">บัญชีเงินเดือน (ชื่อบัญชี)</span>
+                                <span class="text-danger" ng-show="isShowBankAccountNameError()">กรุณาระบุบัญชีเงินเดือน (ชื่อบัญชี)</span>
+                            </label>
+                            <input 
+                                name="bankAccountName" 
+                                type="text" 
+                                class="form-control" 
+                                ng-class="{'is-invalid': isShowBankAccountNameError()}" 
+                                placeholder="ระบุบัญชีเงินเดือน (ธนาคาร)" 
+                                ng-model="selectedTeacherProfile.teacher.bankAccountName" 
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowBankAccountNoError()">บัญชีเงินเดือน (เลขบัญชี)</span>
+                                <span class="text-danger" ng-show="isShowBankAccountNoError()">กรุณาระบุบัญชีเงินเดือน (เลขบัญชี)</span>
+                            </label>
+                            <input 
+                                name="bankAccountNo" 
+                                type="text" 
+                                class="form-control" 
+                                ng-class="{'is-invalid': isShowBankAccountNoError()}" 
+                                placeholder="ระบุบัญชีเงินเดือน (เลขบัญชี)" 
+                                ng-model="selectedTeacherProfile.teacher.bankAccountNo" 
+                                required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- employ-info -->
+
+        <!-- education-info -->
+        <div class="card card-navy">
+            <div class="card-header">
+                <h3 class="card-title">ข้อมูลการศึกษา</h3>
+            </div>
+        
+            <div class="card-body p-2">
+                <form name="educationInfoForm" class="form row" novalidate>
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowEducationSchoolError()">มหาวิทยาลัย</span>
+                                <span class="text-danger" ng-show="isShowEducationSchoolError()">กรุณาระบุมหาวิทยาลัย</span>
+                            </label>
+                            <input 
+                                name="educationSchool" 
+                                type="text" 
+                                class="form-control" 
+                                ng-class="{'is-invalid': isShowEducationSchoolError()}" 
+                                placeholder="ระบุมหาวิทยาลัย" 
+                                ng-model="selectedTeacherProfile.teacher.educationSchool" 
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowEducationFacultyError()">คณะวิชา</span>
+                                <span class="text-danger" ng-show="isShowEducationFacultyError()">กรุณาระบุคณะวิชา</span>
+                            </label>
+                            <input 
+                                name="educationFaculty" 
+                                type="text" 
+                                class="form-control" 
+                                ng-class="{'is-invalid': isShowEducationFacultyError()}" 
+                                placeholder="ระบุคณะวิชา" 
+                                ng-model="selectedTeacherProfile.teacher.educationFaculty" 
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowEducationMajorError()">สาขาวิชา</span>
+                                <span class="text-danger" ng-show="isShowEducationMajorError()">กรุณาระบุสาขาวิชา</span>
+                            </label>
+                            <input 
+                                name="educationMajor" 
+                                type="text" 
+                                class="form-control" 
+                                ng-class="{'is-invalid': isShowEducationMajorError()}" 
+                                placeholder="ระบุสาขาวิชา" 
+                                ng-model="selectedTeacherProfile.teacher.educationMajor" 
+                                required>
+                        </div>
+                    </div>
+
+                    <!-- <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowSubjectsError()">วิชาที่สอนได้</span>
+                                <span class="text-danger" ng-show="isShowSubjectsError()">กรุณาระบุวิชาที่สอนได้</span>
+                            </label>
+                            <select name="subjects" class="form-control" ng-model="selectedTeacherProfile.subjectIds" ng-class="{'is-invalid': isShowSubjectsError()}" multiple required>
+                                <option ng-repeat="subject in subjects | orderBy: 'name'" ng-value="subject.id">
+                                    {{ subject.name }}
+                                </option>
+                            </select>
+                        </div>
+                    </div> -->
+
+                    <div class="col-md-12">
+                        <label>
+                            <span class="text-danger">*</span>
+                            <span ng-show="!isShowSubjectsError()">วิชาที่สอนได้</span>
+                            <span class="text-danger" ng-show="isShowSubjectsError()">กรุณาระบุวิชาที่สอนได้</span>
+                        </label>
+        
+                        <table class="table text-nowrap">
+                            <tr ng-repeat="subjectCategory in subjectCategories | orderBy: 'seqNo'">
+                                <td class="align-middle" style="width: 20%;">{{ subjectCategory.name }}</td>
+                                <td class="align-middle">
+                                    <div>
+                                        <button type="button" 
+                                                ng-repeat="subject in getSubjectsByCategoryId(subjectCategory.id) | orderBy: 'title'" 
+                                                class="btn btn-sm mx-1" 
+                                                title="{{ subject.name }}" 
+                                                ng-class="getSelectSubjectClass(subject)" 
+                                                ng-click="toggleSelectSubject(subject)">
+                                            {{ getClassLevelTitle(subject) }}
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- education-info -->
+    </div>
+
+    <div class="card-footer">
+        <div class="text-right">
+            <button class="btn btn-outline-danger" ng-click="toListMode()">
+                <i class="fa fa-caret-left"></i> กลับ
+            </button>
+            <button class="btn btn-outline-primary" ng-click="requestSave()">
+                <i class="fa fa-save"></i> บันทึก
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,242 @@
+<div th:replace="firstjobber/admin-lte-3/registration/internship/script/api"></div>
+<div th:replace="firstjobber/admin-lte-3/registration/internship/script/entry-controller"></div>
+<div th:replace="firstjobber/admin-lte-3/registration/internship/script/validator"></div>
+
+<script th:inline="javascript">
+    const kws_webEnv = /*[[${kws_webEnv}]]*/ '';
+    const kws_serverURL = /*[[${kws_serverURL}]]*/ '';
+    const kws_data = /*[[${kws_data}]]*/ {};
+
+    console.log("kws_webEnv => " + kws_webEnv);
+    console.log("kws_serverURL => " + kws_serverURL);
+    console.log("kws_data => ", kws_data);
+
+    const app = angular.module("app", ["ngSanitize"]);
+
+    app.controller("InternshipRegistrationController", ["$scope", "$http", ($scope, $http) => {
+        $scope.genders = kws_data.genders || [];
+        $scope.relationships = kws_data.relationships || [];
+        $scope.schools = kws_data.schools || [];
+        $scope.schoolTypes = kws_data.schoolTypes || [];
+        $scope.provinces = kws_data.provinces || [];
+        $scope.amphurs = kws_data.amphurs || [];
+        $scope.educationLevels = kws_data.educationLevels || [];
+        $scope.educationStatuses = kws_data.educationStatuses || [];
+        $scope.educationDegrees = kws_data.educationDegrees || [];
+        $scope.educationFaculties = kws_data.educationFaculties || [];
+        $scope.educationMajors = kws_data.educationMajors || [];
+        $scope.internshipTypes = kws_data.internshipTypes || [];
+        $scope.jobs = kws_data.jobs || [];
+
+        $scope.isLoading = false;
+        $scope.submitted = false;
+        $scope.mode = "welcome"; // ["welcome", "entry", "result"]
+        $scope.formStyle = "row"; // ["row", "column"]
+        $scope.acceptConsent = false;
+        $scope.internshipRegisterId;
+        $scope.userProfile = {
+            personalInfo: {
+                formalPhotoFile: null,
+                formalPhotoBase64: '',
+                informalPhotoFile: null,
+                informalPhotoBase64: ''
+            },
+            contactInfo: {},
+            personContactInfo: {},
+            educationInfo: {
+                schoolId: "",
+                schoolOther: ""
+            },
+            internInfo: {
+                requestJob1Id: "",
+                requestJob2Id: "",
+                requestJob3Id: "",
+                requestDayOffNum: 2,
+                experiences: []
+            },
+            attachmentInfo: {
+                resumeFile: null,
+                internLetterFile: null,
+                portfolioFiles: []
+            }
+        };
+
+        $scope.init = function() {
+            console.log("### InternshipRegistrationController.init ###");
+
+            useApi($scope, $http);
+            useEntryController($scope, $http);
+            useValidator($scope, $http);
+
+            setTimeout(() => {
+                $('.select2').select2();
+
+                $('.select2bs4').select2({
+                    theme: 'bootstrap4'
+                });
+
+                $('.kws-datepicker').datepicker({
+                    format: "yyyy-mm-dd",
+                    language: 'th-TH',
+                    autoHide: true
+                });
+
+                $('[data-mask]').inputmask();
+
+                $("#formal-photo-file").on('change', ($event) => {
+                    console.log("### attach formal_photo file ###");
+                    
+                    $scope.userProfile.personalInfo.formalPhotoFile = null;
+                    $scope.userProfile.personalInfo.formalPhotoBase64 = "";
+
+                    var file = $event.target.files[0];
+
+                    if(file) {
+                        $scope.userProfile.personalInfo.formalPhotoFile = file;
+                        console.log("fileName => " + file.name);
+
+                        var reader = new FileReader();
+                        reader.onloadend = () => {
+                            $scope.userProfile.personalInfo.formalPhotoBase64 = reader.result;
+                            $scope.$apply();
+                        };
+                        reader.readAsDataURL(file);
+                    } 
+
+                    $scope.$apply();
+                });
+
+                $("#informal-photo-file").on('change', ($event) => {
+                    console.log("### attach informal_photo file ###");
+                    
+                    $scope.userProfile.personalInfo.informalPhotoFile = null;
+                    $scope.userProfile.personalInfo.informalPhotoBase64 = "";
+
+                    var file = $event.target.files[0];
+
+                    if(file) {
+                        $scope.userProfile.personalInfo.informalPhotoFile = file;
+                        console.log("fileName => " + file.name);
+
+                        var reader = new FileReader();
+                        reader.onloadend = () => {
+                            $scope.userProfile.personalInfo.informalPhotoBase64 = reader.result;
+                            $scope.$apply();
+                        };
+                        reader.readAsDataURL(file);
+                    } 
+
+                    $scope.$apply();
+                });
+
+                $(".resume-file").on('change', ($event) => {
+                    console.log("### attach resume file ###");
+                    
+                    $scope.userProfile.attachmentInfo.resumeFile = null;
+
+                    var file = $event.target.files[0];
+                    if(file) {
+                        $scope.userProfile.attachmentInfo.resumeFile = file;
+                        console.log("fileName => " + file.name);
+                    }
+
+                    $scope.$apply();
+                });
+
+                $(".intern-letter-file").on('change', ($event) => {
+                    console.log("### attach intern_letter file ###");
+                    
+                    $scope.userProfile.attachmentInfo.internLetterFile = null;
+
+                    var file = $event.target.files[0];
+                    if(file) {
+                        $scope.userProfile.attachmentInfo.internLetterFile = file;
+                        console.log("fileName => " + file.name);
+                    }
+
+                    $scope.$apply();
+                });
+
+                $(".portfolio-files").on('change', ($event) => {
+                    console.log("### attach portfolio files ###");
+                    
+                    $scope.userProfile.attachmentInfo.portfolioFiles = [];
+
+                    var files = $event.target.files;
+                    if(files && files.length > 0) {
+                        $scope.userProfile.attachmentInfo.portfolioFiles = files;
+                        console.log("portfolios " + files.length + " files");
+                    }
+
+                    $scope.$apply();
+                });
+            }, 0);
+        };
+
+        $scope.setFormStyle = function(formStyle) {
+            $scope.formStyle = formStyle;
+        };
+
+        $scope.gotoWelcomeView = function() {
+            console.log("### InternshipRegistrationController.gotoWelcomeView ###");
+            $scope.mode = "welcome";
+        };
+
+        $scope.gotoEntryView = function() {
+            console.log("### InternshipRegistrationController.gotoEntryView ###");
+            $scope.mode = "entry";
+        };
+
+        $scope.gotoResultView = function() {
+            console.log("### InternshipRegistrationController.gotoResultView ###");
+            $scope.mode = "result";
+        };
+
+        $scope.gotoEducationTab = function() {
+            console.log("### InternshipRegistrationController.gotoEducationTab ###");
+            $('.nav-pills a[href="#tab-education"]').tab('show');
+        };
+
+        $scope.gotoInternTab = function() {
+            console.log("### InternshipRegistrationController.gotoInternTab ###");
+            $('.nav-pills a[href="#tab-internInfo"]').tab('show');
+        };
+
+        $scope.gotoAttachmentTab = function() {
+            console.log("### InternshipRegistrationController.gotoAttachmentTab ###");
+            $('.nav-pills a[href="#tab-attachment"]').tab('show');
+        };
+
+        $scope.removeFormalPhoto = function() {
+            console.log("### InternshipRegistrationController.removeFormalPhoto ###");
+            $scope.userProfile.personalInfo.formalPhotoFile = null;
+            $scope.userProfile.personalInfo.formalPhotoBase64 = '';
+        };
+
+        $scope.removeInformalPhoto = function() {
+            console.log("### InternshipRegistrationController.removeInformalPhoto ###");
+            $scope.userProfile.personalInfo.informalPhotoFile = null;
+            $scope.userProfile.personalInfo.informalPhotoBase64 = '';
+        };
+
+        $scope.removeResumeFile = function() {
+            console.log("### InternshipRegistrationController.removeResumeFile ###");
+            $scope.userProfile.attachmentInfo.resumeFile = null;
+        };
+
+        $scope.removeInternLetterFile = function() {
+            console.log("### InternshipRegistrationController.removeInternLetterFile ###");
+            $scope.userProfile.attachmentInfo.internLetterFile = null;
+        };
+
+        $scope.removePortfolioFiles = function() {
+            console.log("### InternshipRegistrationController.removePortfolioFiles ###");
+            $scope.userProfile.attachmentInfo.portfolioFiles = [];
+        };
+
+        $scope.gotoUploadTest = function() {
+            console.log("### InternshipRegistrationController.removePortfolioFiles ###");
+            location = kws_serverURL + "/views/firstjobber/registration/internship/upload-test?internshipRegisterId=" + $scope.internshipRegisterId;
+        };
+    }]);
+</script>

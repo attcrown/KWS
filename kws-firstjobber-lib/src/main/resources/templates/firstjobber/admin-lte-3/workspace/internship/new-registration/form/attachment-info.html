@@ -1,0 +1,41 @@
+<div class="card" ng-if="selectedInternshipRegister.attachmentInfo.resumeFileURL">
+    <div class="card-header">
+        <h3 class="card-title text-maroon">Resume</h3>
+    </div>
+
+    <div class="card-body p-1">
+        <object data="{{ selectedInternshipRegister.attachmentInfo.resumeFileURL }}" type="application/pdf" width="100%" height="760">
+            Resume : <a ng-href="{{ selectedInternshipRegister.attachmentInfo.resumeFileURL }}">เปิด</a>
+        </object>
+    </div>
+
+    <div class="card-footer">
+        <div class="text-right">
+            <a ng-href="{{ selectedInternshipRegister.attachmentInfo.resumeFileURL }}" target="_blank" class="btn btn-primary btn-sm">
+                <i class="fas fa-external-link-alt"></i> เปิด
+            </a>
+        </div>
+    </div>
+</div>
+
+<div ng-if="selectedInternshipRegister.attachmentInfo.portfolioFileURLs && selectedInternshipRegister.attachmentInfo.portfolioFileURLs.length > 0">
+    <div class="card" ng-repeat="portfolioFileURL in selectedInternshipRegister.attachmentInfo.portfolioFileURLs">
+        <div class="card-header">
+            <h3 class="card-title text-maroon">พอร์ตโฟลิโอ-{{ $index + 1 }}</h3>
+        </div>
+    
+        <div class="card-body p-1">
+            <object data="{{ portfolioFileURL }}" type="application/pdf" width="100%" height="760">
+                พอร์ตโฟลิโอ : <a ng-href="{{ portfolioFileURL }}">เปิด</a>
+            </object>
+        </div>
+    
+        <div class="card-footer">
+            <div class="text-right">
+                <a ng-href="{{ portfolioFileURL }}" target="_blank" class="btn btn-primary btn-sm">
+                    <i class="fas fa-external-link-alt"></i> เปิด
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,117 @@
+<script th:inline="javascript">
+    function useEntryController($scope, $http)
+    {
+        console.log("### InternshipRegistrationUploadTestController.useEntryController ###");
+        $scope.requestUpload = useRequestUpload($scope, $http);
+        $scope.buildFormData = useBuildFormData($scope, $http);
+        $scope.upload = useUpload($scope, $http);
+    }
+
+    function useRequestUpload($scope, $http)
+    {
+        return () => {
+            console.log("### InternshipRegistrationUploadTestController.requestUpload ###");
+
+            $scope.submitted = true;
+
+            const verify = $scope.verifyFormData();
+
+            if(verify.valid === true) {
+                const options = {
+                    title: "ยืนยันอัพโหลดผลการทำแบบทดสอบ ?",
+                    text: 'กรุณาตรวจสอบความถูกต้องของข้อมูล และยืนยันว่าข้อมูลที่อัพโหลดเป็นความจริงทุกประการ กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                    icon: "warning",
+                    buttons: ["ยกเลิก", "ตกลง"],
+                    dangerMode: true
+                };
+
+                swal(options).
+                then(confirm => {
+                    if (confirm) {
+                        $scope.upload();
+                        // swal("บันทึกข้อมูลสำเร็จ", "บันทึกข้อมูลผลการทำแบบทดสอบเพื่อลงทะเบียนเข้าร่วมโครงการ Internship.Co สำเร็จ, โปรดรอผลการตอบรับจากแอดมิน", "success");
+                        // setTimeout(() => {
+                        //     $scope.gotoResultView();
+                        //     $scope.$apply();
+                        // }, 0);
+                    }
+                });
+            } else {
+                // swal(verify.error.title, verify.error.message, "error");
+                swal("ข้อมูลไม่ถูกต้อง/ครบถ้วน", "กรุณาระบุข้อมูลให้ถูกต้อง/ครบถ้วน", "error");
+            }
+        };
+    }
+
+    function useBuildFormData($scope, $http)
+    {
+        return () => {
+            console.log("### InternshipRegistrationUploadTestController.buildFormData ###");
+
+            const formData = new FormData();
+
+            formData.append('internshipRegisterId', $scope.internshipRegister.id);
+
+            formData.append('sixteenPersonalityCategoryId', $scope.uploadTest.personality.categoryId);
+            formData.append('sixteenPersonalityImageFile', $scope.uploadTest.personality.resultFile);
+
+            formData.append('high5CategoryId1', $scope.uploadTest.high5.categoryId1);
+            formData.append('high5CategoryId2', $scope.uploadTest.high5.categoryId2);
+            formData.append('high5CategoryId3', $scope.uploadTest.high5.categoryId3);
+            formData.append('high5CategoryId4', $scope.uploadTest.high5.categoryId4);
+            formData.append('high5CategoryId5', $scope.uploadTest.high5.categoryId5);
+            formData.append('high5ImageFile', $scope.uploadTest.high5.resultFile);
+
+            formData.append('iqScore', $scope.uploadTest.iq.score);
+            formData.append('iqImageFile', $scope.uploadTest.iq.resultFile);
+
+            return formData;
+        };
+    }
+
+    function useUpload($scope, $http)
+    {
+        return () => {
+            console.log("### InternshipRegistrationUploadTestController.upload ###");
+
+            const options = {
+                method: 'POST',
+                url: `${kws_serverURL}/api/firstjobber/registration/internship/upload-test`,
+                headers: {
+                    'Content-Type': undefined
+                },
+                data: $scope.buildFormData()
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    swal("บันทึกข้อมูลสำเร็จ", "บันทึกข้อมูลผลการทำแบบทดสอบเพื่อลงทะเบียนเข้าร่วมโครงการ Internship.Co สำเร็จ, โปรดรอผลการตอบรับจากแอดมิน", "success");
+                    setTimeout(() => {
+                        $scope.gotoResultView();
+                        $scope.$apply();
+                    }, 0);
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกข้อมูลผลการทำแบบทดสอบได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+                let errorMessage = "ไม่สามารถบันทึกข้อมูลผลการทำแบบทดสอบได้ กรุณาติดต่อผู้ดูแลระบบ";
+                if(error.data && error.data.head) {
+                    errorMessage = "ไม่สามารถบันทึกข้อมูลผลการทำแบบทดสอบได้ เนื่องจาก" + error.data.head.statusMessage;
+                }
+                swal("เกิดข้อผิดพลาด", errorMessage, "error");
+            };
+
+            const doneHandler = () => {
+                $scope.isLoading = false;
+            };
+
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(doneHandler);
+        };
+    }
+</script>

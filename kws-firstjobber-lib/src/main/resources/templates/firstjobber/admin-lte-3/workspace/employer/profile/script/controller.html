@@ -1,0 +1,111 @@
+<div th:replace="firstjobber/admin-lte-3/workspace/employer/profile/script/api"></div>
+<div th:replace="firstjobber/admin-lte-3/workspace/employer/profile/script/list-controller"></div>
+<div th:replace="firstjobber/admin-lte-3/workspace/employer/profile/script/entry-controller"></div>
+
+<script th:inline="javascript">
+    const kws_data = /*[[${kws_data}]]*/ {};
+    
+    app.controller("FjbEmployerProfileController", ["$scope", "$http", ($scope, $http) => {
+        $scope.employerTypes = /*[[${kws_data.employerTypes}]]*/ [];
+        $scope.genders = /*[[${kws_data.genders}]]*/ [];
+        $scope.masterStatuses = /*[[${kws_data.masterStatuses}]]*/ [];
+        $scope.provinces = /*[[${kws_data.provinces}]]*/ [];
+        $scope.amphurs = [];
+
+        $scope.isLoading = false;
+        $scope.criteria = {};
+        $scope.paging = {};
+        $scope.selectedDistricts = [];
+        $scope.employers = [];
+        $scope.selectedEmployerProfile;
+        $scope.mode = "list"; // ["list", "entry"]
+        $scope.entryMode = ""; // ["add", "edit"]
+
+        $scope.init = function() {
+            console.log("### FjbEmployerProfileController.init ###");
+            console.log("kws_data => ", kws_data);
+
+            useApi($scope, $http);
+            useListController($scope, $http);
+            useEntryController($scope, $http);
+
+            setTimeout(() => {
+                $scope.loadAmphurs();
+            }, 0);
+
+            $scope.criteria = {
+                employerTypeIds: [],
+                name: '',
+                statuses: ['Active']
+            };
+
+            $scope.paging = {
+                pageNo: 1,
+                pageSize: 25,
+                totalPage: 0,
+                totalSize: 0
+            };
+
+            $('.select2').select2({ theme: 'bootstrap4' });
+        };
+
+        $scope.getEmployerTypeName = function(employer) {
+            const employerType = $scope.employerTypes.find(e => e.id === employer.employerTypeId);
+            if(employerType) {
+                return employerType.name;
+            }
+        };
+
+        $scope.getStatusName = function(employer) {
+            const status = $scope.masterStatuses.find(e => e.id === employer.status);
+            if(status) {
+                return status.title;
+            }
+        };
+
+        $scope.swapMode = function() {
+            if($scope.mode === 'list') {
+                $scope.toEntryMode();
+            } else if($scope.mode === 'entry') {
+                $scope.toListMode();
+            }
+        };
+
+        $scope.toListMode = function() {
+            $scope.mode = 'list';
+        };
+
+        $scope.toEntryMode = function() {
+            $scope.mode = 'entry';
+        };
+
+        $scope.requestAddEmployer = function() {
+            console.log("### FjbEmployerProfileController.requestAddEmployer ###");
+            $scope.toEntryMode();
+            $scope.entryMode = "add";
+            $scope.selectedEmployerProfile = {
+                employer: {
+                    employerTypeId: 'company',
+                    status: 'Active'
+                },
+                contactAddress: {
+                    provinceId: '',
+                    amphurId: '',
+                    districtId: ''
+                },
+                employerUserProfiles: [
+
+                ]
+            };
+
+            setTimeout(() => {
+                $('#provinceSelect').select2({ theme: 'bootstrap4' });
+                $('#amphurSelect').select2({ theme: 'bootstrap4' });
+                $('#districtSelect').select2({ theme: 'bootstrap4' });
+                $scope.$apply();
+            }, 0);
+
+            $scope.resetForm();
+        };
+    }]);
+</script>

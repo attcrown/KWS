@@ -1,0 +1,70 @@
+<div class="card">
+    <!-- card-header -->
+    <div class="card-header">
+        <h3 class="card-title text-maroon">รายชื่อการลงทะเบียนข้อมูลครู</h3>
+    </div>
+    <!-- /.card-header -->
+
+    <!-- card-body -->
+    <div class="card-body p-2">
+        <div class="row" ng-show="teacherRegisters.length > 0">
+            <div ng-repeat="teacherRegister in teacherRegisters | orderBy: 'registeredAt'" class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+            
+                <div class="card bg-light d-flex flex-fill">
+                    <div class="card-header border-bottom-0">
+                        <div>
+                            <label>ชื่อ-นามสกุล : </label>
+                            <span class="text-muted">{{ teacherRegister.firstName }} {{ teacherRegister.lastName }}</span>
+                        </div>
+
+                        <div>
+                            <label>ชื่อเล่น : </label>
+                            <span class="text-muted">{{ teacherRegister.nickName }}</span>
+                        </div>
+
+                        <!-- <div>
+                            <label>โรงเรียน : </label>
+                            <span class="text-muted">{{ studentRegister.educationSchool }}</span>
+                        </div>
+
+                        <div>
+                            <label>ระดับการศึกษา : </label>
+                            <span class="text-muted">{{ studentRegister.educationLevel }}</span>
+                        </div>
+
+                        <hr> -->
+
+                        <div>
+                            <label>เบอร์มือถือ : </label>
+                            <span class="text-muted">{{ teacherRegister.mobileNo }}</span>
+                        </div>
+
+                        <div>
+                            <label>Email : </label>
+                            <span class="text-muted">{{ teacherRegister.email }}</span>
+                        </div>
+
+                        <div>
+                            <label>ลงทะเบียนเมื่อ : </label>
+                            <span class="text-muted">{{ teacherRegister.registeredAt }}</span>
+                        </div>
+                    </div>
+            
+                    <div class="card-footer px-2">
+                        <div class="text-right">
+                            <a href="javascript:void(0)" class="btn btn-sm btn-primary btn-block" ng-click="requestReviewTeacherRegister(teacherRegister)">
+                                <i class="fas fa-user"></i> รีวิว
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" ng-show="teacherRegisters.length === 0">
+            <div class="col-12 text-center">
+                <h6 class="text-center text-muted">ไม่มีข้อมูลรายชื่อการลงทะเบียนข้อมูลครู</h6>
+            </div>
+        </div>
+    </div>
+</div>

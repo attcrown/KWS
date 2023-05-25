@@ -1,0 +1,54 @@
+<div ng-show="mode === 'entry'" class="card">
+    <div class="card-header">
+        <h3 class="card-title text-maroon">เพิ่ม/แก้ไขข้อมูลสาขาวิชา</h3>
+    </div>
+
+    <div class="card-body">
+        <form name="educationMajorForm" class="form row" novalidate>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowEducationFacultyError()">คณะวิชา</span>
+                        <span class="text-danger" ng-show="isShowEducationFacultyError()">กรุณาเลือกคณะวิชา</span>
+                    </label>
+                    <select name="educationFaculty" class="form-control" ng-class="{'is-invalid': isShowEducationFacultyError()}" style="width: 100%;" ng-model="selectedEducationMajor.educationFacultyId" required>
+                        <option value="" selected disabled>--- กรุณาเลือกคณะวิชา ---</option>
+                        <option ng-repeat="educationFaculty in educationFaculties | orderBy: 'seqNo'" ng-value="educationFaculty.id">{{ educationFaculty.name }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowNameError()">ชื่อสาขาวิชา</span>
+                        <span class="text-danger" ng-show="isShowNameError()">ชื่อสาขาวิชา</span>
+                    </label>
+                    <input name="name" type="text" class="form-control" ng-class="{'is-invalid': isShowNameError()}" placeholder="ระบุชื่อสาขาวิชา" ng-model="selectedEducationMajor.name" required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>รายละเอียด</span>
+                    </label>
+                    <textarea rows="5" class="form-control" placeholder="ระบุรายละเอียด" ng-model="selectedEducationMajor.description"></textarea>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="card-footer">
+        <div class="text-right">
+            <button class="btn btn-outline-danger" ng-click="toListMode()">
+                <i class="fa fa-caret-left"></i> กลับ
+            </button>
+            <button class="btn btn-outline-primary" ng-click="requestSave()">
+                <i class="fa fa-save"></i> บันทึก
+            </button>
+        </div>
+    </div>
+</div>

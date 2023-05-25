@@ -1,0 +1,60 @@
+<div class="card">
+    <!-- card-header -->
+    <div class="card-header">
+        <h3 class="card-title text-maroon">ผลการค้นหา</h3>
+    </div>
+    <!-- /.card-header -->
+
+    <!-- card-body -->
+    <div class="card-body table-responsive p-0">
+        <table class="table table-striped table-hover text-nowrap">
+            <thead>
+                <tr>
+                    <th>EMP ID</th>
+                    <th>EMP NAME</th>
+                    <th>EMP SURNAME</th>
+                    <th class="text-center" style="width: 64px;">Action</th>
+                </tr>
+            </thead>
+
+            <tbody ng-if="employees.length > 0">
+                <tr ng-repeat="employee in employees">
+                    <td>{{ employee.id }}</td>
+                    <td>{{ employee.name }}</td>
+                    <td>{{ employee.surname }}</td>
+                    <td class="text-center">
+                        <button class="btn btn-sm btn-outline-warning" ng-click="requestEditEmployee(employee)">
+                            <i class="fa fa-edit kws-table-action-icon"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger" ng-click="requestDeleteEmployee(employee)">
+                            <i class="fa fa-trash kws-table-action-icon"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+
+            <tfoot ng-if="employees.length == 0">
+                <tr>
+                    <td class="text-center text-orange" colspan="4">--- ไม่มีข้อมูล ---</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <!-- /.card-body -->
+
+    <!-- card-footer -->
+    <div class="card-footer clearfix d-none" ng-show="employees.length > 0">
+        <ul class="pagination pagination-sm m-0 float-right">
+            <li class="page-item">
+                <a class="page-link" href="javascript:void(0)" ng-click="gotoPageNo(1)">&laquo;</a>
+            </li>
+            <li class="page-item" ng-repeat="pageNo in getPageNos() track by $index">
+                <a class="page-link" ng-class="{'text-bold': pageNo == paging.pageNo}" href="javascript:void(0)" ng-click="gotoPageNo(pageNo)">{{ pageNo }}</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="javascript:void(0)" ng-click="gotoPageNo(paging.totalPage)">&raquo;</a>
+            </li>
+        </ul>
+    </div>
+    <!-- /.card-footer -->
+</div>

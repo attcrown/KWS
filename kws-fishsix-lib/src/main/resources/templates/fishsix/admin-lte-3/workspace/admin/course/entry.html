@@ -1,0 +1,228 @@
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title text-maroon">เพิ่ม/แก้ไขข้อมูลคอร์ส</h3>
+    </div>
+
+    <div class="card-body p-2">
+        
+        <form name="courseForm" class="form row" novalidate>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowNameError()">ชื่อคอร์ส</span>
+                        <span class="text-danger" ng-show="isShowNameError()">ระบุชื่อคอร์ส</span>
+                    </label>
+                    <input  name="name" 
+                            type="text" 
+                            class="form-control" 
+                            ng-class="{'is-invalid': isShowNameError()}" 
+                            placeholder="ระบุชื่อคอร์ส" 
+                            ng-model="selectedCourseProfile.course.name" 
+                            required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowClassChannelError()">ช่องทาง</span>
+                        <span class="text-danger" ng-show="isShowClassChannelError()">กรุณาเลือกช่องทาง</span>
+                    </label>
+                    <select name="classChannel" class="form-control" ng-class="{'is-invalid': isShowClassChannelError()}" style="width: 100%;" ng-model="selectedCourseProfile.course.classChannelId" required>
+                        <option value="" selected disabled>--- กรุณาเลือกช่องทาง ---</option>
+                        <option ng-repeat="classChannel in classChannels | orderBy: 'seqNo'" ng-value="classChannel.id">{{ classChannel.name }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowClassTypeError()">ประเภทคลาส</span>
+                        <span class="text-danger" ng-show="isShowClassTypeError()">กรุณาเลือกประเภทคลาส</span>
+                    </label>
+                    <select name="classType" class="form-control" ng-class="{'is-invalid': isShowClassTypeError()}" style="width: 100%;" ng-model="selectedCourseProfile.course.classTypeId" required>
+                        <option value="" selected disabled>--- กรุณาเลือกประเภทคลาส ---</option>
+                        <option ng-repeat="classType in classTypes | orderBy: 'seqNo'" ng-value="classType.id">{{ classType.name }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowHourError()">ชั่วโมงเรียน</span>
+                        <span class="text-danger" ng-show="isShowHourError()">กรุณาเลือกชั่วโมงเรียน</span>
+                    </label>
+                    <select name="hour" class="form-control" ng-class="{'is-invalid': isShowHourError()}" style="width: 100%;" ng-model="selectedCourseProfile.course.hour" required>
+                        <option value="" selected disabled>--- กรุณาเลือกชั่วโมงเรียน ---</option>
+                        <option ng-repeat="classHour in classHours | orderBy: 'seqNo'" ng-value="classHour.hour">{{ classHour.name }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowExtraHourError()">ชั่วโมงเรียน (แถม)</span>
+                        <span class="text-danger" ng-show="isShowExtraHourError()">ระบุชั่วโมงเรียน (แถม)</span>
+                    </label>
+                    <input  name="extraHour" 
+                            type="number" 
+                            class="form-control" 
+                            ng-class="{'is-invalid': isShowExtraHourError()}" 
+                            placeholder="ระบุชื่อชั่วโมงเรียน (แถม)" 
+                            ng-model="selectedCourseProfile.course.extraHour" 
+                            required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowPriceError()">ราคา</span>
+                        <span class="text-danger" ng-show="isShowPriceError()">ระบุราคา</span>
+                    </label>
+                    <input  name="price" 
+                            type="number" 
+                            class="form-control" 
+                            ng-class="{'is-invalid': isShowPriceError()}" 
+                            placeholder="ระบุราคา" 
+                            ng-model="selectedCourseProfile.course.price" 
+                            required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowDiscountPriceError()">ส่วนลด</span>
+                        <span class="text-danger" ng-show="isShowDiscountPriceError()">ระบุส่วนลด</span>
+                    </label>
+                    <input  name="discountPrice" 
+                            type="number" 
+                            class="form-control" 
+                            ng-class="{'is-invalid': isShowDiscountPriceError()}" 
+                            placeholder="ระบุส่วนลด" 
+                            ng-model="selectedCourseProfile.course.discountPrice" 
+                            required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowExpirationPeriodError()">ระยะเวลาเรียน</span>
+                        <span class="text-danger" ng-show="isShowExpirationPeriodError()">กรุณาเลือกระยะเวลาเรียน</span>
+                    </label>
+                    <select name="expirationPeriod" class="form-control" ng-class="{'is-invalid': isShowExpirationPeriodError()}" style="width: 100%;" ng-model="selectedCourseProfile.course.expirationPeriod" required>
+                        <option value="" selected disabled>--- กรุณาเลือกระยะเวลาเรียน ---</option>
+                        <option ng-repeat="classHour in classHours | orderBy: 'seqNo'" ng-value="classHour.period.id">{{ classHour.period.value }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <!--
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowSelectableSubjectsError()">รายวิชาที่สามารถเลือกเรียนได้</span>
+                        <span class="text-danger" ng-show="isShowSelectableSubjectsError()">กรุณาเลือกรายวิชาที่สามารถเลือกเรียนได้</span>
+                    </label>
+
+                    <select name="selectableSubjects" 
+                            class="form-control" 
+                            multiple="multiple" 
+                            ng-class="{'is-invalid': isShowSelectableSubjectsError()}" 
+                            style="width: 100%;" 
+                            ng-model="selectedCourseProfile.subjectIds" 
+                            required>
+                        <option ng-repeat="subject in subjects | orderBy: 'seqNo'" ng-value="subject.id">{{ subject.name }}</option>
+                    </select>
+                </div>
+            </div>
+            -->
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>รายละเอียด</span>
+                    </label>
+                    <textarea rows="3" class="form-control" placeholder="ระบุรายละเอียด" ng-model="selectedCourseProfile.course.description"></textarea>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>หมายเหตุ</span>
+                    </label>
+                    <textarea rows="3" class="form-control" placeholder="ระบุหมายเหตุ" ng-model="selectedCourseProfile.course.remark"></textarea>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowMaxSubjectError()">จำนวนวิชาที่สามารถเรียนได้</span>
+                        <span class="text-danger" ng-show="isShowMaxSubjectError()">ระบุจำนวนวิชาที่สามารถเรียนได้</span>
+                    </label>
+                    <input  name="maxSubject" 
+                            type="number" 
+                            class="form-control" 
+                            ng-class="{'is-invalid': isShowMaxSubjectError()}" 
+                            placeholder="ระบุจำนวนวิชาที่สามารถเรียนได้" 
+                            ng-model="selectedCourseProfile.course.maxSubject" 
+                            required>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <label>
+                    <span class="text-danger">*</span>
+                    <span>รายวิชาที่สามารถเลือกเรียนได้</span>
+                </label>
+
+                <table class="table text-nowrap">
+                    <tr ng-repeat="subjectCategory in subjectCategories | orderBy: 'seqNo'">
+                        <td class="align-middle" style="width: 20%;">{{ subjectCategory.name }}</td>
+                        <td class="align-middle">
+                            <div>
+                                <button type="button" 
+                                        ng-repeat="subject in getSubjectsByCategoryId(subjectCategory.id)" 
+                                        class="btn btn-sm mx-1" 
+                                        title="{{ subject.name }}" 
+                                        ng-class="getSelectSubjectClass(subject)" 
+                                        ng-click="toggleSelectSubject(subject)">
+                                    {{ getClassLevelTitle(subject) }}
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+
+    </div>
+
+    <div class="card-footer">
+        <div class="text-right">
+            <button class="btn btn-outline-danger" ng-click="toListMode()">
+                <i class="fa fa-caret-left"></i> กลับ
+            </button>
+            <button class="btn btn-outline-primary" ng-click="requestSave()">
+                <i class="fa fa-save"></i> บันทึก
+            </button>
+        </div>
+    </div>
+</div>

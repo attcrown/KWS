@@ -1,0 +1,273 @@
+<div th:replace="__${#execInfo.templateName}__/../api"></div>
+<div th:replace="__${#execInfo.templateName}__/../controller-form-schedule"></div>
+<div th:replace="__${#execInfo.templateName}__/../controller-form-checkin"></div>
+<div th:replace="__${#execInfo.templateName}__/../controller-form-evaluation"></div>
+
+<script th:inline="javascript">
+    app.controller("FishsixStudyScheduleClassController", ["$scope", "$http", ($scope, $http) => {
+        $scope.today = /*[[${today}]]*/ '';
+        $scope.classChannels = /*[[${classChannels}]]*/ [];
+        $scope.classTypes = /*[[${classTypes}]]*/ [];
+        $scope.classLocations = /*[[${classLocations}]]*/ [];
+        $scope.educationClasses = /*[[${educationClasses}]]*/ [];
+        $scope.evaluationFactors = /*[[${evaluationFactors}]]*/ [];
+        $scope.subjectProfiles = /*[[${subjectProfiles}]]*/ [];
+        $scope.teacherProfiles = /*[[${teacherProfiles}]]*/ [];
+        $scope.students = /*[[${students}]]*/ [];
+        $scope.studyClassScheduleProfile = /*[[${studyClassScheduleProfile}]]*/ { date: $scope.today, periods: [] };
+
+        console.log("classChannels => ", $scope.classChannels);
+        console.log("classTypes => ", $scope.classTypes);
+        console.log("classLocations => ", $scope.classLocations);
+        console.log("educationClasses => ", $scope.educationClasses);
+        console.log("evaluationFactors => ", $scope.evaluationFactors);
+        console.log("subjectProfiles => ", $scope.subjectProfiles);
+        console.log("teacherProfiles => ", $scope.teacherProfiles);
+        console.log("students => ", $scope.students);
+        console.log("studyClassScheduleProfile => ", $scope.studyClassScheduleProfile);
+
+        $scope.isLoading = false;
+        $scope.criteria = {};
+        $scope.mode = "list"; // ["list", "entry"]
+        $scope.entryMode = ""; // ["add", "edit"]
+
+        $scope.classStatuses = ["Reserved", "Cancelled", "Confirmed", "Completed"];
+        $scope.studentCheckinStatuses = ["Absent", "Present", "Leave"];       
+        $scope.studentQuotaStatuses = ["Reserved", "Used", "Returned"];
+        $scope.teacherQuotaStatuses = ["Pending", "Cancelled", "Acquired"];
+        $scope.evaluateStatuses = ["Pending", "Rejected", "Approved"];
+
+        // create confirm remove checkin method
+        $scope.selectedStudyClass;
+        $scope.selectedStudyClassSchedule;
+
+        // create method
+        $scope.studyClassSchedule; //Keep value from classScheduleForm
+        $scope.studentSubjectQuotaProfiles; // Keep value from studentSubjectQuotaLoad API
+        $scope.chaptersInstudentSubjectQuota; // Keep chapters from studentSubjectQuotaProfiles
+
+        // checkin method
+        $scope.studentCheckinOptions = [
+            {
+                "id": "option1", // ให้ dropdown default เลือกค่านี้
+                "text": "น้องมาเรียน",
+                "attributes": {
+                    "checkinStatus": "Present",
+                    "studentQuotaStatus": "Used",
+                    "teacherQuotaStatus": "Acquired"
+                }
+            },
+            {
+                "id": "option2",
+                "text": "น้องลา หักชม. ของน้อง ให้ชม. ครู",
+                "attributes": {
+                    "checkinStatus": "Absent",
+                    "studentQuotaStatus": "Used",
+                    "teacherQuotaStatus": "Acquired"
+                }
+            },
+            {
+                "id": "option3",
+                "text": "น้องลา ไม่หักชม. ของน้อง ให้ชม. ครู",
+                "attributes": {
+                    "checkinStatus": "Leave",
+                    "studentQuotaStatus": "Returned",
+                    "teacherQuotaStatus": "Acquired"
+                }
+            }
+        ];
+        $scope.studyClassCheckin = { //Keep value from studyClassCheckinForm & default value in studyClassCheckinForm
+            studyClassCheckinOption: $scope.studentCheckinOptions[0]
+        }; 
+
+        // evaluation method
+        $scope.studyClassEvaluate = { //Keep value from evaluateStudyClassForm & default value in evaluateStudyClassForm
+            entryMode: "add",
+            studyClassEvaluationProfile: {
+                studyClassEvaluation: {
+                    classScheduleId: "",
+                    evaluateFromType: "Teacher",
+                    evaluateToType: "Student",
+                    comment: "",
+                    evaluateStatus: "Approved"
+                },
+
+                studyClassEvaluationDetails: []
+            }
+        };
+
+        $scope.init = function() {
+            console.log("### FishsixStudyScheduleClassController.init ###");
+
+            useApi($scope, $http);
+            useScheduleFormController($scope, $http);
+            useCheckinFormController($scope, $http);
+            useEvaluationFormController($scope, $http);
+
+            $scope.criteria = {
+                date: $scope.today
+            };
+
+            $('#criteriaDatePicker').datetimepicker({
+                format: 'YYYY-MM-DD'
+            });
+
+            $("#schedule-form-modal").on('hidden.bs.modal', function(){
+                $scope.closeScheduleFormModal();
+            });
+
+            $("#checkin-form-modal").on('hidden.bs.modal', function(){
+                $scope.closeCheckinFormModal();
+            });
+
+            $("#evaluation-form-modal").on('hidden.bs.modal', function(){
+                $scope.closeEvaluationFormModal();
+            });
+        };
+
+        $scope.resetForm = function() {
+            setTimeout(() => {
+                $scope.classScheduleForm.$submitted = false;
+                $scope.studyClassCheckinForm.$submitted = false;   
+                $scope.evaluateStudyClassForm.$submitted = false;              
+
+                $scope.$apply();
+            }, 0);
+        };
+
+        $scope.getClassChannel = function(classChannelId) {
+            let classChannel = $scope.classChannels.find(e => e.id === classChannelId);
+            if(classChannel) {
+                return classChannel;
+            }
+        };
+
+        $scope.getClassLocationName = function(classLocationId) {
+            let classLocation = $scope.classLocations.find(e => e.id === classLocationId);
+            if(classLocation) {
+                return classLocation.locationName;
+            }
+        };
+
+        $scope.getStudentByStudentId = function(studentId) {
+            let student = $scope.students.find(e => e.id === studentId);
+            if(student) {
+                return student;
+            }
+        };
+
+        $scope.getTeacherByTeacherId = function(teacherId) {
+            let teacherProfile = $scope.teacherProfiles.find(e => e.teacher.id === teacherId);
+            if(teacherProfile) {
+                return teacherProfile.teacher;
+            }
+        };
+
+        $scope.getwageHourRateTeacherByTeacherId = function(teacherId) {
+            // console.log("### FishsixStudyScheduleClassController.getwageHourRateTeacherByTeacherId ###");
+            // console.log("teacherId => ", teacherId);
+
+            let teacherProfile = $scope.teacherProfiles.find(e => e.teacher.id === teacherId);
+            if(teacherProfile) {
+                // console.log("teacherProfile.teacher.wageHourRate => ", teacherProfile.teacher.wageHourRate);
+                if(teacherProfile.teacher.wageHourRate != undefined || teacherProfile.teacher.wageHourRate != null || teacherProfile.teacher.wageHourRate > 0){
+                    // console.log("teacherProfile.teacher.wageHourRate => Y");
+                    return teacherProfile.teacher.wageHourRate;
+                }else{
+                    // console.log("teacherProfile.teacher.wageHourRate => N", );
+                    return 0;
+                }
+
+                // อันนี้ก็ใช้ได้
+                // if(teacherProfile.teacher.wageHourRate != undefined){
+                //     console.log("teacherProfile.teacher.wageHourRate => !undefined");
+                //     return teacherProfile.teacher.wageHourRate;
+                // }else if(teacherProfile.teacher.wageHourRate != null){
+                //     console.log("teacherProfile.teacher.wageHourRate => != null", );
+                //     return teacherProfile.teacher.wageHourRate;
+                // }else if(teacherProfile.teacher.wageHourRate > 0){
+                //     console.log("teacherProfile.teacher.wageHourRate => != 0", );
+                //     return teacherProfile.teacher.wageHourRate;
+                // }else{
+                //     return 0;
+                // }
+            }
+        };
+
+        $scope.getSubjectProfile = function(subjectId) {
+            let subjectProfile = $scope.subjectProfiles.find(e => e.id === subjectId);
+            if(subjectProfile) {
+                return subjectProfile;
+            }
+        };
+
+        $scope.getChapterInSubject = function(subjectId, subjectChapterId) {
+            // console.log("subjectId => ", subjectId);
+            // console.log("subjectChapterId => ", subjectChapterId);
+
+            if(subjectId != undefined && subjectChapterId != undefined){
+                let subjectProfile = $scope.getSubjectProfile(subjectId);
+
+                let chapters = subjectProfile.chapters;
+                // console.log("chapters => ", chapters);
+
+                if(chapters && chapters.length > 0){
+                    let chapter = chapters.find(e => e.id === subjectChapterId);
+                    // console.log("chapter => ", chapter);
+                    if(chapter) {
+                        return chapter;
+                    }
+                }
+            }
+        };
+
+        $scope.getTeachersBySubjectId = function(subjectId) {
+            // console.log("### FishsixStudyScheduleClassController.getTeachersBySubjectId ###");
+            // console.log("subjectId => ", subjectId);
+
+            let filterResults = [];
+            $scope.teacherProfiles.forEach(teacherProfile => {
+                let filterTeacherBySubjectId = teacherProfile.teacherSubjectMappers.filter(e => e.subjectId === subjectId);
+                if(filterTeacherBySubjectId && filterTeacherBySubjectId.length > 0){
+                    filterResults.push(teacherProfile);
+                }
+            });
+            // console.log("filterResults => ", filterResults);
+
+            return filterResults;
+        };
+
+        $scope.getEducationClass = function(educationClassId) {
+            let educationClass = $scope.educationClasses.find(e => e.id === educationClassId);
+            if(educationClass) {
+                return educationClass;
+            }
+        };
+
+        $scope.getStudentFullName = function(studentId) {
+            let student = $scope.students.find(e => e.id === studentId);
+            if(student) {
+                return student.firstName + ' ' + student.lastName;
+            }
+        };
+
+        $scope.getClassType = function(classTypeId) {
+            let classType = $scope.classTypes.find(e => e.id === classTypeId);
+            if(classType) {
+                return classType;
+            }
+        };
+
+        // $scope.updateConfirmedClassStatus = function(updatedStudyClassSchedules) {
+        //     console.log("### FishsixStudyScheduleClassController.updateConfirmedClassStatus ###");
+        //     console.log("updatedStudyClassSchedules.id => ", updatedStudyClassSchedules.id);
+
+        //     //$scope.studyClassScheduleProfile;
+
+        //     // let student = $scope.students.find(e => e.id === studentId);
+        //     // if(student) {
+        //     //     return student.firstName + ' ' + student.lastName;
+        //     // }
+        // };
+    }]);
+</script>

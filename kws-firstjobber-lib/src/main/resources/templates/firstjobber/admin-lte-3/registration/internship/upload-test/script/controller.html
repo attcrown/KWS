@@ -1,0 +1,129 @@
+<div th:replace="firstjobber/admin-lte-3/registration/internship/upload-test/script/validator"></div>
+<div th:replace="firstjobber/admin-lte-3/registration/internship/upload-test/script/entry-controller"></div>
+
+<script th:inline="javascript">
+    const kws_webEnv = /*[[${kws_webEnv}]]*/ '';
+    const kws_serverURL = /*[[${kws_serverURL}]]*/ '';
+    const kws_data = /*[[${kws_data}]]*/ {};
+
+    console.log("kws_webEnv => " + kws_webEnv);
+    console.log("kws_serverURL => " + kws_serverURL);
+    console.log("kws_data => ", kws_data);
+
+    const app = angular.module("app", ["ngSanitize"]);
+
+    app.controller("InternshipRegistrationUploadTestController", ["$scope", "$http", ($scope, $http) => {
+        $scope.internshipRegister = kws_data.internshipRegister || {};
+        $scope.formalImageURL = kws_data.formalImageURL;
+        $scope.informalImageURL = kws_data.informalImageURL;
+        $scope.testHigh5Name = kws_data.testHigh5Name;
+        $scope.testHigh5Link = kws_data.testHigh5Link;
+        $scope.test16PersonlityName = kws_data.test16PersonlityName;
+        $scope.test16PersonlityLink = kws_data.test16PersonlityLink;
+        $scope.testIQName = kws_data.testIQName;
+        $scope.testIQLink = kws_data.testIQLink;
+        $scope.high5TestCategories = kws_data.high5TestCategories || [];
+        $scope.sixteenPersonalityTypes = kws_data.sixteenPersonalityTypes || [];
+        $scope.sixteenPersonalityCategories = kws_data.sixteenPersonalityCategories || [];
+
+        $scope.isLoading = false;
+        $scope.submitted = false;
+        $scope.mode = "upload"; // ["upload", "result"]
+        $scope.uploadTest = {
+            high5: {
+                categoryId1: '',
+                categoryId2: '',
+                categoryId3: '',
+                categoryId4: '',
+                categoryId5: '',
+                resultFile: null
+            },
+
+            personality: {
+                categoryId: '',
+                resultFile: null
+            },
+
+            iq: {
+                score: undefined,
+                resultFile: null
+            }
+        };
+
+        $scope.init = function() {
+            console.log("### InternshipRegistrationUploadTestController.init ###");
+
+            useValidator($scope, $http);
+            useEntryController($scope, $http);
+
+            setTimeout(() => {
+                $(".high5-file").on('change', ($event) => {
+                    console.log("### attach high5 file ###");
+                    
+                    $scope.uploadTest.high5.resultFile = null;
+
+                    var file = $event.target.files[0];
+                    if(file) {
+                        $scope.uploadTest.high5.resultFile = file;
+                        console.log("fileName => " + file.name);
+                    }
+
+                    $scope.$apply();
+                });
+
+                $(".personality-file").on('change', ($event) => {
+                    console.log("### attach personality file ###");
+                    
+                    $scope.uploadTest.personality.resultFile = null;
+
+                    var file = $event.target.files[0];
+                    if(file) {
+                        $scope.uploadTest.personality.resultFile = file;
+                        console.log("fileName => " + file.name);
+                    }
+
+                    $scope.$apply();
+                });
+
+                $(".iq-file").on('change', ($event) => {
+                    console.log("### attach iq file ###");
+                    
+                    $scope.uploadTest.iq.resultFile = null;
+
+                    var file = $event.target.files[0];
+                    if(file) {
+                        $scope.uploadTest.iq.resultFile = file;
+                        console.log("fileName => " + file.name);
+                    }
+
+                    $scope.$apply();
+                });
+            }, 0);
+        };
+
+        $scope.gotoUploadView = function() {
+            console.log("### InternshipRegistrationUploadTestController.gotoUploadView ###");
+            $scope.mode = "upload";
+        };
+
+        $scope.gotoResultView = function() {
+            console.log("### InternshipRegistrationUploadTestController.gotoResultView ###");
+            $scope.mode = "result";
+        };
+
+        $scope.removeHigh5ResultFile = function() {
+            console.log("### InternshipRegistrationUploadTestController.removePersonalityResultFile ###");
+            $scope.uploadTest.high5.resultFile = null;
+        };
+
+        $scope.removePersonalityResultFile = function() {
+            console.log("### InternshipRegistrationUploadTestController.removePersonalityResultFile ###");
+            $scope.uploadTest.personality.resultFile = null;
+        };
+
+        $scope.removeIQResultFile = function() {
+            console.log("### InternshipRegistrationUploadTestController.removeIQResultFile ###");
+            $scope.uploadTest.iq.resultFile = null;
+        };
+    }]);
+</script>

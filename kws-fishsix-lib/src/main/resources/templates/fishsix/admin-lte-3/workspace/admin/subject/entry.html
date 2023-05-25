@@ -1,0 +1,388 @@
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title text-maroon">เพิ่ม/แก้ไขข้อมูลรายวิชา</h3>
+    </div>
+
+    <div class="card-body p-2">
+
+        <div class="card card-navy">
+            <div class="card-header">
+                <h3 class="card-title">ข้อมูลรายวิชา</h3>
+            </div>
+        
+            <div class="card-body">
+                <div class="row mb-4 d-none">
+                    <div class="col-md-12 text-center">
+                        <img class="img-fluid" style="max-height: 550px;" ng-src="{{ selectedSubjectProfile.thumbnailImageURL }}" />
+                    </div>
+                </div>
+        
+                <form name="subjectForm" class="form row" novalidate>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowSubjectCategoryError()">หมวดวิชา</span>
+                                <span class="text-danger" ng-show="isShowSubjectCategoryError()">กรุณาเลือกหมวดวิชา</span>
+                            </label>
+                            <select name="subjectCategory" class="form-control" ng-class="{'is-invalid': isShowSubjectCategoryError()}" style="width: 100%;" ng-model="selectedSubjectProfile.subjectCategoryId" required>
+                                <option value="" selected disabled>--- กรุณาเลือกหมวดวิชา ---</option>
+                                <option ng-repeat="subjectCategory in subjectCategories | orderBy: 'seqNo'" ng-value="subjectCategory.id">
+                                    {{ subjectCategory.name }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowNameError()">ชื่อวิชา</span>
+                                <span class="text-danger" ng-show="isShowNameError()">ระบุชื่อวิชา</span>
+                            </label>
+                            <input  name="name" 
+                                    type="text" 
+                                    class="form-control" 
+                                    ng-class="{'is-invalid': isShowNameError()}" 
+                                    placeholder="ระบุชื่อวิชา" 
+                                    ng-model="selectedSubjectProfile.name" 
+                                    required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowEducationClassError()">ระดับชั้น</span>
+                                <span class="text-danger" ng-show="isShowEducationClassError()">กรุณาเลือกระดับชั้น</span>
+                            </label>
+                            <select name="educationClass" class="form-control" ng-class="{'is-invalid': isShowEducationClassError()}" style="width: 100%;" ng-model="selectedSubjectProfile.educationClassId" required>
+                                <option value="" selected disabled>--- กรุณาเลือกระดับชั้น ---</option>
+                                <option ng-repeat="educationClass in educationClasses | orderBy: 'seqNo'" ng-value="educationClass.id">{{ educationClass.title }}</option>
+                            </select>
+                        </div>
+                    </div>
+        
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowDescriptionError()">รายละเอียด</span>
+                                <span class="text-danger" ng-show="isShowDescriptionError()">ระบุรายละเอียด</span>
+                            </label>
+                            <textarea name="description" rows="3" class="form-control" placeholder="ระบุรายละเอียด" ng-class="{'is-invalid': isShowDescriptionError()}" ng-model="selectedSubjectProfile.description" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 d-none">
+                        <div class="form-group">
+                            <label>
+                                <span>หมายเหตุ</span>
+                            </label>
+                            <textarea rows="5" class="form-control" placeholder="ระบุหมายเหตุ" ng-model="selectedSubjectProfile.remark"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 d-none">
+                        <div class="form-group">
+                            <label>
+                                <span>อัพโหลดรูป</span>
+                            </label>
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input resume-file" accept="image/*">
+                                    <label ng-show="!userProfile.attachmentInfo.resumeFile" class="custom-file-label">--- อัพโหลดรูป ---</label>
+                                    <label ng-show="userProfile.attachmentInfo.resumeFile" class="custom-file-label">{{ userProfile.attachmentInfo.resumeFile.name }}</label>
+                                </div>
+                                <div class="input-group-append">
+                                    <button ng-show="userProfile.attachmentInfo.resumeFile" class="btn btn-danger" ng-click="removeResumeFile()">
+                                        <i class="fas fa-trash"></i> ลบ
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div th:replace="__${#execInfo.templateName}__/../entry_chapter"></div>
+
+        <!-- chapter -->
+        <div class="card card-navy d-none">
+            <div class="card-header">
+                <h3 class="card-title">ข้อมูลเนื้อหาการสอน</h3>
+            </div>
+        
+            <div class="card-body p-2">
+                <div class="row mb-4">
+                    <div class="col-md-12 text-center">
+                        <img class="img-fluid" style="max-height: 400px;" ng-src="{{ selectedSubject.thumbnailImageURL }}" />
+                    </div>
+                </div>
+
+                <form name="parentForm" class="form row" novalidate>
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowParentNameError()">บทที่</span>
+                                <span class="text-danger" ng-show="isShowParentNameError()">กรุณาระบุบทที่</span>
+                            </label>
+                            <input 
+                                name="name" 
+                                type="number" 
+                                class="form-control" 
+                                ng-class="{'is-invalid': isShowParentNameError()}" 
+                                placeholder="ระบุบทที่" 
+                                ng-model="selectedStudent.parentInfo.name" 
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowParentMobileNoError()">ชื่อบท</span>
+                                <span class="text-danger" ng-show="isShowParentMobileNoError()">กรุณาระบุชื่อบท</span>
+                            </label>
+                            <input 
+                                name="mobileNo" 
+                                type="text" 
+                                class="form-control" 
+                                ng-class="{'is-invalid': isShowParentMobileNoError()}" 
+                                placeholder="ระบุเบอร์มือถือ" 
+                                ng-model="selectedStudent.parentInfo.mobileNo" 
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowParentExpectationError()">รายละเอียดเนื้อหา</span>
+                                <span class="text-danger" ng-show="isShowParentExpectationError()">กรุณาระบุรายละเอียดเนื้อหา</span>
+                            </label>
+                            <textarea 
+                                name="expectation" 
+                                rows="5" 
+                                class="form-control" 
+                                ng-class="{'is-invalid': isShowParentExpectationError()}" 
+                                placeholder="ระบุรายละเอียดเนื้อหา" 
+                                ng-model="selectedStudent.parentInfo.expectation" 
+                                required>
+                            </textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowParentExpectationError()">หมายเหตุ</span>
+                                <span class="text-danger" ng-show="isShowParentExpectationError()">กรุณาระบุหมายเหตุ</span>
+                            </label>
+                            <textarea 
+                                name="expectation" 
+                                rows="5" 
+                                class="form-control" 
+                                ng-class="{'is-invalid': isShowParentExpectationError()}" 
+                                placeholder="ระบุหมายเหตุ" 
+                                ng-model="selectedStudent.parentInfo.expectation" 
+                                required>
+                            </textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>
+                                <span>อัพโหลดรูป</span>
+                            </label>
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input resume-file" accept="image/*">
+                                    <label ng-show="!userProfile.attachmentInfo.resumeFile" class="custom-file-label">--- อัพโหลดรูป ---</label>
+                                    <label ng-show="userProfile.attachmentInfo.resumeFile" class="custom-file-label">{{ userProfile.attachmentInfo.resumeFile.name }}</label>
+                                </div>
+                                <div class="input-group-append">
+                                    <button ng-show="userProfile.attachmentInfo.resumeFile" class="btn btn-danger" ng-click="removeResumeFile()">
+                                        <i class="fas fa-trash"></i> ลบ
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <hr>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title text-maroon">วีดีโอสื่อการสอน</h3>
+                            </div>
+
+                            <div class="card-body p-2">
+                                <div class="callout callout-danger">
+                                    <h6>กฏของนิวตัน PART-1</h6>
+                    
+                                    <p class="text-muted">
+                                        รู้จักและทำความเข้าใจเรื่องกฏของนิวตัน
+                                    </p>
+
+                                    <p>
+                                        <span>ความยาว: </span>
+                                        <span class="text-muted">12.05 นาที</span>
+                                    </p>
+
+                                    <div class="text-right border-top pt-2">
+                                        <button class="btn btn-sm btn-outline-warning">
+                                            <i class="fas fa-edit"></i> แก้ไข
+                                        </button>
+
+                                        <button class="btn btn-sm btn-outline-danger">
+                                            <i class="fas fa-trash"></i> ลบ
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="callout callout-danger">
+                                    <h6>กฏของนิวตัน PART-2</h6>
+                    
+                                    <p class="text-muted">
+                                        รู้จักและทำความเข้าใจเรื่องกฏของนิวตัน
+                                    </p>
+
+                                    <p>
+                                        <span>ความยาว: </span>
+                                        <span class="text-muted">8.15 นาที</span>
+                                    </p>
+
+                                    <div class="text-right border-top pt-2">
+                                        <button class="btn btn-sm btn-outline-warning">
+                                            <i class="fas fa-edit"></i> แก้ไข
+                                        </button>
+
+                                        <button class="btn btn-sm btn-outline-danger">
+                                            <i class="fas fa-trash"></i> ลบ
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="callout callout-danger">
+                                    <h6>สสาร</h6>
+                    
+                                    <p class="text-muted">
+                                        รู้จักและเข้าใจธรรมชาติของสสาร
+                                    </p>
+
+                                    <p>
+                                        <span>ความยาว: </span>
+                                        <span class="text-muted">17.24 นาที</span>
+                                    </p>
+
+                                    <div class="text-right border-top pt-2">
+                                        <button class="btn btn-sm btn-outline-warning">
+                                            <i class="fas fa-edit"></i> แก้ไข
+                                        </button>
+
+                                        <button class="btn btn-sm btn-outline-danger">
+                                            <i class="fas fa-trash"></i> ลบ
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card card-default">
+                            <!-- card-header -->
+                            <div class="card-header">
+                                <h3 class="card-title text-indigo">
+                                    เอกสารสื่อการสอน
+                                </h3>
+                            </div>
+                            <!-- /.card-header -->
+
+                            <!-- card-body -->
+                            <div class="card-body p-2">
+                                <div class="callout callout-info">
+                                    <h6>
+                                        <i class="fas fa-file-pdf"></i> กฏของนิวตัน
+                                    </h6>
+                    
+                                    <p class="text-muted">
+                                        รู้จักและทำความเข้าใจเรื่องกฏของนิวตัน
+                                    </p>
+
+                                    <p>
+                                        <span>จำนวน: </span>
+                                        <span class="text-muted">5 หน้า</span>
+                                    </p>
+
+                                    <div class="text-right border-top pt-2">
+                                        <button class="btn btn-sm btn-outline-warning">
+                                            <i class="fas fa-edit"></i> แก้ไข
+                                        </button>
+
+                                        <button class="btn btn-sm btn-outline-danger">
+                                            <i class="fas fa-trash"></i> ลบ
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="callout callout-info">
+                                    <h6>
+                                        <i class="fas fa-file-pdf"></i> สสาร
+                                    </h6>
+                    
+                                    <p class="text-muted">
+                                        รู้จักและเข้าใจธรรมชาติของสสาร
+                                    </p>
+
+                                    <p>
+                                        <span>จำนวน: </span>
+                                        <span class="text-muted">5 หน้า</span>
+                                    </p>
+
+                                    <div class="text-right border-top pt-2">
+                                        <button class="btn btn-sm btn-outline-warning">
+                                            <i class="fas fa-edit"></i> แก้ไข
+                                        </button>
+
+                                        <button class="btn btn-sm btn-outline-danger">
+                                            <i class="fas fa-trash"></i> ลบ
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- chapter -->
+
+    </div>
+
+    <div class="card-footer">
+        <div class="text-right">
+            <button class="btn btn-outline-danger" ng-click="toListMode()">
+                <i class="fa fa-caret-left"></i> กลับ
+            </button>
+            <button class="btn btn-outline-primary" ng-click="requestSave()">
+                <i class="fa fa-save"></i> บันทึก
+            </button>
+        </div>
+    </div>
+</div>

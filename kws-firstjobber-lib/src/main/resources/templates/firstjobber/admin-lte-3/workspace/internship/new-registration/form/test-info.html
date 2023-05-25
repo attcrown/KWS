@@ -1,0 +1,117 @@
+<h6>ส่งผลการทำแบบทดสอบเมื่อ {{ selectedInternshipRegister.testInfo.createdAt }}</h6>
+
+<hr>
+
+<!-- high5-test -->
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">Strengths Finder เจาะจุดแข็ง 5 ด้าน</h3>
+    </div>
+
+    <div class="card-body p-2">
+        <h4 class="border-bottom">ผลการทำแบบทดสอบ</h4>
+
+        <form class="form-horizontal">
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">จุดแข็งลำดับที่ 1</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" ng-value="selectedInternshipRegister.testInfo.high5CategoryTitle1" disabled>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">จุดแข็งลำดับที่ 2</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" ng-value="selectedInternshipRegister.testInfo.high5CategoryTitle2" disabled>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">จุดแข็งลำดับที่ 3</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" ng-value="selectedInternshipRegister.testInfo.high5CategoryTitle3" disabled>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">จุดแข็งลำดับที่ 4</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" ng-value="selectedInternshipRegister.testInfo.high5CategoryTitle4" disabled>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">จุดแข็งลำดับที่ 5</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" ng-value="selectedInternshipRegister.testInfo.high5CategoryTitle5" disabled>
+                </div>
+            </div>
+
+            <div>
+                <div class="text-center" ng-if="selectedInternshipRegister.testInfo.high5ImageURL">
+                    <img class="img-fluid" ng-src="{{ selectedInternshipRegister.testInfo.high5ImageURL }}" alt="Informal Photo">
+                    <p class="text-muted text-center">รูปผลการทำแบบทดสอบ</p>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- /.high5-test -->
+
+
+<!-- 16personality-test -->
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">แบบทดสอบ MBTI วัดบุคลิกภาพ</h3>
+    </div>
+
+    <div class="card-body p-2">
+        <h4 class="border-bottom">ผลการทำแบบทดสอบ</h4>
+
+        <form class="form-horizontal">
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">บุคคลิกภาพ</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" ng-value="selectedInternshipRegister.testInfo.personalityCategoryName" disabled>
+                </div>
+            </div>
+
+            <div>
+                <div class="text-center" ng-if="selectedInternshipRegister.testInfo.personalityImageURL">
+                    <img class="img-fluid" ng-src="{{ selectedInternshipRegister.testInfo.personalityImageURL }}" alt="Informal Photo">
+                    <p class="text-muted text-center">รูปผลการทำแบบทดสอบ</p>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- /.16personality-test -->
+
+
+<!-- iq-test -->
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">แบบทดสอบ IQ</h3>
+    </div>
+
+    <div class="card-body p-2">
+        <h4 class="border-bottom">ผลการทำแบบทดสอบ</h4>
+
+        <form class="form-horizontal">
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">ระดับ IQ</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" ng-value="selectedInternshipRegister.testInfo.iqScore" disabled>
+                </div>
+            </div>
+
+            <div>
+                <div class="text-center" ng-if="selectedInternshipRegister.testInfo.iqImageURL">
+                    <img class="img-fluid" ng-src="{{ selectedInternshipRegister.testInfo.iqImageURL }}" alt="Informal Photo">
+                    <p class="text-muted text-center">รูปผลการทำแบบทดสอบ</p>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- /.iq-test -->

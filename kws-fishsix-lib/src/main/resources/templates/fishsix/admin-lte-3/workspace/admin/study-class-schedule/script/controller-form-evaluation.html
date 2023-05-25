@@ -1,0 +1,155 @@
+<script th:inline="javascript">
+    function useEvaluationFormController($scope, $http)
+    {
+        console.info("### FishsixStudyScheduleClassController.useEvaluationFormController ###");
+
+        $scope.openEvaluationFormModal = useOpenEvaluationFormModal($scope, $http);
+        $scope.closeEvaluationFormModal = useCloseEvaluationFormModal($scope, $http);
+        $scope.requestEvaluateStudyClassSchedule = useRequestEvaluateStudyClassSchedule($scope, $http);
+
+        $scope.requestSaveEvaluateStudyClass = useRequestSaveEvaluateStudyClass($scope, $http);
+
+        $scope.verifyEvaluateStudyClass = useVerifyEvaluateStudyClass($scope, $http);
+
+        $scope.getEvaluateDetailsTypeText = useGetEvaluateDetailsTypeText($scope, $http);
+        $scope.getEvaluateDetailsTypeScore = useGetEvaluateDetailsTypeScore($scope, $http);
+        //$scope.ngModelEvaluationValue = useNgModelEvaluationValue($scope, $http);
+    }
+
+    function useOpenEvaluationFormModal($scope, $http)
+    {
+        return () => {
+            console.log("### FishsixStudyScheduleClassController.openEvaluationFormModal ###");
+            $('#evaluation-form-modal').modal({backdrop: false}).modal('show');
+        }
+    }
+
+    function useCloseEvaluationFormModal($scope, $http)
+    {
+        return () => {
+            console.log("### FishsixStudyScheduleClassController.closeEvaluationFormModal ###");
+
+            $scope.selectedStudyClassSchedule = null;
+
+            $scope.studyClassEvaluate = null;
+
+            $scope.studyClassEvaluate = { //Keep value from evaluateStudyClassForm & default value in evaluateStudyClassForm
+                entryMode: "add",
+                studyClassEvaluationProfile: {
+                    studyClassEvaluation: {
+                        classScheduleId: "",
+                        evaluateFromType: "Teacher",
+                        evaluateToType: "Student",
+                        comment: "",
+                        evaluateStatus: "Approved"
+                    },
+
+                    studyClassEvaluationDetails: $scope.evaluationFactors.map(e => {
+                        return {
+                            evaluationFactor: e,
+                            evaluationFactorId: e.id,
+                            evaluationValue: e.type === "Text" ? "" : e.minScore
+                        }
+                    })
+                }
+            };
+
+            $('#evaluation-form-modal').modal('hide');
+        }
+    }
+
+    function useRequestEvaluateStudyClassSchedule($scope, $http)
+    {
+        return (studyClassSchedule) => {
+            console.log("### FishsixStudyScheduleClassController.requestEvaluateStudyClassSchedule ###");
+            console.log("studyClassSchedule => ", studyClassSchedule);
+
+            $scope.selectedStudyClassSchedule = studyClassSchedule;
+
+            // const entryMode = $scope.loadEvaluateStudyClassSchedule(studyClassSchedule);
+            // console.log("entryMode => ", entryMode);
+            $scope.resetForm();
+
+            $scope.loadEvaluateStudyClassSchedule(studyClassSchedule);
+            
+            // $scope.studyClassEvaluate = {
+            //     studyClassCheckinOption: $scope.studentCheckinOptions[0]
+            // }; //default value in evaluateStudyClassForm
+
+            $scope.openEvaluationFormModal();
+        }
+    }
+
+    function useRequestSaveEvaluateStudyClass($scope, $http)
+    {
+        return () => {
+            console.log("### FishsixStudyScheduleClassController.requestSaveEvaluateStudyClass ###");
+            console.log("studyClassEvaluate => ", $scope.studyClassEvaluate);
+
+            $scope.evaluateStudyClassForm.$submitted = true;
+            const { valid, message } = $scope.verifyEvaluateStudyClass();
+
+            if(valid) {
+
+                const options = {
+                    title: "ยืนยันการบันทึกพัฒนาการ ?",
+                    text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                    icon: "warning",
+                    buttons: ["ยกเลิก", "ตกลง"],
+                    dangerMode: true
+                };
+
+                const handler = (confirm) => {
+                    if (confirm) {
+                        console.log("### FishsixStudyScheduleClassController.requestSaveEvaluateStudyClass.confirm ###");
+
+                       
+
+                        if($scope.studyClassEvaluate.entryMode == "add"){
+                            $scope.createEvaluateStudyClassSchedule();
+                        }else if($scope.studyClassEvaluate.entryMode == "edit"){
+                            $scope.updateEvaluateStudyClassSchedule();
+                        }
+                    }else{
+                        $scope.studyClassEvaluate = null;
+                    }
+                };
+
+                swal(options).then(handler);
+            } else {
+                if(message) {
+                    swal("ข้อมูลไม่ครบถ้วน", message, "error");
+                } else {
+                    swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+                }
+                // swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+            }
+        };
+    }
+
+    function useVerifyEvaluateStudyClass($scope, $http)
+    {
+        return () => {
+
+            return {
+                valid: $scope.evaluateStudyClassForm.$valid
+            };
+
+        };
+    }
+
+    function useGetEvaluateDetailsTypeText($scope, $http)
+    {
+        return () => {
+            return $scope.studyClassEvaluate.studyClassEvaluationProfile.studyClassEvaluationDetails.filter(e => e.evaluationFactor.type === "Text");
+        };
+    }
+
+    function useGetEvaluateDetailsTypeScore($scope, $http)
+    {
+        return () => {
+            return $scope.studyClassEvaluate.studyClassEvaluationProfile.studyClassEvaluationDetails.filter(e => e.evaluationFactor.type === "Score");
+        };
+    }
+
+</script>

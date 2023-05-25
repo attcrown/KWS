@@ -1,0 +1,172 @@
+<script th:inline="javascript">
+    function useEntryController($scope, $http)
+    {
+        console.info("### FishsixStudyClassController.useEntryController ###");
+
+        $scope.requestSave = useRequestSave($scope, $http);
+
+        $scope.verify = useVerify($scope, $http);
+        $scope.isShowClassNameError = useIsShowClassNameError($scope, $http);
+        $scope.isShowStartDateError = useIsShowStartDateError($scope, $http);
+        $scope.isShowStartTimeError = useIsShowStartTimeError($scope, $http);
+        $scope.isShowEndTimeError = useIsShowEndTimeError($scope, $http);
+        $scope.isShowHourError = useIsShowHourError($scope, $http);
+        $scope.isShowMaxStudentError = useIsShowMaxStudentError($scope, $http);
+        $scope.isShowClassChannelIdError = useIsShowClassChannelIdError($scope, $http);
+        $scope.isShowClassTypeIdError = useIsShowClassTypeIdError($scope, $http);
+        $scope.isShowClassLocationIdError = useIsShowClassLocationIdError($scope, $http);
+        $scope.isShowDescriptionError = useIsShowDescriptionError($scope, $http);
+
+        $scope.changeValueClassLocation = useChangeValueClassLocation($scope, $http);
+    }
+
+    function useRequestSave($scope, $http)
+    {
+        return () => {
+            console.log("### FishsixStudyClassController.requestSave ###");
+
+            $scope.studyClassScheduleTemplateForm.$submitted = true;
+            const { valid, message } = $scope.verify();
+
+            if(valid) {
+                const options = {
+                    title: $scope.entryMode === "add" ? "ยืนยันการบันทึกข้อมูลคลาสเรียน ?" : "ยืนยันการแก้ไขข้อมูลคลาสเรียน",
+                    text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                    icon: "warning",
+                    buttons: ["ยกเลิก", "ตกลง"],
+                    dangerMode: true
+                };
+
+                const handler = (confirm) => {
+                    if (confirm) {
+                        //$scope.selectedCourseProfile.course.maxSubject = $scope.selectedCourseProfile.subjectIds.length;
+                        if($scope.entryMode === 'add') {
+                            console.log("### FishsixStudyClassController.requestSave.add ###");
+
+                            $scope.create($scope.selectedStudyClassScheduleTemplate);
+                        } else if($scope.entryMode === 'edit') {
+                            console.log("### FishsixStudyClassController.requestSave.edit ###");
+
+                            $scope.update($scope.selectedStudyClassScheduleTemplate);
+                        }
+                    }
+                };
+
+                swal(options).then(handler);
+            } else {
+                if(message) {
+                    swal("ข้อมูลไม่ครบถ้วน", message, "error");
+                } else {
+                    swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+                }
+                // swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+            }
+        };
+    }
+
+    function useChangeValueClassLocation($scope, $http) 
+    {
+        return () => {
+            if($scope.selectedStudyClassScheduleTemplate.classChannelId == 'OnLine'){
+                //console.log("OnLine");
+                $scope.selectedStudyClassScheduleTemplate.classLocationId = "";
+            }
+        };
+    }
+
+    function useVerify($scope, $http)
+    {
+        return () => {
+
+            // return {
+            //     valid: $scope.studyClassScheduleTemplateForm.$valid
+            // };
+
+            const result = {
+                valid: $scope.studyClassScheduleTemplateForm.$valid
+            };
+
+            if(!result.valid && $scope.selectedStudyClassScheduleTemplate.classChannelId == 'OnLine' && !$scope.selectedStudyClassScheduleTemplate.classLocationId) {
+                result.valid = true;
+            }
+
+            return result;
+
+        };
+    }
+
+    // ****************************** validate ****************************** //
+    function useIsShowClassNameError($scope, $http) 
+    {
+        return () => {
+            return $scope.studyClassScheduleTemplateForm.$submitted && $scope.studyClassScheduleTemplateForm.className.$invalid;
+        };
+    }
+
+    function useIsShowStartDateError($scope, $http) 
+    {
+        return () => {
+            return $scope.studyClassScheduleTemplateForm.$submitted && $scope.studyClassScheduleTemplateForm.startDate.$invalid;
+        };
+    }
+
+    function useIsShowStartTimeError($scope, $http) 
+    {
+        return () => {
+            return $scope.studyClassScheduleTemplateForm.$submitted && $scope.studyClassScheduleTemplateForm.startTime.$invalid;
+        };
+    }
+
+    function useIsShowEndTimeError($scope, $http) 
+    {
+        return () => {
+            return $scope.studyClassScheduleTemplateForm.$submitted && $scope.studyClassScheduleTemplateForm.endTime.$invalid;
+        };
+    }
+
+    function useIsShowHourError($scope, $http) 
+    {
+        return () => {
+            return ($scope.studyClassScheduleTemplateForm.$submitted || $scope.studyClassScheduleTemplateForm.hour.$dirty) && $scope.studyClassScheduleTemplateForm.hour.$invalid;
+        };
+    }
+
+    function useIsShowMaxStudentError($scope, $http) 
+    {
+        return () => {
+            return ($scope.studyClassScheduleTemplateForm.$submitted || $scope.studyClassScheduleTemplateForm.maxStudent.$dirty) && $scope.studyClassScheduleTemplateForm.maxStudent.$invalid;
+        };
+    }
+
+    function useIsShowClassChannelIdError($scope, $http) 
+    {
+        return () => {
+            return $scope.studyClassScheduleTemplateForm.$submitted && $scope.studyClassScheduleTemplateForm.classChannelId.$invalid;
+        };
+    }
+
+    function useIsShowClassTypeIdError($scope, $http) 
+    {
+        return () => {
+            return $scope.studyClassScheduleTemplateForm.$submitted && $scope.studyClassScheduleTemplateForm.classTypeId.$invalid;
+        };
+    }
+
+    function useIsShowClassLocationIdError($scope, $http) 
+    {
+        return () => {
+            //return $scope.studyClassScheduleTemplateForm.$submitted && $scope.studyClassScheduleTemplateForm.classLocationId.$invalid;
+            return $scope.studyClassScheduleTemplateForm.$submitted && $scope.studyClassScheduleTemplateForm.classLocationId.$invalid && $scope.selectedStudyClassScheduleTemplate.classChannelId == 'OnSite';
+            //return $scope.studyClassScheduleTemplateForm.$submitted && $scope.studyClassScheduleTemplateForm.classLocationId.$invalid || $scope.studyClassScheduleTemplateForm.classChannelId == "OnLine";  
+        };
+    }
+
+    function useIsShowDescriptionError($scope, $http) 
+    {
+        return () => {
+            return $scope.studyClassScheduleTemplateForm.$submitted && $scope.studyClassScheduleTemplateForm.description.$invalid;
+        };
+    }
+
+    // ****************************** validate ****************************** //
+</script>

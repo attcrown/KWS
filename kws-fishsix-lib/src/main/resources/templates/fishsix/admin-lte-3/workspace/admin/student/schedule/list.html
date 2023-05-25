@@ -1,0 +1,72 @@
+<div class="card">
+    <!-- card-header -->
+    <div class="card-header">
+        <h3 class="card-title text-maroon">ผลการค้นหา</h3>
+    </div>
+    <!-- /.card-header -->
+
+    <!-- card-body -->
+    <div class="card-body table-responsive p-0">
+        <table class="table table-hover text-nowrap">
+            <thead>
+                <tr>
+                    <th>วันที่</th>
+                    <th>เวลา</th>
+                    <th>ชื่อ-สกุล</th>
+                    <th>ชื่อเล่น</th>
+                    <th>คลาส</th>
+                    <th>ระดับชั้น</th>
+                    <th>วิชา</th>
+                    <th>เรื่องถัดไป</th>
+                    <th>ครู</th>
+                    <th class="text-center" style="width: 64px;">Action</th>
+                </tr>
+            </thead>
+
+            <tbody ng-if="schedules.length > 0">
+                <tr ng-repeat="schedule in schedules">
+                    <td>{{ schedule.studyDate }}</td>
+                    <td>{{ schedule.startTime + ' ' + schedule.endTime }}</td>
+                    <td>{{ schedule.student.firstName + ' ' + schedule.student.lastName }}</td>
+                    <td>{{ schedule.student.nickName }}</td>
+                    <td>{{ schedule.course.classType.name }}</td>
+                    <td>{{ schedule.subject.classLevelTitle }}</td>
+                    <td>{{ schedule.subject.name }}</td>
+                    <td>{{ schedule.nextTopic }}</td>
+                    <td>{{ schedule.teacher.firstName + ' ' + schedule.teacher.lastName }}</td>
+                    <td class="text-center">
+                        <a href="javascript:void(0)" ng-click="requestEditSchedule(schedule)">
+                            <i class="fa fa-edit text-warning kws-table-action-icon"></i>
+                        </a>
+                        <a href="javascript:void(0)" ng-click="requestDeleteSchedule(schedule)">
+                            <i class="fa fa-trash text-danger kws-table-action-icon"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+
+            <tfoot ng-if="schedules.length == 0">
+                <tr>
+                    <td class="text-center text-orange" colspan="10">--- ไม่มีข้อมูล ---</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <!-- /.card-body -->
+
+    <!-- card-footer -->
+    <div class="card-footer clearfix" ng-show="schedules.length > 0">
+        <ul class="pagination pagination-sm m-0 float-right">
+            <li class="page-item">
+                <a class="page-link" href="javascript:void(0)" ng-click="gotoPageNo(1)">&laquo;</a>
+            </li>
+            <li class="page-item" ng-repeat="pageNo in getPageNos() track by $index">
+                <a class="page-link" ng-class="{'text-bold': pageNo == paging.pageNo}" href="javascript:void(0)" ng-click="gotoPageNo(pageNo)">{{ pageNo }}</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="javascript:void(0)" ng-click="gotoPageNo(paging.totalPage)">&raquo;</a>
+            </li>
+        </ul>
+    </div>
+    <!-- /.card-footer -->
+</div>

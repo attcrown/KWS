@@ -1,0 +1,453 @@
+<div class="card card-outline card-primary">
+    <div class="card-header text-center">
+        <div class="row mb-4">
+            <div class="col-12">
+                <img style="width: 100%;" 
+                src="data:image/jpeg;base64,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" alt="">
+            </div>
+        </div>
+
+        <h2>ลงทะเบียนโครงการ <span class="text-orange">Internship.Co</span></h2>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+
+            <!-- column-left -->
+            <div class="col-md-4">
+                <div class="card card-primary card-outline">
+                    <div class="card-body box-profile p-2">
+                        <h6 class="text-mute text-center">อัพโหลดรูปถ่ายอย่างน้อย 1 รูป</h6>
+
+                        <hr>
+
+                        <div class="text-center">
+                            <img ng-show="!userProfile.personalInfo.formalPhotoBase64"  
+                                class="profile-user-img img-fluid img-circle border rounded-circle" 
+                                ng-class="{'border-danger': validator.personalInfo.photo.isInvalid()}" 
+                                th:src="@{/assets/firstjobber/img/registration/internship/formal.jpg}" 
+                                alt="Formal Photo">
+
+                            <img ng-show="userProfile.personalInfo.formalPhotoBase64" 
+                                class="profile-user-img img-fluid img-circle" 
+                                ng:src="{{ userProfile.personalInfo.formalPhotoBase64 }}" 
+                                alt="Formal Photo">
+
+                            <p class="text-muted text-center">
+                                <span class="text-danger">*</span>
+                                <span ng-show="!validator.personalInfo.photo.isInvalid()">รูปถ่ายหน้าตรง</span>
+                                <span ng-show="validator.personalInfo.photo.isInvalid()" class="text-danger">กรุณาอัพโหลดรูปถ่ายหน้าตรง</span>
+
+                                <span>
+                                    <label for="formal-photo-file" class="custom-file-upload" title="อัพโหลด">
+                                        <i class="fas fa-upload text-primary" style="font-size: 1.5em; cursor: pointer;"></i>
+                                    </label>
+                                    <input id="formal-photo-file" type="file" style="display: none;" accept="image/*" />
+                                </span>
+
+                                <span ng-show="userProfile.personalInfo.formalPhotoBase64">
+                                    <label class="custom-file-upload" title="ลบ">
+                                        <a href="javascript:void(0)" ng-click="removeFormalPhoto()">
+                                            <i class="fas fa-trash text-danger" style="font-size: 1.5em;"></i>
+                                        </a>
+                                    </label>
+                                </span>
+                            </p>
+                        </div>
+
+                        <hr>
+
+                        <div class="text-center">
+                            <img ng-show="!userProfile.personalInfo.informalPhotoBase64"  
+                                class="profile-user-img img-fluid img-circle border rounded-circle" 
+                                ng-class="{'border-danger': validator.personalInfo.photo.isInvalid()}" 
+                                th:src="@{/assets/firstjobber/img/registration/internship/informal.jpg}" 
+                                alt="Informal Photo">
+
+                            <img ng-show="userProfile.personalInfo.informalPhotoBase64" 
+                                class="profile-user-img img-fluid img-circle" 
+                                ng:src="{{ userProfile.personalInfo.informalPhotoBase64 }}" 
+                                alt="Informal Photo">
+
+                            <p class="text-muted text-center">
+                                <span class="text-danger">*</span>
+                                <span ng-show="!validator.personalInfo.photo.isInvalid()">รูปถ่ายฟรีสไตล์</span>
+                                <span ng-show="validator.personalInfo.photo.isInvalid()" class="text-danger">กรุณาอัพโหลดรูปถ่ายฟรีสไตล์</span>
+
+                                <span>
+                                    <label for="informal-photo-file" class="custom-file-upload" title="อัพโหลด">
+                                        <i class="fas fa-upload text-primary" style="font-size: 1.5em; cursor: pointer;"></i>
+                                    </label>
+                                    <input id="informal-photo-file" type="file" style="display: none;" accept="image/*" />
+                                </span>
+
+                                <span ng-show="userProfile.personalInfo.informalPhotoBase64">
+                                    <label class="custom-file-upload" title="ลบ">
+                                        <a href="javascript:void(0)" ng-click="removeInformalPhoto()">
+                                            <i class="fas fa-trash text-danger" style="font-size: 1.5em;"></i>
+                                        </a>
+                                    </label>
+                                </span>
+                            </p>
+                        </div>
+
+                        <hr>
+                        
+                        <!-- personal-info -->
+                        <ul class="list-group list-group-unbordered mb-3">
+                            <div class="my-1 border rounded p-1" ng-class="{'border-danger': validator.personalInfo.firstName.isInvalid()}" >
+                                <label>
+                                    <span class="text-danger">*</span>
+                                    <span ng-show="!validator.personalInfo.firstName.isInvalid()">ชื่อ</span>
+                                    <span ng-show="validator.personalInfo.firstName.isInvalid()" class="text-danger">กรุณาระบุชื่อ</span>
+                                </label>
+                                <div>
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        placeholder="ระบุชื่อ" 
+                                        ng-model="userProfile.personalInfo.firstName">
+                                </div>
+                            </div>
+
+                            <div class="my-1 border rounded p-1" ng-class="{'border-danger': validator.personalInfo.lastName.isInvalid()}">
+                                <label>
+                                    <span class="text-danger">*</span>
+                                    <span ng-show="!validator.personalInfo.lastName.isInvalid()">นามสกุล</span>
+                                    <span ng-show="validator.personalInfo.lastName.isInvalid()" class="text-danger">กรุณาระบุนามสกุล</span>
+                                </label>
+                                <div>
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        placeholder="ระบุนามสกุล" 
+                                        ng-model="userProfile.personalInfo.lastName">
+                                </div>
+                            </div>
+
+                            <div class="my-1 border rounded p-1" ng-class="{'border-danger': validator.personalInfo.nickName.isInvalid()}">
+                                <label>
+                                    <span class="text-danger">*</span>
+                                    <span ng-show="!validator.personalInfo.nickName.isInvalid()">ชื่อเล่น</span>
+                                    <span ng-show="validator.personalInfo.nickName.isInvalid()" class="text-danger">กรุณาระบุชื่อเล่น</span>
+                                </label>
+                                <div>
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        placeholder="ระบุชื่อเล่น" 
+                                        ng-model="userProfile.personalInfo.nickName">
+                                </div>
+                            </div>
+
+                            <div class="my-1 border rounded p-1" ng-class="{'border-danger': validator.personalInfo.gender.isInvalid()}">
+                                <label>
+                                    <span class="text-danger">*</span>
+                                    <span ng-show="!validator.personalInfo.gender.isInvalid()">เพศ</span>
+                                    <span ng-show="validator.personalInfo.gender.isInvalid()" class="text-danger">กรุณาเลือกเพศ</span>
+                                </label>
+                                <div>
+                                    <select class="form-control" ng-model="userProfile.personalInfo.gender">
+                                        <option value="" selected disabled>--- เลือกเพศ ---</option>
+                                        <option ng-repeat="gender in genders | orderBy: 'seqNo'" ng-value="gender.id">
+                                            {{ gender.name }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="my-1 border rounded p-1" ng-class="{'border-danger': validator.personalInfo.birthDate.isInvalid()}">
+                                <label>
+                                    <span class="text-danger">*</span>
+                                    <span ng-show="!validator.personalInfo.birthDate.isInvalid()">วัน-เดือน-ปี เกิด (ค.ศ.)</span>
+                                    <span ng-show="validator.personalInfo.birthDate.isInvalid()" class="text-danger">กรุณาระบุวัน-เดือน-ปี เกิด (ค.ศ.)</span>
+                                </label>
+                                <div>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="far fa-calendar-alt"></i>
+                                            </span>
+                                        </div>
+                                        <input 
+                                            type="text" 
+                                            class="form-control kws-datepicker" 
+                                            placeholder="ระบุวัน-เดือน-ปี เกิด" 
+                                            data-mask data-inputmask-alias="datetime" 
+                                            data-inputmask-inputformat="yyyy-mm-dd" 
+                                            ng-model="userProfile.personalInfo.birthDate" />
+                                    </div>
+                                </div>
+                            </div>
+                        </ul>
+                        <!-- /.personal-info -->
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+        
+                <!-- contact-info -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">ข้อมูลการติดต่อ</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body p-2">
+                        <div class="my-2 p-1 border rounded" ng-class="{'border-danger': validator.contactInfo.mobileNo.isInvalid()}">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!validator.contactInfo.mobileNo.isInvalid()">เบอร์มือถือ</span>
+                                <span ng-show="validator.contactInfo.mobileNo.isInvalid()" class="text-danger">กรุณาระบุเบอร์มือถือ</span>
+                            </label>
+                            <div>
+                                <div class="input-group">
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        placeholder="ระบุเบอร์มือถือ" 
+                                        ng-model="userProfile.contactInfo.mobileNo">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-mobile-alt mr-1"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="my-2 p-1 border rounded" ng-class="{'border-danger': validator.contactInfo.email.isInvalid()}">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!validator.contactInfo.email.isInvalid()">อีเมล์</span>
+                                <span ng-show="validator.contactInfo.email.isInvalid()" class="text-danger">กรุณาระบุอีเมล์</span>
+                            </label>
+                            <div>
+                                <div class="input-group">
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        placeholder="ระบุอีเมล์" 
+                                        ng-model="userProfile.contactInfo.email">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-envelope-square mr-1"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="my-2 p-1 border rounded" ng-class="{'border-danger': validator.contactInfo.lineId.isInvalid()}">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!validator.contactInfo.lineId.isInvalid()">ไลน์ไอดี</span>
+                                <span ng-show="validator.contactInfo.lineId.isInvalid()" class="text-danger">กรุณาระบุไลน์ไอดี</span>
+                            </label>
+                            <div>
+                                <div class="input-group">
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        placeholder="ระบุไลน์ไอดี" 
+                                        ng-model="userProfile.contactInfo.lineId">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-at mr-1"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="my-2 p-1 border rounded" ng-class="{'border-danger': validator.contactInfo.addressDetail.isInvalid()}">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!validator.contactInfo.addressDetail.isInvalid()">ที่อยู่ปัจจุบัน</span>
+                                <span ng-show="validator.contactInfo.addressDetail.isInvalid()" class="text-danger">กรุณาระบุที่อยู่ปัจจุบัน</span>
+                            </label>
+                            <div>
+                                <textarea 
+                                    class="form-control" 
+                                    rows="3" 
+                                    placeholder="ระบุที่อยู่ปัจจุบัน" 
+                                    ng-model="userProfile.contactInfo.addressDetail">
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.contact-info -->
+                
+                <!-- urgent-person-contact-info -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">บุคคลที่สามารถติดต่อได้ในกรณีฉุกเฉิน</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body p-2">
+                        <div class="my-2 p-1 border rounded" ng-class="{'border-danger': validator.personContactInfo.name.isInvalid()}">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!validator.personContactInfo.name.isInvalid()">ชื่อ-นามสกุล</span>
+                                <span ng-show="validator.personContactInfo.name.isInvalid()" class="text-danger">กรุณาระบุชื่อ-นามสกุล</span>
+                            </label>
+                            <div>
+                                <div class="input-group">
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        placeholder="ระบุชื่อ-นามสกุล" 
+                                        ng-model="userProfile.personContactInfo.name">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-user mr-1"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="my-2 p-1 border rounded" ng-class="{'border-danger': validator.personContactInfo.relationship.isInvalid()}">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!validator.personContactInfo.relationship.isInvalid()">ความสัมพันธ์</span>
+                                <span ng-show="validator.personContactInfo.relationship.isInvalid()" class="text-danger">กรุณาเลือกความสัมพันธ์</span>
+                            </label>
+                            <div>
+                                <select class="form-control" ng-model="userProfile.personContactInfo.relationshipId">
+                                    <option value="" selected disabled>--- เลือกความสัมพันธ์ ---</option>
+                                    <option ng-repeat="relationship in relationships | orderBy: 'seqNo'" ng-value="relationship.id">{{ relationship.name }}</option>
+                                    <option value="other">--- อื่นๆ ---</option>
+                                </select>
+
+                                <div class="input-group mt-2" ng-show="userProfile.personContactInfo.relationshipId === 'other'">
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        placeholder="ระบุความสัมพันธ์" 
+                                        ng-model="userProfile.personContactInfo.relationshipOther">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-link mr-1"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="my-2 p-1 border rounded" ng-class="{'border-danger': validator.personContactInfo.mobileNo.isInvalid()}">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!validator.personContactInfo.mobileNo.isInvalid()">เบอร์มือถือ</span>
+                                <span ng-show="validator.personContactInfo.mobileNo.isInvalid()" class="text-danger">กรุณาระบุเบอร์มือถือ</span>
+                            </label>
+                            <div>
+                                <div class="input-group">
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        placeholder="ระบุเบอร์มือถือ" 
+                                        ng-model="userProfile.personContactInfo.mobileNo">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-mobile-alt mr-1"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.urgent-person-contact-info -->
+            </div>
+            <!-- /.column-left -->
+        
+            <!-- column-right -->
+            <div class="col-md-8">
+                <div class="card">
+                    <!-- card-header -->
+                    <div class="card-header p-2">
+                        <ul class="nav nav-pills">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#tab-education" data-toggle="tab">ข้อมูลการศึกษา</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#tab-internInfo" data-toggle="tab">ข้อมูลการฝึกงาน</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#tab-attachment" data-toggle="tab">เอกสารแนบ</a>
+                            </li>
+                        </ul>
+
+                        <div ng-if="false" class="card-tools">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fas fa-th-large"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                    <a href="javascript:void(0)" ng-click="setFormStyle('row')" class="dropdown-item" ng-class="{active: formStyle === 'row'}">
+                                        <i class="fas fa-arrows-alt-v"></i> Vertical
+                                    </a>
+                                    <a href="javascript:void(0)" ng-click="setFormStyle('column')" class="dropdown-item" ng-class="{active: formStyle === 'column'}">
+                                        <i class="fas fa-arrows-alt-h"></i> Horizontal
+                                    </a>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-tool d-none" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+        
+                    <!-- card-body -->
+                    <div class="card-body p-2">
+                        <div class="tab-content">
+                            <!-- tab-education -->
+                            <div class="tab-pane active" id="tab-education" href="#tab-education">
+                                <div th:replace="firstjobber/admin-lte-3/registration/internship/form/education-info"></div>
+                            </div>
+                            <!-- /.tab-education -->
+
+                            <!-- tab-internInfo -->
+                            <div class="tab-pane" id="tab-internInfo" href="#tab-internInfo">
+                                <div th:replace="firstjobber/admin-lte-3/registration/internship/form/intern-info"></div>
+                            </div>
+                            <!-- /.tab-internInfo -->
+        
+                            <!-- tab-attachment -->
+                            <div class="tab-pane" id="tab-attachment" href="#tab-attachment">
+                                <div th:replace="firstjobber/admin-lte-3/registration/internship/form/attachment-info"></div>
+                            </div>
+                            <!-- /.tab-attachment -->
+                        </div>
+                        <!-- /.tab-content -->
+                    </div>
+                    <!-- /.card-body -->
+
+                    <div class="card-footer">
+                        <div class="row text-right">
+                            <div ng-if="false" class="col-6">
+                                <button class="btn btn-outline-danger btn-block" ng-click="gotoWelcomeView()">
+                                    <i class="fa fa-arrow-circle-left"></i> กลับ
+                                </button>
+                            </div>
+
+                            <div class="offset-6"></div>
+                            
+                            <div class="col-6">
+                                <button class="btn btn-outline-primary btn-block" ng-click="requestSave()">
+                                    <i class="fa fa-upload"></i> ลงทะเบียน
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.column-right -->
+        </div>
+    </div>
+</div>

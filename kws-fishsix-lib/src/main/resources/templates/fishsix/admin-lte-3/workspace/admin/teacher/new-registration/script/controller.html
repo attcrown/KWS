@@ -1,0 +1,243 @@
+<script src="https://adminlte.io/themes/v3/plugins/inputmask/jquery.inputmask.min.js"></script>
+
+<div th:replace="fishsix/admin-lte-3/workspace/admin/teacher/new-registration/script/api"></div>
+<div th:replace="fishsix/admin-lte-3/workspace/admin/teacher/new-registration/script/list-controller"></div>
+<div th:replace="fishsix/admin-lte-3/workspace/admin/teacher/new-registration/script/entry-controller"></div>
+
+<script th:inline="javascript">
+    app.controller("FishsixTeacherNewRegistrationController", ["$scope", "$http", ($scope, $http) => {
+        $scope.teacherRegisters = /*[[${teacherRegisters}]]*/ [];
+        $scope.genders = /*[[${genders}]]*/ [];
+        $scope.nameTitles = /*[[${nameTitles}]]*/ [];
+        $scope.educationStatuses = /*[[${educationStatuses}]]*/ [];
+        $scope.educationLevels = /*[[${educationLevels}]]*/ [];
+        $scope.studyClassLocations = /*[[${studyClassLocations}]]*/ [];
+        $scope.wageRateTypes = /*[[${wageRateTypes}]]*/ [];
+        $scope.hireTypes = /*[[${hireTypes}]]*/ [];
+        $scope.worktimeTypes = /*[[${worktimeTypes}]]*/ [];
+        $scope.educationClasses = /*[[${educationClasses}]]*/ [];
+        $scope.subjectCategories = /*[[${subjectCategories}]]*/ [];
+        $scope.subjects = /*[[${subjects}]]*/ [];
+
+        $scope.isLoading = false;
+        $scope.selectedTeacherRegister;
+        $scope.mode = "list"; // ["list", "entry"]
+
+        $scope.init = function() {
+            console.log("### FishsixTeacherNewRegistrationController.init ###");
+
+            if($scope.teacherRegisters && $scope.teacherRegisters.length > 0) {
+                for(let i=0; i<$scope.teacherRegisters.length; i++) {
+                    if($scope.teacherRegisters[i].subjectIds) {
+                        $scope.teacherRegisters[i].subjectIds = $scope.teacherRegisters[i].subjectIds.split(",");
+                    }
+                }
+            }
+
+            console.log("teacherRegisters => ", $scope.teacherRegisters);
+            console.log("genders => ", $scope.genders);
+            console.log("nameTitles => ", $scope.nameTitles);
+            console.log("educationStatuses => ", $scope.educationStatuses);
+            console.log("educationLevels => ", $scope.educationLevels);
+            console.log("studyClassLocations => ", $scope.studyClassLocations);
+            console.log("wageRateTypes => ", $scope.wageRateTypes);
+            console.log("hireTypes => ", $scope.hireTypes);
+            console.log("worktimeTypes => ", $scope.worktimeTypes);
+            console.log("educationClasses => ", $scope.educationClasses);
+            console.log("subjectCategories => ", $scope.subjectCategories);
+            console.log("subjects => ", $scope.subjects);
+
+            useApi($scope, $http);
+            useListController($scope, $http);
+            useEntryController($scope, $http);
+
+            $('.select2').select2({ theme: 'bootstrap4' });
+            $('[data-mask]').inputmask();
+            $(".idcard-file").on('change', $scope.idcardNoUploadHandler);
+        };
+
+        $scope.swapMode = function() {
+            if($scope.mode === 'list') {
+                $scope.toEntryMode();
+            } else if($scope.mode === 'entry') {
+                $scope.toListMode();
+            }
+        };
+
+        $scope.toListMode = function() {
+            $scope.mode = 'list';
+        };
+
+        $scope.toEntryMode = function() {
+            $scope.mode = 'entry';
+        };
+
+        $scope.getTeacherWageType = function(teacherRegister) {
+            if(teacherRegister) {
+                const hireType = $scope.hireTypes.find(e => e.id === teacherRegister.hireTypeId);
+                if(hireType) {
+                    return hireType.wageType;
+                }
+            }
+        };
+
+        $scope.getClassLevelTitle = function(subject) {
+            let educationClass = $scope.educationClasses.find(e => e.id === subject.educationClassId);
+            if(educationClass) {
+                return educationClass.title;
+            }
+        };
+
+        $scope.getSubjectsByCategoryId = function(subjectCategoryId) {
+            let subjects = $scope.subjects.filter(e => e.subjectCategoryId === subjectCategoryId);
+            if(subjects && subjects.length > 0) {
+                subjects = subjects.sort((s1, s2) => s1.seqNo - s2.seqNo);
+                return subjects;
+            }
+            return [];
+        };
+
+        $scope.getSelectSubjectClass = function(subject) {
+            if($scope.selectedTeacherRegister) {
+                if($scope.selectedTeacherRegister.subjectIds && $scope.selectedTeacherRegister.subjectIds.length > 0) {
+                    const _subjectId = $scope.selectedTeacherRegister.subjectIds.find(subjectId => subjectId === subject.id);
+                    if(_subjectId) {
+                        return "btn-primary";
+                    } 
+                }
+                return "btn-outline-primary";
+            }
+        };
+
+        $scope.toggleSelectSubject = function(subject) {
+            if($scope.selectedTeacherRegister && $scope.selectedTeacherRegister.subjectIds) {
+                const _subjectId = $scope.selectedTeacherRegister.subjectIds.find(subjectId => subjectId === subject.id);
+                if(_subjectId) {
+                    $scope.selectedTeacherRegister.subjectIds = $scope.selectedTeacherRegister.subjectIds.filter(subjectId => subjectId !== subject.id);
+                } else {
+                    $scope.selectedTeacherRegister.subjectIds.push(subject.id);
+                }
+            }
+        };
+
+        $scope.idcardNoUploadHandler = function($event) {
+            console.log("### attach idcard file ###");
+                
+            $scope.attachment.idCardFile = null;
+            $scope.selectedTeacherRegister.idcardFileBase64 = '';
+
+            var file = $event.target.files[0];
+            if(file) {
+                $scope.attachment.idCardFile = file;
+                console.log("fileName => " + file.name);
+            }
+
+            const idCardImage = document.getElementById("idCardImage");
+
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                idCardImage.src = event.target.result;
+                setTimeout(() => {
+                    $scope.selectedTeacherRegister.idcardFileBase64 = event.target.result;
+                    $scope.$apply();
+                }, 0);
+            };
+            reader.readAsDataURL(file);
+
+            $scope.$apply();
+        };
+
+        $scope.removeIdCardFile = function() {
+            $scope.attachment.idCardFile = null;
+            $scope.selectedTeacherRegister.idcardFileBase64 = '';
+        };
+
+        $scope.resetForm = function() {
+            setTimeout(() => {
+                // ****************************** userInfoForm ****************************** //
+                $scope.userInfoForm.$submitted = false;
+
+                $scope.userInfoForm.email.$setUntouched();
+                $scope.userInfoForm.email.$setPristine();
+
+                $scope.userInfoForm.password.$setUntouched();
+                $scope.userInfoForm.password.$setPristine();
+                // ****************************** userInfoForm ****************************** //
+
+                // ****************************** generalInfoForm ****************************** //
+                $scope.generalInfoForm.$submitted = false;
+
+                $scope.generalInfoForm.firstName.$setUntouched();
+                $scope.generalInfoForm.lastName.$setPristine();
+
+                $scope.generalInfoForm.lastName.$setUntouched();
+                $scope.generalInfoForm.lastName.$setPristine();
+
+                $scope.generalInfoForm.nickName.$setUntouched();
+                $scope.generalInfoForm.nickName.$setPristine();
+
+                $scope.generalInfoForm.mobileNo.$setUntouched();
+                $scope.generalInfoForm.mobileNo.$setPristine();
+
+                $scope.generalInfoForm.registAddress.$setUntouched();
+                $scope.generalInfoForm.registAddress.$setPristine();
+
+                $scope.generalInfoForm.contactAddress.$setUntouched();
+                $scope.generalInfoForm.contactAddress.$setPristine();
+
+                $scope.generalInfoForm.idcardNo.$setUntouched();
+                $scope.generalInfoForm.idcardNo.$setPristine();
+
+                // $scope.generalInfoForm.idcardFileBase64.$setUntouched();
+                // $scope.generalInfoForm.idcardFileBase64.$setPristine();
+
+                $scope.generalInfoForm.occupation.$setUntouched();
+                $scope.generalInfoForm.occupation.$setPristine();
+                // ****************************** generalInfoForm ****************************** //
+
+                // ****************************** employInfoForm ****************************** //
+                $scope.employInfoForm.$submitted = false;
+
+                $scope.employInfoForm.hireType.$setUntouched();
+                $scope.employInfoForm.hireType.$setPristine();
+
+                $scope.employInfoForm.worktimeType.$setUntouched();
+                $scope.employInfoForm.worktimeType.$setPristine();
+
+                $scope.employInfoForm.startWorkDate.$setUntouched();
+                $scope.employInfoForm.startWorkDate.$setPristine();
+
+                $scope.employInfoForm.workHourMonth.$setUntouched();
+                $scope.employInfoForm.workHourMonth.$setPristine();
+
+                $scope.employInfoForm.salary.$setUntouched();
+                $scope.employInfoForm.salary.$setPristine();
+
+                $scope.employInfoForm.wageHourRate.$setUntouched();
+                $scope.employInfoForm.wageHourRate.$setPristine();
+
+                $scope.employInfoForm.bankAccountName.$setUntouched();
+                $scope.employInfoForm.bankAccountName.$setPristine();
+
+                $scope.employInfoForm.bankAccountNo.$setUntouched();
+                $scope.employInfoForm.bankAccountNo.$setPristine();
+                // ****************************** employInfoForm ****************************** //
+
+                // ****************************** educationInfoForm ****************************** //
+                $scope.educationInfoForm.$submitted = false;
+
+                $scope.educationInfoForm.educationSchool.$setUntouched();
+                $scope.educationInfoForm.educationSchool.$setPristine();
+
+                $scope.educationInfoForm.educationFaculty.$setUntouched();
+                $scope.educationInfoForm.educationFaculty.$setPristine();
+
+                $scope.educationInfoForm.educationMajor.$setUntouched();
+                $scope.educationInfoForm.educationMajor.$setPristine();
+                // ****************************** educationInfoForm ****************************** //
+
+                $scope.$apply();
+            }, 0);
+        };
+    }]);
+</script>

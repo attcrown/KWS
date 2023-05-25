@@ -1,0 +1,64 @@
+<div class="card">
+    <!-- card-header -->
+    <div class="card-header">
+        <h3 class="card-title text-maroon">ผลการค้นหา</h3>
+    </div>
+    <!-- /.card-header -->
+
+    <!-- card-body -->
+    <div class="card-body table-responsive p-0">
+        <table class="table table-hover text-nowrap">
+            <thead>
+                <tr>
+                    <th>ชื่อ-สกุล</th>
+                    <th>ชื่อเล่น</th>
+                    <th>BU</th>
+                    <th>สัญญาจ้าง</th>
+                    <th>เวลางาน</th>
+                    <th class="text-center" style="width: 64px;">Action</th>
+                </tr>
+            </thead>
+
+            <tbody ng-if="salesmans.length > 0">
+                <tr ng-repeat="salesman in salesmans  | orderBy: 'name'">
+                    <td class="align-middle">{{ salesman.firstName + ' ' + salesman.lastName }}</td>
+                    <td class="align-middle">{{ salesman.nickName }}</td>
+                    <td class="align-middle">{{ getBuName(salesman) }}</td>
+                    <td class="align-middle">{{ getHireTypeName(salesman) }}</td>
+                    <td class="align-middle">{{ getWorktimeTypeName(salesman) }}</td>
+                    <td class="text-center align-middle">
+                        <button class="btn btn-sm btn-outline-warning" ng-click="requestEditSalesman(salesman)">
+                            <i class="fa fa-edit kws-table-action-icon"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger" ng-click="requestDeleteSalesman(salesman)">
+                            <i class="fa fa-trash kws-table-action-icon"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+
+            <tfoot ng-if="salesmans.length == 0">
+                <tr>
+                    <td class="text-center text-orange" colspan="6">--- ไม่มีข้อมูล ---</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <!-- /.card-body -->
+
+    <!-- card-footer -->
+    <div class="card-footer clearfix" ng-show="salesmans.length > 0">
+        <ul class="pagination pagination-sm m-0 float-right">
+            <li class="page-item">
+                <a class="page-link" href="javascript:void(0)" ng-click="gotoPageNo(1)">&laquo;</a>
+            </li>
+            <li class="page-item" ng-repeat="pageNo in getPageNos() track by $index">
+                <a class="page-link" ng-class="{'text-bold': pageNo == paging.pageNo}" href="javascript:void(0)" ng-click="gotoPageNo(pageNo)">{{ pageNo }}</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="javascript:void(0)" ng-click="gotoPageNo(paging.totalPage)">&raquo;</a>
+            </li>
+        </ul>
+    </div>
+    <!-- /.card-footer -->
+</div>

@@ -1,0 +1,135 @@
+<div th:replace="__${#execInfo.templateName}__/../api"></div>
+<div th:replace="__${#execInfo.templateName}__/../controller-list"></div>
+<div th:replace="__${#execInfo.templateName}__/../controller-entry"></div>
+<div th:replace="__${#execInfo.templateName}__/../controller-entry-chapter"></div>
+<div th:replace="__${#execInfo.templateName}__/../controller-entry-media"></div>
+
+<script th:inline="javascript">
+    app.controller("FishsixSubjectController", ["$scope", "$http", ($scope, $http) => {
+        $scope.educationClasses = /*[[${educationClasses}]]*/ [];
+        $scope.subjectCategories = /*[[${subjectCategories}]]*/ [];
+        $scope.subjectProfiles = /*[[${subjectProfiles}]]*/ [];
+
+        console.log("educationClasses => ", $scope.educationClasses);
+        console.log("subjectCategories => ", $scope.subjectCategories);
+        console.log("subjectProfiles => ", $scope.subjectProfiles);
+
+        $scope.isLoading = false;
+        $scope.criteria = {};
+        $scope.paging = {};
+        $scope.selectedSubjectProfile;
+        $scope.mode = "list"; // ["list", "entry"]
+        $scope.entryMode = ""; // ["add", "edit"]
+
+        $scope.init = function() {
+            console.log("### FishsixSubjectController.init ###");
+
+            useApi($scope, $http);
+            useListController($scope, $http);
+            useEntryController($scope, $http);
+            useEntryChapterController($scope, $http);
+            useEntryMediaController($scope, $http);
+
+            $scope.criteria = {
+                subjectCategoryIds: [],
+                educationClassIds: []
+            };
+
+            $scope.paging = {
+                pageNo: 1,
+                pageSize: 25,
+                totalPage: 0,
+                totalSize: 0
+            };
+
+            $('.select2').select2({ theme: 'bootstrap4' });
+        };
+
+        $scope.swapMode = function() {
+            if($scope.mode === 'list') {
+                $scope.toEntryMode();
+            } else if($scope.mode === 'entry') {
+                $scope.toListMode();
+            }
+        };
+
+        $scope.toListMode = function() {
+            console.log("toListMode...");
+            $scope.mode = 'list';
+            $scope.search();
+        };
+
+        $scope.toEntryMode = function() {
+            $scope.mode = 'entry';
+        };
+
+        $scope.getChapterCount = function(subjectProfile) {
+            if(subjectProfile.chapters) {
+                return subjectProfile.chapters.length;
+            }
+            return 0;
+        };
+
+        $scope.getMediaDocumentCount = function(subjectProfile) {
+            if(subjectProfile.chapters) {
+                let count = 0;
+                subjectProfile.chapters.forEach(chapter => {
+                    if(chapter.medias) {
+                        const documents = chapter.medias.filter(media => media.mediaType === 'Document');
+                        if(documents && documents.length > 0) {
+                            count = count + Number(documents.length);
+                        }
+                    }
+                });
+                return count;
+            }
+            return 0;
+        };
+
+        $scope.getMediaVideoCount = function(subjectProfile) {
+            if(subjectProfile.chapters) {
+                let count = 0;
+                subjectProfile.chapters.forEach(chapter => {
+                    if(chapter.medias) {
+                        const documents = chapter.medias.filter(media => media.mediaType === 'Video');
+                        if(documents && documents.length > 0) {
+                            count = count + Number(documents.length);
+                        }
+                    }
+                });
+                return count;
+            }
+            return 0;
+        };
+
+        $scope.requestAddSubject = function() {
+            console.log("### FishsixSubjectController.requestAddSubject ###");
+            $scope.toEntryMode();
+            $scope.entryMode = "add";
+            $scope.selectedSubjectProfile = {
+                chapters: []
+            };
+            $scope.resetForm();
+        };
+
+        $scope.resetForm = function() {
+            setTimeout(() => {
+                $scope.subjectForm.$submitted = false;
+
+                $scope.subjectForm.subjectCategory.$setUntouched();
+                $scope.subjectForm.subjectCategory.$setPristine();
+
+                $scope.subjectForm.name.$setUntouched();
+                $scope.subjectForm.name.$setPristine();
+
+                $scope.subjectForm.educationClass.$setUntouched();
+                $scope.subjectForm.educationClass.$setPristine();
+
+                $scope.subjectForm.description.$setUntouched();
+                $scope.subjectForm.description.$setPristine();
+
+                $scope.$apply();
+            }, 0);
+        };
+    }]);
+</script>

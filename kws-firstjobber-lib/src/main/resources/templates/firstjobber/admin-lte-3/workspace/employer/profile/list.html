@@ -1,0 +1,68 @@
+<div class="card">
+    <!-- card-header -->
+    <div class="card-header">
+        <h3 class="card-title text-maroon">ผลการค้นหา</h3>
+    </div>
+    <!-- /.card-header -->
+
+    <!-- card-body -->
+    <div class="card-body table-responsive p-0">
+        <table class="table table-hover text-nowrap">
+            <thead>
+                <tr>
+                    <th>ชื่อ</th>
+                    <th>ประเภท</th>
+                    <th>เบอร์โทร</th>
+                    <th>สถานะ</th>
+                    <th class="text-center" style="width: 64px;">Action</th>
+                </tr>
+            </thead>
+
+            <tbody ng-if="employers.length > 0">
+                <tr ng-repeat="employer in employers  | orderBy: 'name'">
+                    <td>{{ employer.name }}</td>
+                    <td>{{ getEmployerTypeName(employer) }}</td>
+                    <td>{{ employer.telNo }}</td>
+                    <td>{{ getStatusName(employer) }}</td>
+                    <td class="text-center">
+                        <!-- <a href="javascript:void(0)" ng-click="requestEditEmployer(employer)">
+                            <i class="fa fa-edit text-warning kws-table-action-icon"></i>
+                        </a>
+                        <a href="javascript:void(0)" ng-click="requestDeleteEmployer(employer)">
+                            <i class="fa fa-trash text-danger kws-table-action-icon"></i>
+                        </a> -->
+                        <button class="btn btn-sm btn-outline-warning" ng-click="requestEditEmployer(employer)">
+                            <i class="fa fa-edit kws-table-action-icon"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger" ng-click="requestDeleteEmployer(employer)">
+                            <i class="fa fa-trash kws-table-action-icon"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+
+            <tfoot ng-if="employers.length == 0">
+                <tr>
+                    <td class="text-center text-orange" colspan="5">--- ไม่มีข้อมูล ---</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <!-- /.card-body -->
+
+    <!-- card-footer -->
+    <div class="card-footer clearfix" ng-show="employers.length > 0">
+        <ul class="pagination pagination-sm m-0 float-right">
+            <li class="page-item">
+                <a class="page-link" href="javascript:void(0)" ng-click="gotoPageNo(1)">&laquo;</a>
+            </li>
+            <li class="page-item" ng-repeat="pageNo in getPageNos() track by $index">
+                <a class="page-link" ng-class="{'text-bold': pageNo == paging.pageNo}" href="javascript:void(0)" ng-click="gotoPageNo(pageNo)">{{ pageNo }}</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="javascript:void(0)" ng-click="gotoPageNo(paging.totalPage)">&raquo;</a>
+            </li>
+        </ul>
+    </div>
+    <!-- /.card-footer -->
+</div>

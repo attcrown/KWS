@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+
+<script src="https://adminlte.io/themes/v3/plugins/moment/moment.min.js"></script>
+<script src="https://adminlte.io/themes/v3/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+
+<div th:replace="__${#execInfo.templateName}__/../script/controller"></div>
+
+<section ng-controller="FishsixStudyClassController" ng-init="init()">
+    <div ng-if="isLoading" class="kws-loader">
+        <div class='kws-loader-spin'></div>
+    </div>
+
+    <div ng-show="mode === 'list'">
+        <div th:replace="__${#execInfo.templateName}__/../search"></div>
+        <div th:replace="__${#execInfo.templateName}__/../list"></div>
+    </div>
+    <div ng-show="mode === 'entry'">
+        <div th:replace="__${#execInfo.templateName}__/../entry"></div>
+    </div>
+</section>

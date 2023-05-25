@@ -1,0 +1,231 @@
+<div th:replace="__${#execInfo.templateName}__/../api"></div>
+<div th:replace="__${#execInfo.templateName}__/../controller-list"></div>
+<div th:replace="__${#execInfo.templateName}__/../controller-entry"></div>
+
+<script th:inline="javascript">
+    app.controller("FishsixStudentCourseHistoryController", ["$scope", "$http", ($scope, $http) => {
+        $scope.classChannels = /*[[${classChannels}]]*/ [];
+        $scope.classTypes = /*[[${classTypes}]]*/ [];
+        $scope.students = /*[[${students}]]*/ [];
+        $scope.teachers = /*[[${teachers}]]*/ [];
+        $scope.courseProfiles = /*[[${courseProfiles}]]*/ [];
+        $scope.orderStatuses = /*[[${orderStatuses}]]*/ [];
+        $scope.salesmans = /*[[${salesmans}]]*/ [];
+
+        console.log("classChannels => ", $scope.classChannels);
+        console.log("classTypes => ", $scope.classTypes);
+        console.log("students => ", $scope.students);
+        console.log("teachers => ", $scope.teachers);
+        console.log("courseProfiles => ", $scope.courseProfiles);
+        console.log("orderStatuses => ", $scope.orderStatuses);
+        console.log("salesmans => ", $scope.salesmans);
+
+        $scope.isLoading = false;
+        $scope.criteria = {};
+        $scope.courseOrders = [];
+        $scope.selectedCourseOrder;
+        $scope.selectSubjectIds = [];
+        $scope.mode = "list"; // ["list", "entry"]
+        $scope.entryMode = ""; // ["add", "edit"]
+
+        $scope.init = function() {
+            console.log("### FishsixStudentCourseHistoryController.init ###");
+
+            useApi($scope, $http);
+            useListController($scope, $http);
+            useEntryController($scope, $http);
+
+            $scope.criteria = {
+                courseId: "",
+                studentId: ""
+            };
+
+            $('.select2').select2({ theme: 'bootstrap4' });
+
+            $("#paymentSlipInput").on("change", (event) => {
+                $scope.removePaymentSlipFile();
+                const files = event.target.files;
+                if(files && files.length > 0) {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(files[0]);
+                    reader.onload = function () {
+                        setTimeout(() => {
+                            $scope.selectedCourseOrder.paymentSlipBase64 = reader.result;
+                            $scope.selectedCourseOrder.paymentSlipFile = files[0];
+                            $scope.$apply();
+                        }, 0);
+                    };
+                    reader.onerror = function (error) {
+                        console.log('Error: ', error);
+                    };
+                }
+            });
+
+            $("#receiptInput").on("change", (event) => {
+                $scope.removeReceiptFile();
+                const files = event.target.files;
+                if(files && files.length > 0) {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(files[0]);
+                    reader.onload = function () {
+                        setTimeout(() => {
+                            $scope.selectedCourseOrder.receiptBase64 = reader.result;
+                            $scope.selectedCourseOrder.receiptFile = files[0];
+                            $scope.$apply();
+                        }, 0);
+                    };
+                    reader.onerror = function (error) {
+                        console.log('Error: ', error);
+                    };
+                }
+            });
+        };
+
+        $scope.swapMode = function() {
+            if($scope.mode === 'list') {
+                $scope.toEntryMode();
+            } else if($scope.mode === 'entry') {
+                $scope.toListMode();
+            }
+        };
+
+        $scope.toListMode = function() {
+            $scope.mode = 'list';
+            $scope.selectedCourseOrder = {};
+        };
+
+        $scope.toEntryMode = function() {
+            $scope.mode = 'entry';
+        };
+
+        $scope.requestAddCourseOrder = function() {
+            console.log("### FishsixStudentCourseHistoryController.requestAddCourseOrder ###");
+            $scope.toEntryMode();
+            $scope.entryMode = "add";
+            $scope.selectedCourseOrder = {
+                orderStatusId: "Approved"
+            };
+            $scope.resetForm();
+        };
+
+        $scope.resetForm = function() {
+            setTimeout(() => {
+                $scope.courseOrderForm.$submitted = false;
+
+                $scope.courseOrderForm.studentId.$setUntouched();
+                $scope.courseOrderForm.studentId.$setPristine();
+
+                $scope.courseOrderForm.courseId.$setUntouched();
+                $scope.courseOrderForm.courseId.$setPristine();
+
+                $scope.$apply();
+            }, 0);
+        };
+
+        $scope.getStudentFirstName = function(studentId) {
+            let student = $scope.students.find(e => e.id === studentId);
+            if(student) {
+                return student.firstName;
+            }
+        };
+
+        $scope.getStudentLastName = function(studentId) {
+            let student = $scope.students.find(e => e.id === studentId);
+            if(student) {
+                return student.lastName;
+            }
+        };
+
+        $scope.getCourseName = function(courseId) {
+            let courseProfile = $scope.courseProfiles.find(e => e.course.id === courseId);
+            if(courseProfile) {
+                return courseProfile.course.name;
+            }
+        };
+
+        $scope.getCourseClassChannelName = function(courseId) {
+            let courseProfile = $scope.courseProfiles.find(e => e.course.id === courseId);
+            if(courseProfile) {
+                let classChannel = $scope.classChannels.find(e => e.id === courseProfile.course.classChannelId);
+                if(classChannel) {
+                    return classChannel.name;
+                }
+            }
+        };
+
+        $scope.getCourseClassTypeName = function(courseId) {
+            let courseProfile = $scope.courseProfiles.find(e => e.course.id === courseId);
+            if(courseProfile) {
+                let classType = $scope.classTypes.find(e => e.id === courseProfile.course.classTypeId);
+                if(classType) {
+                    return classType.name;
+                }
+            }
+        };
+
+        $scope.getCourseProfile = function(courseId) {
+            let courseProfile = $scope.courseProfiles.find(e => e.course.id === courseId);
+            if(courseProfile) {
+                return courseProfile;
+            }
+        };
+
+        $scope.getCourseMaxSubject = function(courseId) {
+            let courseProfile = $scope.courseProfiles.find(e => e.course.id === courseId);
+            if(courseProfile) {
+                return Number(courseProfile.course.maxSubject);
+            }else{
+                return 0;
+            }
+        };
+
+        $scope.getCourseHour = function(courseId) {
+            let courseProfile = $scope.courseProfiles.find(e => e.course.id === courseId);
+            if(courseProfile) {
+                return courseProfile.course.hour;
+            }
+        };
+
+        $scope.getCoursePrice = function(courseId) {
+            let courseProfile = $scope.courseProfiles.find(e => e.course.id === courseId);
+            if(courseProfile) {
+                return courseProfile.course.price;
+            }
+        };
+
+        $scope.getOrderStatusName = function(orderStatusId) {
+            let orderStatus = $scope.orderStatuses.find(e => e.id === orderStatusId);
+            if(orderStatus) {
+                return orderStatus.name;
+            }
+        };
+
+        $scope.uploadPaymentSlipHandler = async function(event) {
+            console.log("### uploadPaymentSlipHandler ###");
+            const files = event.target.files;
+            if(files && files.length > 0) {
+                const base64 = await $scope.toBase64(files[0]);
+                console.log("base64 => " + base64);
+            }
+        };
+
+        $scope.toBase64 = function(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        };
+
+        $scope.removePaymentSlipFile = function() {
+            $scope.selectedCourseOrder.paymentSlipBase64 = null;
+            $scope.selectedCourseOrder.paymentSlipFile = null;
+        };
+
+        $scope.removeReceiptFile = function() {
+            $scope.selectedCourseOrder.receiptBase64 = null;
+            $scope.selectedCourseOrder.receiptFile = null;
+        };
+    }]);
+</script>

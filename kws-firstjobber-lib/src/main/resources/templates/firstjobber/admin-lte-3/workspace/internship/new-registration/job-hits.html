@@ -1,0 +1,211 @@
+<style>
+    #jobHitsChart {
+        width: 100%;
+        height: 500px;
+    }
+
+    #registrationStatsChart {
+        width: 100%;
+        height: 600px;
+    }
+</style>
+
+<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- card-body -->
+        <div class="card">
+            <!-- card-header -->
+            <div class="card-header">
+                <h5 class="card-title text-maroon">ตำแหน่งงานยอดนิยม</h5>
+            </div>
+            <!-- /.card-header -->
+
+            <!-- card-body -->
+            <div class="card-body">
+                <div id="jobHitsChart"></div>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+
+         <!-- card-body -->
+         <div class="card">
+            <!-- card-header -->
+            <div class="card-header">
+                <h5 class="card-title text-maroon">สถิติการลงทะเบียนเข้าร่วมโครงการของนักศึกษาฝึกงาน</h5>
+            </div>
+            <!-- /.card-header -->
+
+            <!-- card-body -->
+            <div class="card-body">
+                <div id="registrationStatsChart"></div>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+</div>
+
+
+<script>
+    am4core.ready(function () {
+
+        // Themes begin
+        am4core.useTheme(am4themes_animated);
+        // Themes end
+
+        buildJobHitsChart();
+        buildRegistrationStatsChart();
+    }); // end am4core.ready()
+
+    function buildJobHitsChart()
+    {
+        var chart = am4core.create("jobHitsChart", am4charts.PieChart);
+        chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
+
+        chart.data = [
+            {
+                country: "Marketting",
+                value: 260
+            },
+            {
+                country: "Graphics Design",
+                value: 230
+            },
+            {
+                country: "Video Editor",
+                value: 200
+            },
+            {
+                country: "Programmer",
+                value: 165
+            },
+            {
+                country: "HR",
+                value: 139
+            },
+            {
+                country: "Sales",
+                value: 128
+            },
+            {
+                country: "Tester",
+                value: 98
+            }
+        ];
+
+        var series = chart.series.push(new am4charts.PieSeries());
+        series.dataFields.value = "value";
+        series.dataFields.radiusValue = "value";
+        series.dataFields.category = "country";
+        series.slices.template.cornerRadius = 6;
+        series.colors.step = 3;
+
+        series.hiddenState.properties.endAngle = -90;
+
+        chart.legend = new am4charts.Legend();
+    }
+
+    function buildRegistrationStatsChart()
+    {
+        var chart = am4core.create("registrationStatsChart", am4charts.XYChart);
+        chart.scrollbarX = new am4core.Scrollbar();
+
+        // Add data
+        chart.data = [
+            {
+                "country": "USA",
+                "visits": 302
+            },
+            {
+                "country": "Germany",
+                "visits": 232
+            },
+            {
+                "country": "Netherlands",
+                "visits": 365
+            },
+            {
+                "country": "UK",
+                "visits": 212
+            },
+            {
+                "country": "France",
+                "visits": 211
+            },
+            {
+                "country": "India",
+                "visits": 484
+            },
+            {
+                "country": "South Korea",
+                "visits": 443
+            },
+            {
+                "country": "04/2564",
+                "visits": 511
+            },
+            {
+                "country": "05/2564",
+                "visits": 188
+            },
+            {
+                "country": "06/2564",
+                "visits": 180
+            },
+            {
+                "country": "07/2564",
+                "visits": 480
+            },
+            {
+                "country": "08/2564",
+                "visits": 441
+            }
+        ];
+
+        // Create axes
+        var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+        categoryAxis.dataFields.category = "country";
+        categoryAxis.renderer.grid.template.location = 0;
+        categoryAxis.renderer.minGridDistance = 30;
+        categoryAxis.renderer.labels.template.horizontalCenter = "right";
+        categoryAxis.renderer.labels.template.verticalCenter = "middle";
+        categoryAxis.renderer.labels.template.rotation = 270;
+        categoryAxis.tooltip.disabled = true;
+        categoryAxis.renderer.minHeight = 110;
+
+        var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+        valueAxis.renderer.minWidth = 50;
+
+        // Create series
+        var series = chart.series.push(new am4charts.ColumnSeries());
+        series.sequencedInterpolation = true;
+        series.dataFields.valueY = "visits";
+        series.dataFields.categoryX = "country";
+        series.tooltipText = "[{categoryX}: bold]{valueY}[/]";
+        series.columns.template.strokeWidth = 0;
+
+        series.tooltip.pointerOrientation = "vertical";
+
+        series.columns.template.column.cornerRadiusTopLeft = 10;
+        series.columns.template.column.cornerRadiusTopRight = 10;
+        series.columns.template.column.fillOpacity = 0.8;
+
+        // on hover, make corner radiuses bigger
+        var hoverState = series.columns.template.column.states.create("hover");
+        hoverState.properties.cornerRadiusTopLeft = 0;
+        hoverState.properties.cornerRadiusTopRight = 0;
+        hoverState.properties.fillOpacity = 1;
+
+        series.columns.template.adapter.add("fill", function(fill, target) {
+        return chart.colors.getIndex(target.dataItem.index);
+        });
+
+        // Cursor
+        chart.cursor = new am4charts.XYCursor();
+    }
+</script>

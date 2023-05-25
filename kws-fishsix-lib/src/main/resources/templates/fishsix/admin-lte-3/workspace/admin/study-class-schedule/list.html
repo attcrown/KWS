@@ -1,0 +1,126 @@
+<div class="card" ng-repeat="period in studyClassScheduleProfile.periods">
+    <!-- card-header -->
+    <div class="card-header">
+        <h3 class="card-title text-maroon">{{ period.startTime }} - {{ period.endTime }}</h3>
+
+        <div class="card-tools d-none">
+            <div class="btn-group">
+                <button type="button" class="btn btn-outline-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    เลือกวัน
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item">Option-1</a>
+                    <a class="dropdown-item">Option-2</a>
+                </div>
+            </div>
+            &nbsp;
+            <button type="button" class="btn btn-outline-info">
+                <i class="fas fa-sync"></i> รีเฟรช
+            </button>
+            &nbsp;
+            <button type="button" class="btn btn-outline-success">
+                <i class="far fa-file-excel"></i> โหลด Excel
+            </button>
+        </div>
+    </div>
+    <!-- /.card-header -->
+
+    <!-- card-body -->
+    <div class="card-body px-2 py-2">
+        <div ng-if="period.classes.length > 0">
+            <div class="card card-navy" ng-repeat="class in period.classes">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <span>{{ class.className }}</span>
+                    </h3>
+
+                    <div class="card-tools">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
+                                <i class="fas fa-wrench"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                <a href="javascript:void(0)" class="dropdown-item text-navy" ng-click="requestAddStudyClassSchedule(class)">
+                                    <i class="fa fa-plus text-primary"></i> เพิ่มตารางสอน
+                                </a>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="ซ่อน/โชว์">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card-body p-0">
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-striped table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>ชื่อ-นามสกุล</th>
+                                    <th>ชื่อเล่น</th>
+                                    <th>ประเภทคอร์ส</th>
+                                    <th>สาขา</th>
+                                    <th>ระดับชั้น</th>
+                                    <th>วิชา</th>
+                                    <th>เรื่องถัดไป</th>
+                                    <th>ครู</th>
+                                    <th>สถานะคลาสเรียน</th>
+                                    <th class="text-center" style="width: 64px;">Action</th>
+                                </tr>
+                            </thead>
+                
+                            <tbody ng-if="class.schedules.length > 0">
+                                <tr ng-repeat="schedule in class.schedules">
+                                    <!-- <td>student.firstName student.lastName</td> -->
+                                    <td>{{ getStudentFullName(schedule.studentId) }}</td>
+                                    <td>{{ getStudentByStudentId(schedule.studentId).nickName }}</td>
+                                    <td>{{ getClassType(class.classTypeId).name }}</td>
+                                    <td>{{ getClassChannel(class.classChannelId).name }}</td>
+                                    <!-- <td>{{ getEducationClass(getSubject(schedule.subjectId).educationClassId).title }}subject.educationClassId.title</td> -->
+                                    <td>{{ getEducationClass(getSubjectProfile(schedule.subjectId).educationClassId).title }}</td>
+                                    <td>{{ getSubjectProfile(schedule.subjectId).name }}</td>
+                                    <td>{{ getChapterInSubject(schedule.subjectId,schedule.subjectChapterId).name }}</td>
+                                    <td>{{ getTeacherByTeacherId(schedule.teacherId).firstName }} {{ getTeacherByTeacherId(schedule.teacherId).lastName }}</td>
+                                    <!-- <td>studyClassSchedule.classStatus</td> -->
+                                    <td>{{ schedule.classStatus }}</td>
+                                    <td class="text-center">
+                                        <button class="btn btn-sm btn-outline-warning" ng-click="requestConfirmStudyClassSchedule(schedule)" ng-disabled="schedule.classStatus != 'Reserved'" title="ส่ง Confirm">
+                                            <i class="fas fa-check"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-success" ng-click="requestCheckinStudyClassSchedule(class, schedule)" ng-disabled="schedule.classStatus != 'Confirmed'" title="เชคชื่อ">
+                                            <i class="far fa-calendar-check"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-primary" ng-click="requestEvaluateStudyClassSchedule(schedule)" ng-disabled="schedule.classStatus != 'Completed'" title="พัฒนาการ">
+                                            <i class="fas fa-tasks"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger" ng-click="requestDeleteStudyClassSchedule(class, schedule)" ng-disabled="schedule.classStatus == 'Completed'" title="ลบ">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                
+                            <tfoot ng-if="class.schedules.length == 0">
+                                <tr>
+                                    <td class="text-center text-orange" colspan="10">--- ไม่มีข้อมูล ---</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <div class="col-md-12 mx-0 px-0 text-right">
+                        <button class="btn btn-sm btn-outline-primary mx-1" title="เพิ่มตารางสอน" ng-click="requestAddStudyClassSchedule(class)">
+                            <i class="fa fa-plus"></i> เพิ่ม
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-footer">
+        
+    </div>
+</div>

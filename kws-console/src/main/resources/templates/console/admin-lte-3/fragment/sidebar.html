@@ -1,0 +1,112 @@
+<aside class="main-sidebar sidebar-dark-indigo elevation-4">
+	<!-- Brand Logo -->
+	<a th:href="@{/views/workspace/home}" class="brand-link"> 
+		<img th:src="@{/assets/template/admin-lte-3/img/AdminLTELogo.png}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+		<span class="brand-text font-weight-light">KWS Console</span>
+	</a>
+    <!-- /.Brand Logo -->
+
+	<!-- Sidebar -->
+	<div class="sidebar">
+        <div th:if="${kws_webEnv != 'prod'}" class="ribbon-wrapper ribbon-lg">
+            <div class="ribbon bg-success" th:text="${kws_webEnv}">
+            </div>
+        </div>
+
+		<!-- Sidebar user panel-->
+		<div class="user-panel mt-3 pb-3 mb-3 d-flex">
+			<div class="image">
+				<img th:src="@{/assets/template/admin-lte-3/img/user2-160x160.jpg}" class="img-circle elevation-2" alt="User Image">
+			</div>
+			<div class="info">
+				<a href="#" class="d-block">
+                    [[|${kws_userProfile.user.firstName} ${kws_userProfile.user.lastName}|]]
+                </a>
+			</div>
+		</div>
+        <!-- /.Sidebar user panel-->
+
+		<!-- Sidebar Menu -->
+		<nav class="nav-flat mt-2 pb-2">
+			<ul id="sidebar-menu" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+			</ul>
+		</nav>
+		<!-- /.Sidebar Menu -->
+	</div>
+	<!-- /.Sidebar -->
+</aside>
+
+<script>
+    kws_sidebar_init();
+
+    function kws_sidebar_init()
+    {
+        console.log("!!! kws_sidebar_init !!!");
+
+        if(kws_menus && kws_menus.length > 0) {
+        	kws_menus.forEach(menu => {
+                kws_sidebar_buildMenu("sidebar-menu", menu);
+            });
+        }
+    }
+
+    function kws_sidebar_buildMenu(parentId, menu)
+    {
+        if(menu.itemType === 'Section') {
+        	kws_sidebar_buildMenuHeader(parentId, menu);
+            if(menu.children && menu.children.length > 0) {
+            	menu.children.forEach(child => {
+            		kws_sidebar_buildMenu(parentId, child);
+              	});
+            }
+        } else if(menu.itemType === 'MenuDropdown') {
+        	kws_sidebar_buildMenuDropdown(parentId, menu.menuId, menu);
+        	if(menu.children && menu.children.length > 0) {
+            	menu.children.forEach(child => {
+            		kws_sidebar_buildMenu(menu.menuId, child);
+              	});
+            }
+        } else if(menu.itemType === 'MenuItem') {
+        	kws_sidebar_buildMenuItem(parentId, menu);
+        }
+    }
+
+    function kws_sidebar_buildMenuHeader(parentId, menu)
+    {
+        const header = `<li class="nav-header text-light">`+menu.title+`</li>`;
+        $("#"+parentId).append(header);
+    }
+
+    function kws_sidebar_buildMenuDropdown(parentId, menuDropdownId, menu)
+    {
+    	const menuOpenClass = (menu.active && menu.active === true) ? "menu-open" : "";
+        const menuDropdown = `
+        <li class="nav-item has-treeview `+menuOpenClass+`">
+            <a href="#" class="nav-link"> 
+                <i class="nav-icon `+menu.iconFontClass+`"></i>
+                <p>
+                    `+menu.title+` <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul id="`+menuDropdownId+`" class="nav nav-treeview">
+                
+            </ul>
+        </li>
+        `;
+        $("#"+parentId).append(menuDropdown);
+    }
+
+    function kws_sidebar_buildMenuItem(parentId, menu)
+    {
+        const activeClass = (menu.active && menu.active === true) ? "active" : "";
+        const menuItem = `
+            <li class="nav-item">
+                <a href="`+kws_contextPath+``+menu.href+`" class="nav-link `+activeClass+`">
+                    <i class="`+menu.iconFontClass+`"></i>
+                    <p>`+menu.title+`</p>
+                </a>
+            </li>
+        `;
+        $("#"+parentId).append(menuItem);
+    }
+</script>

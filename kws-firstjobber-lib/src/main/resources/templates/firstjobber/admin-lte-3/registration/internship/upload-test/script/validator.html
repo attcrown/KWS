@@ -1,0 +1,218 @@
+<script th:inline="javascript">
+    function useValidator($scope, $http)
+    {
+        console.log("### InternshipRegistrationUploadTestController.useValidator ###");
+        $scope.verifyFormData = useVerifyFormData($scope, $http);
+        buildValidator($scope);
+    }
+
+    function buildValidator($scope)
+    {
+        console.log("### InternshipRegistrationUploadTestController.buildValidator ###");
+
+        $scope.validator = {
+            high5: {
+                categoryId1: {
+                    isInvalid: function() {
+                        const categoryId1 = $scope.uploadTest.high5.categoryId1;
+                        return $scope.submitted && !categoryId1;
+                    }
+                },
+
+                categoryId2: {
+                    isInvalid: function() {
+                        const categoryId2 = $scope.uploadTest.high5.categoryId2;
+                        return $scope.submitted && !categoryId2;
+                    }
+                },
+
+                categoryId2: {
+                    isInvalid: function() {
+                        const categoryId2 = $scope.uploadTest.high5.categoryId2;
+                        return $scope.submitted && !categoryId2;
+                    }
+                },
+
+                categoryId3: {
+                    isInvalid: function() {
+                        const categoryId3 = $scope.uploadTest.high5.categoryId3;
+                        return $scope.submitted && !categoryId3;
+                    }
+                },
+
+                categoryId4: {
+                    isInvalid: function() {
+                        const categoryId4 = $scope.uploadTest.high5.categoryId4;
+                        return $scope.submitted && !categoryId4;
+                    }
+                },
+
+                categoryId5: {
+                    isInvalid: function() {
+                        const categoryId5 = $scope.uploadTest.high5.categoryId5;
+                        return $scope.submitted && !categoryId5;
+                    }
+                },
+
+                resultFile: {
+                    isInvalid: function() {
+                        const resultFile = $scope.uploadTest.high5.resultFile;
+                        return $scope.submitted && !resultFile;
+                    }
+                }
+            },
+
+            personality: {
+                categoryId: {
+                    isInvalid: function() {
+                        const categoryId = $scope.uploadTest.personality.categoryId;
+                        return $scope.submitted && !categoryId;
+                    }
+                },
+
+                resultFile: {
+                    isInvalid: function() {
+                        const resultFile = $scope.uploadTest.personality.resultFile;
+                        return $scope.submitted && !resultFile;
+                    }
+                }
+            },
+
+            iq: {
+                score: {
+                    isInvalid: function() {
+                        const score = $scope.uploadTest.iq.score;
+                        return $scope.submitted && (!score || Number.isNaN(score) || score < 0);
+                    }
+                },
+
+                resultFile: {
+                    isInvalid: function() {
+                        const resultFile = $scope.uploadTest.iq.resultFile;
+                        return $scope.submitted && !resultFile;
+                    }
+                }
+            }
+        }
+    }
+
+    function useVerifyFormData($scope, $http)
+    {
+        return () => {
+            console.log("### InternshipRegistrationUploadTestController.verifyFormData ###");
+
+            // ****************************** high5 ****************************** //
+            if($scope.validator.high5.categoryId1.isInvalid()) {
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'high5.categoryId1'
+                    }
+                };
+            }
+
+            if($scope.validator.high5.categoryId2.isInvalid()) {
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'high5.categoryId2'
+                    }
+                };
+            }
+
+            if($scope.validator.high5.categoryId3.isInvalid()) {
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'high5.categoryId3'
+                    }
+                };
+            }
+
+            if($scope.validator.high5.categoryId4.isInvalid()) {
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'high5.categoryId4'
+                    }
+                };
+            }
+
+            if($scope.validator.high5.categoryId5.isInvalid()) {
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'high5.categoryId5'
+                    }
+                };
+            }
+            
+            if($scope.validator.high5.resultFile.isInvalid()) {
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'high5.resultFile'
+                    }
+                };
+            }
+            // ****************************** personalInfo ****************************** //
+
+
+            // ****************************** personality ****************************** //
+            if($scope.validator.personality.categoryId.isInvalid()) {
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'personality.categoryId'
+                    }
+                };
+            }
+            
+            if($scope.validator.personality.resultFile.isInvalid()) {
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'personality.resultFile'
+                    }
+                };
+            }
+            // ****************************** personality ****************************** //
+
+
+            // ****************************** iq ****************************** //
+            if($scope.validator.iq.score.isInvalid()) {
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'iq.score'
+                    }
+                };
+            }
+            
+            if($scope.validator.iq.resultFile.isInvalid()) {
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'iq.resultFile'
+                    }
+                };
+            }
+            // ****************************** iq ****************************** //
+
+
+            return {
+                valid: true
+            };
+        };
+    }
+</script>

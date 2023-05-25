@@ -1,0 +1,343 @@
+<script th:inline="javascript">
+    function useApi($scope, $http)
+    {
+        console.info("### FishsixStudentCourseHistoryController.useApi ###");
+
+        $scope.search = useSearch($scope, $http);
+        $scope.createCourseOrder = useCreateCourseOrder($scope, $http);
+        $scope.updateCourseOrder = useUpdateCourseOrder($scope, $http);
+        $scope.removeCourseOrder = useRemoveCourseOrder($scope, $http);
+        $scope.loadStudentCourseQuota = useLoadStudentCourseQuota($scope, $http);
+    }
+
+    function useSearch($scope, $http)
+    {
+        return () => {
+            console.log("### FishsixStudentCourseHistoryController.search ###");
+            console.log("criteria => " + JSON.stringify($scope.criteria));
+
+            //$scope.courseProfiles = [];
+
+            if($scope.criteria.studentId === ""){
+                $scope.criteria.studentId = null;
+            }
+            if($scope.criteria.courseId === ""){
+                $scope.criteria.courseId = null;
+            }
+
+            const requestMessage = {
+                studentId: $scope.criteria.studentId,
+                courseId: $scope.criteria.courseId
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/course-order/history/load`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    $scope.courseOrders = response.data.body.courseOrders;
+                    
+                    console.log("$scope.courseOrders => ", $scope.courseOrders);
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถค้นหาข้อมูลประวัติการซื้อคอร์สได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถค้นหาข้อมูลประวัติการซื้อคอร์สได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).
+            then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+
+    function useCreateCourseOrder($scope, $http)
+    {
+        return (courseOrder) => {
+            console.log("### FishsixStudentCourseHistoryController.createCourseOrder ###");
+            console.log("courseOrder => ", courseOrder);
+
+            const requestMessage = {
+                courseOrder: courseOrder
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/course-order/create`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    const courseOrder = response.data.body.createdCourseOrder;
+
+                    console.log("courseOrder => ", courseOrder);
+
+                    $scope.courseOrders.push(courseOrder);
+                    $scope.toListMode();
+                    swal("บันทึกข้อมูลสำเร็จ", "บันทึกข้อมูลประวัติการซื้อคอร์สสำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกข้อมูลประวัติการซื้อคอร์สได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถบันทึกข้อมูลประวัติการซื้อคอร์สได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+
+    function useUpdateCourseOrder($scope, $http)
+    {
+        return (courseOrder) => {
+            console.log("### FishsixStudentCourseHistoryController.updateCourseOrder ###");
+            console.log("courseOrder => ", courseOrder);
+
+            const requestMessage = {
+                courseOrder: courseOrder
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/course-order/update`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    const courseOrder = response.data.body.updatedCourseOrder;
+
+                    console.log("courseOrder => ", courseOrder);
+
+                    $scope.courseOrders.push(courseOrder);
+
+                    $scope.toListMode();
+                    swal("บันทึกข้อมูลสำเร็จ", "บันทึกข้อมูลประวัติการซื้อคอร์สสำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกข้อมูลประวัติการซื้อคอร์สได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถบันทึกข้อมูลประวัติการซื้อคอร์สได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+
+    function useRemoveCourseOrder($scope, $http)
+    {
+        return (courseOrder) => {
+            console.log("### FishsixStudentCourseHistoryController.removeCourseOrder ###");
+            console.log("courseOrder => ", courseOrder);
+
+            const requestMessage = {
+                id: courseOrder.id
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/course-order/remove`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    //$scope.courseProfiles = $scope.courseProfiles.filter(e => e.course.id !== courseProfile.course.id);
+                    $scope.courseOrders = $scope.courseOrders.filter(e => e.id !== response.data.body.removedCourseOrder.id);
+                    swal("ลบข้อมูลสำเร็จ", "ลบข้อมูลประวัติการซื้อคอร์สสำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถลบข้อมูลประวัติการซื้อคอร์สได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถลบข้อมูลประวัติการซื้อคอร์สได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+
+    function useLoadStudentCourseQuota($scope, $http)
+    {
+        return (courseOrder) => {
+            console.log("### FishsixStudentCourseHistoryController.loadStudentCourseQuota ###");
+            console.log("studentId => ", courseOrder.studentId);
+
+            courseOrder.quotaInfo = undefined;
+
+            const requestMessage = {
+                studentId: courseOrder.studentId
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/student/course-quota/info/load`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    const data = response.data.body;
+                    console.log("data => ", data);
+                    
+                    if(data.studentCourseQuotaInfos && data.studentCourseQuotaInfos.length > 0) {
+                        courseOrder.quotaInfo = data.studentCourseQuotaInfos.find(e => e.studentCourseQuota.courseOrderId === courseOrder.id);
+                    }
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+</script>

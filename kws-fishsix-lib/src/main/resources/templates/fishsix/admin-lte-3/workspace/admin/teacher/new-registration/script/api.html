@@ -1,0 +1,217 @@
+<script th:inline="javascript">
+    function useApi($scope, $http)
+    {
+        $scope.searchTeacherRegister = useSearchTeacherRegister($scope, $http);
+        $scope.approveTeacherRegister = useApproveTeacherRegister($scope, $http);
+        $scope.rejectTeacherRegister = useRejectTeacherRegister($scope, $http);
+    }
+
+    function useSearchTeacherRegister($scope, $http)
+    {
+        return () => {
+            console.log("### FishsixTeacherNewRegistrationController.searchTeacherRegister ###");
+            console.log("criteria => " + JSON.stringify($scope.criteria));
+
+            $scope.teacherRegisters = [];
+
+            const requestMessage = undefined;
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/teacher-register/search`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    $scope.teacherRegisters = response.data.body.teacherRegisters;
+                    console.log("$scope.teacherRegisters => ", $scope.teacherRegisters);
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถค้นหาข้อมูลการลงทะเบียนครูได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถค้นหาข้อมูลการลงทะเบียนครูได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+
+    function useApproveTeacherRegister($scope, $http)
+    {
+        return (teacherRegister) => {
+            console.log("### FishsixTeacherNewRegistrationController.approveTeacherRegister ###");
+            console.log("teacherRegister => ", teacherRegister);
+
+            const _teacherRegister = JSON.parse(JSON.stringify(teacherRegister));
+            _teacherRegister.subjectIds = teacherRegister.subjectIds.join(",");
+
+            const requestMessage = {
+                teacherRegister: _teacherRegister
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/teacher-register/approve`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    const approvedTeacherRegister = response.data.body.approvedTeacherRegister;
+                    console.log("approvedTeacherRegister => ", approvedTeacherRegister);
+
+                    $scope.teacherRegisters = $scope.teacherRegisters.filter(e => e.id !== approvedTeacherRegister.id);
+                    $scope.toListMode();
+                    swal("บันทึกข้อมูลสำเร็จ", "อนุมัติการลงทะเบียนข้อมูลครูสำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถอนุมัติการลงทะเบียนข้อมูลครูได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถอนุมัติการลงทะเบียนข้อมูลครูได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+
+    function useRejectTeacherRegister($scope, $http)
+    {
+        return (teacherRegister) => {
+            console.log("### FishsixTeacherNewRegistrationController.rejectTeacherRegister ###");
+            console.log("teacherRegister => ", teacherRegister);
+
+            const _teacherRegister = JSON.parse(JSON.stringify(teacherRegister));
+            _teacherRegister.subjectIds = teacherRegister.subjectIds.join(",");
+
+            const requestMessage = {
+                teacherRegister: _teacherRegister
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/teacher-register/reject`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    const rejectedTeacherRegister = response.data.body.rejectedTeacherRegister;
+                    console.log("rejectedTeacherRegister => ", rejectedTeacherRegister);
+
+                    $scope.teacherRegisters = $scope.teacherRegisters.filter(e => e.id !== rejectedTeacherRegister.id);
+                    $scope.toListMode();
+                    swal("บันทึกข้อมูลสำเร็จ", "Reject การลงทะเบียนข้อมูลครูสำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถ Reject การลงทะเบียนข้อมูลครูได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถ Reject การลงทะเบียนข้อมูลครูได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+</script>

@@ -1,0 +1,65 @@
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title text-maroon">ระบุเงื่อนไขการค้นหา</h3>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>รายชื่อนักเรียน</label>
+                    <select class="form-control select2" multiple="multiple" data-placeholder="--- กรุณาเลือกรายชื่อนักเรียน ---" style="width: 100%;" ng-model="criteria.subjectIds">
+                        <option ng-repeat="student in students" ng-value="student.id">{{ student.firstName + ' ' + student.lastName }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>รายชื่อครู</label>
+                    <select class="form-control select2" multiple="multiple" data-placeholder="--- กรุณาเลือกรายชื่อครู ---" style="width: 100%;" ng-model="criteria.teacherIds">
+                        <option ng-repeat="teacher in teachers" ng-value="teacher.id">{{ teacher.firstName + ' ' + teacher.lastName }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>รายชื่อรายวิชา</label>
+                    <select class="form-control select2" multiple="multiple" data-placeholder="--- กรุณาเลือกรายชื่อรายวิชา ---" style="width: 100%;" ng-model="criteria.subjectIds">
+                        <option ng-repeat="subject in subjects" ng-value="subject.id">{{ subject.name }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>ประเภทคลาสเรียน</label>
+                    <select class="form-control select2" multiple="multiple" data-placeholder="--- กรุณาเลือกประเภทคลาสเรียน ---" style="width: 100%;" ng-model="criteria.classTypeIds">
+                        <option ng-repeat="classType in classTypes" ng-value="classType.id">{{ classType.name }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <!--
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>ชื่อเล่น</label>
+                    <input type="text" class="form-control" ng-model="criteria.nickName">
+                </div>
+            </div>
+            -->
+        </div>
+    </div>
+
+    <div class="card-footer">
+        <div class="text-right">
+            <button class="btn btn-success" ng-click="requestAddStudent()">
+                <i class="fa fa-plus"></i> เพิ่มข้อมูล
+            </button>
+            <button class="btn btn-primary" ng-click="search()">
+                <i class="fa fa-search"></i> ค้นหา
+            </button>
+        </div>
+    </div>
+</div>

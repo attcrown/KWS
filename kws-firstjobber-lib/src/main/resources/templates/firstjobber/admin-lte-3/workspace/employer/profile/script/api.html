@@ -1,0 +1,375 @@
+<script th:inline="javascript">
+    function useApi($scope, $http)
+    {
+        $scope.loadAmphurs = useLoadAmphurs($scope, $http);
+        $scope.loadDistrictByAmphur = useLoadDistrictByAmphur($scope, $http);
+        $scope.search = useSearch($scope, $http);
+        $scope.loadEmployerProfile = useLoadEmployerProfile($scope, $http);
+        $scope.createEmployer = useCreateEmployer($scope, $http);
+        $scope.updateEmployer = useUpdateEmployer($scope, $http);
+        $scope.removeEmployer = useRemoveEmployer($scope, $http);
+    }
+
+    function useLoadAmphurs($scope, $http)
+    {
+        return () => {
+            console.log("### FjbEmployerProfileController.loadAmphurs ###");
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/core/location/amphur/fetch-all`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+                if(response.data.head.status === "Success") {
+                    $scope.amphurs = response.data.body.amphurs;
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถโหลดข้อมูลอำเภอ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+                let errorMessage = "ไม่สามารถโหลดข้อมูลอำเภอ กรุณาติดต่อผู้ดูแลระบบ";
+                if(error.data && error.data.head) {
+                    errorMessage = "ไม่สามารถโหลดข้อมูลอำเภอ เนื่องจาก" + error.data.head.statusMessage;
+                }
+                swal("เกิดข้อผิดพลาด", errorMessage, "error");
+            };
+
+            const doneHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            // $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(doneHandler);
+        };
+    }
+
+    function useLoadDistrictByAmphur($scope, $http)
+    {
+        return (amphurId) => {
+            console.log("### FjbEmployerProfileController.loadDistrictByAmphur ###");
+            console.log("amphurId => ", amphurId);
+
+            const requestMessage = {
+                amphurId: amphurId
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/core/location/district/fetch-by-amphur`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+                if(response.data.head.status === "Success") {
+                    $scope.selectedDistricts = response.data.body.districts;
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถโหลดข้อมูลตำบล เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+
+                setTimeout(() => {
+                    $('#districtSelect').select2({ theme: 'bootstrap4' });
+                    $scope.$apply();
+                }, 0);
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+                let errorMessage = "ไม่สามารถโหลดข้อมูลตำบล กรุณาติดต่อผู้ดูแลระบบ";
+                if(error.data && error.data.head) {
+                    errorMessage = "ไม่สามารถโหลดข้อมูลตำบล เนื่องจาก" + error.data.head.statusMessage;
+                }
+                swal("เกิดข้อผิดพลาด", errorMessage, "error");
+            };
+
+            const doneHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            // $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(doneHandler);
+        };
+    }
+
+    function useSearch($scope, $http)
+    {
+        return () => {
+            console.log("### FjbEmployerProfileController.search ###");
+            console.log("criteria => " + JSON.stringify($scope.criteria));
+
+            $scope.employers = [];
+
+            const requestMessage = {
+                criteria: $scope.criteria,
+
+                paging: {
+                    pageNo: $scope.paging.pageNo,
+                    pageSize: $scope.paging.pageSize
+                },
+
+                sortBy: [
+                    {
+                        field: "name",
+                        order: "asc"
+                    }
+                ]
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/firstjobber/employer/search`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    $scope.employers = response.data.body.datas;
+                    $scope.paging.totalPage = response.data.body.totalPage;
+                    $scope.paging.totalSize = response.data.body.totalSize;
+
+                    if($scope.employers.length === 0 && $scope.paging.pageNo > 1) {
+                        $scope.gotoPageNo(1);
+                    }
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถค้นหาข้อมูลบริษัท/ลูกค้าได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+                let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                if(error.data && error.data.head) {
+                    errorMessage = "ไม่สามารถค้นหาข้อมูลบริษัท/ลูกค้าได้ เนื่องจาก" + error.data.head.statusMessage;
+                }
+                swal("เกิดข้อผิดพลาด", errorMessage, "error");
+            };
+
+            const doneHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(doneHandler);
+        };
+    }
+
+    function useLoadEmployerProfile($scope, $http)
+    {
+        return (employer) => {
+            console.log("### FjbEmployerProfileController.loadEmployerProfile ###");
+            console.log("employer => ", employer);
+
+            const requestMessage = {
+                employerId: employer.id
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/firstjobber/employer/fetch-profile`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    $scope.selectedEmployerProfile = response.data.body.employerProfile;
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถโหลดข้อมูลบริษัท/ลูกค้าได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+
+                setTimeout(() => {
+                    $('#provinceSelect').select2({ theme: 'bootstrap4' });
+                    $('#amphurSelect').select2({ theme: 'bootstrap4' });
+                    if($scope.selectedEmployerProfile && $scope.selectedEmployerProfile.contactAddress.amphurId) {
+                        $scope.loadDistrictByAmphur($scope.selectedEmployerProfile.contactAddress.amphurId);
+                    }
+                    $scope.$apply();
+                }, 0);
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                if(error.data && error.data.head) {
+                    errorMessage = "ไม่สามารถโหลดข้อมูลบริษัท/ลูกค้าได้ เนื่องจาก" + error.data.head.statusMessage;
+                }
+                swal("เกิดข้อผิดพลาด", errorMessage, "error");
+
+                $scope.toListMode();
+            };
+
+            const doneHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(doneHandler);
+        };
+    }
+
+    function useCreateEmployer($scope, $http)
+    {
+        return () => {
+            console.log("### FjbEmployerProfileController.createEmployer ###");
+
+            const requestMessage = {
+                employerProfile: $scope.selectedEmployerProfile
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/firstjobber/employer/create`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+                if(response.data.head.status === "Success") {
+                    const employerProfile = response.data.body.employerProfile;
+                    $scope.employers.push(employerProfile.employer);
+                    $scope.toListMode();
+                    swal("บันทึกข้อมูลสำเร็จ", "บันทึกข้อมูลบริษัท/ลูกค้าสำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกข้อมูลบริษัท/ลูกค้าได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+                let errorMessage = "ไม่สามารถบันทึกข้อมูลบริษัท/ลูกค้าได้ กรุณาติดต่อผู้ดูแลระบบ";
+                if(error.data && error.data.head) {
+                    errorMessage = "ไม่สามารถบันทึกข้อมูลบริษัท/ลูกค้าได้ เนื่องจาก" + error.data.head.statusMessage;
+                }
+                swal("เกิดข้อผิดพลาด", errorMessage, "error");
+            };
+
+            const doneHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(doneHandler);
+        };
+    }
+
+    function useUpdateEmployer($scope, $http)
+    {
+        return () => {
+            console.log("### FjbEmployerProfileController.updateEmployer ###");
+
+            const requestMessage = {
+                employerProfile: $scope.selectedEmployerProfile
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/firstjobber/employer/update`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+                if(response.data.head.status === "Success") {
+                    const employerProfile = response.data.body.employerProfile;
+                    $scope.employers = $scope.employers.filter(e => e.id !== employerProfile.employer.id);
+                    $scope.employers.push(employerProfile.employer);
+                    $scope.toListMode();
+                    swal("บันทึกข้อมูลสำเร็จ", "บันทึกข้อมูลบริษัท/ลูกค้าสำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกข้อมูลบริษัท/ลูกค้าได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+                let errorMessage = "ไม่สามารถบันทึกข้อมูลบริษัท/ลูกค้าได้ กรุณาติดต่อผู้ดูแลระบบ";
+                if(error.data && error.data.head) {
+                    errorMessage = "ไม่สามารถบันทึกข้อมูลบริษัท/ลูกค้าได้ เนื่องจาก" + error.data.head.statusMessage;
+                }
+                swal("เกิดข้อผิดพลาด", errorMessage, "error");
+            };
+
+            const doneHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(doneHandler);
+        };
+    }
+
+    function useRemoveEmployer($scope, $http)
+    {
+        return (employer) => {
+            console.log("### FjbEmployerProfileController.removeEmployer ###");
+            console.log("employer => ", employer);
+
+            const requestMessage = {
+                employerId: employer.id
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/firstjobber/employer/remove`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    $scope.employers = $scope.employers.filter(e => e.id !== employer.id);
+                    swal("ลบข้อมูลสำเร็จ", "ลบข้อมูลบริษัท/ลูกค้าสำเร็จ", "success");
+                    $scope.employers = $scope.employers.filter(e => e.id !== employer.id);
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถลบข้อมูลบริษัท/ลูกค้าได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+                let errorMessage = "ไม่สามารถลบข้อมูลบริษัท/ลูกค้าได้ กรุณาติดต่อผู้ดูแลระบบ";
+                if(error.data && error.data.head) {
+                    errorMessage = "ไม่สามารถลบข้อมูลบริษัท/ลูกค้าได้ เนื่องจาก" + error.data.head.statusMessage;
+                }
+                swal("เกิดข้อผิดพลาด", errorMessage, "error");
+            };
+
+            const doneHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(doneHandler);
+        };
+    }
+</script>

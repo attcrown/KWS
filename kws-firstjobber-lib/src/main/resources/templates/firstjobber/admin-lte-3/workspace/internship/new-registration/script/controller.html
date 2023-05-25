@@ -1,0 +1,86 @@
+<script th:inline="javascript">
+    const kws_data = /*[[${kws_data}]]*/ {};
+
+    console.log("kws_data => ", kws_data);
+
+    app.controller("InternshipNewRegistrationController", ["$scope", "$http", ($scope, $http) => {
+        $scope.internshipRegisterStatuses = kws_data.internshipRegisterStatuses || [];
+        $scope.internshipRegisters = kws_data.internshipRegisters || [];
+        $scope.selectedInternshipRegister;
+
+        $scope.isLoading = false;
+        $scope.criteria = {};
+        $scope.paging = {};
+        $scope.selectedInternshipProfile;
+        $scope.mode = "list"; // ["list", "entry"]
+        $scope.entryMode = ""; // ["add", "edit"]
+
+        $scope.init = function() {
+            console.log("### InternshipNewRegistrationController.init ###");
+            // console.log("internships => ", $scope.internships);
+
+            // useApi($scope, $http);
+            // useListController($scope, $http);
+            // useEntryController($scope, $http);
+
+            $scope.criteria = {
+                educationFacultyIds: [],
+                name: ''
+            };
+
+            $scope.paging = {
+                pageNo: 1,
+                pageSize: 25,
+                totalPage: 0,
+                totalSize: 0
+            };
+
+            $('.select2').select2({ theme: 'bootstrap4' });
+        };
+
+        $scope.getInternshipTypeRibbonClass = function(internshipRegister) {
+            if(internshipRegister) {
+                if(internshipRegister.registerStatusId === 'Registered') {
+                    return "text-danger";
+                } else if(internshipRegister.registerStatusId === 'TestUploaded') {
+                    return "text-warning";
+                } else if(internshipRegister.registerStatusId === 'Reviewing') {
+                    return "text-info";
+                }
+            }
+        };
+
+        $scope.swapMode = function() {
+            if($scope.mode === 'list') {
+                $scope.toEntryMode();
+            } else if($scope.mode === 'entry') {
+                $scope.toListMode();
+            }
+        };
+
+        $scope.toListMode = function() {
+            $scope.mode = 'list';
+            $scope.selectedInternshipRegister = undefined;
+        };
+
+        $scope.toEntryMode = function() {
+            $scope.mode = 'entry';
+        };
+
+        $scope.requestOpenProfile = function(internshipRegister) {
+            console.log("### InternshipNewRegistrationController.requestOpenProfile ###");
+            $scope.toEntryMode();
+            $scope.selectedInternshipRegister = internshipRegister;
+        };
+
+        $scope.getDisplayInternshipProfilePhoto = function(internshipProfile) {
+            if(internshipProfile) {
+                if(internshipProfile.personalInfo.formalPhotoURL) {
+                    return internshipProfile.personalInfo.formalPhotoURL;
+                } else if(internshipProfile.personalInfo.informalPhotoURL) {
+                    return internshipProfile.personalInfo.informalPhotoURL;
+                }
+            }
+        };
+    }]);
+</script>

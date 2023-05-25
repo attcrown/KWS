@@ -1,0 +1,284 @@
+<div class="card mx-5">
+  <div class="card-header">
+    <h3 class="card-title">ข้อมูลส่วนตัว</h3>
+  </div>
+
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>คำนำหน้า</label><span class="red-asterisk"> *</span>
+          <select
+            class="form-control"
+            style="width: 100%"
+            ng-model="criteria.prefix"
+          >
+            <option value="" disabled selected hidden>
+              --- กรุณาเลือก ---
+            </option>
+            <option
+              ng-repeat="prefix in prefix | orderBy: 'name'"
+              ng-value="prefix.name"
+            >
+              {{ prefix.name }}
+            </option>
+          </select>
+          <div class="text-danger" ng-show="!criteria.prefix">
+            กรุณาเลือกคำนำหน้า
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>ชื่อ - นามสกุล (ภาษาไทยเท่านั้น)</label
+          ><span class="red-asterisk"> *</span>
+          <input
+            type="text"
+            class="form-control"
+            ng-model="criteria.name"
+            required
+          />
+          <div class="text-danger" ng-show="!criteria.name">
+            กรุณาระบุชื่อ-นามสกุล (ภาษาไทยเท่านั้น)
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>ชื่อเล่น (ภาษาไทยเท่านั้น)</label
+          ><span class="red-asterisk"> *</span>
+          <input
+            type="text"
+            class="form-control"
+            ng-model="criteria.nickname"
+          />
+          <div class="text-danger" ng-show="!criteria.nickname">
+            กรุณาระบุชื่อเล่น (ภาษาไทยเท่านั้น)
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>เบอร์โทรศัพท์</label><span class="red-asterisk"> *</span>
+          <input
+            type="text"
+            class="form-control"
+            ng-model="criteria.phone"
+            ng-pattern="/^[0-9]{10}$/"
+            ng-required="true"
+          />
+          <div ng-show="!criteria.phone" class="text-danger">
+            เบอร์โทรศัพท์ต้องประกอบด้วยตัวเลข 10 หลัก
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>อายุ</label>
+          <input type="number" class="form-control" ng-model="criteria.old" />
+          <div ng-show="!criteria.old" class="text-danger">กรุณาระบุอายุ</div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>ที่อยู่ปัจจุบัน</label>
+          <input
+            type="text"
+            class="form-control"
+            ng-model="criteria.location"
+          />
+          <div ng-show="!criteria.location" class="text-danger">
+            กรุณากรอกที่อยู่ปัจจุบัน
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>ชื่อ Line (Line ที่ใช้แอดกับทางบริษัท)</label>
+          <input type="text" class="form-control" ng-model="criteria.line" />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>ชื่อ Facebook</label>
+          <input
+            type="text"
+            class="form-control"
+            ng-model="criteria.facebook"
+          />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>สัญชาติ</label>
+          <input
+            type="text"
+            class="form-control"
+            ng-model="criteria.nationality"
+          />
+          <div ng-show="!criteria.nationality" class="text-danger">
+            กรุณาระบุสัญชาติ
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>เชื้อชาติ</label>
+          <input
+            type="text"
+            class="form-control"
+            ng-model="criteria.ethnicity"
+          />
+          <div ng-show="!criteria.ethnicity" class="text-danger">
+            กรุณาระบุเชื้อชาติ
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Line ID สำหรับติดต่อประสานงาน และส่งข้อมูลเพิ่มเติม</label>
+          <input
+            type="text"
+            class="form-control"
+            ng-model="criteria.linework"
+          />
+          <div ng-show="!criteria.linework" class="text-danger">
+            กรุณาระบุ Line ID สำหรับติดต่อประสานงาน
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>งานอดิเรก/สิ่งที่สนใจเป็นพิเศษ</label>
+          <input type="text" class="form-control" ng-model="criteria.Wishes" />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>ประเภทบุคคล</label>
+          <select
+            class="form-control"
+            style="width: 100%"
+            ng-model="criteria.indtype"
+          >
+            <option value="" disabled selected hidden>
+              --- กรุณาเลือก ---
+            </option>
+            <option
+              ng-repeat="prefix in prefix | orderBy: 'name'"
+              ng-value="prefix.name"
+            >
+              {{ prefix.name }}
+            </option>
+          </select>
+          <div ng-show="!criteria.indtype" class="text-danger">
+            กรุณาเลือกประเภทบุคคล
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>คุณมีอาการดังนี้ หรือไม่</label>
+          <select
+            class="form-control"
+            style="width: 100%"
+            ng-model="criteria.sick"
+          >
+            <option value="" disabled selected hidden>
+              --- กรุณาเลือก ---
+            </option>
+            <option
+              ng-repeat="prefix in prefix | orderBy: 'name'"
+              ng-value="prefix.name"
+            >
+              {{ prefix.name }}
+            </option>
+          </select>
+          <div ng-show="!criteria.sick" class="text-danger">
+            กรุณาเลือกอาการ
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label>ขับรถอะไรได้บ้าง</label>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            ng-model="criteria.car"
+          />
+          <label class="form-check-label">ขับรถยนต์ได้ / มีใบขับขี่</label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            ng-model="criteria.car_not"
+          />
+          <label class="form-check-label">ขับรถยนต์ได้ / ไม่มีใบขับขี่</label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            ng-model="criteria.moto"
+          />
+          <label class="form-check-label">ขับมอเตอร์ไซด์ได้ / มีใบขับขี่</label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            ng-model="criteria.moto_not"
+          />
+          <label class="form-check-label"
+            >ขับมอเตอร์ไซด์ได้ / ไม่มีใบขับขี่</label
+          >
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            ng-model="criteria.notdrive"
+          />
+          <label class="form-check-label">ขับรถไม่เป็น</label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            ng-model="criteria.drive_other"
+          />
+          <label class="form-check-label">อื่นๆ</label>
+        </div>
+      </div>
+
+      <div class="col-md-6"></div>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <div class="text-right">
+      <!-- <button class="btn btn-success" ng-click="requestAddInternshipProfile()">
+                <i class="fa fa-plus"></i> เพิ่มข้อมูล
+            </button> -->
+      <button class="btn btn-primary" ng-click="sum()">
+        <i class="fa fa-search"></i> shows
+      </button>
+    </div>
+  </div>
+</div>

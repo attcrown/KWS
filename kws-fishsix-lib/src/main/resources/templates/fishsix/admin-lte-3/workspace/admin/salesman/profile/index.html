@@ -1,0 +1,15 @@
+<div th:replace="fishsix/admin-lte-3/workspace/admin/salesman/profile/script/controller"></div>
+
+<section ng-controller="FishsixSalesmanProfileController" ng-init="init()">
+    <div ng-if="isLoading" class="kws-loader">
+        <div class='kws-loader-spin'></div>
+    </div>
+
+    <div ng-show="mode === 'list'">
+        <div th:replace="fishsix/admin-lte-3/workspace/admin/salesman/profile/search"></div>
+        <div th:replace="fishsix/admin-lte-3/workspace/admin/salesman/profile/list"></div>
+    </div>
+    <div ng-show="mode === 'entry'">
+        <div th:replace="fishsix/admin-lte-3/workspace/admin/salesman/profile/entry"></div>
+    </div>
+</section>

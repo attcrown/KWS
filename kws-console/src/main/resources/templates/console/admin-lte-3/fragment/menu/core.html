@@ -1,0 +1,102 @@
+<li class="nav-header text-light">CORE</li>
+
+<li class="nav-item">
+    <a id="core-dashboard-menuItem" th:href="@{/views/workspace/core/dashboard}" class="nav-link"> 
+        <i class="nav-icon fas fa-tachometer-alt"></i>
+        <p>แดชบอร์ด</p>
+    </a>
+</li>
+
+<li id="core-education-menuDropdown" class="nav-item has-treeview">
+    <a href="#" class="nav-link"> 
+        <i class="nav-icon fas fa-folder-open text-warning"></i>
+        <p>
+            ข้อมูลการศึกษา <i class="right fas fa-angle-left"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a id="core-education-dashboard-menuItem" th:href="@{/views/workspace/core/education/dashboard}" class="nav-link"> 
+                <i class="far fa-circle nav-icon text-teal"></i>
+                <p>แดชบอร์ด</p>
+            </a>
+        </li>
+        <li ng-if="false" class="nav-item">
+            <a id="core-education-schoolType-menuItem" th:href="@{/views/workspace/core/education/school-type}" class="nav-link"> 
+                <i class="far fa-circle nav-icon text-teal"></i>
+                <p>ประเภทสถานศึกษา</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a id="core-education-school-menuItem" th:href="@{/views/workspace/core/education/school}" class="nav-link">
+                <i class="far fa-circle nav-icon text-teal"></i>
+                <p>สถานศึกษา</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a id="core-education-educationDegree-menuItem" th:href="@{/views/workspace/core/education/education-degree}" class="nav-link">
+                <i class="far fa-circle nav-icon text-teal"></i>
+                <p>วุฒิการศึกษา</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a id="core-education-educationFaculty-menuItem" th:href="@{/views/workspace/core/education/education-faculty}" class="nav-link">
+                <i class="far fa-circle nav-icon text-teal"></i>
+                <p>คณะวิชา</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a id="core-education-educationMajor-menuItem" th:href="@{/views/workspace/core/education/education-major}" class="nav-link">
+                <i class="far fa-circle nav-icon text-teal"></i>
+                <p>สาขาวิชา</p>
+            </a>
+        </li>
+    </ul>
+</li>
+
+<li id="core-stats-menuDropdown" class="nav-item has-treeview">
+    <a href="#" class="nav-link"> 
+        <i class="nav-icon fas fa-folder-open text-warning"></i>
+        <p>
+            สถิติ-ข้อมูล <i class="right fas fa-angle-left"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a id="core-stats-dashboard-menuItem" th:href="@{/views/workspace/core/stats/dashboard}" class="nav-link"> 
+                <i class="far fa-circle nav-icon text-teal"></i>
+                <p>แดชบอร์ด</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a id="core-stats-fishsix-menuItem" th:href="@{/views/workspace/core/stats/fishsix}" class="nav-link">
+                <i class="far fa-circle nav-icon text-teal"></i>
+                <p>Fishsix</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a id="core-stats-esc-menuItem" th:href="@{/views/workspace/core/stats/esc}" class="nav-link">
+                <i class="far fa-circle nav-icon text-teal"></i>
+                <p>ESC</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a id="core-stats-knoware-menuItem" th:href="@{/views/workspace/core/stats/knoware}" class="nav-link">
+                <i class="far fa-circle nav-icon text-teal"></i>
+                <p>Knoware</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a id="core-stats-firstjobber-menuItem" th:href="@{/views/workspace/core/stats/firstjobber}" class="nav-link">
+                <i class="far fa-circle nav-icon text-teal"></i>
+                <p>90% First Jobber</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a id="core-stats-yx-menuItem" th:href="@{/views/workspace/core/stats/yx}" class="nav-link">
+                <i class="far fa-circle nav-icon text-teal"></i>
+                <p>YX</p>
+            </a>
+        </li>
+    </ul>
+</li>

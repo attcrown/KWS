@@ -1,0 +1,211 @@
+<script th:inline="javascript">
+    function useApi($scope, $http)
+    {
+        $scope.searchStudentRegister = useSearchStudentRegister($scope, $http);
+        $scope.approveStudentRegister = useApproveStudentRegister($scope, $http);
+        $scope.rejectStudentRegister = useRejectStudentRegister($scope, $http);
+    }
+
+    function useSearchStudentRegister($scope, $http)
+    {
+        return () => {
+            console.log("### FishsixStudentNewRegistrationController.searchStudentRegister ###");
+            console.log("criteria => " + JSON.stringify($scope.criteria));
+
+            $scope.studentRegisters = [];
+
+            const requestMessage = undefined;
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/student-register/search`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    $scope.studentRegisters = response.data.body.studentRegisters;
+                    console.log("$scope.studentRegisters => ", $scope.studentRegisters);
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถค้นหาข้อมูลการลงทะเบียนนักเรียนได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถค้นหาข้อมูลการลงทะเบียนนักเรียนได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+
+    function useApproveStudentRegister($scope, $http)
+    {
+        return (studentRegister) => {
+            console.log("### FishsixStudentNewRegistrationController.approveStudentRegister ###");
+            console.log("studentRegister => ", studentRegister);
+
+            const requestMessage = {
+                studentRegister
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/student-register/approve`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    const approvedStudentRegister = response.data.body.approvedStudentRegister;
+                    console.log("approvedStudentRegister => ", approvedStudentRegister);
+
+                    $scope.studentRegisters = $scope.studentRegisters.filter(e => e.id !== approvedStudentRegister.id);
+                    $scope.toListMode();
+                    swal("บันทึกข้อมูลสำเร็จ", "อนุมัติการลงทะเบียนข้อมูลนักเรียนสำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถอนุมัติการลงทะเบียนข้อมูลนักเรียนได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถอนุมัติการลงทะเบียนข้อมูลนักเรียนได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+
+    function useRejectStudentRegister($scope, $http)
+    {
+        return (studentRegister) => {
+            console.log("### FishsixStudentNewRegistrationController.rejectStudentRegister ###");
+            console.log("studentRegister => ", studentRegister);
+
+            const requestMessage = {
+                studentRegister
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/student-register/reject`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    const rejectedStudentRegister = response.data.body.rejectedStudentRegister;
+                    console.log("rejectedStudentRegister => ", rejectedStudentRegister);
+
+                    $scope.studentRegisters = $scope.studentRegisters.filter(e => e.id !== rejectedStudentRegister.id);
+                    $scope.toListMode();
+                    swal("บันทึกข้อมูลสำเร็จ", "Reject การลงทะเบียนข้อมูลนักเรียนสำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถ Reject การลงทะเบียนข้อมูลนักเรียนได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถ Reject การลงทะเบียนข้อมูลนักเรียนได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+</script>

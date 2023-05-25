@@ -1,0 +1,232 @@
+<div class="card">
+    <!-- card-header -->
+    <div class="card-header">
+        <h3 class="card-title text-maroon">นักศึกษาฝึกงานที่ลงทะเบียนใหม่</h3>
+    
+        <div class="card-tools d-none">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <!-- /.card-header -->
+
+    <!-- card-body -->
+    <div class="card-body p-2">
+        <!-- table-responsive -->
+        <div class="table-responsive d-none">
+            <table class="table m-0">
+                <thead>
+                    <tr>
+                        <th>ชื่อ-สกุล</th>
+                        <th>สถานศึกษา</th>
+                        <th>ตำแหน่งงานที่สนใจ</th>
+                        <th>สถานะ</th>
+                        <th>ลงทะเบียนเมื่อ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <a href="javascript:void(0)" ng-click="requestOpenProfile()">Francesco Totti</a>
+                        </td>
+                        <td>มหาวิทยาลัยแม่โจ้</td>
+                        <td>Programmer</td>
+                        <td>
+                            <span class="badge badge-warning">รอพิจารณา</span>
+                        </td>
+                        <td>2021-06-21 08:30:25</td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <a href="javascript:void(0)" ng-click="requestOpenProfile()">Gianluigi Buffon</a>
+                        </td>
+                        <td>มหาวิทยาลัยสงขลานครินทร์</td>
+                        <td>Graphics Design</td>
+                        <td>
+                            <span class="badge badge-warning">รอพิจารณา</span>
+                        </td>
+                        <td>2021-06-20 18:02:23</td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <a href="javascript:void(0)" ng-click="requestOpenProfile()">Andrei Chevshenko</a>
+                        </td>
+                        <td>มหาวิทยาลัยกรุงเทพ</td>
+                        <td>Video Editor</td>
+                        <td>
+                            <span class="badge badge-warning">รอพิจารณา</span>
+                        </td>
+                        <td>2021-06-20 16:20:45</td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <a href="javascript:void(0)" ng-click="requestOpenProfile()">Alessandro Nesta</a>
+                        </td>
+                        <td>มหาวิทยาลัยนเรศวร</td>
+                        <td>Marketting</td>
+                        <td>
+                            <span class="badge badge-warning">รอพิจารณา</span>
+                        </td>
+                        <td>2021-06-19 12:50:12</td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <a href="javascript:void(0)" ng-click="requestOpenProfile()">Fabio Cannavaro</a>
+                        </td>
+                        <td>มหาวิทยาลัยธรรมศาสตร์</td>
+                        <td>Programmer</td>
+                        <td>
+                            <span class="badge badge-warning">รอพิจารณา</span>
+                        </td>
+                        <td>2021-06-18 09:01:51</td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <a href="javascript:void(0)" ng-click="requestOpenProfile()">Paolo Maldini</a>
+                        </td>
+                        <td>วิทยาลัยสารพัดช่างบางมด</td>
+                        <td>Systam Analyst</td>
+                        <td>
+                            <span class="badge badge-warning">รอพิจารณา</span>
+                        </td>
+                        <td>2021-06-17 19:10:45</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- /.table-responsive -->
+
+        <div class="row" ng-show="internshipRegisters.length > 0">
+            <div ng-repeat="internshipRegister in internshipRegisters | orderBy: 'registeredAt'" class="col-12 col-sm-6 col-md-4 col-xl-3 d-flex align-items-stretch flex-column">
+                <!--
+                <div class="ribbon-wrapper ribbon-lg">
+                    <div class="ribbon text-md" ng-class="getInternshipTypeRibbonClass(internshipRegister)">
+                        {{ internshipRegister.registerStatusName }}
+                    </div>
+                </div>
+                -->
+
+                <div class="card bg-light d-flex flex-fill">
+                    <div class="card-header border-bottom-0">
+                        <div class="text-primary"><strong>{{ internshipRegister.internInfo.internshipTypeName }}</strong></div>
+                        <div class="text-muted">{{ internshipRegister.registeredAt }}</div>
+
+                        <hr>
+
+                        <div>
+                            <label>ระยะเวลาการฝึกงาน : </label>
+                            <span class="text-muted">{{ internshipRegister.internInfo.requestStartDate }} ถึง {{ internshipRegister.internInfo.requestEndDate }}</span>
+                        </div>
+
+                        <div>
+                            <label>สถานะ : </label>
+                            <span ng-class="getInternshipTypeRibbonClass(internshipRegister)">{{ internshipRegister.registerStatusName }}</span>
+                        </div>
+
+                        <hr>
+                    </div>
+
+                    <div class="card-body pt-0 py-2">
+                        <div class="row">
+                            <div class="col-8">
+                                <h2 class="lead"><b>{{ internshipRegister.personalInfo.firstName }} {{ internshipRegister.personalInfo.lastName }}</b></h2>
+                                <div class="text-muted text-sm">
+                                    <b>ตำแหน่งงานที่สนใจ: </b>
+                                </div>
+                                <ul class="mx-2 mb-0 fa-ul text-muted">
+                                    <li class="small" ng-repeat="requestJob in internshipRegister.internInfo.requestJobs">
+                                        - {{ requestJob.name }}
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-4 text-center">
+                                <!-- <img ng:src="{{ internshipRegister.personalInfo.formalPhotoURL }}" alt="user-avatar" class="img-circle img-fluid"> -->
+                                <img ng:src="{{ getDisplayInternshipProfilePhoto(internshipRegister) }}" alt="user-avatar" class="img-circle img-fluid">
+                            </div>
+                        </div>
+
+                        <div class="row p-0 my-1 border rounded">
+                            <div class="col-12 p-0">
+                                <ul class="mx-2 mb-0 fa-ul text-muted">
+                                    <li class="small my-1">
+                                        <strong>ระดับการศึกษา: </strong> {{ internshipRegister.educationInfo.levelName }}
+                                    </li>
+                                    <li class="small my-1">
+                                        <strong>ระดับชั้น: </strong> {{ internshipRegister.educationInfo.classNo }}
+                                    </li>
+                                    <li class="small my-1">
+                                        <strong>สถานศึกษา : </strong> {{ internshipRegister.educationInfo.schoolName }}
+                                    </li>
+                                    <li class="small my-1">
+                                        <strong>คณะ: </strong> {{ internshipRegister.educationInfo.facultyName }}
+                                    </li>
+                                    <li class="small my-1">
+                                        <strong>สาขา: </strong> {{ internshipRegister.educationInfo.majorName }}
+                                    </li>
+                                    <li class="small my-1">
+                                        <strong>เกรดเฉลี่ยสะสม: </strong> {{ internshipRegister.educationInfo.gpa }}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="row p-0 my-1 border rounded">
+                            <div class="col-12 p-0">
+                                <ul class="mx-2 mb-0 fa-ul text-muted">
+                                    <li class="small my-1">
+                                        <strong>Phone : </strong> {{ internshipRegister.personalInfo.mobileNo }}
+                                    </li>
+                                    <li class="small my-1">
+                                        <strong>Email: </strong> {{ internshipRegister.personalInfo.email }}
+                                    </li>
+                                    <li class="small my-1">
+                                        <strong>Line ID : </strong> {{ internshipRegister.personalInfo.lineId }}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!--
+                        <hr>
+
+                        <div>
+                            <label>สถานะ : </label>
+                            <span ng-class="getInternshipTypeRibbonClass(internshipRegister)">{{ internshipRegister.registerStatusName }}</span>
+                        </div>
+                        -->
+                    </div>
+                    <div class="card-footer">
+                        <div class="text-right">
+                            <a href="javascript:void(0)" class="btn btn-sm btn-primary btn-block" ng-click="requestOpenProfile(internshipRegister)">
+                                <i class="fas fa-user"></i> ดูโปรไฟล์
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" ng-show="internshipRegisters.length === 0">
+            <div class="col-12 text-center">
+                <h5 class="text-center text-muted">ไม่มีข้อมูลนักศึกษาฝึกงานที่ลงทะเบียนใหม่</h5>
+            </div>
+        </div>
+    </div>
+    <!-- /.card-body -->
+
+    <!-- card-footer -->
+    <div ng-if="false" class="card-footer clearfix">
+        <!-- <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">Place New Order</a> -->
+        <a href="javascript:void(0)" class="btn btn-sm btn-info float-right">ดูทั้งหมด</a>
+    </div>
+    <!-- /.card-footer -->
+</div>

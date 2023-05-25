@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="KWS Console" name="keywords">
+        <meta content="KWS Console Web Application" name="description">
+        
+        <title>KWS Console | Login</title>
+        
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400&display=swap">
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/icheck-bootstrap/3.0.1/icheck-bootstrap.min.css">
+	    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.0.5/dist/css/adminlte.min.css">
+        <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+	    
+	    <script	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    	<script	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    	<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.0.5/dist/js/adminlte.min.js"></script>
+    </head>
+
+    <body class="hold-transition login-page" onload="init()">
+        <div id="loading-spinner" class="kws-loader d-none">
+            <div class='kws-loader-spin'></div>
+        </div>
+
+        <div class="login-box">
+            <div class="login-logo">
+                <a href="#"><b class="text-indigo">KWS</b>Console</a>
+            </div>
+            <!-- /.login-logo -->
+            <div class="card">
+                <div class="card-body login-card-body">
+                    <div th:if="${kws_webEnv != 'prod'}" class="ribbon-wrapper ribbon-lg">
+                        <div class="ribbon bg-success text-lg" th:text="${kws_webEnv}">
+                        </div>
+                    </div>
+
+                    <p class="login-box-msg text-maroon">เข้าสู่ระบบ</p>
+
+                    <!-- <form> -->
+                        <div class="input-group mb-3">
+                            <input id="username" type="text" class="form-control" placeholder="ชื่อผู้ใช้" onkeyup="inputKeyupHandler(event)">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-envelope"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input id="password" type="password" class="form-control" placeholder="รหัสผ่าน" onkeyup="inputKeyupHandler(event)">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-lock"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="icheck-primary d-none">
+                                    <input type="checkbox" id="remember"> 
+                                    <label for="remember"> Remember Me </label>
+                                </div>
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-4">
+                                <button class="btn btn-primary btn-block" onclick="login()">เข้าสู่ระบบ</button>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                    <!-- </form> -->
+
+                    <div class="social-auth-links text-center mb-3 d-none">
+                        <p>- OR -</p>
+                        <a href="#" class="btn btn-block btn-primary"> 
+                            <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
+                        </a>
+                        <a href="#" class="btn btn-block btn-danger"> 
+                            <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
+                        </a>
+                    </div>
+                    <!-- /.social-auth-links -->
+
+                    <p class="mb-1">
+                        <a th:href="@{/views/forgot-password}">ลืมรหัสผ่าน</a>
+                    </p>
+                    <p class="mb-0 d-none">
+                        <a href="register.html" class="text-center">Register a new membership</a>
+                    </p>
+                </div>
+                <!-- /.login-card-body -->
+            </div>
+        </div>
+    </body>
+
+    <script th:inline="javascript">
+        const kws_webEnv = /*[[${kws_webEnv}]]*/ '';
+        const kws_contextPath = /*[[${kws_contextPath}]]*/ '';
+        const kws_callbackURL = /*[[${kws_callbackURL}]]*/ '';
+
+        console.log("kws_webEnv => " + kws_webEnv);
+        console.log("kws_contextPath => " + kws_contextPath);
+        console.log("kws_callbackURL => " + kws_callbackURL);
+
+        function init()
+        {
+            if(kws_webEnv === "local" || kws_webEnv === "dev") {
+                $("#username").val("admin@kws");
+                $("#password").val("1234");
+            }
+        }
+
+        function inputKeyupHandler(event)
+        {
+            if(event.keyCode === 13) {
+                event.preventDefault();
+                login();
+            }
+        }
+
+        function login()
+        {
+            console.log("### login ###");
+            let username = $("#username").val().trim();
+            let password = $("#password").val().trim();
+            console.log("username => " + username);
+            console.log("password => " + password);
+
+            if(! username) {
+                // alert("กรุณาระบุ Username");
+                swal("ข้อมูลไม่ถูกต้อง", "กรุณาระบุ Username", "error");
+                return;
+            }
+
+            if(! password) {
+                // alert("กรุณาระบุ Password");
+                swal("ข้อมูลไม่ถูกต้อง", "กรุณาระบุ Password", "error");
+                return;
+            }
+
+            let url = kws_contextPath + "/api/login";
+            console.log("url => " + url);
+
+            var data = JSON.stringify({
+                platform: "web",
+                username: username,
+                password: password
+            });
+
+            $("#loading-spinner").removeClass("d-none");
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                headers: {
+                    "api-key": "bdd60b73-cfd2-4efa-9183-1eb2c2db72e3-ecbf5efb-3c6e-473e-9404-f18898eb9235"
+                },
+                dataType: 'json',
+                contentType: 'application/json',
+                data: data,
+                success: function (response) {
+                    $("#loading-spinner").addClass("d-none");
+                    // alert(JSON.stringify(response));
+                    if(response.head.status === 'Success') {
+                        location = kws_callbackURL;
+                    } else if(response.head.status === 'Error') {
+                        swal(response.head.statusCode, response.head.statusMessage, "error");
+                    }
+                },
+                error: function(xhr, textStatus, error) {
+                    $("#loading-spinner").addClass("d-none");
+                    console.log(xhr);
+                    console.log(textStatus);
+                    console.log(error);
+                    swal('ERROR', error, "error");
+                }
+            });
+        }
+    </script>
+</html>

@@ -1,0 +1,72 @@
+<div th:replace="core/admin-lte-3/workspace/education/education-faculty/script/api"></div>
+<div th:replace="core/admin-lte-3/workspace/education/education-faculty/script/list-controller"></div>
+<div th:replace="core/admin-lte-3/workspace/education/education-faculty/script/entry-controller"></div>
+
+<script th:inline="javascript">
+    app.controller("EducationFacultyController", ["$scope", "$http", ($scope, $http) => {
+        $scope.isLoading = false;
+        $scope.criteria = {};
+        $scope.paging = {};
+        $scope.educationFaculties = [];
+        $scope.selectedEducationFaculty;
+        $scope.mode = "list"; // ["list", "entry"]
+        $scope.entryMode = ""; // ["add", "edit"]
+
+        $scope.init = function() {
+            console.log("### EducationFacultyController.init ###");
+
+            useApi($scope, $http);
+            useListController($scope, $http);
+            useEntryController($scope, $http);
+
+            $scope.criteria = {
+                name: ''
+            };
+
+            $scope.paging = {
+                pageNo: 1,
+                pageSize: 25,
+                totalPage: 0,
+                totalSize: 0
+            };
+        };
+
+        $scope.swapMode = function() {
+            if($scope.mode === 'list') {
+                $scope.toEntryMode();
+            } else if($scope.mode === 'entry') {
+                $scope.toListMode();
+            }
+        };
+
+        $scope.toListMode = function() {
+            $scope.mode = 'list';
+        };
+
+        $scope.toEntryMode = function() {
+            $scope.mode = 'entry';
+        };
+
+        $scope.requestAddEducationFaculty = function() {
+            console.log("### EducationFacultyController.requestAddEducationFaculty ###");
+            $scope.toEntryMode();
+            $scope.entryMode = "add";
+            $scope.selectedEducationFaculty = {};
+            $scope.resetForm();
+        };
+
+        $scope.resetForm = function() {
+            setTimeout(() => {
+                $scope.educationFacultyForm.$submitted = false;
+
+                $scope.educationFacultyForm.name.$setUntouched();
+                $scope.educationFacultyForm.name.$setPristine();
+
+                $scope.educationFacultyForm.description.$setUntouched();
+                $scope.educationFacultyForm.description.$setPristine();
+
+                $scope.$apply();
+            }, 0);
+        };
+    }]);
+</script>

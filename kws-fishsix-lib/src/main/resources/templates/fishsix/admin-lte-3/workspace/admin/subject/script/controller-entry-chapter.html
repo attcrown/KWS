@@ -1,0 +1,151 @@
+<script th:inline="javascript">
+    function useEntryChapterController($scope, $http)
+    {
+        console.info("### FishsixSubjectController.useEntryChapterController ###");
+
+        $scope.chapterEntryMode = 'add'; // ['add', 'edit']
+
+        $scope.requestAddChapter = useRequestAddChapter($scope, $http);
+        $scope.requestEditChapter = useRequestEditChapter($scope, $http);
+        $scope.requestRemoveChapter = useRequestRemoveChapter($scope, $http);
+        $scope.saveChapter = useSaveChapter($scope, $http);
+        $scope.buildChapterFormData = useBuildChapterFormData($scope, $http);
+    }
+
+    function useRequestAddChapter($scope, $http)
+    {
+        return () => {
+            console.log("### FishsixCourseController.requestAddChapter ###");
+
+            if(! $scope.selectedSubjectProfile.chapters) {
+                $scope.selectedSubjectProfile.chapters = [];
+            }
+
+            $scope.chapterEntryMode = 'add';
+
+            let seqNo = 1;
+            if($scope.selectedSubjectProfile.chapters.length > 0) {
+                seqNo = $scope.selectedSubjectProfile.chapters[$scope.selectedSubjectProfile.chapters.length - 1].seqNo + 1;
+            }
+
+            $scope.selectedChapter = {
+                seqNo: seqNo,
+                name: '',
+                description: '',
+                remark: '',
+                semaster: 1
+            };
+
+            showChapterModal();
+        };
+    }
+
+    function useRequestEditChapter($scope, $http)
+    {
+        return (chapter) => {
+            console.log("### FishsixCourseController.requestEditChapter ###");
+
+            $scope.chapterEntryMode = 'edit';
+            $scope.selectedChapter = chapter;
+            showChapterModal();
+        };
+    }
+
+    function useRequestRemoveChapter($scope, $http)
+    {
+        return (chapter) => {
+            console.log("### FishsixCourseController.requestRemoveChapter ###");
+
+            let chapters = $scope.selectedSubjectProfile.chapters;
+            
+            $scope.selectedSubjectProfile.chapters = chapters.filter(_chapter => _chapter.seqNo !== chapter.seqNo);
+
+            if($scope.entryMode === 'edit') {
+                $scope.removeChapter(chapter);
+            }
+        };
+    }
+
+    function useSaveChapter($scope, $http)
+    {
+        return () => {
+            if($scope.chapterEntryMode === 'add') {
+                $scope.selectedSubjectProfile.chapters.push($scope.selectedChapter);
+                if($scope.entryMode === 'add') {
+                    
+                } else if($scope.entryMode === 'edit') {
+                    $scope.selectedChapter.subjectId = $scope.selectedSubjectProfile.id;
+                    $scope.createChapter($scope.selectedChapter);
+                }
+            } else if($scope.chapterEntryMode === 'edit') {
+                if($scope.entryMode === 'edit') {
+                    $scope.updateChapter($scope.selectedChapter);
+                }
+            }
+
+            hideChapterModal();
+        };
+    }
+
+    function useBuildChapterFormData($scope, $http)
+    {
+        return (chapter) => {
+            const formData = new FormData();
+
+            if(chapter.id) {
+                formData.append("id", chapter.id);
+            }
+
+            formData.append("subjectId", chapter.subjectId);
+            formData.append("seqNo", chapter.seqNo);
+            formData.append("name", chapter.name);
+            formData.append("description", chapter.description);
+            formData.append("remark", chapter.remark);
+
+            return formData;
+        };
+    }
+
+    function showChapterModal()
+    {
+        $('#chapterModal').modal({
+            backdrop: 'static'
+        });
+    }
+
+    function hideChapterModal()
+    {
+        $('#chapterModal').modal("hide");
+    }
+
+    function validate($scope)
+    {
+        console.log("### FishsixCourseController.validate ###");
+
+        if(! $scope.selectedChapter.seqNo || isNaN($scope.selectedChapter.seqNo)) {
+            return {
+                valid: false,
+                message: 'กรุณาระบุบทที่ให้ถูกต้อง'
+            }
+        }
+
+        if(! $scope.selectedChapter.name) {
+            return {
+                valid: false,
+                message: 'กรุณาระบุชื่อบท'
+            }
+        }
+
+
+        if(! $scope.selectedChapter.description) {
+            return {
+                valid: false,
+                message: 'กรุณาระบุรายละเอียด'
+            }
+        }
+
+        return {
+            valid: true
+        };
+    }
+</script>

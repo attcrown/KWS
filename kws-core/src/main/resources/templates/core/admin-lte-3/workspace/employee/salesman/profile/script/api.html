@@ -1,0 +1,303 @@
+<script th:inline="javascript">
+    function useApi($scope, $http)
+    {
+        $scope.search = useSearch($scope, $http);
+        $scope.createSalesman = useCreateSalesman($scope, $http);
+        $scope.updateSalesman = useUpdateSalesman($scope, $http);
+        $scope.removeSalesman = useRemoveSalesman($scope, $http);
+    }
+
+    function useSearch($scope, $http)
+    {
+        return () => {
+            console.log("### SalesmanProfileController.search ###");
+            console.log("criteria => " + JSON.stringify($scope.criteria));
+
+            $scope.salesmans = [];
+
+            const requestMessage = {
+                criteria: $scope.criteria,
+
+                paging: {
+                    pageNo: $scope.paging.pageNo,
+                    pageSize: $scope.paging.pageSize
+                },
+
+                sortBy: [
+                    {
+                        field: "firstName",
+                        order: "asc"
+                    }
+                ]
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/core/salesman/fetch-all`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    const salesmans = response.data.body.salesmans.filter(e => {
+                        const firstName = $scope.criteria.firstName.trim();
+                        const lastName = $scope.criteria.lastName.trim();
+
+                        if(firstName && !e.firstName.includes(firstName)) {
+                            return false;
+                        }
+
+                        if(lastName && !e.lastName.includes(lastName)) {
+                            return false;
+                        }
+
+                        return true;
+                    });
+
+                    $scope.salesmans = salesmans;
+                    $scope.paging.totalPage = response.data.body.totalPage;
+                    $scope.paging.totalSize = response.data.body.totalSize;
+
+                    if($scope.salesmans.length === 0 && $scope.paging.pageNo > 1) {
+                        $scope.gotoPageNo(1);
+                    }
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถค้นหาข้อมูลเซลล์ได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถค้นหาข้อมูลเซลล์ได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            };
+
+            const doneHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(doneHandler);
+        };
+    }
+
+    function useCreateSalesman($scope, $http)
+    {
+        return (salesman) => {
+            console.log("### SalesmanProfileController.createSalesman ###");
+            console.log("salesman => ", salesman);
+
+            const requestMessage = {
+                salesman
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/core/salesman/create`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    $scope.salesmans.push(response.data.body.createdSalesman);
+                    $scope.toListMode();
+                    swal("บันทึกข้อมูลสำเร็จ", "บันทึกข้อมูลเซลล์สำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกข้อมูลเซลล์ได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถบันทึกข้อมูลเซลล์ได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            };
+
+            const doneHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(doneHandler);
+        };
+    }
+
+    function useUpdateSalesman($scope, $http)
+    {
+        return (salesman) => {
+            console.log("### SalesmanProfileController.updateSalesman ###");
+            console.log("salesman => ", salesman);
+
+            const requestMessage = {
+                salesman
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/core/salesman/update`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    $scope.salesmans = $scope.salesmans.filter(e => e.id !== salesman.id);
+                    $scope.salesmans.push(response.data.body.updatedSalesman);
+                    $scope.toListMode();
+                    swal("บันทึกข้อมูลสำเร็จ", "บันทึกข้อมูลเซลล์สำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกข้อมูลเซลล์ได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถบันทึกข้อมูลเซลล์ได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            };
+
+            const doneHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(doneHandler);
+        };
+    }
+
+    function useRemoveSalesman($scope, $http)
+    {
+        return (salesman) => {
+            console.log("### SalesmanProfileController.removeSalesman ###");
+            console.log("salesman => ", salesman);
+
+            const requestMessage = {
+                salesmanId: salesman.id
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/core/salesman/remove`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+            
+            $scope.isLoading = true;
+            $http(options).
+            then(response => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    $scope.salesmans = $scope.salesmans.filter(e => e.id !== salesman.id);
+                    swal("ลบข้อมูลสำเร็จ", "ลบข้อมูลเซลล์สำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถลบข้อมูลเซลล์ได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            })
+            .catch(error => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถลบข้อมูลเซลล์ได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            })
+            .finally(() => {
+                $scope.isLoading = false;
+            });
+        };
+    }
+</script>

@@ -1,0 +1,63 @@
+<aside class="main-sidebar sidebar-dark-indigo elevation-4">
+	<!-- Brand Logo -->
+	<a th:href="@{/views/workspace/home}" class="brand-link"> 
+		<img th:src="@{/assets/template/admin-lte-3/img/AdminLTELogo.png}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+		<span class="brand-text font-weight-light">KWS Console</span>
+	</a>
+    <!-- /.Brand Logo -->
+
+	<!-- Sidebar -->
+	<div class="sidebar">
+        <div th:if="${kws_webEnv != 'prod'}" class="ribbon-wrapper ribbon-lg">
+            <div class="ribbon bg-success" th:text="${kws_webEnv}">
+            </div>
+        </div>
+
+		<!-- Sidebar user panel-->
+		<div class="user-panel mt-3 pb-3 mb-3 d-flex">
+			<div class="image">
+				<img th:src="@{/assets/template/admin-lte-3/img/user2-160x160.jpg}" class="img-circle elevation-2" alt="User Image">
+			</div>
+			<div class="info">
+				<a href="#" class="d-block">
+                    [[|${kws_userProfile.user.firstName} ${kws_userProfile.user.lastName}|]]
+                </a>
+			</div>
+		</div>
+        <!-- /.Sidebar user panel-->
+
+		<!-- Sidebar Menu -->
+		<nav class="nav-flat mt-2">
+			<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+                <li class="nav-item">
+                    <a id="home-menuItem" th:href="@{/views/workspace/home}" class="nav-link"> 
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+						<p>หน้าหลัก</p>
+				    </a>
+                </li>
+
+                <div th:replace="console/admin-lte-3/fragment/menu/core"></div>
+                <div th:replace="console/admin-lte-3/fragment/menu/firstjobber"></div>
+                <div th:replace="console/admin-lte-3/fragment/menu/esc"></div>
+                <div th:replace="console/admin-lte-3/fragment/menu/eziiwork"></div>
+			</ul>
+		</nav>
+		<!-- /.Sidebar Menu -->
+	</div>
+	<!-- /.Sidebar -->
+</aside>
+
+<script>
+    if(kws_activeMenus && kws_activeMenus.length > 0) {
+        kws_activeMenus.forEach(menu => {
+            if(menu.menuType == 'Dropdown') {
+                $("#" + menu.id).addClass("menu-open");
+                $("#" + menu.id + " > a").addClass("active");
+            } else if(menu.menuType == 'Item') {
+                $("#" + menu.id).addClass("active");
+                $("#" + menu.id + " > i").removeClass("text-teal");
+            }
+        });
+    }
+</script>

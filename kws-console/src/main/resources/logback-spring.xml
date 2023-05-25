@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+
+    <springProperty name="LOG_DIR" source="kws-console.log.dir"/>
+    <springProperty name="LOG_FILE_NAME" source="kws-console.log.file-name"/>
+
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %yellow(%d{yyyy-MM-dd HH:mm:ss}) %green(%-5level) [%magenta(%t)] [%boldCyan(%C)::%boldYellow(%M)::%boldGreen(%L)] %white(%C{1.})\n%boldGreen(message:) %msg%n%throwable\n
+            </Pattern>
+        </layout>
+    </appender>
+
+    <appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/${LOG_FILE_NAME}.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss} %p [%t] %C{1.}: %m%n</Pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily and when the file reaches 20 MegaBytes -->
+            <fileNamePattern>${LOG_DIR}/${LOG_FILE_NAME}-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>20MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+    
+    <!-- local env configure -->
+    <springProfile name="web_local">
+        <root level="INFO">
+            <appender-ref ref="Console" />
+        </root>
+        
+        <logger name="com.otc.kws" level="DEBUG" additivity="false">
+        	<appender-ref ref="Console" />
+	        <appender-ref ref="RollingFile" />
+	    </logger>
+    </springProfile>
+    <!-- local env configure -->
+    
+    <!-- dev env configure -->
+    <springProfile name="web_dev">
+        <root level="INFO">
+            <appender-ref ref="Console" />
+        </root>
+    </springProfile>
+    <!-- dev env configure -->
+    
+    <!-- test env configure -->
+    <springProfile name="web_test">
+        <root level="INFO">
+            <appender-ref ref="RollingFile" />
+	        <appender-ref ref="Console" />
+        </root>
+        
+        <logger name="com.otc.kws" level="DEBUG" />
+    </springProfile>
+    <!-- test env configure -->
+    
+    <!-- prod env configure -->
+    <springProfile name="web_prod">
+        <root level="INFO">
+            <appender-ref ref="RollingFile" />
+	        <appender-ref ref="Console" />
+        </root>
+        
+        <logger name="com.otc.kws" level="DEBUG" />
+    </springProfile>
+    <!-- prod env configure -->
+
+</configuration>

@@ -1,0 +1,213 @@
+<!-- <div th:replace="fishsix/admin-lte-3/workspace/admin/salesman/profile/script/api"></div> -->
+<div th:replace="fishsix/admin-lte-3/workspace/admin/salesman/profile/script/list-controller"></div>
+<!-- <div th:replace="fishsix/admin-lte-3/workspace/admin/salesman/profile/script/entry-controller"></div> -->
+
+<script th:inline="javascript">
+    app.controller("FishsixSalesmanProfileController", ["$scope", "$http", ($scope, $http) => {
+        $scope.businessUnits = /*[[${businessUnits}]]*/ [];
+        $scope.hireTypes = /*[[${hireTypes}]]*/ [];
+        $scope.worktimeTypes = /*[[${worktimeTypes}]]*/ [];
+
+        $scope.isLoading = false;
+        $scope.criteria = {};
+        $scope.paging = {};
+        $scope.salesmans = [];
+        $scope.selectedSalesman;
+        $scope.mode = "list"; // ["list", "entry"]
+        $scope.entryMode = ""; // ["add", "edit"]
+
+        $scope.init = function() {
+            console.log("### FishsixSalesmanProfileController.init ###");
+
+            // useApi($scope, $http);
+            useListController($scope, $http);
+            // useEntryController($scope, $http);
+
+            $scope.criteria = {
+                firstName: '',
+                lastName: '',
+                nickName: '',
+                buId: '',
+                hireTypeId: '',
+                worktimeTypeId: ''
+            };
+
+            $scope.paging = {
+                pageNo: 1,
+                pageSize: 25,
+                totalPage: 0,
+                totalSize: 0
+            };
+
+            $('.select2').select2({ theme: 'bootstrap4' });
+
+            $scope.initialBusinessUnits();
+            $scope.initHireTypes();
+            $scope.initWorktimeTypes();
+            $scope.initSalesmans();
+        };
+
+        $scope.initialBusinessUnits = function() {
+            console.log("### FishsixSalesmanProfileController.initialBusinessUnits ###");
+
+            $scope.businessUnits = [
+                {
+                    id: 'knoware',
+                    name: 'Knoware',
+                    seqNo: 1
+                },
+                {
+                    id: 'fishsix',
+                    name: 'Fishsix',
+                    seqNo: 2
+                },
+                {
+                    id: 'esc',
+                    name: 'โรงเรียนคู่ขนาน',
+                    seqNo: 3
+                },
+                {
+                    id: 'firstjobber',
+                    name: '90% First Jobber',
+                    seqNo: 4
+                }
+            ];
+        };
+
+        $scope.initHireTypes = function() {
+            console.log("### FishsixSalesmanProfileController.initHireTypes ###");
+
+            $scope.hireTypes = [
+                {
+                    id: 'permanent',
+                    name: 'พนง.ประจำ',
+                    seqNo: 1
+                },
+                {
+                    id: 'trainee',
+                    name: 'ฝึกงาน',
+                    seqNo: 2
+                }
+            ];
+        };
+
+        $scope.initWorktimeTypes = function() {
+            console.log("### FishsixSalesmanProfileController.initWorktimeTypes ###");
+
+            $scope.worktimeTypes = [
+                {
+                    id: 'fulltime',
+                    name: 'Full Time',
+                    seqNo: 1
+                },
+                {
+                    id: 'parttime',
+                    name: 'Part Time',
+                    seqNo: 2
+                }
+            ];
+        };
+
+        $scope.initSalesmans = function() {
+            $scope.salesmans = [
+                {
+                    id: 'salesman-001',
+                    firstName: 'Francessco',
+                    lastName: 'Totti',
+                    nickName: 'Totty',
+                    buId: 'fishsix',
+                    hireTypeId: 'permanent',
+                    worktimeTypeId: 'fulltime',
+                    salary: 15000,
+                    status: 'Active'
+                },
+
+                {
+                    id: 'salesman-002',
+                    firstName: 'Gianluigi',
+                    lastName: 'Buffon',
+                    nickName: 'buff',
+                    buId: 'esc',
+                    hireTypeId: 'trainee',
+                    worktimeTypeId: 'parttime',
+                    salary: 7000,
+                    status: 'Active'
+                },
+
+                {
+                    id: 'salesman-003',
+                    firstName: 'Damiano',
+                    lastName: 'Tomazi',
+                    nickName: 'tomaz',
+                    buId: 'knoware',
+                    hireTypeId: 'permanent',
+                    worktimeTypeId: 'fulltime',
+                    salary: 12000,
+                    status: 'Inactive'
+                }
+            ];
+        };
+
+        $scope.getBuName = function(salesman) {
+            const bu = $scope.businessUnits.find(e => e.id === salesman.buId);
+            if(bu) {
+                return bu.name;
+            }
+        };
+
+        $scope.getHireTypeName = function(salesman) {
+            const hireType = $scope.hireTypes.find(e => e.id === salesman.hireTypeId);
+            if(hireType) {
+                return hireType.name;
+            }
+        };
+
+        $scope.getWorktimeTypeName = function(salesman) {
+            const worktimeType = $scope.worktimeTypes.find(e => e.id === salesman.worktimeTypeId);
+            if(worktimeType) {
+                return worktimeType.name;
+            }
+        };
+
+        $scope.swapMode = function() {
+            if($scope.mode === 'list') {
+                $scope.toEntryMode();
+            } else if($scope.mode === 'entry') {
+                $scope.toListMode();
+            }
+        };
+
+        $scope.toListMode = function() {
+            $scope.mode = 'list';
+        };
+
+        $scope.toEntryMode = function() {
+            $scope.mode = 'entry';
+        };
+
+        $scope.requestAddSalesman = function() {
+            console.log("### FishsixSalesmanProfileController.requestAddSalesman ###");
+            $scope.toEntryMode();
+            $scope.entryMode = "add";
+            $scope.selectedSalesman = {};
+            $scope.resetForm();
+        };
+
+        $scope.resetForm = function() {
+            setTimeout(() => {
+                $scope.salesmanForm.$submitted = false;
+
+                $scope.salesmanForm.firstName.$setUntouched();
+                $scope.salesmanForm.lastName.$setPristine();
+
+                $scope.salesmanForm.lastName.$setUntouched();
+                $scope.salesmanForm.lastName.$setPristine();
+
+                $scope.salesmanForm.nickName.$setUntouched();
+                $scope.salesmanForm.nickName.$setPristine();
+
+                $scope.$apply();
+            }, 0);
+        };
+    }]);
+</script>

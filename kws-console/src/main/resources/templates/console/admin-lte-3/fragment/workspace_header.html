@@ -1,0 +1,38 @@
+<div class="content-header" ng-controller="WorkspaceHeaderController" ng-init="init()">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1 class="m-0 text-dark" style="font-size: 1.1em;">{{ pageTitle }}</h1>
+			</div>
+			<!-- /.col -->
+			<div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right" ng-bind-html="breadcrumbsContent"></ol>
+			</div>
+			<!-- /.col -->
+		</div>
+		<!-- /.row -->
+	</div>
+	<!-- /.container-fluid -->
+</div>
+
+<script>
+    app.controller("WorkspaceHeaderController", ["$scope", ($scope) => {
+        $scope.pageTitle = kws_pageTitle;
+        $scope.breadcrumbs = kws_breadcrumbs;
+        $scope.breadcrumbsContent = '';
+
+        $scope.init = function() {
+            console.log("### WorkspaceHeaderController.init ###");
+            $scope.breadcrumbsContent = '';
+            if($scope.breadcrumbs && $scope.breadcrumbs.length > 0) {
+                $scope.breadcrumbs.forEach(breadcrumb => {
+                    if(breadcrumb.leaf === true) {
+                        $scope.breadcrumbsContent += `<li class="breadcrumb-item active">${breadcrumb.title}</li>`;
+                    } else {
+                        $scope.breadcrumbsContent += `<li class="breadcrumb-item"><i class="fas fa-folder-open"></i> <a href="${kws_contextPath}/${breadcrumb.href}">${breadcrumb.title}</a></li>`;
+                    }
+                });
+            }
+        };
+    }]);
+</script>

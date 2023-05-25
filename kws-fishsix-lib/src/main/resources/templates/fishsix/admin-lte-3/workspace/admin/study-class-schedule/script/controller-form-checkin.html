@@ -1,0 +1,107 @@
+<script th:inline="javascript">
+    function useCheckinFormController($scope, $http)
+    {
+        console.info("### FishsixStudyScheduleClassController.useCheckinFormController ###");
+
+        $scope.openCheckinFormModal = useOpenCheckinFormModal($scope, $http);
+        $scope.closeCheckinFormModal = useCloseCheckinFormModal($scope, $http);
+        $scope.requestCheckinStudyClassSchedule = useRequestCheckinStudyClassSchedule($scope, $http);
+
+        $scope.requestSaveStudyClassCheckin = useRequestSaveStudyClassCheckin($scope, $http);
+
+        $scope.verifyCheckinStudyClass = useVerifyCheckinStudyClass($scope, $http);
+    }
+
+    function useOpenCheckinFormModal($scope, $http)
+    {
+        return () => {
+            console.log("### FishsixStudyScheduleClassController.openCheckinFormModal ###");
+            $('#checkin-form-modal').modal({backdrop: false}).modal('show');
+        }
+    }
+
+    function useCloseCheckinFormModal($scope, $http)
+    {
+        return () => {
+            console.log("### FishsixStudyScheduleClassController.closeCheckinFormModal ###");
+
+            $scope.selectedStudyClass = null;
+            $scope.selectedStudyClassSchedule = null;
+
+            $scope.studyClassCheckin = null;
+
+            $('#checkin-form-modal').modal('hide');
+        }
+    }
+
+    function useRequestCheckinStudyClassSchedule($scope, $http)
+    {
+        return (studyClass, studyClassSchedule) => {
+            console.log("### FishsixStudyScheduleClassController.requestCheckinStudyClassSchedule ###");
+            console.log("studyClass => ", studyClass);
+            console.log("studyClassSchedule => ", studyClassSchedule);
+
+            $scope.selectedStudyClass = studyClass;
+            $scope.selectedStudyClassSchedule = studyClassSchedule;
+
+            $scope.studyClassCheckin = {
+                studyClassCheckinOption: $scope.studentCheckinOptions[0],
+                wageHourRate: $scope.getwageHourRateTeacherByTeacherId($scope.selectedStudyClassSchedule.teacherId)
+            }; //default value in studyClassCheckinForm
+
+            $scope.openCheckinFormModal();
+        }
+    }
+
+    function useRequestSaveStudyClassCheckin($scope, $http)
+    {
+        return () => {
+            console.log("### FishsixStudyScheduleClassController.requestSaveStudyClassCheckin ###");
+            console.log("$scope.studyClassCheckin => ", $scope.studyClassCheckin);
+
+            $scope.studyClassCheckinForm.$submitted = true;
+            const { valid, message } = $scope.verifyCheckinStudyClass();
+
+            if(valid) {
+
+                const options = {
+                    title: "ยืนยันการบันทึกการเชคชื่อ ?",
+                    text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                    icon: "warning",
+                    buttons: ["ยกเลิก", "ตกลง"],
+                    dangerMode: true
+                };
+
+                const handler = (confirm) => {
+                    if (confirm) {
+                        console.log("### FishsixStudyScheduleClassController.requestSaveStudyClassCheckin.confirm ###");
+
+                        $scope.checkinStudyClassSchedule();
+                    }else{
+                        $scope.studyClassCheckin = null;
+                    }
+                };
+
+                swal(options).then(handler);
+            } else {
+                if(message) {
+                    swal("ข้อมูลไม่ครบถ้วน", message, "error");
+                } else {
+                    swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+                }
+                // swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+            }
+        };
+    }
+
+    function useVerifyCheckinStudyClass($scope, $http)
+    {
+        return () => {
+
+            return {
+                valid: $scope.studyClassCheckinForm.$valid
+            };
+
+        };
+    }
+</script>

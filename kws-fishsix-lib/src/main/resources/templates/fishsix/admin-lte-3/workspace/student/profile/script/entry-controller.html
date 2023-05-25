@@ -1,0 +1,162 @@
+<script th:inline="javascript">
+    function useEntryController($scope, $http)
+    {
+        $scope.requestSave = useRequestSave($scope, $http);
+        $scope.verify = useVerify($scope, $http);
+
+        $scope.isShowFirstNameError = useIsShowFirstNameError($scope, $http);
+        $scope.isShowLastNameError = useIsShowLastNameError($scope, $http);
+        $scope.isShowNickNameError = useIsShowNickNameError($scope, $http);
+        $scope.isShowGenderError = useIsShowGenderError($scope, $http);
+        $scope.isShowMobileNoError = useIsShowMobileNoError($scope, $http);
+        $scope.isShowEmailError = useIsShowEmailError($scope, $http);
+        $scope.isShowContactAddressError = useIsShowContactAddressError($scope, $http);
+
+        $scope.isShowParentNameError = useIsShowParentNameError($scope, $http);
+        $scope.isShowParentMobileNoError = useIsShowParentMobileNoError($scope, $http);
+        $scope.isShowParentJobError = useIsShowParentJobError($scope, $http);
+        $scope.isShowParentExpectationError = useIsShowParentExpectationError($scope, $http);
+
+        $scope.isShowEducationSchoolError = useIsShowEducationSchoolError($scope, $http);
+        $scope.isShowEducationLevelError = useIsShowEducationLevelError($scope, $http);
+    }
+
+    function useRequestSave($scope, $http)
+    {
+        return () => {
+            console.log("### FishsixStudentProfileController.requestSave ###");
+
+            $scope.studentForm.$submitted = true;
+            $scope.parentForm.$submitted = true;
+            $scope.educationForm.$submitted = true;
+
+            if($scope.verify()) {
+                const options = {
+                    title: $scope.entryMode === "add" ? "ยืนยันการบันทึกข้อมูลนักเรียน ?" : "ยืนยันการแก้ไขข้อมูลนักเรียน",
+                    text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                    icon: "warning",
+                    buttons: ["ยกเลิก", "ตกลง"],
+                    dangerMode: true
+                };
+
+                const handler = (confirm) => {
+                    if (confirm) {
+                        if($scope.entryMode === 'add') {
+                            $scope.selectedStudentProfile.userAccount.username = $scope.selectedStudentProfile.userAccount.email;
+                            $scope.selectedStudentProfile.userAccount.password = "password-1234";
+                            $scope.selectedStudentProfile.userAccount.genus = "Human";
+
+                            $scope.createStudent($scope.selectedStudentProfile);
+                        } else if($scope.entryMode === 'edit') {
+                            $scope.updateStudent($scope.selectedStudentProfile);
+                        }
+                    }
+                };
+
+                swal(options).then(handler);
+            } else {
+                swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+            }
+        };
+    }
+
+    function useVerify($scope, $http)
+    {
+        return () => {
+            return $scope.studentForm.$valid && $scope.parentForm.$valid && $scope.educationForm.$valid;
+        };
+    }
+
+    // ****************************** validate ****************************** //
+    function useIsShowFirstNameError($scope, $http) 
+    {
+        return () => {
+            return ($scope.studentForm.$submitted || $scope.studentForm.firstName.$dirty) && $scope.studentForm.firstName.$invalid;
+        };
+    }
+
+    function useIsShowLastNameError($scope, $http) 
+    {
+        return () => {
+            return ($scope.studentForm.$submitted || $scope.studentForm.lastName.$dirty) && $scope.studentForm.lastName.$invalid;
+        };
+    }
+
+    function useIsShowNickNameError($scope, $http) 
+    {
+        return () => {
+            return ($scope.studentForm.$submitted || $scope.studentForm.nickName.$dirty) && $scope.studentForm.nickName.$invalid;
+        };
+    }
+
+    function useIsShowGenderError($scope, $http) 
+    {
+        return () => {
+            return $scope.studentForm.$submitted && $scope.studentForm.gender.$invalid;
+        };
+    }
+
+    function useIsShowMobileNoError($scope, $http) 
+    {
+        return () => {
+            return ($scope.studentForm.$submitted || $scope.studentForm.mobileNo.$dirty) && $scope.studentForm.mobileNo.$invalid;
+        };
+    }
+
+    function useIsShowEmailError($scope, $http) 
+    {
+        return () => {
+            return ($scope.studentForm.$submitted || $scope.studentForm.email.$dirty) && $scope.studentForm.email.$invalid;
+        };
+    }
+
+    function useIsShowContactAddressError($scope, $http) 
+    {
+        return () => {
+            return ($scope.studentForm.$submitted || $scope.studentForm.contactAddress.$dirty) && $scope.studentForm.contactAddress.$invalid;
+        };
+    }
+    
+    function useIsShowParentNameError($scope, $http) 
+    {
+        return () => {
+            return ($scope.parentForm.$submitted || $scope.parentForm.name.$dirty) && $scope.parentForm.name.$invalid;
+        };
+    }
+
+    function useIsShowParentMobileNoError($scope, $http) 
+    {
+        return () => {
+            return ($scope.parentForm.$submitted || $scope.parentForm.mobileNo.$dirty) && $scope.parentForm.mobileNo.$invalid;
+        };
+    }
+
+    function useIsShowParentJobError($scope, $http) 
+    {
+        return () => {
+            return ($scope.parentForm.$submitted || $scope.parentForm.job.$dirty) && $scope.parentForm.job.$invalid;
+        };
+    }
+
+    function useIsShowParentExpectationError($scope, $http) 
+    {
+        return () => {
+            return ($scope.parentForm.$submitted || $scope.parentForm.expectation.$dirty) && $scope.parentForm.expectation.$invalid;
+        };
+    }
+
+    function useIsShowEducationSchoolError($scope, $http) 
+    {
+        return () => {
+            return ($scope.educationForm.$submitted || $scope.educationForm.school.$dirty) && $scope.educationForm.school.$invalid;
+        };
+    }
+
+    function useIsShowEducationLevelError($scope, $http) 
+    {
+        return () => {
+            return $scope.educationForm.$submitted && $scope.educationForm.level.$invalid;
+        };
+    }
+    // ****************************** validate ****************************** //
+</script>

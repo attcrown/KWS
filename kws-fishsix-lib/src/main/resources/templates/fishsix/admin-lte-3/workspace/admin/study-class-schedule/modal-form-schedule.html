@@ -1,0 +1,115 @@
+<div class="modal fade" id="schedule-form-modal" tabindex="-1" role="dialog" aria-labelledby="schedule-form-modal-label" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="schedule-form-modal-label">ตารางสอน วันที่ {{ selectedStudyClass.studyDate }} | </h5>
+                &nbsp;
+                <h5 class="modal-title text-secondary">{{ selectedStudyClass.studyStartTime }} - {{ selectedStudyClass.studyEndTime }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form name="classScheduleForm" novalidate>
+
+                    <div class="form-group">
+                        <label>
+                            <span class="text-danger">*</span>
+                            <span ng-show="!isShowStudentError()">นักเรียน</span>
+                            <span class="text-danger" ng-show="isShowStudentError()">กรุณาเลือกนักเรียน</span>
+                        </label>
+                        <select name="studentId" class="form-control" style="width: 100%;"
+                                ng-change="changeValueStudentId(studyClassSchedule.studentId)"
+                                ng-class="{'is-invalid': isShowStudentError()}" 
+                                ng-model="studyClassSchedule.studentId" 
+                                required>
+                            <option value="" selected disabled>--- กรุณาเลือกนักเรียน ---</option>
+                            <option ng-repeat="student in students" ng-value="student.id">
+                                {{ student.firstName }} {{ student.lastName }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <span class="text-danger">*</span>
+                            <span ng-show="!isShowSubjecError()">วิชา</span>
+                            <span class="text-danger" ng-show="isShowSubjecError()">กรุณาเลือกวิชา</span>
+                        </label>
+                        <select name="subjectId" class="form-control" style="width: 100%;"
+                                ng-change="changeValueSubjectId(studyClassSchedule.subjectId)"
+                                ng-disabled="!studentSubjectQuotaProfiles"
+                                ng-class="{'is-invalid': isShowSubjecError()}" 
+                                ng-model="studyClassSchedule.subjectId" 
+                                required>
+                            <option value="" selected disabled>--- กรุณาเลือกนักเรียนก่อน ---</option>
+                            <!-- <option value="" selected disabled ng-show="!studentSubjectQuotaProfiles">--- กรุณาเลือกวิชา ---</option>
+                            <option value="" selected disabled ng-show="studentSubjectQuotaProfiles">--- กรุณาเลือกนักเรียนก่อน ---</option> -->
+                            <option ng-repeat="subject in studentSubjectQuotaProfiles" ng-value="subject.id">
+                                {{ subject.name }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <span class="text-danger">*</span>
+                            <span ng-show="!isShowChapterError()">เรื่อง</span>
+                            <span class="text-danger" ng-show="isShowChapterError()">กรุณาเลือกเรื่อง</span>
+                        </label>
+                        <select name="subjectChapterId" class="form-control" style="width: 100%;"
+                                ng-disabled="!chaptersInstudentSubjectQuota"
+                                ng-class="{'is-invalid': isShowChapterError()}" 
+                                ng-model="studyClassSchedule.subjectChapterId" 
+                                required>
+                            <option value="" selected disabled>--- กรุณาเลือกวิชาก่อน ---</option>
+                            <option ng-repeat="chapter in chaptersInstudentSubjectQuota" ng-value="chapter.id">
+                                {{ chapter.name }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <span class="text-danger">*</span>
+                            <span ng-show="!isShowTeacherError()">ครู</span>
+                            <span class="text-danger" ng-show="isShowTeacherError()">กรุณาเลือกครู</span>
+                        </label>
+                        <select name="teacherId" class="form-control" style="width: 100%;"
+                                ng-disabled="!chaptersInstudentSubjectQuota"
+                                ng-class="{'is-invalid': isShowTeacherError()}" 
+                                ng-model="studyClassSchedule.teacherId" 
+                                required>
+                            <option value="" selected disabled>--- กรุณาเลือกวิชาก่อน ---</option>
+                            <option ng-repeat="teacherProfile in getTeachersBySubjectId(studyClassSchedule.subjectId)" ng-value="teacherProfile.teacher.id">
+                                {{ teacherProfile.teacher.firstName }} {{ teacherProfile.teacher.lastName }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <!-- <div class="form-group">
+                        <label>
+                            <span class="text-danger">*</span>
+                            <span ng-show="!isShowStudentCourseQuotaIdError()">studentCourseQuotaId</span>
+                            <span class="text-danger" ng-show="isShowStudentCourseQuotaIdError()">กรุณากรอก studentCourseQuotaId</span>
+                        </label>
+                        <input  name="studentCourseQuotaId" type="text" class="form-control" placeholder="กรุณาระบุ studentCourseQuotaId" 
+                                ng-class="{'is-invalid': isShowStudentCourseQuotaIdError()}" 
+                                ng-model="studyClassSchedule.studentCourseQuotaId" 
+                                required>
+                    </div> -->
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button> -->
+                <button class="btn btn-outline-danger" data-dismiss="modal">
+                    <i class="fa fa-times"></i> Close
+                </button>
+                <button class="btn btn-outline-primary" ng-click="requestSave()">
+                    <i class="fa fa-save"></i> บันทึก
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

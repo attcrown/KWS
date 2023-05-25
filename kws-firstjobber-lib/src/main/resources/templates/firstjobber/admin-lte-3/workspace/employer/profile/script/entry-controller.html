@@ -1,0 +1,339 @@
+<script th:inline="javascript">
+    function useEntryController($scope, $http)
+    {
+        $scope.getSelectedAmphurs = useGetSelectedAmphurs($scope, $http);
+        $scope.provinceSelected = useProvinceSelected($scope, $http);
+        $scope.amphurSelected = useAmphurSelected($scope, $http);
+        $scope.districtSelected = useDistrictSelected($scope, $http);
+        $scope.requestSave = useRequestSave($scope, $http);
+        $scope.verify = useVerify($scope, $http);
+
+        $scope.isShowEmployerTypeError = useIsShowEmployerTypeError($scope, $http);
+        $scope.isShowEmployerNameError = useIsShowEmployerNameError($scope, $http);
+        $scope.isShowEmployerRegistNoError = useIsShowEmployerRegistNoError($scope, $http);
+        $scope.isShowEmployerTelNoError = useIsShowEmployerTelNoError($scope, $http);
+        $scope.isShowEmployerEmailError = useIsShowEmployerEmailError($scope, $http);
+        $scope.isShowEmployerBizTypeError = useIsShowEmployerBizTypeError($scope, $http);
+        $scope.isShowEmployerBizBackgroundError = useIsShowEmployerBizBackgroundError($scope, $http);
+
+        $scope.isEmployerAddressInfo = useIsEmployerAddressInfo($scope, $http);
+        $scope.isEmployerAddressProvince = useIsEmployerAddressProvince($scope, $http);
+        $scope.isEmployerAddressAmphur = useIsEmployerAddressAmphur($scope, $http);
+        $scope.isEmployerAddressDistrict = useIsEmployerAddressDistrict($scope, $http);
+        $scope.isEmployerAddressPostCode = useIsEmployerAddressPostCode($scope, $http);
+
+        $scope.isShowEmployerUserFirstNameError = useIsShowEmployerUserFirstNameError($scope, $http);
+        $scope.isShowEmployerUserLastNameError = useIsShowEmployerUserLastNameError($scope, $http);
+        $scope.isShowEmployerUserNickNameError = useIsShowEmployerUserNickNameError($scope, $http);
+        $scope.isShowEmployerUserMobileNoError = useIsShowEmployerUserMobileNoError($scope, $http);
+        $scope.isShowEmployerUserEmailError = useIsShowEmployerUserEmailError($scope, $http);
+        $scope.isShowEmployerUserLineIdError = useIsShowEmployerUserLineIdError($scope, $http);
+        $scope.isShowEmployerUserDepartmentError = useIsShowEmployerUserDepartmentError($scope, $http);
+        $scope.isShowEmployerUserPositionError = useIsShowEmployerUserPositionError($scope, $http);
+
+        $scope.resetForm = useResetForm($scope, $http);
+    }
+
+    function useGetSelectedAmphurs($scope, $http)
+    {
+        return () => {
+            if($scope.selectedEmployerProfile && $scope.selectedEmployerProfile.contactAddress.provinceId) {
+                return $scope.amphurs.filter(e => e.provinceId === $scope.selectedEmployerProfile.contactAddress.provinceId);
+            }
+            return [];
+        };
+    }
+
+    function useProvinceSelected($scope, $http)
+    {
+        return () => {
+            console.log("### FjbEmployerProfileController.provinceSelected ###");
+            $scope.selectedDistricts = [];
+            $scope.selectedEmployerProfile.contactAddress.districtId = "";
+            const province = $scope.provinces.find(e => e.id === $scope.selectedEmployerProfile.contactAddress.provinceId);
+            if(province) {
+                $scope.selectedEmployerProfile.contactAddress.provinceName = province.nameTH;
+            }
+        };
+    }
+
+    function useAmphurSelected($scope, $http)
+    {
+        return () => {
+            console.log("### FjbEmployerProfileController.amphurSelected ###");
+            $scope.selectedDistricts = [];
+            $scope.selectedEmployerProfile.contactAddress.districtId = "";
+            if($scope.selectedEmployerProfile && $scope.selectedEmployerProfile.contactAddress.amphurId) {
+                $scope.loadDistrictByAmphur($scope.selectedEmployerProfile.contactAddress.amphurId);
+                const amphur = $scope.amphurs.find(e => e.id === $scope.selectedEmployerProfile.contactAddress.amphurId);
+                if(amphur) {
+                    $scope.selectedEmployerProfile.contactAddress.amphurName = amphur.nameTH;
+                }
+            }
+        };
+    }
+
+    function useDistrictSelected($scope, $http)
+    {
+        return () => {
+            console.log("### FjbEmployerProfileController.districtSelected ###");
+            console.log(`districtId => ${$scope.selectedEmployerProfile.contactAddress.districtId}`);
+            const district = $scope.selectedDistricts.find(e => e.id === $scope.selectedEmployerProfile.contactAddress.districtId);
+            console.log("district => ", district);
+            if(district) {
+                $scope.selectedEmployerProfile.contactAddress.postCode = district.zipCode;
+                $scope.selectedEmployerProfile.contactAddress.districtName = district.nameTH;
+            }
+        };
+    }
+
+    function useRequestSave($scope, $http)
+    {
+        return () => {
+            console.log("### FjbEmployerProfileController.requestSave ###");
+
+            $scope.employerForm.$submitted = true;
+            $scope.employerAddressForm.$submitted = true;
+            $scope.employerUserForm.$submitted = true;
+
+            if($scope.verify()) {
+                const options = {
+                    title: $scope.entryMode === "add" ? "ยืนยันการบันทึกข้อมูลบริษัท/ลูกค้า ?" : "ยืนยันการแก้ไขข้อมูลบริษัท/ลูกค้า",
+                    text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                    icon: "warning",
+                    buttons: ["ยกเลิก", "ตกลง"],
+                    dangerMode: true
+                };
+
+                swal(options).
+                then(confirm => {
+                    if (confirm) {
+                        $scope.selectedEmployerProfile.employerUserProfiles[0].userAccount.username = $scope.selectedEmployerProfile.employerUserProfiles[0].userAccount.email;
+
+                        if($scope.entryMode === 'add') {
+                            $scope.createEmployer();
+                        } else if($scope.entryMode === 'edit') {
+                            $scope.selectedEmployerProfile.contactAddress.status = $scope.selectedEmployerProfile.employer.status;
+                            $scope.selectedEmployerProfile.employerUserProfiles[0].employerUser.status = $scope.selectedEmployerProfile.employer.status;
+                            $scope.selectedEmployerProfile.employerUserProfiles[0].userAccount.status = $scope.selectedEmployerProfile.employer.status;
+                            $scope.selectedEmployerProfile.employerUserProfiles[0].userPersonalInfo.status = $scope.selectedEmployerProfile.employer.status;
+                            if($scope.selectedEmployerProfile.employerUserProfiles[0].userRoleMappers && $scope.selectedEmployerProfile.employerUserProfiles[0].userRoleMappers.length > 0) {
+                                for(let i=0; i<$scope.selectedEmployerProfile.employerUserProfiles[0].userRoleMappers.length; i++) {
+                                    $scope.selectedEmployerProfile.employerUserProfiles[0].userRoleMappers[i].status = $scope.selectedEmployerProfile.employer.status;
+                                }
+                            }
+                            $scope.updateEmployer();
+                        }
+                    }
+                });
+            } else {
+                swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+            }
+        };
+    }
+
+    function useVerify($scope, $http)
+    {
+        return () => {
+            return $scope.employerForm.$valid && $scope.employerAddressForm.$valid && $scope.employerUserForm.$valid;
+        };
+    }
+
+    // ****************************** validate ****************************** //
+    function useIsShowEmployerTypeError($scope, $http) 
+    {
+        return () => {
+            return $scope.employerForm.$submitted && $scope.employerForm.employerType.$invalid;
+        };
+    }
+
+    function useIsShowEmployerNameError($scope, $http) 
+    {
+        return () => {
+            return ($scope.employerForm.$submitted || $scope.employerForm.name.$dirty) && $scope.employerForm.name.$invalid;
+        };
+    }
+
+    function useIsShowEmployerRegistNoError($scope, $http) 
+    {
+        return () => {
+            return ($scope.employerForm.$submitted || $scope.employerForm.registNo.$dirty) && $scope.employerForm.registNo.$invalid;
+        };
+    }
+
+    function useIsShowEmployerTelNoError($scope, $http) 
+    {
+        return () => {
+            return ($scope.employerForm.$submitted || $scope.employerForm.telNo.$dirty) && $scope.employerForm.telNo.$invalid;
+        };
+    }
+
+    function useIsShowEmployerEmailError($scope, $http) 
+    {
+        return () => {
+            return ($scope.employerForm.$submitted || $scope.employerForm.email.$dirty) && $scope.employerForm.email.$invalid;
+        };
+    }
+
+    function useIsShowEmployerBizTypeError($scope, $http) 
+    {
+        return () => {
+            return ($scope.employerForm.$submitted || $scope.employerForm.bizType.$dirty) && $scope.employerForm.bizType.$invalid;
+        };
+    }
+
+    function useIsShowEmployerBizBackgroundError($scope, $http) 
+    {
+        return () => {
+            return ($scope.employerForm.$submitted || $scope.employerForm.bizBackground.$dirty) && $scope.employerForm.bizBackground.$invalid;
+        };
+    }
+
+    function useIsEmployerAddressInfo($scope, $http)
+    {
+        return () => {
+            return ($scope.employerAddressForm.$submitted || $scope.employerAddressForm.addressInfo.$dirty) && $scope.employerAddressForm.addressInfo.$invalid;
+        };
+    }
+
+    function useIsEmployerAddressProvince($scope, $http)
+    {
+        return () => {
+            return $scope.employerAddressForm.$submitted && $scope.employerAddressForm.province.$invalid;
+        };
+    }
+
+    function useIsEmployerAddressAmphur($scope, $http)
+    {
+        return () => {
+            return $scope.employerAddressForm.$submitted && $scope.employerAddressForm.amphur.$invalid;
+        };
+    }
+
+    function useIsEmployerAddressDistrict($scope, $http)
+    {
+        return () => {
+            return $scope.employerAddressForm.$submitted && $scope.employerAddressForm.district.$invalid;
+        };
+    }
+
+    function useIsEmployerAddressPostCode($scope, $http)
+    {
+        return () => {
+            return ($scope.employerAddressForm.$submitted || $scope.employerAddressForm.postCode.$dirty) && $scope.employerAddressForm.postCode.$invalid;
+        };
+    }
+
+    function useIsShowEmployerUserFirstNameError($scope, $http)
+    {
+        return () => {
+            return ($scope.employerUserForm.$submitted || $scope.employerUserForm.firstName.$dirty) && $scope.employerUserForm.firstName.$invalid;
+        };
+    }
+
+    function useIsShowEmployerUserLastNameError($scope, $http)
+    {
+        return () => {
+            return ($scope.employerUserForm.$submitted || $scope.employerUserForm.lastName.$dirty) && $scope.employerUserForm.lastName.$invalid;
+        };
+    }
+
+    function useIsShowEmployerUserNickNameError($scope, $http)
+    {
+        return () => {
+            return ($scope.employerUserForm.$submitted || $scope.employerUserForm.nickName.$dirty) && $scope.employerUserForm.nickName.$invalid;
+        };
+    }
+
+    function useIsShowEmployerUserMobileNoError($scope, $http)
+    {
+        return () => {
+            return ($scope.employerUserForm.$submitted || $scope.employerUserForm.mobileNo.$dirty) && $scope.employerUserForm.mobileNo.$invalid;
+        };
+    }
+
+    function useIsShowEmployerUserEmailError($scope, $http)
+    {
+        return () => {
+            return ($scope.employerUserForm.$submitted || $scope.employerUserForm.email.$dirty) && $scope.employerUserForm.email.$invalid;
+        };
+    }
+
+    function useIsShowEmployerUserLineIdError($scope, $http)
+    {
+        return () => {
+            return ($scope.employerUserForm.$submitted || $scope.employerUserForm.lineId.$dirty) && $scope.employerUserForm.lineId.$invalid;
+        };
+    }
+
+    function useIsShowEmployerUserDepartmentError($scope, $http)
+    {
+        return () => {
+            return ($scope.employerUserForm.$submitted || $scope.employerUserForm.department.$dirty) && $scope.employerUserForm.department.$invalid;
+        };
+    }
+
+    function useIsShowEmployerUserPositionError($scope, $http)
+    {
+        return () => {
+            return ($scope.employerUserForm.$submitted || $scope.employerUserForm.position.$dirty) && $scope.employerUserForm.position.$invalid;
+        };
+    }
+
+    // ****************************** validate ****************************** //
+
+    function useResetForm($scope, $http)
+    {
+        return () => {
+            setTimeout(() => {
+                $scope.employerForm.$submitted = false;
+                $scope.employerForm.employerType.$setUntouched();
+                $scope.employerForm.employerType.$setPristine();
+                $scope.employerForm.name.$setUntouched();
+                $scope.employerForm.name.$setPristine();
+                $scope.employerForm.registNo.$setUntouched();
+                $scope.employerForm.registNo.$setPristine();
+                $scope.employerForm.telNo.$setUntouched();
+                $scope.employerForm.telNo.$setPristine();
+                $scope.employerForm.email.$setUntouched();
+                $scope.employerForm.email.$setPristine();
+                $scope.employerForm.bizType.$setUntouched();
+                $scope.employerForm.bizType.$setPristine();
+                $scope.employerForm.bizBackground.$setUntouched();
+                $scope.employerForm.bizBackground.$setPristine();
+
+                $scope.employerAddressForm.$submitted = false;
+                $scope.employerAddressForm.addressInfo.$setUntouched();
+                $scope.employerAddressForm.addressInfo.$setPristine();
+                $scope.employerAddressForm.province.$setUntouched();
+                $scope.employerAddressForm.province.$setPristine();
+                $scope.employerAddressForm.amphur.$setUntouched();
+                $scope.employerAddressForm.amphur.$setPristine();
+                $scope.employerAddressForm.district.$setUntouched();
+                $scope.employerAddressForm.district.$setPristine();
+                $scope.employerAddressForm.postCode.$setUntouched();
+                $scope.employerAddressForm.postCode.$setPristine();
+
+                $scope.employerUserForm.$submitted = false;
+                $scope.employerUserForm.firstName.$setUntouched();
+                $scope.employerUserForm.firstName.$setPristine();
+                $scope.employerUserForm.lastName.$setUntouched();
+                $scope.employerUserForm.lastName.$setPristine();
+                $scope.employerUserForm.nickName.$setUntouched();
+                $scope.employerUserForm.nickName.$setPristine();
+                $scope.employerUserForm.mobileNo.$setUntouched();
+                $scope.employerUserForm.mobileNo.$setPristine();
+                $scope.employerUserForm.email.$setUntouched();
+                $scope.employerUserForm.email.$setPristine();
+                $scope.employerUserForm.lineId.$setUntouched();
+                $scope.employerUserForm.lineId.$setPristine();
+                $scope.employerUserForm.department.$setUntouched();
+                $scope.employerUserForm.department.$setPristine();
+                $scope.employerUserForm.position.$setUntouched();
+                $scope.employerUserForm.position.$setPristine();
+
+                $scope.$apply();
+            }, 0);
+        };
+    }
+</script>

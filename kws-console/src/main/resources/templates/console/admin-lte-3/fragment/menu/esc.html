@@ -1,0 +1,164 @@
+<li class="nav-header text-light">ESC</li>
+
+<li class="nav-item">
+    <a th:href="@{/views/workspace/esc/dashboard}" class="nav-link"> 
+        <i class="nav-icon fas fa-tachometer-alt"></i>
+        <p>แดชบอร์ด</p>
+    </a>
+</li>
+
+<li class="nav-item has-treeview">
+    <a href="#"	class="nav-link"> 
+        <i class="nav-icon fas fa-folder-open text-warning"></i>
+        <p>
+            ฐานข้อมูล <i class="right fas fa-angle-left"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a th:href="@{/views/workspace/esc/course-location}" class="nav-link">
+                <i class="far fa-circle nav-icon text-teal"></i>
+                <p>สถานที่เรียน</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a th:href="@{/views/workspace/esc/course-study-room}" class="nav-link">
+                <i class="far fa-circle nav-icon text-teal"></i>
+                <p>ห้องเรียน</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a th:href="@{/views/workspace/esc/teacher}" class="nav-link">
+                <i class="far fa-circle nav-icon text-teal"></i>
+                <p>ครู</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a th:href="@{/views/workspace/esc/student}" class="nav-link">
+                <i class="far fa-circle nav-icon text-teal"></i>
+                <p>นักเรียน</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a th:href="@{/views/workspace/esc/parent}" class="nav-link">
+                <i class="far fa-circle nav-icon text-teal"></i>
+                <p>ผู้ปกครอง</p>
+            </a>
+        </li>
+    </ul>
+</li>
+
+<li class="nav-item has-treeview">
+    <a href="#"	class="nav-link"> 
+        <i class="nav-icon fas fa-folder-open text-warning"></i>
+        <p>
+            คอร์ส <i class="right fas fa-angle-left"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a href="./index.html" class="nav-link"> 
+                <i class="far fa-circle nav-icon text-teal"></i>
+                <p>ประเภทคอร์ส</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="./index.html" class="nav-link"> 
+                <i class="far fa-circle nav-icon text-teal"></i>
+                <p>คอร์ส</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="./index2.html" class="nav-link">
+                <i class="far fa-circle nav-icon text-teal"></i>
+                <p>คอร์สแพ๊คเกจ</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="./index2.html" class="nav-link">
+                <i class="far fa-circle nav-icon text-teal"></i>
+                <p>รายการสั่งซื้อคอร์ส</p>
+            </a>
+        </li>
+    </ul>
+</li>
+
+<li class="nav-item has-treeview">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-folder-open text-warning"></i>
+        <p>
+            คลาสเรียน <i class="right fas fa-angle-left"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item has-treeview">
+            <a href="#" class="nav-link"> 
+                <i class="far fa-folder-open nav-icon text-teal"></i>
+                <p>
+                    ครู <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="#" class="nav-link"> 
+                        <i class="far fa-circle nav-icon text-info"></i>
+                        <p>ตารางสอน</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link"> 
+                        <i class="far fa-circle nav-icon text-info"></i>
+                        <p>เช็คเข้าสอน</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link"> 
+                        <i class="far fa-circle nav-icon text-info"></i>
+                        <p>ลาสอน</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link"> 
+                        <i class="far fa-circle nav-icon text-info"></i>
+                        <p>ประเมินเรียน</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="nav-item has-treeview">
+            <a href="#" class="nav-link"> 
+                <i class="far fa-folder-open nav-icon text-teal"></i>
+                <p>
+                    นักเรียน <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="#" class="nav-link"> 
+                        <i class="far fa-circle nav-icon text-info"></i>
+                        <p>ตารางเรียน</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link"> 
+                        <i class="far fa-circle nav-icon text-info"></i>
+                        <p>เช็คเข้าเรียน</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link"> 
+                        <i class="far fa-circle nav-icon text-info"></i>
+                        <p>ลาเรียน</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link"> 
+                        <i class="far fa-circle nav-icon text-info"></i>
+                        <p>ประเมินการสอน</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</li>

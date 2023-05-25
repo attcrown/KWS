@@ -1,0 +1,984 @@
+<script th:inline="javascript">
+    function useApi($scope, $http)
+    {
+        console.info("### FishsixStudyScheduleClassController.useApi ###");
+
+        $scope.search = useSearch($scope, $http);
+        $scope.createStudyClassSchedule = useCreateStudyClassSchedule($scope, $http);
+        $scope.removeStudyClassSchedule = useRemoveStudyClassSchedule($scope, $http);
+        $scope.confirmStudyClassSchedule = useConfirmStudyClassSchedule($scope, $http);
+        $scope.checkinStudyClassSchedule = useCheckinStudyClassSchedule($scope, $http);
+
+        $scope.loadEvaluateStudyClassSchedule = useLoadEvaluateStudyClassSchedule($scope, $http);
+        $scope.createEvaluateStudyClassSchedule = useCreateEvaluateStudyClassSchedule($scope, $http);
+        $scope.updateEvaluateStudyClassSchedule = useUpdateEvaluateStudyClassSchedule($scope, $http);
+
+        $scope.loadStudentSubjectQuota = useLoadStudentSubjectQuota($scope, $http);
+    }
+
+    function useSearch($scope, $http)
+    {
+        return () => {
+            console.log("### FishsixStudyScheduleClassController.useSearch ###");
+            console.log("criteria => " + JSON.stringify($scope.criteria));
+
+            $scope.studyClassScheduleProfile = {
+                date: $scope.criteria.date,
+                periods: []
+            };
+
+            const requestMessage = {
+                date: $scope.criteria.date,
+                forceCreateEmptyStudyClasses: true
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/study-class/schedule/profile/load`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    $scope.studyClassScheduleProfile = response.data.body.studyClassScheduleProfile;
+                    console.log("$scope.studyClassScheduleProfile => ", $scope.studyClassScheduleProfile);
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถโหลดข้อมูลตารางสอนได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถโหลดข้อมูลตารางสอนได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).
+            then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+
+    function useLoadStudentSubjectQuota($scope, $http)
+    {
+        return (studentId) => {
+            console.log("### FishsixStudyScheduleClassController.useLoadStudentSubjectQuota ###");
+            console.log("studentId => " + studentId);
+
+            // /api/fishsix/student/subject-quota/load
+            const requestMessage = {
+                studentId: studentId
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/student/subject-quota/load`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    $scope.studyClassSchedule.subjectId = ""; // clear data !!!
+                    $scope.studentSubjectQuotaProfiles = null; // clear data !!!
+                    $scope.studentSubjectQuotaProfiles = response.data.body.subjectProfiles; // Must clear when done and close modal !!!
+                    console.log("$scope.studentSubjectQuotaProfiles => ", $scope.studentSubjectQuotaProfiles);
+
+                    if($scope.studentSubjectQuotaProfiles && $scope.studentSubjectQuotaProfiles.length > 0) {
+                        //Do Something !!!
+                        $scope.chaptersInstudentSubjectQuota = null;
+                    } else {
+                        swal("เกิดข้อผิดพลาด", "ไม่มีโควต้าชั่วโมงเรียนสำหรับนักเรียนที่เลือก", "error");
+                    }
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถโหลดข้อมูลโควต้าชั่วโมงเรียนสำหรับนักเรียนที่เลือกได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถโหลดข้อมูลตารางสอนได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).
+            then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+
+    function useCreateStudyClassSchedule($scope, $http)
+    {
+        return () => {
+            console.log("### FishsixStudyScheduleClassController.useCreateStudyClassSchedule ###");
+            console.log("$scope.selectedStudyClass => ", $scope.selectedStudyClass);
+            console.log("$scope.studyClassSchedule => ", $scope.studyClassSchedule);
+
+
+            // /api/fishsix/study-class/schedule/create
+            const requestMessage = {
+                studyClassSchedule: {
+                    classId: $scope.selectedStudyClass.id,
+                    studentId: $scope.studyClassSchedule.studentId,
+                    teacherId: $scope.studyClassSchedule.teacherId,
+                    subjectId: $scope.studyClassSchedule.subjectId,
+                    subjectChapterId: $scope.studyClassSchedule.subjectChapterId
+                }
+            };
+            console.log("requestMessage => ", requestMessage);
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/study-class/schedule/create`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    //ข้อมูลที่ส่งกลับมา
+                    // const createdStudyClassSchedule = response.data.body.createdStudyClassSchedule;
+                    // console.log("createdStudyClassSchedule => ", createdStudyClassSchedule;
+                    // const studyClass = response.data.body.studyClass;
+                    // console.log("studyClass => ", studyClass;
+                    // const updatedStudentCourseQuota = response.data.body.updatedStudentCourseQuota;
+                    // console.log("updatedStudentCourseQuota => ", updatedStudentCourseQuota;
+
+                    //อับเดตข้อมูลในตัวแปล ตรงนี้
+                    //$scope.studyClassScheduleProfile;
+                    $scope.search();
+
+                    swal("Confirm คลาสเรียนสำเร็จ", "ทำการ Confirm คลาสเรียนสำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกข้อมูลคลาสเรียนได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถบันทึกข้อมูลคลาสเรียนได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+                $scope.closeScheduleFormModal();
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+
+    function useRemoveStudyClassSchedule($scope, $http)
+    {
+        return (studyClass, studyClassSchedule) => {
+            console.log("### FishsixStudyScheduleClassController.removeStudyClassSchedule ###");
+            console.log("studyClass => ", studyClass);
+            console.log("studyClassSchedule => ", studyClassSchedule);
+
+            // /api/fishsix/study-class/schedule/remove
+            const requestMessage = {
+                classScheduleId: studyClassSchedule.id
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/study-class/schedule/remove`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    //ข้อมูลที่ส่งกลับมา
+                    const removedStudyClassSchedule = response.data.body.removedStudyClassSchedule;
+                    // console.log("removedStudyClassSchedule => ", removedStudyClassSchedule);
+                    // const studyClass = response.data.body.studyClass;
+                    // console.log("studyClass => ", studyClass);
+                    // const updatedStudentCourseQuota = response.data.body.updatedStudentCourseQuota;
+                    // console.log("updatedStudentCourseQuota => ", updatedStudentCourseQuota);
+
+                    //อับเดตข้อมูลในตัวแปล ตรงนี้
+                    //$scope.studyClassScheduleProfile;
+
+                    // var myArray = [{'name': 'test'}, {'name':'test2'}];
+                    // var myObject = {'name': 'test'};
+                    // myArray.splice(myArray.indexOf(myObject),1);
+
+                    //studyClass.schedules.splice(studyClass.schedules.indexOf(removedStudyClassSchedule),1);
+
+                    $scope.search();
+
+                    swal("ลบคลาสเรียนสำเร็จ", "ทำการลบคลาสเรียนสำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกข้อมูลคลาสเรียนได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถบันทึกข้อมูลคลาสเรียนได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+
+    function useConfirmStudyClassSchedule($scope, $http)
+    {
+        return (studyClassSchedule) => {
+            console.log("### FishsixStudyScheduleClassController.useConfirmStudyClassSchedule ###");
+            console.log(studyClassSchedule);
+
+            // /api/fishsix/study-class/schedule/confirm
+            const requestMessage = {
+                classScheduleIds: [studyClassSchedule.id]
+            };
+            //console.log("requestMessage => ", requestMessage);
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/study-class/schedule/confirm`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    //ข้อมูลที่ส่งกลับมา
+                    const updatedStudyClassSchedules = response.data.body.updatedStudyClassSchedules;
+                    console.log("updatedStudyClassSchedule => ", updatedStudyClassSchedules[0]);
+
+                    //อับเดตข้อมูลในตัวแปล ตรงนี้
+                    //studyClassSchedule.push(updatedStudyClassSchedules[0]);
+                    studyClassSchedule.classStatus = updatedStudyClassSchedules[0].classStatus;
+                    studyClassSchedule.classConfirmedBy = updatedStudyClassSchedules[0].classConfirmedBy;
+                    studyClassSchedule.classConfirmedAt = updatedStudyClassSchedules[0].classConfirmedAt;
+                    studyClassSchedule.lastModifiedBy = updatedStudyClassSchedules[0].lastModifiedBy;
+                    studyClassSchedule.lastModifiedAt = updatedStudyClassSchedules[0].lastModifiedAt;
+                    //console.log("studyClassScheduleProfile => ", studyClassSchedule);
+
+                    swal("Confirm คลาสเรียนสำเร็จ", "ทำการ Confirm คลาสเรียนสำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกข้อมูลคลาสเรียนได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถบันทึกข้อมูลคลาสเรียนได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+
+    function useCheckinStudyClassSchedule($scope, $http)
+    {
+        return () => {
+            console.log("### FishsixStudyScheduleClassController.useCheckinStudyClassSchedule ###");
+            console.log("$scope.selectedStudyClass => ", $scope.selectedStudyClass);
+            console.log("$scope.selectedStudyClassSchedule => ", $scope.selectedStudyClassSchedule);
+            console.log("$scope.studyClassCheckin => ", $scope.studyClassCheckin);
+
+            // /api/fishsix/study-class/schedule/checkin
+            const requestMessage = {
+                classScheduleId: $scope.selectedStudyClassSchedule.id,
+                checkinStatus: $scope.studyClassCheckin.studyClassCheckinOption.attributes.checkinStatus,
+                checkinRemark: $scope.studyClassCheckin.remark,
+                studentQuotaStatus: $scope.studyClassCheckin.studyClassCheckinOption.attributes.studentQuotaStatus,
+                teacherQuotaStatus: $scope.studyClassCheckin.studyClassCheckinOption.attributes.teacherQuotaStatus,
+                teacherWageHourRate: $scope.studyClassCheckin.wageHourRate
+            };
+            console.log("requestMessage => ", requestMessage);
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/study-class/schedule/checkin`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    //ข้อมูลที่ส่งกลับมา
+                    const updatedStudyClassSchedule = response.data.body.updatedStudyClassSchedule;
+                    // console.log("updatedStudyClassSchedule => ", updatedStudyClassSchedule);
+                    // const studyClass = response.data.body.studyClass;
+                    // console.log("studyClass => ", studyClass);
+                    // const updatedStudentCourseQuota = response.data.body.updatedStudentCourseQuota;
+                    // console.log("updatedStudentCourseQuota => ", updatedStudentCourseQuota);
+
+                    //อับเดตข้อมูลในตัวแปล ตรงนี้
+                    //$scope.studyClassScheduleProfile;
+
+                    let schedule = $scope.selectedStudyClass.schedules.find(e => e.id === updatedStudyClassSchedule.id)
+                    if(schedule) {
+                        schedule.classStatus = updatedStudyClassSchedule.classStatus
+                        schedule.classConfirmedBy = updatedStudyClassSchedule.classConfirmedBy;
+                        schedule.classConfirmedAt = updatedStudyClassSchedule.classConfirmedAt;
+                        schedule.lastModifiedBy = updatedStudyClassSchedule.lastModifiedBy;
+                        schedule.lastModifiedAt = updatedStudyClassSchedule.lastModifiedAt;
+                    }
+
+                    //$scope.search();
+
+                    swal("การเชคชื่อสำเร็จ", "ทำการเชคชื่อสำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกการเชคชื่อได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถบันทึกข้อมูลคลาสเรียนได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+                $scope.closeCheckinFormModal();
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+
+    function useLoadEvaluateStudyClassSchedule($scope, $http)
+    {
+        return (studyClassSchedule) => {
+            console.log("### FishsixStudyScheduleClassController.loadEvaluateStudyClassSchedule ###");
+            console.log("studyClassSchedule => ", studyClassSchedule);
+
+            // /api/fishsix/study-class/evaluation/load
+            const requestMessage = {
+                // classScheduleIds: ["bfeb017b-012f-420e-8a46-fd3ee72c05c5"]
+                classScheduleIds: [studyClassSchedule.id]
+            };
+            console.log("requestMessage => ", requestMessage);
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/study-class/evaluation/load`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    //ข้อมูลที่ส่งกลับมา
+                    const studyClassEvaluationProfiles = response.data.body.studyClassEvaluationProfiles;
+                    console.log("studyClassEvaluationProfiles => ", studyClassEvaluationProfiles);
+
+                    //อับเดตข้อมูลในตัวแปล ตรงนี้
+                    if(studyClassEvaluationProfiles == null) {
+
+                        $scope.studyClassEvaluate = { //Keep value from evaluateStudyClassForm & default value in evaluateStudyClassForm
+                            entryMode: "add",
+                            studyClassEvaluationProfile: {
+                                studyClassEvaluation: {
+                                    classScheduleId: studyClassSchedule.id,
+                                    evaluateFromType: "Teacher",
+                                    evaluateToType: "Student",
+                                    comment: "",
+                                    evaluateStatus: "Approved"
+                                },
+
+                                studyClassEvaluationDetails: $scope.evaluationFactors.map(e => {
+                                    return {
+                                        evaluationFactor: e,
+                                        evaluationFactorId: e.id,
+                                        evaluationValue: e.type === "Text" ? "" : e.minScore
+                                    }
+                                })
+                            }
+                        };
+
+                    } else if( studyClassEvaluationProfiles.length > 0) {
+
+                        let studyClassEvaluationDetails = [];
+                        let indexEvaluationFactor = 0;
+                        let indexStudyClassEvaluationDetails = 0;
+                        $scope.evaluationFactors.forEach(evaluationFactor => {
+                            console.log("evaluationFactorId => ", studyClassEvaluationProfiles[0].studyClassEvaluationDetails[indexStudyClassEvaluationDetails].evaluationFactorId);
+                            console.log("evaluationFactor.id => ", evaluationFactor.id);
+
+                            const evaluationDetail = studyClassEvaluationProfiles[0].studyClassEvaluationDetails.find(e => e.evaluationFactorId === evaluationFactor.id);
+
+                            if(evaluationDetail) {
+                                console.log("EE");
+
+                                studyClassEvaluationDetails[indexEvaluationFactor] = evaluationDetail;
+                                studyClassEvaluationDetails[indexEvaluationFactor] = Object.assign({evaluationFactor: evaluationFactor}, evaluationDetail);
+                                indexStudyClassEvaluationDetails++;
+                            } else {
+                                console.log("NE");
+                                studyClassEvaluationDetails.push({
+                                    evaluationFactor: evaluationFactor,
+                                    evaluationFactorId: evaluationFactor.id,
+                                    evaluationValue: evaluationFactor.type === "Text" ? "" : evaluationFactor.minScore
+                                });
+                            }
+
+                            if(studyClassEvaluationDetails[indexEvaluationFactor].evaluationFactor.type == "Score"){
+                                studyClassEvaluationDetails[indexEvaluationFactor].evaluationValue = Number(studyClassEvaluationDetails[indexEvaluationFactor].evaluationValue);
+                            }
+                            
+                            indexEvaluationFactor++;
+                        });
+
+                        $scope.studyClassEvaluate = { //Keep value from evaluateStudyClassForm & default value in evaluateStudyClassForm
+                            entryMode: "edit",
+                            studyClassEvaluationProfile: {
+                                studyClassEvaluation: studyClassEvaluationProfiles[0].studyClassEvaluation,
+
+                                studyClassEvaluationDetails: studyClassEvaluationDetails
+                            }
+                        };
+                        
+                        console.log("$scope.selectedStudyClassSchedule at  Success => ", $scope.selectedStudyClassSchedule);
+                        console.log("$scope.studyClassEvaluate after Success => ", $scope.studyClassEvaluate);
+                    }
+
+                    //swal("การบันทึกพัฒนาการสำเร็จ", "ทำการบันทึกพัฒนาการสำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถตรวจสอบการบันทึกพัฒนาการได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถทำการตรวจสอบการบันทึกพัฒนาการได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+
+    function useLoadEvaluateStudyClassSchedule2($scope, $http)
+    {
+        return (studyClassSchedule) => {
+            console.log("### FishsixStudyScheduleClassController.loadEvaluateStudyClassSchedule ###");
+            console.log("studyClassSchedule => ", studyClassSchedule);
+
+            // /api/fishsix/study-class/evaluation/load
+            const requestMessage = {
+                // classScheduleIds: ["bfeb017b-012f-420e-8a46-fd3ee72c05c5"]
+                classScheduleIds: [studyClassSchedule.id]
+            };
+            console.log("requestMessage => ", requestMessage);
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/study-class/evaluation/load`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    //ข้อมูลที่ส่งกลับมา
+                    const studyClassEvaluationProfiles = response.data.body.studyClassEvaluationProfiles;
+                    console.log("studyClassEvaluationProfiles => ", studyClassEvaluationProfiles);
+
+                    //อับเดตข้อมูลในตัวแปล ตรงนี้
+                    if(studyClassEvaluationProfiles == null){
+
+                        $scope.studyClassEvaluate = { //Keep value from evaluateStudyClassForm & default value in evaluateStudyClassForm
+                            entryMode: "add",
+                            studyClassEvaluationProfile: {
+                                studyClassEvaluation: {
+                                    classScheduleId: studyClassSchedule.id,
+                                    evaluateFromType: "Teacher",
+                                    evaluateToType: "Student",
+                                    comment: "",
+                                    evaluateStatus: "Approved"
+                                },
+
+                                studyClassEvaluationDetails: $scope.evaluationFactors.map(e => {
+                                    return {
+                                        evaluationFactor: e,
+                                        evaluationFactorId: e.id,
+                                        evaluationValue: e.type === "Text" ? "" : e.minScore
+                                    }
+                                })
+                            }
+                        };
+
+                    }else if( studyClassEvaluationProfiles.length > 0){
+
+                        let studyClassEvaluationDetails = [];
+                        let indexEvaluationFactor = 0;
+                        let indexStudyClassEvaluationDetails = 0;
+                        $scope.evaluationFactors.forEach(evaluationFactor => {
+                            console.log("evaluationFactorId => ", studyClassEvaluationProfiles[0].studyClassEvaluationDetails[indexStudyClassEvaluationDetails].evaluationFactorId);
+                            console.log("evaluationFactor.id => ", evaluationFactor.id);
+
+                            if(evaluationFactor.id == studyClassEvaluationProfiles[0].studyClassEvaluationDetails[indexStudyClassEvaluationDetails].evaluationFactorId){
+                                console.log("EE");
+
+                                studyClassEvaluationDetails[indexEvaluationFactor] = studyClassEvaluationProfiles[0].studyClassEvaluationDetails[indexStudyClassEvaluationDetails];
+                                // studyClassEvaluationDetails[indexEvaluationFactor] = {
+                                //     evaluationFactor: evaluationFactor,
+                                // };
+                                studyClassEvaluationDetails[indexEvaluationFactor] = Object.assign({evaluationFactor: evaluationFactor},studyClassEvaluationDetails[indexEvaluationFactor]);
+
+                                indexStudyClassEvaluationDetails++;
+                            }else{
+                                console.log("NE");
+                                studyClassEvaluationDetails.push({
+                                    evaluationFactor: evaluationFactor,
+                                    evaluationFactorId: evaluationFactor.id,
+                                    evaluationValue: evaluationFactor.type === "Text" ? "" : evaluationFactor.minScore
+                                });
+                            }
+
+                            if(studyClassEvaluationDetails[indexEvaluationFactor].evaluationFactor.type == "Score"){
+                                studyClassEvaluationDetails[indexEvaluationFactor].evaluationValue = Number(studyClassEvaluationDetails[indexEvaluationFactor].evaluationValue);
+                            }
+                            
+                            indexEvaluationFactor++;
+                        });
+
+                        $scope.studyClassEvaluate = { //Keep value from evaluateStudyClassForm & default value in evaluateStudyClassForm
+                            entryMode: "edit",
+                            studyClassEvaluationProfile: {
+                                studyClassEvaluation: studyClassEvaluationProfiles[0].studyClassEvaluation,
+
+                                studyClassEvaluationDetails: studyClassEvaluationDetails
+                            }
+                        };
+                        
+                        console.log("$scope.selectedStudyClassSchedule at  Success => ", $scope.selectedStudyClassSchedule);
+                        console.log("$scope.studyClassEvaluate after Success => ", $scope.studyClassEvaluate);
+                    }
+
+                    //swal("การบันทึกพัฒนาการสำเร็จ", "ทำการบันทึกพัฒนาการสำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถตรวจสอบการบันทึกพัฒนาการได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถทำการตรวจสอบการบันทึกพัฒนาการได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+
+    function useCreateEvaluateStudyClassSchedule($scope, $http)
+    {
+        return () => {
+            console.log("### FishsixStudyScheduleClassController.createEvaluateStudyClassSchedule ###");
+            console.log("$scope.selectedStudyClassSchedule => ", $scope.selectedStudyClassSchedule);
+            console.log("$scope.studyClassEvaluate => ", $scope.studyClassEvaluate);
+
+            // /api/fishsix/study-class/evaluation/create
+            const studyClassEvaluation = {
+                classScheduleId: $scope.studyClassEvaluate.studyClassEvaluationProfile.studyClassEvaluation.classScheduleId,
+                evaluateFromType: "Teacher",
+                evaluateToType: "Student",
+                evaluateStatus: $scope.studyClassEvaluate.studyClassEvaluationProfile.studyClassEvaluation.evaluateStatus,
+                comment: $scope.studyClassEvaluate.studyClassEvaluationProfile.studyClassEvaluation.comment
+            };
+            console.log("studyClassEvaluation => ", studyClassEvaluation);
+
+            let studyClassEvaluationDetails = [];
+            $scope.studyClassEvaluate.studyClassEvaluationProfile.studyClassEvaluationDetails.forEach(studyClassEvaluationDetail => {
+                let _evaluationDetail = angular.copy(studyClassEvaluationDetail);
+                delete _evaluationDetail.evaluationFactor;
+                _evaluationDetail.evaluationValue = _evaluationDetail.evaluationValue.toString();
+                studyClassEvaluationDetails.push(_evaluationDetail);
+            });
+            console.log("studyClassEvaluationDetails => ", studyClassEvaluationDetails);
+
+            const requestMessage = {
+                studyClassEvaluationProfile: {
+                    studyClassEvaluation: studyClassEvaluation,
+                    studyClassEvaluationDetails: studyClassEvaluationDetails
+                }
+            };
+            console.log("requestMessage => ", requestMessage);
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/study-class/evaluation/create`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    //ข้อมูลที่ส่งกลับมา
+                    // const updatedStudyClassSchedule = response.data.body.createdStudyClassSchedule;
+                    // console.log("updatedStudyClassSchedule => ", updatedStudyClassSchedule);
+
+                    //อับเดตข้อมูลในตัวแปล ตรงนี้
+                    //$scope.search();
+
+                    swal("การบันทึกพัฒนาการสำเร็จ", "ทำการบันทึกพัฒนาการสำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกพัฒนาการได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถบันทึกข้อมูลพัฒนาการได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+                $scope.closeEvaluationFormModal();
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+
+    function useUpdateEvaluateStudyClassSchedule($scope, $http)
+    {
+        return () => {
+            console.log("### FishsixStudyScheduleClassController.updateEvaluateStudyClassSchedule ###");
+            console.log("$scope.selectedStudyClassSchedule => ", $scope.selectedStudyClassSchedule);
+            console.log("$scope.studyClassEvaluate Before API=> ", $scope.studyClassEvaluate);
+
+            // /api/fishsix/study-class/evaluation/update
+            let studyClassEvaluationDetails = [];
+            $scope.studyClassEvaluate.studyClassEvaluationProfile.studyClassEvaluationDetails.forEach(studyClassEvaluationDetail => {
+
+                let _evaluationDetail = angular.copy(studyClassEvaluationDetail);
+                delete _evaluationDetail.evaluationFactor;
+                _evaluationDetail.evaluationValue = _evaluationDetail.evaluationValue.toString();
+                studyClassEvaluationDetails.push(_evaluationDetail);
+
+            });
+            console.log("studyClassEvaluationDetails => ", studyClassEvaluationDetails);
+
+            const requestMessage = {
+                studyClassEvaluationProfile: {
+                    studyClassEvaluation: $scope.studyClassEvaluate.studyClassEvaluationProfile.studyClassEvaluation,
+                    studyClassEvaluationDetails: studyClassEvaluationDetails
+                }
+            };
+            console.log("requestMessage => ", requestMessage);
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/study-class/evaluation/update`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    //ข้อมูลที่ส่งกลับมา
+                    // const updatedStudyClassEvaluationProfile = response.data.body.updatedStudyClassEvaluationProfile;
+                    // console.log("updatedStudyClassEvaluationProfile => ", updatedStudyClassEvaluationProfile);
+
+                    //อับเดตข้อมูลในตัวแปล ตรงนี้
+                    // $scope.search();
+
+                    console.log("$scope.studyClassEvaluate at  Success => ", $scope.studyClassEvaluate);
+
+                    swal("การบันทึกพัฒนาการสำเร็จ", "ทำการบันทึกพัฒนาการสำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกพัฒนาการได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถบันทึกข้อมูลพัฒนาการได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+                $scope.closeEvaluationFormModal();
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+</script>

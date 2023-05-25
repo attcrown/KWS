@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/kws.iml" filepath="$PROJECT_DIR$/kws.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kws-console/kws-console.iml" filepath="$PROJECT_DIR$/kws-console/kws-console.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kws-core/kws-core.iml" filepath="$PROJECT_DIR$/kws-core/kws-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kws-firstjobber-lib/kws-firstjobber-lib.iml" filepath="$PROJECT_DIR$/kws-firstjobber-lib/kws-firstjobber-lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kws-fishsix-lib/kws-fishsix-lib.iml" filepath="$PROJECT_DIR$/kws-fishsix-lib/kws-fishsix-lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kws-marketpet-lib/kws-marketpet-lib.iml" filepath="$PROJECT_DIR$/kws-marketpet-lib/kws-marketpet-lib.iml" />
+    </modules>
+  </component>
+</project>

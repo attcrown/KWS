@@ -1,0 +1,149 @@
+<div ng-show="mode === 'entry'" class="card">
+    <div class="card-header">
+        <h3 class="card-title text-maroon">เพิ่ม/แก้ไขข้อมูลสถานศึกษา</h3>
+    </div>
+
+    <div class="card-body">
+        <div class="row mb-4">
+            <div class="col-md-12 text-center">
+                <img class="img-size-60 img-fluid" ng-src="{{ selectedSchool.logoImageURI }}" />
+            </div>
+        </div>
+
+        <form name="schoolForm" class="form row" novalidate>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowSchoolTypeError()">ประเภทสถานศึกษา</span>
+                        <span class="text-danger" ng-show="isShowSchoolTypeError()">กรุณาเลือกประเภทสถานศึกษา</span>
+                    </label>
+                    <select name="schoolType" class="form-control" ng-class="{'is-invalid': isShowSchoolTypeError()}" style="width: 100%;" ng-model="selectedSchool.schoolTypeId" required>
+                        <option value="" selected disabled>--- กรุณาเลือกประเภทสถานศึกษา ---</option>
+                        <option ng-repeat="schoolType in schoolTypes | orderBy: 'seqNo'" ng-value="schoolType.id">{{ schoolType.name }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowSchoolOwnerTypeError()">สังกัด</span>
+                        <span class="text-danger" ng-show="isShowSchoolOwnerTypeError()">กรุณาเลือกสังกัดสถานศึกษา</span>
+                    </label>
+                    <select name="schoolOwnerType" class="form-control" ng-class="{'is-invalid': isShowSchoolOwnerTypeError()}" style="width: 100%;" ng-model="selectedSchool.schoolOwnerTypeId" required>
+                        <option value="" selected disabled>--- กรุณาเลือกสังกัดสถานศึกษา ---</option>
+                        <option ng-repeat="schoolOwnerType in schoolOwnerTypes | orderBy: 'seqNo'" ng-value="schoolOwnerType.id">{{ schoolOwnerType.name }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowNameError()">ชื่อสถานศึกษา</span>
+                        <span class="text-danger" ng-show="isShowNameError()">ชื่อสถานศึกษา</span>
+                    </label>
+                    <input name="name" type="text" class="form-control" ng-class="{'is-invalid': isShowNameError()}" placeholder="ระบุชื่อสถานศึกษา" ng-model="selectedSchool.name" required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>โทร</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="ระบุเบอร์โทร" ng-model="selectedSchool.phoneNo">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>แฟกซ์</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="ระบุเบอร์แฟกซ์" ng-model="selectedSchool.faxNo">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>อีเมล์</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="ระบุอีเมล์" ng-model="selectedSchool.email">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>เว็บไซต์</span>
+                    </label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="ระบุเว็บไซต์" aria-label="ระบุเว็บไซต์" aria-describedby="basic-addon2" ng-model="selectedSchool.website">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-primary" type="button">
+                                <a ng-href="{{ selectedSchool.website }}" target="_blank">เปิด</a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>Facebook Page URL</span>
+                    </label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="ระบุ Facebook Page URL" aria-label="ระบุ Facebook Page URL" aria-describedby="basic-addon2" ng-model="selectedSchool.facebookPageURL">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-primary" type="button">
+                                <a ng-href="{{ selectedSchool.facebookPageURL }}" target="_blank">เปิด</a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>URL รูปโลโก้</span>
+                    </label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="ระบุ URL รูปโลโก้" aria-label="ระบุ URL รูปโลโก้" aria-describedby="basic-addon2" ng-model="selectedSchool.logoImageURI">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-primary" type="button">
+                                <a href="{{ selectedSchool.logoImageURI }}" target="_blank">เปิด</a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>หมายเหตุ</span>
+                    </label>
+                    <textarea rows="5" class="form-control" placeholder="ระบุหมายเหตุ" ng-model="selectedSchool.remark"></textarea>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="card-footer">
+        <div class="text-right">
+            <button class="btn btn-outline-danger" ng-click="toListMode()">
+                <i class="fa fa-caret-left"></i> กลับ
+            </button>
+            <button class="btn btn-outline-primary" ng-click="requestSave()">
+                <i class="fa fa-save"></i> บันทึก
+            </button>
+        </div>
+    </div>
+</div>

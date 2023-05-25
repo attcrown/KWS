@@ -1,0 +1,289 @@
+<div class="card">
+    <!-- card-header -->
+    <div class="card-header">
+        <h3 class="card-title text-maroon">ทำแบบทดสอบและอัพโหลดผลการทำแบบทดสอบ</h3>
+    </div>
+    <!-- /.card-header -->
+
+    <!-- card-body -->
+    <div class="card-body p-2">
+
+        <!-- high5-test -->
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">{{ testHigh5Name }}</h3>
+            </div>
+        
+            <div class="card-body p-2">
+                <p>ลิงค์ทำแบบทดสอบ <a ng-href="{{ testHigh5Link }}" target="_blank">คลิ๊ก/กด</a></p>
+
+                <h4 class="border-bottom">ผลการทำแบบทดสอบ</h4>
+
+                <form class="form-horizontal">
+                    <div>
+                        <div class="form-group border rounded p-2" ng-class="{'border-danger': validator.high5.categoryId1.isInvalid()}">
+                            <div>
+                                <label class="col-form-label">
+                                    <span class="text-danger">*</span>
+                                    <span ng-show="!validator.high5.categoryId1.isInvalid()">จุดแข็งลำดับที่ 1</span>
+                                    <span ng-show="validator.high5.categoryId1.isInvalid()" class="text-danger">กรุณาเลือกจุดแข็งลำดับที่ 1</span>
+                                </label>
+                                <small class="text-muted">กรุณาเลือกจุดแข็งลำดับที่ 1</small>
+                            </div>
+                            <div>
+                                <select class="form-control" ng-model="uploadTest.high5.categoryId1">
+                                    <option value="" selected disabled>--- เลือกจุดแข็งลำดับที่ 1 ---</option>
+                                    <option ng-repeat="high5TestCategory in high5TestCategories | orderBy: 'title'" ng-value="high5TestCategory.id">{{ high5TestCategory.title }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="form-group border rounded p-2" ng-class="{'border-danger': validator.high5.categoryId2.isInvalid()}">
+                            <div>
+                                <label class="col-form-label">
+                                    <span class="text-danger">*</span>
+                                    <span ng-show="!validator.high5.categoryId2.isInvalid()">จุดแข็งลำดับที่ 2</span>
+                                    <span ng-show="validator.high5.categoryId2.isInvalid()" class="text-danger">กรุณาเลือกจุดแข็งลำดับที่ 2</span>
+                                </label>
+                                <small class="text-muted">กรุณาเลือกจุดแข็งลำดับที่ 2</small>
+                            </div>
+                            <div>
+                                <select class="form-control" ng-model="uploadTest.high5.categoryId2">
+                                    <option value="" selected disabled>--- เลือกจุดแข็งลำดับที่ 2 ---</option>
+                                    <option ng-repeat="high5TestCategory in high5TestCategories | orderBy: 'title'" ng-value="high5TestCategory.id">{{ high5TestCategory.title }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="form-group border rounded p-2" ng-class="{'border-danger': validator.high5.categoryId3.isInvalid()}">
+                            <div>
+                                <label class="col-form-label">
+                                    <span class="text-danger">*</span>
+                                    <span ng-show="!validator.high5.categoryId3.isInvalid()">จุดแข็งลำดับที่ 3</span>
+                                    <span ng-show="validator.high5.categoryId3.isInvalid()" class="text-danger">กรุณาเลือกจุดแข็งลำดับที่ 3</span>
+                                </label>
+                                <small class="text-muted">กรุณาเลือกจุดแข็งลำดับที่ 3</small>
+                            </div>
+                            <div>
+                                <select class="form-control" ng-model="uploadTest.high5.categoryId3">
+                                    <option value="" selected disabled>--- เลือกจุดแข็งลำดับที่ 3 ---</option>
+                                    <option ng-repeat="high5TestCategory in high5TestCategories | orderBy: 'title'" ng-value="high5TestCategory.id">{{ high5TestCategory.title }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="form-group border rounded p-2" ng-class="{'border-danger': validator.high5.categoryId4.isInvalid()}">
+                            <div>
+                                <label class="col-form-label">
+                                    <span class="text-danger">*</span>
+                                    <span ng-show="!validator.high5.categoryId4.isInvalid()">จุดแข็งลำดับที่ 4</span>
+                                    <span ng-show="validator.high5.categoryId4.isInvalid()" class="text-danger">กรุณาเลือกจุดแข็งลำดับที่ 4</span>
+                                </label>
+                                <small class="text-muted">กรุณาเลือกจุดแข็งลำดับที่ 4</small>
+                            </div>
+                            <div>
+                                <select class="form-control" ng-model="uploadTest.high5.categoryId4">
+                                    <option value="" selected disabled>--- เลือกจุดแข็งลำดับที่ 4 ---</option>
+                                    <option ng-repeat="high5TestCategory in high5TestCategories | orderBy: 'title'" ng-value="high5TestCategory.id">{{ high5TestCategory.title }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="form-group border rounded p-2" ng-class="{'border-danger': validator.high5.categoryId5.isInvalid()}">
+                            <div>
+                                <label class="col-form-label">
+                                    <span class="text-danger">*</span>
+                                    <span ng-show="!validator.high5.categoryId5.isInvalid()">จุดแข็งลำดับที่ 5</span>
+                                    <span ng-show="validator.high5.categoryId5.isInvalid()" class="text-danger">กรุณาเลือกจุดแข็งลำดับที่ 5</span>
+                                </label>
+                                <small class="text-muted">กรุณาเลือกจุดแข็งลำดับที่ 5</small>
+                            </div>
+                            <div>
+                                <select class="form-control" ng-model="uploadTest.high5.categoryId5">
+                                    <option value="" selected disabled>--- เลือกจุดแข็งลำดับที่ 5 ---</option>
+                                    <option ng-repeat="high5TestCategory in high5TestCategories | orderBy: 'title'" ng-value="high5TestCategory.id">{{ high5TestCategory.title }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="form-group border rounded p-2" ng-class="{'border-danger': validator.high5.resultFile.isInvalid()}">
+                            <div>
+                                <label class="col-form-label">
+                                    <span class="text-danger">*</span>
+                                    <span ng-show="!validator.high5.resultFile.isInvalid()">รูปผลการทำแบบทดสอบ</span>
+                                    <span ng-show="validator.high5.resultFile.isInvalid()" class="text-danger">กรุณาอัพโหลดรูปผลการทำแบบทดสอบ</span>
+                                </label>
+                                <small class="text-muted">กรุณาอัพโหลดรูปผลการทำแบบทดสอบ</small>
+                            </div>
+                            <div>
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input high5-file" accept="image/*">
+                                        <label ng-show="!uploadTest.high5.resultFile" class="custom-file-label">--- อัพโหลดรูป ---</label>
+                                        <label ng-show="uploadTest.high5.resultFile" class="custom-file-label">{{ uploadTest.high5.resultFile.name }}</label>
+                                    </div>
+                                    <div class="input-group-append">
+                                        <button ng-show="uploadTest.high5.resultFile" class="btn btn-danger" ng-click="removeHigh5ResultFile()">
+                                            <i class="fas fa-trash"></i> ลบ
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- /.high5-test -->
+
+        <!-- 16personality-test -->
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">{{ test16PersonlityName }}</h3>
+            </div>
+        
+            <div class="card-body p-2">
+                <p>ลิงค์ทำแบบทดสอบ <a ng-href="{{ test16PersonlityLink }}" target="_blank">คลิ๊ก/กด</a></p>
+
+                <h4 class="border-bottom">ผลการทำแบบทดสอบ</h4>
+
+                <form class="form-horizontal">
+                    <div>
+                        <div class="form-group border rounded p-2" ng-class="{'border-danger': validator.personality.categoryId.isInvalid()}">
+                            <div>
+                                <label class="col-form-label">
+                                    <span class="text-danger">*</span>
+                                    <span ng-show="!validator.personality.categoryId.isInvalid()">บุคคลิกภาพ</span>
+                                    <span ng-show="validator.personality.categoryId.isInvalid()" class="text-danger">กรุณาเลือกบุคคลิกภาพของคุณ</span>
+                                </label>
+                                <small class="text-muted">กรุณาเลือกบุคคลิกภาพของคุณ</small>
+                            </div>
+                            <div>
+                                <select class="form-control" ng-model="uploadTest.personality.categoryId">
+                                    <option value="" selected disabled>--- เลือกบุคคลิกภาพ ---</option>
+                                    <option ng-repeat="sixteenPersonalityCategory in sixteenPersonalityCategories | orderBy: 'name'" ng-value="sixteenPersonalityCategory.id">{{ sixteenPersonalityCategory.name }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="form-group border rounded p-2" ng-class="{'border-danger': validator.personality.resultFile.isInvalid()}">
+                            <div>
+                                <label class="col-form-label">
+                                    <span class="text-danger">*</span>
+                                    <span ng-show="!validator.personality.resultFile.isInvalid()">รูปผลการทำแบบทดสอบ</span>
+                                    <span ng-show="validator.personality.resultFile.isInvalid()" class="text-danger">กรุณาอัพโหลดรูปผลการทำแบบทดสอบ</span>
+                                </label>
+                                <small class="text-muted">กรุณาอัพโหลดรูปผลการทำแบบทดสอบ</small>
+                            </div>
+                            <div>
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input personality-file" accept="image/*">
+                                        <label ng-show="!uploadTest.personality.resultFile" class="custom-file-label">--- อัพโหลดรูป ---</label>
+                                        <label ng-show="uploadTest.personality.resultFile" class="custom-file-label">{{ uploadTest.personality.resultFile.name }}</label>
+                                    </div>
+                                    <div class="input-group-append">
+                                        <button ng-show="uploadTest.personality.resultFile" class="btn btn-danger" ng-click="removePersonalityResultFile()">
+                                            <i class="fas fa-trash"></i> ลบ
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- /.16personality-test -->
+
+        <!-- iq-test -->
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">{{ testIQName }}</h3>
+            </div>
+        
+            <div class="card-body p-2">
+                <p>ลิงค์ทำแบบทดสอบ <a ng-href="{{ testIQLink }}" target="_blank">คลิ๊ก/กด</a></p>
+
+                <h4 class="border-bottom">ผลการทำแบบทดสอบ</h4>
+
+                <form class="form-horizontal">
+                    <div>
+                        <div class="form-group border rounded p-2" ng-class="{'border-danger': validator.iq.score.isInvalid()}">
+                            <div>
+                                <label class="col-form-label">
+                                    <span class="text-danger">*</span>
+                                    <span ng-show="!validator.iq.score.isInvalid()">ระดับ IQ</span>
+                                    <span ng-show="validator.iq.score.isInvalid()" class="text-danger">กรุณาระบุระดับ IQ</span>
+                                </label>
+                                <small class="text-muted">กรุณาระบุระดับ IQ</small>
+                            </div>
+                            <div>
+                                <input 
+                                    type="number" 
+                                    class="form-control" 
+                                    ng-class="{'is-invalid': validator.iq.score.isInvalid()}" 
+                                    placeholder="ระบุระดับ IQ" 
+                                    ng-model="uploadTest.iq.score">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="form-group border rounded p-2" ng-class="{'border-danger': validator.iq.resultFile.isInvalid()}">
+                            <div>
+                                <label class="col-form-label">
+                                    <span class="text-danger">*</span>
+                                    <span ng-show="!validator.iq.resultFile.isInvalid()">รูปผลการทำแบบทดสอบ</span>
+                                    <span ng-show="validator.iq.resultFile.isInvalid()" class="text-danger">กรุณาอัพโหลดรูปผลการทำแบบทดสอบ</span>
+                                </label>
+                                <small class="text-muted">กรุณาอัพโหลดรูปผลการทำแบบทดสอบ</small>
+                            </div>
+                            <div>
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input iq-file" accept="image/*">
+                                        <label ng-show="!uploadTest.iq.resultFile" class="custom-file-label">--- อัพโหลดรูป ---</label>
+                                        <label ng-show="uploadTest.iq.resultFile" class="custom-file-label">{{ uploadTest.iq.resultFile.name }}</label>
+                                    </div>
+                                    <div class="input-group-append">
+                                        <button ng-show="uploadTest.iq.resultFile" class="btn btn-danger" ng-click="removeIQResultFile()">
+                                            <i class="fas fa-trash"></i> ลบ
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- /.iq-test -->
+
+    </div>
+    <!-- card-body -->
+
+    <div class="card-footer">
+        <div class="row text-right">
+            <div class="offset-6"></div>
+                            
+            <div class="col-6">
+                <button class="btn btn-outline-primary btn-block" ng-click="requestUpload()">
+                    <i class="fa fa-upload"></i> อัพโหลด
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

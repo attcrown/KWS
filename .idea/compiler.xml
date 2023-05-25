@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="kws-fishsix-lib" />
+        <module name="kws-firstjobber-lib" />
+        <module name="kws-console" />
+        <module name="kws-core" />
+        <module name="kws-marketpet-lib" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="kws" target="11" />
+      <module name="kws-console" target="11" />
+      <module name="kws-core" target="11" />
+      <module name="kws-firstjobber-lib" target="11" />
+      <module name="kws-fishsix-lib" target="11" />
+      <module name="kws-marketpet-lib" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="kws-console" options="-parameters" />
+      <module name="kws-core" options="-parameters" />
+      <module name="kws-firstjobber-lib" options="-parameters" />
+      <module name="kws-fishsix-lib" options="-parameters" />
+      <module name="kws-marketpet-lib" options="-parameters" />
+    </option>
+  </component>
+</project>

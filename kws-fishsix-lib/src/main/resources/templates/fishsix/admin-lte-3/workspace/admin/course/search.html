@@ -1,0 +1,67 @@
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title text-maroon">ระบุเงื่อนไขการค้นหา</h3>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6 col-lg-4 col-xl-3">
+                <div class="form-group">
+                    <label>ช่องทาง</label>
+                    <select class="form-control select2" multiple="multiple" data-placeholder="--- กรุณาเลือกช่องทาง ---" style="width: 100%;" ng-model="criteria.classChannelIds">
+                        <option ng-repeat="classChannel in classChannels | orderBy: 'seqNo'" ng-value="classChannel.id">{{ classChannel.name }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 col-xl-3">
+                <div class="form-group">
+                    <label>ประเภทคลาส</label>
+                    <select class="form-control select2" multiple="multiple" data-placeholder="--- กรุณาเลือกประเภทคลาส ---" style="width: 100%;" ng-model="criteria.classTypeIds">
+                        <option ng-repeat="classType in classTypes | orderBy: 'seqNo'" ng-value="classType.id">{{ classType.name }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <!--
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>ระดับชั้น</label>
+                    <select class="form-control select2" multiple="multiple" data-placeholder="--- กรุณาเลือกระดับชั้น ---" style="width: 100%;" ng-model="criteria.classLevels">
+                        <option ng-repeat="classLevel in classLevels | orderBy: 'seqNo'" ng-value="classLevel.id">{{ classLevel.titleAbbr }}</option>
+                    </select>
+                </div>
+            </div>
+            -->
+
+            <div class="col-md-6 col-lg-4 col-xl-3">
+                <div class="form-group">
+                    <label>จำนวนชั่วโมงเรียน</label>
+                    <select class="form-control select2" multiple="multiple" data-placeholder="--- กรุณาเลือกจำนวนชั่วโมงเรียน ---" style="width: 100%;" ng-model="criteria.classHours">
+                        <option ng-repeat="classHour in classHours | orderBy: 'seqNo'" ng-value="classHour.hour">{{ classHour.name }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 col-xl-3">
+                <div class="form-group">
+                    <label>วิชา</label>
+                    <select class="form-control select2" multiple="multiple" data-placeholder="--- กรุณาเลือกวิชา ---" style="width: 100%;" ng-model="criteria.subjectIds">
+                        <option ng-repeat="subject in subjects" ng-value="subject.id">{{ subject.name }}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-footer">
+        <div class="text-right">
+            <button class="btn btn-outline-success" ng-click="requestAddCourse()">
+                <i class="fa fa-plus"></i> เพิ่มข้อมูล
+            </button>
+            <button class="btn btn-outline-primary" ng-click="search()">
+                <i class="fa fa-search"></i> ค้นหา
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,169 @@
+<script th:inline="javascript">
+    const kws_webEnv = /*[[${kws_webEnv}]]*/ '';
+    const kws_serverURL = /*[[${kws_serverURL}]]*/ '';
+    const kws_data = /*[[${kws_data}]]*/ {};
+
+    console.log("kws_webEnv => " + kws_webEnv);
+    console.log("kws_serverURL => " + kws_serverURL);
+    console.log("kws_data => ", kws_data);
+
+    const app = angular.module("app", ["ngSanitize"]);
+
+    app.controller("StudentRegistrationController", ["$scope", "$http", ($scope, $http) => {
+        $scope.educationLevels = [];
+
+        $scope.isLoading = false;
+        $scope.studentProfile = {};
+
+        $scope.init = function() {
+            console.log("### StudentRegistrationController.init ###");
+
+            $scope.educationLevels = ["ป.1", "ป.2", "ป.3", "ป.4", "ป.5", "ป.6", "ม.1", "ม.2", "ม.3", "ม.4", "ม.5", "ม.6"];
+        };
+
+        $scope.verify = function() {
+            return $scope.userForm.$valid && $scope.studentForm.$valid && $scope.parentForm.$valid && $scope.educationForm.$valid;
+        };
+
+        // ****************************** validate ****************************** //
+        $scope.isShowEmailError = function() {
+            return ($scope.userForm.$submitted || $scope.userForm.email.$dirty) && $scope.userForm.email.$invalid;
+        };
+
+        $scope.isShowPasswordError = function() {
+            return ($scope.userForm.$submitted || $scope.userForm.password.$dirty) && $scope.userForm.password.$invalid;
+        };
+
+        $scope.isShowFirstNameError = function() {
+            return ($scope.studentForm.$submitted || $scope.studentForm.firstName.$dirty) && $scope.studentForm.firstName.$invalid;
+        };
+
+        $scope.isShowLastNameError = function() {
+            return ($scope.studentForm.$submitted || $scope.studentForm.lastName.$dirty) && $scope.studentForm.lastName.$invalid;
+        };
+
+        $scope.isShowNickNameError = function() {
+            return ($scope.studentForm.$submitted || $scope.studentForm.nickName.$dirty) && $scope.studentForm.nickName.$invalid;
+        };
+
+        $scope.isShowGenderError = function() {
+            return $scope.studentForm.$submitted && $scope.studentForm.gender.$invalid;
+        };
+
+        $scope.isShowMobileNoError = function() {
+            return ($scope.studentForm.$submitted || $scope.studentForm.mobileNo.$dirty) && $scope.studentForm.mobileNo.$invalid;
+        };
+
+        $scope.isShowContactAddressError = function() {
+            return ($scope.studentForm.$submitted || $scope.studentForm.contactAddress.$dirty) && $scope.studentForm.contactAddress.$invalid;
+        };
+        
+        $scope.isShowParentNameError = function() {
+            return ($scope.parentForm.$submitted || $scope.parentForm.name.$dirty) && $scope.parentForm.name.$invalid;
+        };
+
+        $scope.isShowParentMobileNoError = function() {
+            return ($scope.parentForm.$submitted || $scope.parentForm.mobileNo.$dirty) && $scope.parentForm.mobileNo.$invalid;
+        };
+
+        $scope.isShowParentJobError = function() {
+            return ($scope.parentForm.$submitted || $scope.parentForm.job.$dirty) && $scope.parentForm.job.$invalid;
+        };
+
+        $scope.isShowParentExpectationError = function() {
+            return ($scope.parentForm.$submitted || $scope.parentForm.expectation.$dirty) && $scope.parentForm.expectation.$invalid;
+        };
+
+        $scope.isShowEducationSchoolError = function() {
+            return ($scope.educationForm.$submitted || $scope.educationForm.school.$dirty) && $scope.educationForm.school.$invalid;
+        };
+
+        $scope.isShowEducationLevelError = function() {
+            return $scope.educationForm.$submitted && $scope.educationForm.level.$invalid;
+        };
+        // ****************************** validate ****************************** //
+
+        $scope.requestSubmit = function() {
+            console.log("### StudentRegistrationController.requestSubmit ###");
+
+            $scope.userForm.$submitted = true;
+            $scope.studentForm.$submitted = true
+            $scope.educationForm.$submitted = true;;
+            $scope.parentForm.$submitted = true;
+
+            if($scope.verify()) {
+                const options = {
+                    title: "ยืนยันการบันทึกข้อมูลนักเรียน",
+                    text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                    icon: "warning",
+                    buttons: ["ยกเลิก", "ตกลง"],
+                    dangerMode: true
+                };
+
+                const handler = (confirm) => {
+                    if (confirm) {
+                        $scope.submit();
+                    }
+                };
+
+                swal(options).then(handler);
+            } else {
+                swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+            }
+        };
+
+        $scope.submit = function() {
+            console.log("### StudentRegistrationController.submit ###");
+
+            const requestMessage = {
+                studentRegister: $scope.studentProfile
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_serverURL}/api/fishsix/student-register/create`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    const createdStudentProfile = response.data.body.createdStudentProfile;
+                    console.log("createdStudentProfile => ", createdStudentProfile);
+                    const alertOptions = {
+                        title: "บันทึกข้อมูลสำเร็จ",
+                        text: "บันทึกข้อมูลนักเรียนสำเร็จ",
+                        type: "success"
+                    };
+                    const alertClickHandler = () => {
+                        window.location = kws_serverURL;
+                    };
+                    swal(alertOptions).then(alertClickHandler);
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกข้อมูลนักเรียนได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                if(error.data && error.data.head) {
+                    errorMessage = "ไม่สามารถบันทึกข้อมูลนักเรียนได้ เนื่องจาก" + error.data.head.statusMessage;
+                }
+                swal("เกิดข้อผิดพลาด", errorMessage, "error");
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }]);
+</script>

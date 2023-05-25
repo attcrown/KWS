@@ -1,0 +1,170 @@
+<script th:inline="javascript">
+    app.controller("InternshipProfileController", ["$scope", "$http", ($scope, $http) => {
+        //$scope.educationFaculties = /*[[${educationFaculties}]]*/ [];
+
+        $scope.schools = [
+            {
+                id: "001",
+                name: "มหาวิทยาลัยมหาสารคาม"
+            },
+
+            {
+                id: "002",
+                name: "มหาวิทยาลัยชินวัตร"
+            },
+
+            {
+                id: "003",
+                name: "มหาวิทยาลัยศรีปทุม"
+            },
+
+            {
+                id: "004",
+                name: "มหาวิทยาลัยกาฬสินธุ์"
+            },
+
+            {
+                id: "005",
+                name: "มหาวิทยาลัยเกษตรศาสตร์"
+            }
+        ];
+
+        $scope.educationFaculties = [
+            {
+                id: "001",
+                name: "คณะจิตวิทยา"
+            },
+
+            {
+                id: "002",
+                name: "คณะทันตแพทยศาสตร์"
+            },
+
+            {
+                id: "003",
+                name: "คณะนิติศาสตร์"
+            },
+
+            {
+                id: "004",
+                name: "คณะนิเทศศาสตร์"
+            },
+
+            {
+                id: "005",
+                name: "คณะบริหารธุรกิจ"
+            }
+        ];
+
+        $scope.educationMajors = [
+            {
+                id: "001",
+                name: "วิทยาศาสตร์"
+            },
+
+            {
+                id: "002",
+                name: "ชีววิทยา"
+            },
+
+            {
+                id: "003",
+                name: "เคมี"
+            },
+
+            {
+                id: "004",
+                name: "คณิตศาสตร์"
+            },
+
+            {
+                id: "005",
+                name: "ภูมิศาสตร์"
+            }
+        ];
+
+        $scope.jobs = [
+            {
+                id: "001",
+                name: "HR"
+            },
+
+            {
+                id: "002",
+                name: "Marketting"
+            },
+
+            {
+                id: "003",
+                name: "Graphics Design"
+            },
+
+            {
+                id: "004",
+                name: "Programmer"
+            },
+
+            {
+                id: "005",
+                name: "Video Editor"
+            }
+        ];
+
+        $scope.isLoading = false;
+        $scope.criteria = {};
+        $scope.paging = {};
+        $scope.internshipProfile = [];
+        $scope.selectedInternshipProfile;
+        $scope.mode = "list"; // ["list", "entry"]
+        $scope.entryMode = ""; // ["add", "edit"]
+
+        $scope.init = function() {
+            console.log("### InternshipProfileController.init ###");
+
+            $('.select2').select2({ theme: 'bootstrap4' });
+        };
+
+        $scope.swapMode = function() {
+            if($scope.mode === 'list') {
+                $scope.toEntryMode();
+            } else if($scope.mode === 'entry') {
+                $scope.toListMode();
+            }
+        };
+
+        $scope.toListMode = function() {
+            $scope.mode = 'list';
+        };
+
+        $scope.toEntryMode = function() {
+            $scope.mode = 'entry';
+        };
+
+        $scope.requestAddInternshipProfile = function() {
+            console.log("### InternshipProfileController.requestAddInternshipProfile ###");
+            $scope.toEntryMode();
+            $scope.entryMode = "add";
+            $scope.selectedInternshipProfile = {
+                
+            };
+            $scope.resetForm();
+        };
+
+        $scope.resetForm = function() {
+            // setTimeout(() => {
+            //     $scope.schoolForm.$submitted = false;
+
+            //     $scope.schoolForm.schoolType.$setUntouched();
+            //     $scope.schoolForm.schoolType.$setPristine();
+
+            //     $scope.schoolForm.schoolOwnerType.$setUntouched();
+            //     $scope.schoolForm.schoolOwnerType.$setPristine();
+
+            //     $scope.schoolForm.name.$setUntouched();
+            //     $scope.schoolForm.name.$setPristine();
+
+            //     $scope.$apply();
+            // }, 0);
+        };
+    }]);
+</script>

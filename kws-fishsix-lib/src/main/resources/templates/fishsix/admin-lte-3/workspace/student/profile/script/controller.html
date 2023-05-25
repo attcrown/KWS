@@ -1,0 +1,284 @@
+<div th:replace="fishsix/admin-lte-3/workspace/student/profile/script/api"></div>
+<div th:replace="fishsix/admin-lte-3/workspace/student/profile/script/list-controller"></div>
+<div th:replace="fishsix/admin-lte-3/workspace/student/profile/script/entry-controller"></div>
+
+<script th:inline="javascript">
+    app.controller("FishsixStudentProfileController", ["$scope", "$http", ($scope, $http) => {
+        $scope.studyClassLevels = /*[[${studyClassLevels}]]*/ [];
+        $scope.educationLevels = [];
+
+        $scope.isLoading = false;
+        $scope.criteria = {};
+        $scope.paging = {};
+        $scope.studentProfiles = [];
+        $scope.selectedStudentProfile;
+        $scope.mode = "list"; // ["list", "entry"]
+        $scope.entryMode = ""; // ["add", "edit"]
+
+        $scope.init = function() {
+            console.log("### FishsixStudentProfileController.init ###");
+
+            useApi($scope, $http);
+            useListController($scope, $http);
+            useEntryController($scope, $http);
+
+            $scope.criteria = {
+                firstName: '',
+                lastName: '',
+                nickName: '',
+                statuses: ["Active"]
+            };
+
+            $scope.paging = {
+                pageNo: 1,
+                pageSize: 25,
+                totalPage: 0,
+                totalSize: 0
+            };
+
+            $('.select2').select2({ theme: 'bootstrap4' });
+
+            // $scope.initStudyClassLevels();
+            // $scope.initStudents();
+
+            $scope.educationLevels = ["ป.1", "ป.2", "ป.3", "ป.4", "ป.5", "ป.6", "ม.1", "ม.2", "ม.3", "ม.4", "ม.5", "ม.6"];
+        };
+
+        $scope.initStudyClassLevels = function() {
+            console.log("### FishsixStudentProfileController.initStudyClassLevels ###");
+
+            $scope.studyClassLevels = [
+                {
+                    id: 'primarySchool',
+                    name: 'ประถมศึกษา',
+                    classes: [
+                        {
+                            classNo: 1,
+                            title: 'ป.1'
+                        },
+                        {
+                            classNo: 2,
+                            title: 'ป.2'
+                        },
+                        {
+                            classNo: 3,
+                            title: 'ป.3'
+                        },
+                        {
+                            classNo: 4,
+                            title: 'ป.4'
+                        },
+                        {
+                            classNo: 5,
+                            title: 'ป.5'
+                        },
+                        {
+                            classNo: 6,
+                            title: 'ป.6'
+                        }
+                    ]
+                },
+
+                {
+                    id: 'highSchool',
+                    name: 'มัธยมศึกษา',
+                    classes: [
+                        {
+                            classNo: 1,
+                            title: 'ม.1'
+                        },
+                        {
+                            classNo: 2,
+                            title: 'ม.2'
+                        },
+                        {
+                            classNo: 3,
+                            title: 'ม.3'
+                        },
+                        {
+                            classNo: 4,
+                            title: 'ม.4'
+                        },
+                        {
+                            classNo: 5,
+                            title: 'ม.5'
+                        },
+                        {
+                            classNo: 6,
+                            title: 'ม.6'
+                        }
+                    ]
+                }
+            ];
+        };
+
+        $scope.initStudents = function() {
+            console.log("### FishsixStudentProfileController.initStudents ###");
+
+            $scope.students = [
+                {
+                    id: 'student-001',
+                    gender: 'male',
+                    firstName: 'Francessco',
+                    lastName: 'Totti',
+                    nickName: 'Totty',
+                    mobileNo: '0978800964',
+                    email: 'student-001@gmail.com',
+                    parentInfo: {
+                        relation: 'แม่',
+                        name: 'Alessandro Nesta',
+                        mobileNo: '0897764589',
+                        email: 'parent-001@gmail.com',
+                        expectation: 'Parent-001 Expectation'
+                    },
+                    educationInfo: {
+                        school: 'School-1',
+                        studyClassTitle: 'ป.5',
+                        studyClassLevelId: 'primarySchool',
+                        studyClassNo: 5
+                    },
+                    status: 'Active'
+                },
+
+                {
+                    id: 'student-002',
+                    gender: 'female',
+                    firstName: 'Maria',
+                    lastName: 'Stonekovski',
+                    nickName: 'Mary',
+                    mobileNo: '0978802278',
+                    email: 'student-002@gmail.com',
+                    parentInfo: {
+                        relation: 'พ่อ',
+                        name: 'Paolo Maldini',
+                        mobileNo: '0899085891',
+                        email: 'parent-002@gmail.com',
+                        expectation: 'Parent-002 Expectation'
+                    },
+                    educationInfo: {
+                        school: 'School-2',
+                        studyClassTitle: 'ม.3',
+                        studyClassLevelId: 'highSchool',
+                        studyClassNo: 3
+                    },
+                    status: 'Active'
+                },
+
+                {
+                    id: 'student-003',
+                    gender: 'male',
+                    firstName: 'Filippo',
+                    lastName: 'Inzaghi',
+                    nickName: 'Pippo',
+                    mobileNo: '0978801100',
+                    email: 'student-003@gmail.com',
+                    parentInfo: {
+                        relation: 'พ่อ',
+                        name: 'Marko Cicento',
+                        mobileNo: '0899080000',
+                        email: 'parent-003@gmail.com',
+                        expectation: 'Parent-003 Expectation'
+                    },
+                    educationInfo: {
+                        school: 'School-3',
+                        studyClassTitle: 'ม.4',
+                        studyClassLevelId: 'highSchool',
+                        studyClassNo: 4
+                    },
+                    status: 'Active'
+                }
+            ];
+        };
+
+        $scope.getStudyClassTitle = function(student) {
+            const studyClassLevel = $scope.studyClassLevels.find(e => e.id === student.studyClassLevelId);
+            if(studyClassLevel) {
+                const clazz = studyClassLevel.classes.find(e => e.classNo === student.studyClassNo);
+                if(clazz) {
+                    return clazz.title;
+                }
+            }
+        };
+
+        $scope.swapMode = function() {
+            if($scope.mode === 'list') {
+                $scope.toEntryMode();
+            } else if($scope.mode === 'entry') {
+                $scope.toListMode();
+            }
+        };
+
+        $scope.toListMode = function() {
+            $scope.mode = 'list';
+        };
+
+        $scope.toEntryMode = function() {
+            $scope.mode = 'entry';
+        };
+
+        $scope.requestAddStudent = function() {
+            console.log("### FishsixStudentProfileController.requestAddStudent ###");
+            $scope.toEntryMode();
+            $scope.entryMode = "add";
+            $scope.selectedStudentProfile = {};
+            $scope.resetForm();
+        };
+
+        $scope.resetForm = function() {
+            setTimeout(() => {
+                // ****************************** studentForm ****************************** //
+                $scope.studentForm.$submitted = false;
+
+                $scope.studentForm.firstName.$setUntouched();
+                $scope.studentForm.lastName.$setPristine();
+
+                $scope.studentForm.lastName.$setUntouched();
+                $scope.studentForm.lastName.$setPristine();
+
+                $scope.studentForm.nickName.$setUntouched();
+                $scope.studentForm.nickName.$setPristine();
+
+                $scope.studentForm.gender.$setUntouched();
+                $scope.studentForm.gender.$setPristine();
+
+                $scope.studentForm.mobileNo.$setUntouched();
+                $scope.studentForm.mobileNo.$setPristine();
+
+                $scope.studentForm.email.$setUntouched();
+                $scope.studentForm.email.$setPristine();
+
+                $scope.studentForm.contactAddress.$setUntouched();
+                $scope.studentForm.contactAddress.$setPristine();
+                // ****************************** studentForm ****************************** //
+
+                // ****************************** parentForm ****************************** //
+                $scope.parentForm.$submitted = false;
+
+                $scope.parentForm.name.$setUntouched();
+                $scope.parentForm.name.$setPristine();
+
+                $scope.parentForm.mobileNo.$setUntouched();
+                $scope.parentForm.mobileNo.$setPristine();
+
+                $scope.parentForm.job.$setUntouched();
+                $scope.parentForm.job.$setPristine();
+
+                $scope.parentForm.expectation.$setUntouched();
+                $scope.parentForm.expectation.$setPristine();
+                // ****************************** parentForm ****************************** //
+
+                // ****************************** educationForm ****************************** //
+                $scope.educationForm.$submitted = false;
+
+                $scope.educationForm.school.$setUntouched();
+                $scope.educationForm.school.$setPristine();
+
+                $scope.educationForm.level.$setUntouched();
+                $scope.educationForm.level.$setPristine();
+                // ****************************** educationForm ****************************** //
+
+                $scope.$apply();
+            }, 0);
+        };
+    }]);
+</script>

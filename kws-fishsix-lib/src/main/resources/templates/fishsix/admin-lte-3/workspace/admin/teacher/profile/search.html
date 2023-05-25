@@ -1,0 +1,70 @@
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title text-maroon">ระบุเงื่อนไขการค้นหา</h3>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>ชื่อ</label>
+                    <input type="text" class="form-control" ng-model="criteria.firstName">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>นามสกุล</label>
+                    <input type="text" class="form-control" ng-model="criteria.lastName">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>ชื่อเล่น</label>
+                    <input type="text" class="form-control" ng-model="criteria.nickName">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>สัญญาจ้าง</label>
+                    <select class="form-control select2" data-dropdown-css-class="select2-indigo" multiple="multiple" data-placeholder="--- กรุณาเลือกสัญญาจ้าง ---" style="width: 100%;" ng-model="criteria.hireTypeIds">
+                        <option ng-repeat="hireType in hireTypes | orderBy: 'seqNo'" ng-value="hireType.id">{{ hireType.name }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>เวลางาน</label>
+                    <select class="form-control select2" data-dropdown-css-class="select2-indigo" multiple="multiple" data-placeholder="--- กรุณาเลือกเวลางาน ---" style="width: 100%;" ng-model="criteria.worktimeTypeIds">
+                        <option ng-repeat="worktimeType in worktimeTypes | orderBy: 'seqNo'" ng-value="worktimeType.id">{{ worktimeType.name }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <!--
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>รายวิชาที่สอน</label>
+                    <select class="form-control select2" data-dropdown-css-class="select2-indigo" multiple="multiple" data-placeholder="--- กรุณาเลือกรายวิชาที่สอน ---" style="width: 100%;" ng-model="criteria.subjectIds">
+                        <option ng-repeat="subject in subjects | orderBy: 'seqNo'" ng-value="subject.id">{{ subject.name }}</option>
+                    </select>
+                </div>
+            </div>
+            -->
+        </div>
+    </div>
+
+    <div class="card-footer">
+        <div class="text-right">
+            <button class="btn btn-outline-success" ng-click="requestAddTeacher()">
+                <i class="fa fa-plus"></i> เพิ่มข้อมูล
+            </button>
+            <button class="btn btn-outline-primary" ng-click="search()">
+                <i class="fa fa-search"></i> ค้นหา
+            </button>
+        </div>
+    </div>
+</div>

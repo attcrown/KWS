@@ -1,0 +1,80 @@
+<div class="card card-primary card-outline">
+    <!-- card-body -->
+    <div class="card-body box-profile p-2">
+        <div class="text-center">
+            <img ng-show="!formalImageURL"  
+                class="profile-user-img img-fluid img-circle" 
+                th:src="@{/assets/firstjobber/img/registration/internship/formal.jpg}" 
+                alt="Formal Photo">
+
+            <img ng-show="formalImageURL" 
+                class="profile-user-img img-fluid img-circle" 
+                ng:src="{{ formalImageURL }}" 
+                alt="Formal Photo">
+
+            <p class="text-muted text-center">
+                <span>รูปถ่ายหน้าตรง</span>
+            </p>
+        </div>
+
+        <hr>
+
+        <div class="text-center">
+            <img ng-show="!informalImageURL"  
+                class="profile-user-img img-fluid img-circle" 
+                th:src="@{/assets/firstjobber/img/registration/internship/informal.jpg}" 
+                alt="Informal Photo">
+
+            <img ng-show="informalImageURL" 
+                class="profile-user-img img-fluid img-circle" 
+                ng:src="{{ informalImageURL }}" 
+                alt="Informal Photo">
+
+            <p class="text-muted text-center">
+                <span>รูปถ่ายฟรีสไตล์</span>
+            </p>
+        </div>
+
+        <hr>
+        
+        <!-- personal-info -->
+        <ul class="list-group list-group-unbordered mb-3">
+            <div class="my-1 border-bottom rounded p-1">
+                <label>
+                    <span>ชื่อ</span> : 
+                    <span class="text-muted">{{ internshipRegister.firstName }} {{ internshipRegister.lastName }}</span>
+                </label>
+            </div>
+
+            <div class="my-1 border-bottom rounded p-1">
+                <label>
+                    <span>ชื่อเล่น</span> : 
+                    <span class="text-muted">{{ internshipRegister.nickName }}</span>
+                </label>
+            </div>
+
+            <div class="my-1 border-bottom rounded p-1">
+                <label>
+                    <span>เบอร์ติดต่อ</span> : 
+                    <span class="text-muted">{{ internshipRegister.mobileNo }}</span>
+                </label>
+            </div>
+
+            <div class="my-1 border-bottom rounded p-1">
+                <label>
+                    <span>อีเมล์</span> : 
+                    <span class="text-muted">{{ internshipRegister.email }}</span>
+                </label>
+            </div>
+
+            <div class="my-1 border-bottom rounded p-1">
+                <label>
+                    <span>ไลน์ไอดี</span> : 
+                    <span class="text-muted">{{ internshipRegister.lineId }}</span>
+                </label>
+            </div>
+        </ul>
+        <!-- /.personal-info -->
+    </div>
+    <!-- /.card-body -->
+</div>

@@ -1,0 +1,83 @@
+<script th:inline="javascript">
+    function useEntryController($scope, $http)
+    {
+        $scope.requestSave = useRequestSave($scope, $http);
+        $scope.verify = useVerify($scope, $http);
+        $scope.isShowIdError = useIsShowIdError($scope, $http);
+        $scope.isShowNameError = useIsShowNameError($scope, $http);
+        $scope.isShowSurnameError = useIsShowSurnameError($scope, $http);
+    }
+
+    function useRequestSave($scope, $http)
+    {
+        return () => {
+            console.log("### FishsixTutorial1Controller.requestSave ###");
+
+            $scope.employeeForm.$submitted = true;
+            const { valid, message } = $scope.verify();
+
+            if(valid) {
+                const options = {
+                    title: $scope.entryMode === "add" ? "ยืนยันการบันทึกข้อมูล Employee ?" : "ยืนยันการแก้ไขข้อมูล Employee",
+                    text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                    icon: "warning",
+                    buttons: ["ยกเลิก", "ตกลง"],
+                    dangerMode: true
+                };
+
+                const handler = (confirm) => {
+                    if (confirm) {
+                        if($scope.entryMode === 'add') {
+                            // alert("ADD");
+                            $scope.employees.push($scope.selectedEmployee);
+                            $scope.toListMode();
+                        } else if($scope.entryMode === 'edit') {
+                            alert("EDIT");
+                        }
+                    }
+                };
+
+                swal(options).then(handler);
+            } else {
+                if(message) {
+                    swal("ข้อมูลไม่ครบถ้วน", message, "error");
+                } else {
+                    swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+                }
+                // swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+            }
+        };
+    }
+
+    function useVerify($scope, $http)
+    {
+        return () => {
+            return {
+                valid: $scope.employeeForm.$valid
+            };
+        };
+    }
+
+    // ****************************** validate ****************************** //
+    function useIsShowIdError($scope, $http) 
+    {
+        return () => {
+            return ($scope.employeeForm.$submitted || $scope.employeeForm.id.$dirty) && $scope.employeeForm.id.$invalid;
+        };
+    }
+
+    function useIsShowNameError($scope, $http) 
+    {
+        return () => {
+            return ($scope.employeeForm.$submitted || $scope.employeeForm.name.$dirty) && $scope.employeeForm.name.$invalid;
+        };
+    }
+
+    function useIsShowSurnameError($scope, $http) 
+    {
+        return () => {
+            return ($scope.employeeForm.$submitted || $scope.employeeForm.surname.$dirty) && $scope.employeeForm.surname.$invalid;
+        };
+    }
+    // ****************************** validate ****************************** //
+</script>

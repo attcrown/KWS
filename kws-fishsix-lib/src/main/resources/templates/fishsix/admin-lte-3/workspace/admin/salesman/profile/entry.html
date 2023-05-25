@@ -1,0 +1,170 @@
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title text-maroon">เพิ่ม/แก้ไขข้อมูลเซลล์</h3>
+    </div>
+
+    <div class="card-body p-2">
+        <form name="salesmanForm" class="form row" novalidate>
+            <div class="col-md-6">
+                <div class="form-group border rounded p-2">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowFirstNameError()">ชื่อ</span>
+                        <span class="text-danger" ng-show="isShowFirstNameError()">กรุณาระบุชื่อ</span>
+                    </label>
+                    <input 
+                        name="firstName" 
+                        type="text" 
+                        class="form-control" 
+                        ng-class="{'is-invalid': isShowFirstNameError()}" 
+                        placeholder="ระบุชื่อ" 
+                        ng-model="selectedSalesman.firstName" 
+                        required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group border rounded p-2">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowLastNameError()">นามสกุล</span>
+                        <span class="text-danger" ng-show="isShowLastNameError()">กรุณาระบุนามสกุล</span>
+                    </label>
+                    <input 
+                        name="lastName" 
+                        type="text" 
+                        class="form-control" 
+                        ng-class="{'is-invalid': isShowLastNameError()}" 
+                        placeholder="ระบุนามสกุล" 
+                        ng-model="selectedSalesman.lastName" 
+                        required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group border rounded p-2">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowNickNameError()">ชื่อเล่น</span>
+                        <span class="text-danger" ng-show="isShowNickNameError()">กรุณาระบุชื่อเล่น</span>
+                    </label>
+                    <input 
+                        name="nickName" 
+                        type="text" 
+                        class="form-control" 
+                        ng-class="{'is-invalid': isShowNickNameError()}" 
+                        placeholder="ระบุชื่อเล่น" 
+                        ng-model="selectedSalesman.nickName" 
+                        required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group border rounded p-2">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowBuError()">BU</span>
+                        <span class="text-danger" ng-show="isShowBuError()">กรุณาเลือก BU</span>
+                    </label>
+                    <select name="bu" class="form-control" ng-class="{'is-invalid': isShowBuError()}" style="width: 100%;" ng-model="selectedSalesman.buId" required>
+                        <option value="" selected disabled>--- กรุณาเลือก BU ---</option>
+                        <option ng-repeat="bu in businessUnits | orderBy: 'seqNo'" ng-value="bu.id">{{ bu.name }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group border rounded p-2">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowHireTypeError()">สัญญาจ้าง</span>
+                        <span class="text-danger" ng-show="isShowHireTypeError()">กรุณาเลือกสัญญาจ้าง</span>
+                    </label>
+                    <select name="hireType" class="form-control" ng-class="{'is-invalid': isShowHireTypeError()}" style="width: 100%;" ng-model="selectedSalesman.hireTypeId" required>
+                        <option value="" selected disabled>--- กรุณาเลือกสัญญาจ้าง ---</option>
+                        <option ng-repeat="hireType in hireTypes | orderBy: 'seqNo'" ng-value="hireType.id">{{ hireType.name }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group border rounded p-2">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowWorktimeTypeError()">เวลางาน</span>
+                        <span class="text-danger" ng-show="isShowWorktimeTypeError()">กรุณาเลือกเวลางาน</span>
+                    </label>
+                    <select name="worktimeType" class="form-control" ng-class="{'is-invalid': isShowWorktimeTypeError()}" style="width: 100%;" ng-model="selectedSalesman.worktimeTypeId" required>
+                        <option value="" selected disabled>--- กรุณาเลือกเวลางาน ---</option>
+                        <option ng-repeat="worktimeType in worktimeTypes | orderBy: 'seqNo'" ng-value="worktimeType.id">{{ worktimeType.name }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group border rounded p-2">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowMobileNoError()">เบอร์มือถือ</span>
+                        <span class="text-danger" ng-show="isShowMobileNoError()">กรุณาระบุเบอร์มือถือ</span>
+                    </label>
+                    <input 
+                        name="mobileNo" 
+                        type="text" 
+                        class="form-control" 
+                        ng-class="{'is-invalid': isShowMobileNoError()}" 
+                        placeholder="ระบุเบอร์มือถือ" 
+                        ng-model="selectedSalesman.mobileNo" 
+                        required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group border rounded p-2">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowEmailError()">อีเมล์</span>
+                        <span class="text-danger" ng-show="isShowEmailError()">กรุณาระบุอีเมล์</span>
+                    </label>
+                    <input 
+                        name="email" 
+                        type="text" 
+                        class="form-control" 
+                        ng-class="{'is-invalid': isShowEmailError()}" 
+                        placeholder="ระบุอีเมล์" 
+                        ng-model="selectedSalesman.email" 
+                        required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group border rounded p-2">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowSalaryError()">เงินเดือน</span>
+                        <span class="text-danger" ng-show="isShowSalaryError()">กรุณาระบุเงินเดือน</span>
+                    </label>
+                    <input 
+                        name="salary" 
+                        type="number" 
+                        class="form-control" 
+                        ng-class="{'is-invalid': isShowSalaryError()}" 
+                        placeholder="ระบุเงินเดือน" 
+                        ng-model="selectedSalesman.salary" 
+                        required>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="card-footer">
+        <div class="text-right">
+            <button class="btn btn-outline-danger" ng-click="toListMode()">
+                <i class="fa fa-caret-left"></i> กลับ
+            </button>
+            <button class="btn btn-outline-primary" ng-click="requestSave()">
+                <i class="fa fa-save"></i> บันทึก
+            </button>
+        </div>
+    </div>
+</div>

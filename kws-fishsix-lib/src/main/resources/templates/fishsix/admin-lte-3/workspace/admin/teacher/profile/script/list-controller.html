@@ -1,0 +1,66 @@
+<script th:inline="javascript">
+    function useListController($scope, $http)
+    {
+        $scope.getPageNos = useGetPageNos($scope, $http);
+        $scope.gotoPageNo = useGotoPageNo($scope, $http);
+        $scope.requestEditTeacher = useRequestEditTeacher($scope, $http);
+        $scope.requestDeleteTeacher = useRequestDeleteTeacher($scope, $http);
+    }
+
+    function useGetPageNos($scope, $http)
+    {
+        return () => {
+            let pageNos = [];
+            if($scope.paging.totalPage > 0) {
+                for(let i=1; i<=$scope.paging.totalPage; i++) {
+                    pageNos.push(i);
+                }
+            }
+            return pageNos;
+        };
+    }
+
+    function useGotoPageNo($scope, $http)
+    {
+        return (pageNo) => {
+            $scope.paging.pageNo = pageNo;
+            $scope.search();
+        };
+    }
+
+    function useRequestEditTeacher($scope, $http)
+    {
+        return (teacherProfile) => {
+            console.log("### FishsixTeacherProfileController.requestEditTeacher ###");
+            $scope.toEntryMode();
+            $scope.entryMode = "edit";
+            $scope.removeIdCardFile();
+            $scope.selectedTeacherProfile = angular.copy(teacherProfile);
+        };
+    }
+
+    function useRequestDeleteTeacher($scope, $http)
+    {
+        return (teacherProfile) => {
+            console.log("### FishsixTeacherProfileController.requestDeleteTeacher ###");
+
+            const options = {
+                title: "ยืนยันการลบข้อมูลผู้สอน",
+                text: 'พิมพ์คำว่า "Confirm" และ กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                content: "input",
+                icon: "warning",
+                buttons: ["ยกเลิก", "ตกลง"],
+                dangerMode: true
+            };
+
+            swal(options)
+            .then(value => {
+                if (value === "Confirm") {
+                    $scope.removeTeacher(teacherProfile);
+                } else {
+                    swal("คุณพิมพ์ไม่ถูกต้อง", "ยกเลิกการลบข้อมูล", "error");
+                }
+            });
+        };
+    }
+</script>

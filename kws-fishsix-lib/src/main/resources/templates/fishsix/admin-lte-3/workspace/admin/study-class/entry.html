@@ -1,0 +1,209 @@
+<!-- <h1>Study Class | Entry</h1> -->
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title text-maroon">เพิ่ม/แก้ไขข้อมูลคอร์ส</h3>
+    </div>
+
+    <div class="card-body p-2">
+        
+        <form name="studyClassScheduleTemplateForm" class="form row" novalidate>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowClassNameError()">ชื่อคลาส</span>
+                        <span class="text-danger" ng-show="isShowClassNameError()">กรุณากรอกชื่อคลาส</span>
+                    </label>
+                    <input  name="className" type="text" class="form-control" placeholder="กรุณาระบุชื่อคลาส" 
+                            ng-class="{'is-invalid': isShowClassNameError()}" 
+                            ng-model="selectedStudyClassScheduleTemplate.className" 
+                            required>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowStartDateError()">วันที่เริ่ม</span>
+                        <span class="text-danger" ng-show="isShowStartDateError()">กรุณากรอกวันที่เริ่ม</span>
+                    </label>
+                    <div class="input-group date" id="entryStartDatePicker" data-target-input="nearest">
+                        <input name="startDate" type="text" class="form-control datetimepicker-input" data-target="#entryStartDatePicker" 
+                            ng-class="{'is-invalid': isShowStartDateError()}" 
+                            ng-model="selectedStudyClassScheduleTemplate.startDate" 
+                            required />
+                        <div class="input-group-append" data-target="#entryStartDatePicker" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>
+                        <span>กำหนดการทำซ้ำ</span>
+                    </label>
+                    <div class="form-check">
+                        <input name="repeatable" type="checkbox" class="form-check-input" ng-model="selectedStudyClassScheduleTemplate.repeatable">
+                        <label class="form-check-label">ทำซ้ำ</label>
+                    </div> 
+                    <!-- <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                    </div> -->
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowStartTimeError()">เวลาเริ่ม (HH:mm:ss เช่น 08:30:00)</span>
+                        <span class="text-danger" ng-show="isShowStartTimeError()">กรุณาระบุเวลาเริ่ม</span>
+                    </label>
+                    <input  name="startTime" type="text" class="form-control" placeholder="กรุณาระบุวันเวลาเริ่ม" 
+                            ng-class="{'is-invalid': isShowStartTimeError()}" 
+                            ng-model="selectedStudyClassScheduleTemplate.startTime" 
+                            required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowEndTimeError()">เวลาจบ (HH:mm:ss เช่น 08:30:00)</span>
+                        <span class="text-danger" ng-show="isShowEndTimeError()">กรุณาระบุเวลาจบ</span>
+                    </label>
+                    <input  name="endTime" type="text" class="form-control" placeholder="กรุณาระบุวันเวลาจบ" 
+                            ng-class="{'is-invalid': isShowEndTimeError()}" 
+                            ng-model="selectedStudyClassScheduleTemplate.endTime" 
+                            required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowHourError()">ชั่วโมง</span>
+                        <span class="text-danger" ng-show="isShowHourError()">ระบุชั่วโมง</span>
+                    </label>
+                    <input  name="hour" type="number" class="form-control" placeholder="ระบุชั่วโมง" 
+                            ng-class="{'is-invalid': isShowHourError()}" 
+                            ng-model="selectedStudyClassScheduleTemplate.hour" 
+                            required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowMaxStudentError()">จำนวนนักเรียน</span>
+                        <span class="text-danger" ng-show="isShowMaxStudentError()">ระบุจำนวนนักเรียน</span>
+                    </label>
+                    <input  name="maxStudent" type="number" class="form-control" placeholder="ระบุจำนวนนักเรียน" 
+                            ng-class="{'is-invalid': isShowMaxStudentError()}" 
+                            ng-model="selectedStudyClassScheduleTemplate.maxStudent" 
+                            required>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowClassChannelIdError()">รูปแบบการเรียน</span>
+                        <span class="text-danger" ng-show="isShowClassChannelIdError()">กรุณาเลือกรูปแบบการเรียน</span>
+                    </label>
+                    <select name="classChannelId" id="classChannelId" class="form-control" style="width: 100%;" 
+                            ng-change="changeValueClassLocation()"
+                            ng-class="{'is-invalid': isShowClassChannelIdError()}" 
+                            ng-model="selectedStudyClassScheduleTemplate.classChannelId" 
+                            required>
+                        <option value="" selected disabled>--- กรุณาเลือกรูปแบบการเรียน ---</option>
+                        <option ng-repeat="classChannel in classChannels" ng-value="classChannel.id">
+                            {{ classChannel.name }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowClassTypeIdError()">ประเภทคลาส</span>
+                        <span class="text-danger" ng-show="isShowClassTypeIdError()">กรุณาเลือกประเภทคลาส</span>
+                    </label>
+                    <select name="classTypeId" class="form-control" style="width: 100%;" 
+                            ng-class="{'is-invalid': isShowClassTypeIdError()}" 
+                            ng-model="selectedStudyClassScheduleTemplate.classTypeId" 
+                            required>
+                        <option value="" selected disabled>--- กรุณาเลือกประเภทคลาส ---</option>
+                        <option ng-repeat="classType in classTypes" ng-value="classType.id">
+                            {{ classType.name }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowClassLocationIdError()">สาขา</span>
+                        <span class="text-danger" ng-show="isShowClassLocationIdError()">กรุณาเลือกสาขา</span>
+                    </label>
+                    <select name="classLocationId" id="classLocationId" class="form-control" style="width: 100%;" 
+                            ng-disabled="selectedStudyClassScheduleTemplate.classChannelId != 'OnSite'"
+                            ng-class="{'is-invalid': isShowClassLocationIdError()}" 
+                            ng-model="selectedStudyClassScheduleTemplate.classLocationId" 
+                            required>
+                        <option value="" selected disabled>--- กรุณาเลือกสาขา ---</option>
+                        <option ng-repeat="classLocation in classLocations" ng-value="classLocation.id">
+                            {{ classLocation.locationName }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowDescriptionError()">รายละเอียดคลาส</span>
+                        <span class="text-danger" ng-show="isShowDescriptionError()">กรุณาระบุรายละเอียดคลาส</span>
+                    </label>
+                    <textarea name="description" rows="3" class="form-control" placeholder="กรุณาระบุรายละเอียดคลาส" 
+                            ng-class="{'is-invalid': isShowDescriptionError()}" 
+                            ng-model="selectedStudyClassScheduleTemplate.description"
+                            required>
+                    </textarea>
+                </div>
+            </div>
+
+
+
+        </form>
+    </div>
+
+    <div class="card-footer">
+        <div class="text-right">
+            <button class="btn btn-outline-danger" ng-click="toListMode()">
+                <i class="fa fa-caret-left"></i> กลับ
+            </button>
+            <button ng-if="entryMode === 'add'" class="btn btn-outline-primary" ng-click="requestSave()">
+                <i class="fa fa-save"></i> สร้าง
+            </button>
+            <button ng-if="entryMode === 'edit'" class="btn btn-outline-primary" ng-click="requestSave()">
+                <i class="fa fa-save"></i> บันทึก
+            </button>
+        </div>
+    </div>
+</div>

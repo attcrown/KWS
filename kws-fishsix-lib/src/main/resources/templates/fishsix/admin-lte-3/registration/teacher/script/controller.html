@@ -1,0 +1,314 @@
+<script th:inline="javascript">
+    const kws_webEnv = /*[[${kws_webEnv}]]*/ '';
+    const kws_serverURL = /*[[${kws_serverURL}]]*/ '';
+    const kws_data = /*[[${kws_data}]]*/ {};
+
+    console.log("kws_webEnv => " + kws_webEnv);
+    console.log("kws_serverURL => " + kws_serverURL);
+    console.log("kws_data => ", kws_data);
+
+    const app = angular.module("app", ["ngSanitize"]);
+
+    app.controller("TeacherRegistrationController", ["$scope", "$http", ($scope, $http) => {
+        $scope.genders = kws_data['genders'] || [];
+        $scope.nameTitles = kws_data['nameTitles'] || [];
+        $scope.educationStatuses = kws_data['educationStatuses'] || [];
+        $scope.educationLevels = kws_data['educationLevels'] || [];
+        $scope.studyClassLocations = kws_data['studyClassLocations'] || [];
+        $scope.wageRateTypes = kws_data['wageRateTypes'] || [];
+        $scope.hireTypes = kws_data['hireTypes'] || [];
+        $scope.worktimeTypes = kws_data['worktimeTypes'] || [];
+        $scope.educationClasses = kws_data['educationClasses'] || [];
+        $scope.subjectCategories = kws_data['subjectCategories'] || [];
+        $scope.subjects = kws_data['subjects'] || [];
+
+        $scope.isLoading = false;
+        $scope.teacherProfile = {
+            hireTypeId: '',
+            worktimeTypeId: '',
+            startWorkDate: '',
+            idcardFileBase64: '',
+            subjectIds: []
+        };
+        $scope.attachment = {};
+
+        $scope.init = function() {
+            console.log("### TeacherRegistrationController.init ###");
+
+            $('[data-mask]').inputmask();
+            $(".idcard-file").on('change', $scope.idcardNoUploadHandler);
+        };
+
+        $scope.getTeacherWageType = function(teacherProfile) {
+            const hireType = $scope.hireTypes.find(e => e.id === teacherProfile.hireTypeId);
+            if(hireType) {
+                return hireType.wageType;
+            }
+        };
+
+        $scope.getClassLevelTitle = function(subject) {
+            let educationClass = $scope.educationClasses.find(e => e.id === subject.educationClassId);
+            if(educationClass) {
+                return educationClass.title;
+            }
+        };
+
+        $scope.getSubjectsByCategoryId = function(subjectCategoryId) {
+            let subjects = $scope.subjects.filter(e => e.subjectCategoryId === subjectCategoryId);
+            if(subjects && subjects.length > 0) {
+                subjects = subjects.sort((s1, s2) => s1.seqNo - s2.seqNo);
+                return subjects;
+            }
+            return [];
+        };
+
+        $scope.getSelectSubjectClass = function(subject) {
+            if($scope.teacherProfile.subjectIds && $scope.teacherProfile.subjectIds.length > 0) {
+                const _subjectId = $scope.teacherProfile.subjectIds.find(subjectId => subjectId === subject.id);
+                if(_subjectId) {
+                    return "btn-primary";
+                } 
+            }
+            return "btn-outline-primary";
+        };
+
+        $scope.toggleSelectSubject = function(subject) {
+            if($scope.teacherProfile.subjectIds) {
+                const _subjectId = $scope.teacherProfile.subjectIds.find(subjectId => subjectId === subject.id);
+                if(_subjectId) {
+                    $scope.teacherProfile.subjectIds = $scope.teacherProfile.subjectIds.filter(subjectId => subjectId !== subject.id);
+                } else {
+                    $scope.teacherProfile.subjectIds.push(subject.id);
+                }
+            }
+        };
+
+        $scope.idcardNoUploadHandler = function($event) {
+            console.log("### attach idcard file ###");
+                
+            $scope.attachment.idCardFile = null;
+            $scope.teacherProfile.idcardFileBase64 = '';
+
+            var file = $event.target.files[0];
+            if(file) {
+                $scope.attachment.idCardFile = file;
+                console.log("fileName => " + file.name);
+            }
+
+            const idCardImage = document.getElementById("idCardImage");
+
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                idCardImage.src = event.target.result;
+                // $scope.teacherProfile.idcardFileBase64 = event.target.result;
+                // $scope.$apply();
+                setTimeout(() => {
+                    $scope.teacherProfile.idcardFileBase64 = event.target.result;
+                    $scope.$apply();
+                }, 0);
+            };
+            reader.readAsDataURL(file);
+
+            $scope.$apply();
+        };
+
+        $scope.removeIdCardFile = function() {
+            $scope.attachment.idCardFile = null;
+            $scope.teacherProfile.idcardFileBase64 = '';
+        };
+
+        $scope.verify = function() {
+            return $scope.userInfoForm.$valid && $scope.generalInfoForm.$valid && $scope.employInfoForm.$valid && $scope.educationInfoForm.$valid;
+        };
+
+        // ****************************** validate ****************************** //
+        $scope.isShowEmailError = function() {
+            return ($scope.userInfoForm.$submitted || $scope.userInfoForm.email.$dirty) && $scope.userInfoForm.email.$invalid;
+        };
+
+        $scope.isShowPasswordError = function() {
+            return ($scope.userInfoForm.$submitted || $scope.userInfoForm.password.$dirty) && $scope.userInfoForm.password.$invalid;
+        };
+
+        /*
+        $scope.isShowGenderError = function() {
+            return $scope.generalInfoForm.$submitted && $scope.generalInfoForm.gender.$invalid;
+        };
+
+        $scope.isShowNameTitleError = function() {
+            return $scope.generalInfoForm.$submitted && $scope.generalInfoForm.nameTitle.$invalid;
+        };
+        */
+
+        $scope.isShowFirstNameError = function() {
+            return ($scope.generalInfoForm.$submitted || $scope.generalInfoForm.firstName.$dirty) && $scope.generalInfoForm.firstName.$invalid;
+        };
+
+        $scope.isShowLastNameError = function() {
+            return ($scope.generalInfoForm.$submitted || $scope.generalInfoForm.lastName.$dirty) && $scope.generalInfoForm.lastName.$invalid;
+        };
+
+        $scope.isShowNickNameError = function() {
+            return ($scope.generalInfoForm.$submitted || $scope.generalInfoForm.nickName.$dirty) && $scope.generalInfoForm.nickName.$invalid;
+        };
+
+        $scope.isShowMobileNoError = function() {
+            return ($scope.generalInfoForm.$submitted || $scope.generalInfoForm.mobileNo.$dirty) && $scope.generalInfoForm.mobileNo.$invalid;
+        };
+
+        $scope.isShowRegistAddressError = function() {
+            return ($scope.generalInfoForm.$submitted || $scope.generalInfoForm.registAddress.$dirty) && $scope.generalInfoForm.registAddress.$invalid;
+        };
+
+        $scope.isShowContactAddressError = function() {
+            return ($scope.generalInfoForm.$submitted || $scope.generalInfoForm.contactAddress.$dirty) && $scope.generalInfoForm.contactAddress.$invalid;
+        };
+
+        $scope.isShowIdcardNoError = function() {
+            return ($scope.generalInfoForm.$submitted || $scope.generalInfoForm.idcardNo.$dirty) && $scope.generalInfoForm.idcardNo.$invalid;
+        };
+
+        $scope.isShowIdcardFileError = function() {
+            return ($scope.generalInfoForm.$submitted) && !$scope.teacherProfile.idcardFileBase64;
+        };
+
+        $scope.isShowOccupationError = function() {
+            return ($scope.generalInfoForm.$submitted || $scope.generalInfoForm.occupation.$dirty) && $scope.generalInfoForm.occupation.$invalid;
+        };
+
+        $scope.isShowHireTypeError = function() {
+            return ($scope.employInfoForm.$submitted) && !$scope.teacherProfile.hireTypeId;
+        };
+
+        $scope.isShowWorktimeTypeError = function() {
+            return ($scope.employInfoForm.$submitted) && !$scope.teacherProfile.worktimeTypeId;
+        };
+
+        $scope.isShowStartWorkDateError = function() {
+            return ($scope.employInfoForm.$submitted || $scope.employInfoForm.startWorkDate.$dirty) && $scope.employInfoForm.startWorkDate.$invalid;
+        };
+
+        $scope.isShowWorkHourMonthError = function() {
+            return ($scope.employInfoForm.$submitted || $scope.employInfoForm.workHourMonth.$dirty) && $scope.employInfoForm.workHourMonth.$invalid;
+        };
+
+        $scope.isShowSalaryError = function() {
+            return ($scope.employInfoForm.$submitted || $scope.employInfoForm.salary.$dirty) && $scope.employInfoForm.salary.$invalid;
+        };
+
+        $scope.isShowWageHourRateError = function() {
+            return ($scope.employInfoForm.$submitted || $scope.employInfoForm.wageHourRate.$dirty) && $scope.employInfoForm.wageHourRate.$invalid;
+        };
+
+        $scope.isShowBankAccountNameError = function() {
+            return ($scope.employInfoForm.$submitted || $scope.employInfoForm.bankAccountName.$dirty) && $scope.employInfoForm.bankAccountName.$invalid;
+        };
+
+        $scope.isShowBankAccountNoError = function() {
+            return ($scope.employInfoForm.$submitted || $scope.employInfoForm.bankAccountNo.$dirty) && $scope.employInfoForm.bankAccountNo.$invalid;
+        };
+
+        $scope.isShowEducationSchoolError = function() {
+            return ($scope.educationInfoForm.$submitted || $scope.educationInfoForm.educationSchool.$dirty) && $scope.educationInfoForm.educationSchool.$invalid;
+        };
+
+        $scope.isShowEducationFacultyError = function() {
+            return ($scope.educationInfoForm.$submitted || $scope.educationInfoForm.educationFaculty.$dirty) && $scope.educationInfoForm.educationFaculty.$invalid;
+        };
+
+        $scope.isShowEducationMajorError = function() {
+            return ($scope.educationInfoForm.$submitted || $scope.educationInfoForm.educationMajor.$dirty) && $scope.educationInfoForm.educationMajor.$invalid;
+        };
+
+        $scope.isShowSubjectsError = function() {
+            return ($scope.educationInfoForm.$submitted) && $scope.teacherProfile.subjectIds.length === 0;
+        };
+        // ****************************** validate ****************************** //
+
+        $scope.requestSubmit = function() {
+            console.log("### TeacherRegistrationController.requestSubmit ###");
+
+            $scope.userInfoForm.$submitted = true;
+            $scope.generalInfoForm.$submitted = true
+            $scope.employInfoForm.$submitted = true;
+            $scope.educationInfoForm.$submitted = true;
+
+            if($scope.verify()) {
+                const options = {
+                    title: "ยืนยันการบันทึกข้อมูลนักเรียน",
+                    text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                    icon: "warning",
+                    buttons: ["ยกเลิก", "ตกลง"],
+                    dangerMode: true
+                };
+
+                const handler = (confirm) => {
+                    if (confirm) {
+                        $scope.submit();
+                    }
+                };
+
+                swal(options).then(handler);
+            } else {
+                swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+            }
+        };
+
+        $scope.submit = function() {
+            console.log("### TeacherRegistrationController.submit ###");
+
+            const teacherRegister = JSON.parse(JSON.stringify($scope.teacherProfile));
+            teacherRegister.subjectIds = teacherRegister.subjectIds.join(",");
+
+            const requestMessage = {
+                teacherRegister: teacherRegister
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_serverURL}/api/fishsix/teacher-register/create`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    const createdTeacherRegister = response.data.body.createdTeacherRegister;
+                    console.log("createdTeacherRegister => ", createdTeacherRegister);
+                    const alertOptions = {
+                        title: "บันทึกข้อมูลสำเร็จ",
+                        text: "บันทึกข้อมูลการลงทะเบียนสำเร็จ",
+                        type: "success"
+                    };
+                    const alertClickHandler = () => {
+                        window.location = kws_serverURL;
+                    };
+                    swal(alertOptions).then(alertClickHandler);
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกข้อมูลการลงทะเบียนได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                if(error.data && error.data.head) {
+                    errorMessage = "ไม่สามารถบันทึกข้อมูลการลงทะเบียนได้ เนื่องจาก" + error.data.head.statusMessage;
+                }
+                swal("เกิดข้อผิดพลาด", errorMessage, "error");
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }]);
+</script>

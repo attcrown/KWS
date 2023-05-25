@@ -1,0 +1,129 @@
+<div class="row g-0 text-center m-3">
+  <div class="col-sm-6 col-md-2">
+    <button type="button" class="btn btn-block btn-lg font-bg" 
+      style="background-color: #FF7628;"
+      ng-click="changeMessage(1);clickcategory = true">
+      พนักงาน
+    </button>
+    <br>
+    <button type="button" class="btn btn-block btn-lg"
+      style="background-color: #EB4645;"
+      ng-click="changeMessage(2);clickcategory = true">
+      ครู Fishsix
+    </button>
+    <br>
+    <button type="button" class="btn btn-block btn-lg"
+      style="background-color: #283EFF;"
+      ng-click="changeMessage(3);clickcategory = true">
+      ครู ESC
+    </button>
+    <br>
+    <button type="button" class="btn btn-block btn-lg"
+      style="background-color:#FFDD28;"
+      ng-click="changeMessage(4);clickcategory = true">
+      Scout
+    </button>
+  </div>
+
+  <div class="col-6 col-md-10" ng-show="read === 'open'">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title text-maroon">นโยบายความเป็นส่วนตัวของลูกค้า</h3>
+      </div>
+      <div class="card-body" style="overflow: scroll; height: 600px">
+        <div>
+          <p style="font-size: 20px" >
+        {{ message }}
+              </p>
+        </div>
+        <div class="card-footer">
+          <div class="text-center">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" ng-model="checkboxValue"
+                ng-disabled="!clickcategory" />
+              <label class="form-check-label" for="defaultCheck1">
+                ข้าพเจ้ายินยอมให้บริษัทเปิดเผยหรือโอนข้อมูลส่วนบุคคลที่มีอยู่ของข้าพเจ้าเพื่อวัตถุประสงค์ข้างต้น
+              </label>
+            </div>
+            <br />
+            <button class="btn btn-outline-success" ng-click="nextpage2()" ng-disabled="!checkboxValue">
+              ถัดไป
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-6 col-md-10" ng-show="read === 'close'">
+    <div>
+      <h1>dashboard</h1>
+    </div>   
+  </div>
+</div>
+
+
+
+  
+
+
+
+  <!-- <div class="text-center m-3">
+    <div class="row justify-content-around">
+      <div class="col-2">
+        <button type="button" class="btn btn-block btn-secondary btn-lg"
+          ng-click="changeMessage(1);clickcategory = true">
+          พนักงาน
+        </button>
+      </div>
+      <div class="col-1"></div>
+      <div class="col-2">
+        <button type="button" class="btn btn-block btn-secondary btn-lg"
+          ng-click="changeMessage(2);clickcategory = true">
+          ครู Fishsix
+        </button>
+      </div>
+      <div class="col-1"></div>
+      <div class="col-2">
+        <button type="button" class="btn btn-block btn-secondary btn-lg"
+          ng-click="changeMessage(3);clickcategory = true">
+          ครู ESC
+        </button>
+      </div>
+      <div class="col-1"></div>
+      <div class="col-2">
+        <button type="button" class="btn btn-block btn-secondary btn-lg"
+          ng-click="changeMessage(4);clickcategory = true">
+          Scout
+        </button>
+      </div>
+    </div>
+  </div>
+
+<div class="card m-4">
+  <div class="card-header">
+    <h3 class="card-title text-maroon">นโยบายความเป็นส่วนตัวของลูกค้า</h3>
+  </div>
+  <div class="card-body" style="overflow: scroll; height: 600px">
+    <div>
+      <p style="font-size: 20px" >
+    {{ message }}
+          </p>
+    </div>
+    <div class="card-footer">
+      <div class="text-center">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" ng-model="checkboxValue"
+            ng-disabled="!clickcategory" />
+          <label class="form-check-label" for="defaultCheck1">
+            ข้าพเจ้ายินยอมให้บริษัทเปิดเผยหรือโอนข้อมูลส่วนบุคคลที่มีอยู่ของข้าพเจ้าเพื่อวัตถุประสงค์ข้างต้น
+          </label>
+        </div>
+        <br />
+        <button class="btn btn-outline-success" ng-click="nextpage2()" ng-disabled="!checkboxValue">
+          ถัดไป
+        </button>
+      </div>
+    </div>
+  </div>
+</div> -->

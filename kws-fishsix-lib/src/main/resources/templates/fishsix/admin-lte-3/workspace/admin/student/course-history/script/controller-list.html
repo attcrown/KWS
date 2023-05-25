@@ -1,0 +1,60 @@
+<script th:inline="javascript">
+    function useListController($scope, $http)
+    {
+        console.info("### FishsixStudentCourseHistoryController.useListController ###");
+
+        $scope.requestEditCourseOrder = useRequestEditCourseOrder($scope, $http);
+        $scope.requestDeleteCourseOrder = useRequestDeleteCourseOrder($scope, $http);
+    }
+
+    function useRequestEditCourseOrder($scope, $http)
+    {
+        return (courseOrder) => {
+            console.log("### FishsixStudentCourseHistoryController.requestEditCourseOrder ###");
+            $scope.toEntryMode();
+            $scope.entryMode = "edit";
+            $scope.selectedCourseOrder = angular.copy(courseOrder);
+            console.log("selectedCourseOrder => ", $scope.selectedCourseOrder);
+            $scope.selectSubjectIds = selectedSubjectIdsToArray($scope, $http);
+            $scope.loadStudentCourseQuota($scope.selectedCourseOrder);
+        };
+    }
+
+    function useRequestDeleteCourseOrder($scope, $http)
+    {
+        return (courseOrder) => {
+            console.log("### FishsixStudentCourseHistoryController.requestDeleteCourse ###");
+
+            const options = {
+                title: "ยืนยันการลบข้อมูลประวัติการซื้อคอร์ส",
+                text: 'พิมพ์คำว่า "Confirm" และ กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                content: "input",
+                icon: "warning",
+                buttons: ["ยกเลิก", "ตกลง"],
+                dangerMode: true
+            };
+
+            swal(options)
+            .then(value => {
+                if (value === "Confirm") {
+                    $scope.removeCourseOrder(courseOrder);
+                } else {
+                    swal("คุณพิมพ์ไม่ถูกต้อง", "ยกเลิกการลบข้อมูล", "error");
+                }
+            });
+        };
+    }
+
+    function selectedSubjectIdsToArray($scope, $http) 
+    {
+        //console.log("$scope.selectedCourseOrder.selectedSubjectIds => ", $scope.selectedCourseOrder.selectedSubjectIds);
+        const selectedSubjectIdsString = $scope.selectedCourseOrder.selectedSubjectIds;
+        const selectedSubjectIds = selectedSubjectIdsString.split(",");
+
+        // selectedSubjectIds.forEach(selectedSubjectId => {
+        //     console.log(selectedSubjectId);
+        // });
+    
+        return selectedSubjectIds;
+    }  
+</script>

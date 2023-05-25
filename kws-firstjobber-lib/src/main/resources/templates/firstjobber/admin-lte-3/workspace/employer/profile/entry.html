@@ -1,0 +1,430 @@
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title text-maroon">เพิ่ม/แก้ไขข้อมูลบริษัท/ลูกค้า</h3>
+    </div>
+
+    <div class="card-body p-2">
+        <!-- employer -->
+        <div class="card card-navy">
+            <div class="card-header">
+                <h3 class="card-title">ข้อมูลบริษัท/ลูกค้า</h3>
+            </div>
+        
+            <div class="card-body p-2">
+                <form name="employerForm" class="form row" novalidate>
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowEmployerTypeError()">ประเภทบริษัท/ลูกค้า</span>
+                                <span class="text-danger" ng-show="isShowEmployerTypeError()">กรุณาเลือกประเภทบริษัท/ลูกค้า</span>
+                            </label>
+                            <select name="employerType" class="form-control" ng-class="{'is-invalid': isShowEmployerTypeError()}" style="width: 100%;" ng-model="selectedEmployerProfile.employer.employerTypeId" required>
+                                <option value="" selected disabled>--- กรุณาเลือกประเภทบริษัท/ลูกค้า ---</option>
+                                <option ng-repeat="employerType in employerTypes | orderBy: 'seqNo'" ng-value="employerType.id">{{ employerType.name }}</option>
+                            </select>
+                        </div>
+                    </div>
+        
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowEmployerNameError()">ชื่อบริษัท/ลูกค้า</span>
+                                <span class="text-danger" ng-show="isShowEmployerNameError()">กรุณาระบุชื่อบริษัท/ลูกค้า</span>
+                            </label>
+                            <input name="name" type="text" class="form-control" ng-class="{'is-invalid': isShowEmployerNameError()}" placeholder="ระบุชื่อบริษัท/ลูกค้า" ng-model="selectedEmployerProfile.employer.name" required>
+                        </div>
+                    </div>
+        
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowEmployerRegistNoError()">เลขที่จดทะเบียน</span>
+                                <span class="text-danger" ng-show="isShowEmployerRegistNoError()">กรุณาระบุเลขที่จดทะเบียน</span>
+                            </label>
+                            <input name="registNo" type="text" class="form-control" ng-class="{'is-invalid': isShowEmployerRegistNoError()}" placeholder="ระบุเลขที่จดทะเบียน" ng-model="selectedEmployerProfile.employer.registNo" required>
+                        </div>
+                    </div>
+        
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowEmployerTelNoError()">เบอร์ติดต่อ</span>
+                                <span class="text-danger" ng-show="isShowEmployerTelNoError()">กรุณาระบุเบอร์ติดต่อ</span>
+                            </label>
+                            <input name="telNo" type="text" class="form-control" ng-class="{'is-invalid': isShowEmployerTelNoError()}" placeholder="ระบุเบอร์ติดต่อ" ng-model="selectedEmployerProfile.employer.telNo" required>
+                        </div>
+                    </div>
+        
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span>แฟกซ์</span>
+                            </label>
+                            <input type="text" class="form-control" placeholder="ระบุเบอร์แฟกซ์" ng-model="selectedEmployerProfile.employer.faxNo">
+                        </div>
+                    </div>
+        
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowEmployerEmailError()">อีเมล์</span>
+                                <span class="text-danger" ng-show="isShowEmployerEmailError()">กรุณาระบุอีเมล์</span>
+                            </label>
+                            <input name="email" type="text" class="form-control" ng-class="{'is-invalid': isShowEmployerEmailError()}" placeholder="ระบุอีเมล์" ng-model="selectedEmployerProfile.employer.email" required>
+                        </div>
+                    </div>
+        
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span>เว็บไซต์</span>
+                            </label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="ระบุเว็บไซต์" aria-label="ระบุเว็บไซต์" aria-describedby="basic-addon2" ng-model="selectedEmployerProfile.employer.website">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-primary" type="button">
+                                        <a ng-href="{{ selectedEmployerProfile.employer.website }}" target="_blank">เปิด</a>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span>Facebook Page URL</span>
+                            </label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="ระบุ Facebook Page URL" aria-label="ระบุ Facebook Page URL" aria-describedby="basic-addon2" ng-model="selectedEmployerProfile.employer.facebookPageURL">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-primary" type="button">
+                                        <a ng-href="{{ selectedEmployerProfile.employer.facebookPageURL }}" target="_blank">เปิด</a>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowEmployerBizTypeError()">ประเภทธุรกิจ/กิจการ</span>
+                                <span class="text-danger" ng-show="isShowEmployerBizTypeError()">กรุณาระบุประเภทธุรกิจ/กิจการ</span>
+                            </label>
+                            <textarea name="bizType" rows="5" class="form-control" ng-class="{'is-invalid': isShowEmployerBizTypeError()}" placeholder="ระบุประเภทธุรกิจ/กิจการ" ng-model="selectedEmployerProfile.employer.bizType" required></textarea>
+                        </div>
+                    </div>
+        
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowEmployerBizBackgroundError()">Business Background</span>
+                                <span class="text-danger" ng-show="isShowEmployerBizBackgroundError()">กรุณาระบุ Business Background</span>
+                            </label>
+                            <textarea name="bizBackground" rows="5" class="form-control" ng-class="{'is-invalid': isShowEmployerBizBackgroundError()}" placeholder="ระบุ Business Background" ng-model="selectedEmployerProfile.employer.bizBackground" required></textarea>
+                        </div>
+                    </div>
+        
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span>หมายเหตุ</span>
+                            </label>
+                            <textarea rows="5" class="form-control" placeholder="ระบุหมายเหตุ" ng-model="selectedEmployerProfile.employer.remark"></textarea>
+                        </div>
+                    </div>
+        
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span>สถานะ</span>
+                            </label>
+                            <select name="status" class="form-control" style="width: 100%;" ng-model="selectedEmployerProfile.employer.status" required>
+                                <option ng-repeat="status in masterStatuses | orderBy: 'seqNo'" ng-value="status.id">{{ status.title }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- /.employer -->
+
+        <!-- employer-contacta-address -->
+        <div class="card card-navy">
+            <div class="card-header">
+                <h3 class="card-title">ที่อยู่บริษัท/ลูกค้า</h3>
+            </div>
+        
+            <div class="card-body p-2">
+                <form name="employerAddressForm" class="form row" novalidate>
+                    <div class="col-md-12">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isEmployerAddressInfo()">ที่อยู่</span>
+                                <span class="text-danger" ng-show="isEmployerAddressInfo()">กรุณาระบุที่อยู่</span>
+                            </label>
+                            <input  
+                                name="addressInfo" 
+                                type="text" 
+                                class="form-control" 
+                                ng-class="{'is-invalid': isEmployerAddressInfo()}" 
+                                placeholder="ระบุที่อยู่" 
+                                ng-model="selectedEmployerProfile.contactAddress.addressInfo" 
+                                required />
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isEmployerAddressProvince()">จังหวัด</span>
+                                <span class="text-danger" ng-show="isEmployerAddressProvince()">กรุณาเลือกจังหวัด</span>
+                            </label>
+                            <select id="provinceSelect" 
+                                    name="province" 
+                                    class="form-control select2" 
+                                    ng-class="{'is-invalid': isEmployerAddressProvince()}" 
+                                    style="width: 100%;" 
+                                    ng-model="selectedEmployerProfile.contactAddress.provinceId" 
+                                    required 
+                                    ng-change="provinceSelected()">
+                                <option value="" selected disabled>--- กรุณาเลือกจังหวัด ---</option>
+                                <option ng-repeat="province in provinces | orderBy: 'name'" ng-value="province.id">{{ province.nameTH }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isEmployerAddressAmphur()">อำเภอ/เขต</span>
+                                <span class="text-danger" ng-show="isEmployerAddressAmphur()">กรุณาเลือกอำเภอ/เขต</span>
+                            </label>
+                            <select id="amphurSelect" 
+                                    name="amphur" 
+                                    class="form-control select2" 
+                                    ng-class="{'is-invalid': isEmployerAddressAmphur()}" 
+                                    style="width: 100%;" 
+                                    ng-model="selectedEmployerProfile.contactAddress.amphurId" 
+                                    required 
+                                    ng-change="amphurSelected()">
+                                <option value="" selected disabled>--- กรุณาเลือกอำเภอ/เขต ---</option>
+                                <option ng-repeat="amphur in getSelectedAmphurs() | orderBy: 'name'" ng-value="amphur.id">{{ amphur.nameTH }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isEmployerAddressDistrict()">ตำบล/แขวง</span>
+                                <span class="text-danger" ng-show="isEmployerAddressDistrict()">กรุณาเลือกตำบล/แขวง</span>
+                            </label>
+                            <select id="districtSelect" 
+                                    name="district" 
+                                    class="form-control select2" 
+                                    ng-class="{'is-invalid': isEmployerAddressDistrict()}" 
+                                    style="width: 100%;" 
+                                    ng-model="selectedEmployerProfile.contactAddress.districtId" 
+                                    required
+                                    ng-change="districtSelected()">
+                                <option value="" selected disabled>--- กรุณาเลือกตำบล/แขวง ---</option>
+                                <option ng-repeat="district in selectedDistricts | orderBy: 'name'" ng-value="district.id">{{ district.nameTH }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isEmployerAddressPostCode()">รหัสไปรษณีย์</span>
+                                <span class="text-danger" ng-show="isEmployerAddressPostCode()">กรุณาระบุรหัสไปรษณีย์</span>
+                            </label>
+                            <input  
+                                name="postCode" 
+                                type="text" 
+                                class="form-control" 
+                                ng-class="{'is-invalid': isEmployerAddressPostCode()}" 
+                                placeholder="ระบุรหัสไปรษณีย์" 
+                                ng-model="selectedEmployerProfile.contactAddress.postCode" 
+                                required />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- /.employer-contacta-address -->
+
+        <!-- employer-user -->
+        <div class="card card-navy">
+            <div class="card-header">
+                <h3 class="card-title">ข้อมูลผู้ติดต่อ</h3>
+            </div>
+        
+            <div class="card-body p-2">
+                <form name="employerUserForm" class="form row" novalidate>
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowEmployerUserFirstNameError()">ชื่อ</span>
+                                <span class="text-danger" ng-show="isShowEmployerUserFirstNameError()">ชื่อ</span>
+                            </label>
+                            <input  
+                                name="firstName" 
+                                type="text" class="form-control" 
+                                ng-class="{'is-invalid': isShowEmployerUserFirstNameError()}" 
+                                placeholder="ระบุชื่อ" 
+                                ng-model="selectedEmployerProfile.employerUserProfiles[0].userPersonalInfo.firstName" 
+                                required />
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowEmployerUserLastNameError()">นามสกุล</span>
+                                <span class="text-danger" ng-show="isShowEmployerUserLastNameError()">นามสกุล</span>
+                            </label>
+                            <input 
+                                name="lastName" 
+                                type="text" class="form-control" 
+                                ng-class="{'is-invalid': isShowEmployerUserLastNameError()}" 
+                                placeholder="ระบุนามสกุล" 
+                                ng-model="selectedEmployerProfile.employerUserProfiles[0].userPersonalInfo.lastName" 
+                                required />
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowEmployerUserNickNameError()">ชื่อเล่น</span>
+                                <span class="text-danger" ng-show="isShowEmployerUserNickNameError()">ชื่อเล่น</span>
+                            </label>
+                            <input 
+                                name="nickName" 
+                                type="text" class="form-control" 
+                                ng-class="{'is-invalid': isShowEmployerUserNickNameError()}" 
+                                placeholder="ระบุชื่อเล่น" 
+                                ng-model="selectedEmployerProfile.employerUserProfiles[0].userPersonalInfo.nickName" 
+                                required />
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowEmployerUserMobileNoError()">เบอร์ติดต่อ</span>
+                                <span class="text-danger" ng-show="isShowEmployerUserMobileNoError()">เบอร์ติดต่อ</span>
+                            </label>
+                            <input 
+                                name="mobileNo" 
+                                type="text" class="form-control" 
+                                ng-class="{'is-invalid': isShowEmployerUserMobileNoError()}" 
+                                placeholder="ระบุเบอร์ติดต่อ" 
+                                ng-model="selectedEmployerProfile.employerUserProfiles[0].userPersonalInfo.mobileNo" 
+                                required />
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowEmployerUserEmailError()">อีเมล์</span>
+                                <span class="text-danger" ng-show="isShowEmployerUserEmailError()">อีเมล์</span>
+                            </label>
+                            <input 
+                                name="email" 
+                                type="text" class="form-control" 
+                                ng-class="{'is-invalid': isShowEmployerUserEmailError()}" 
+                                placeholder="ระบุอีเมล์" 
+                                ng-model="selectedEmployerProfile.employerUserProfiles[0].userAccount.email" 
+                                required />
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowEmployerUserLineIdError()">ไล์ไอดี</span>
+                                <span class="text-danger" ng-show="isShowEmployerUserLineIdError()">ไล์ไอดี</span>
+                            </label>
+                            <input 
+                                name="lineId" 
+                                type="text" class="form-control" 
+                                ng-class="{'is-invalid': isShowEmployerUserLineIdError()}" 
+                                placeholder="ระบุไล์ไอดี" 
+                                ng-model="selectedEmployerProfile.employerUserProfiles[0].userPersonalInfo.lineId" 
+                                required />
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowEmployerUserDepartmentError()">หน่วยงาน</span>
+                                <span class="text-danger" ng-show="isShowEmployerUserDepartmentError()">หน่วยงาน</span>
+                            </label>
+                            <input 
+                                name="department" 
+                                type="text" class="form-control" 
+                                ng-class="{'is-invalid': isShowEmployerUserDepartmentError()}" 
+                                placeholder="ระบุหน่วยงาน" 
+                                ng-model="selectedEmployerProfile.employerUserProfiles[0].employerUser.department" 
+                                required />
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowEmployerUserPositionError()">ตำแหน่ง</span>
+                                <span class="text-danger" ng-show="isShowEmployerUserPositionError()">ตำแหน่ง</span>
+                            </label>
+                            <input 
+                                name="position" 
+                                type="text" class="form-control" 
+                                ng-class="{'is-invalid': isShowEmployerUserPositionError()}" 
+                                placeholder="ระบุตำแหน่ง" 
+                                ng-model="selectedEmployerProfile.employerUserProfiles[0].employerUser.position" 
+                                required />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- /.employer-user -->
+    </div>
+
+    <div class="card-footer">
+        <div class="text-right">
+            <button class="btn btn-outline-danger" ng-click="toListMode()">
+                <i class="fa fa-caret-left"></i> กลับ
+            </button>
+            <button class="btn btn-outline-primary" ng-click="requestSave()">
+                <i class="fa fa-save"></i> บันทึก
+            </button>
+        </div>
+    </div>
+</div>

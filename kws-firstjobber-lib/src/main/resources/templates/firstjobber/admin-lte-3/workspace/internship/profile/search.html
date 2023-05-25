@@ -1,0 +1,70 @@
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title text-maroon">ระบุเงื่อนไขการค้นหา</h3>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>มหาวิทยาลัย</label>
+                    <select class="form-control select2" data-dropdown-css-class="select2-indigo" multiple="multiple" data-placeholder="--- กรุณาเลือกมหาวิทยาลัย ---" style="width: 100%;" ng-model="criteria.schoolIds">
+                        <option ng-repeat="school in schools | orderBy: 'name'" ng-value="school.id">{{ school.name }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>คณะวิชา</label>
+                    <select class="form-control select2" data-dropdown-css-class="select2-indigo" multiple="multiple" data-placeholder="--- กรุณาเลือกคณะวิชา ---" style="width: 100%;" ng-model="criteria.educationFacultyIds">
+                        <option ng-repeat="educationFaculty in educationFaculties | orderBy: 'name'" ng-value="educationFaculty.id">{{ educationFaculty.name }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>สาขาวิชา</label>
+                    <select class="form-control select2" data-dropdown-css-class="select2-indigo" multiple="multiple" data-placeholder="--- กรุณาเลือกสาขาวิชา ---" style="width: 100%;" ng-model="criteria.educationMajorIds">
+                        <option ng-repeat="educationMajor in educationMajors | orderBy: 'name'" ng-value="educationMajor.id">{{ educationMajor.name }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>ตำแหน่งงาน</label>
+                    <select class="form-control select2" data-dropdown-css-class="select2-indigo" multiple="multiple" data-placeholder="--- กรุณาเลือกตำแหน่งงาน ---" style="width: 100%;" ng-model="criteria.jobIds">
+                        <option ng-repeat="job in jobs | orderBy: 'name'" ng-value="job.id">{{ job.name }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>ชื่อ นศ.</label>
+                    <input type="text" class="form-control" ng-model="criteria.firstName">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>นามสกุล นศ.</label>
+                    <input type="text" class="form-control" ng-model="criteria.lastName">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-footer">
+        <div class="text-right">
+            <button class="btn btn-success" ng-click="requestAddInternshipProfile()">
+                <i class="fa fa-plus"></i> เพิ่มข้อมูล
+            </button>
+            <button class="btn btn-primary" ng-click="search()">
+                <i class="fa fa-search"></i> ค้นหา
+            </button>
+        </div>
+    </div>
+</div>

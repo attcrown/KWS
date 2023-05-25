@@ -1,0 +1,16 @@
+<script th:inline="javascript">
+    function useListController($scope, $http)
+    {
+        $scope.requestReviewTeacherRegister = useRequestReviewTeacherRegister($scope, $http);
+    }
+
+    function useRequestReviewTeacherRegister($scope, $http)
+    {
+        return (teacherRegister) => {
+            console.log("### FishsixTeacherNewRegistrationController.requestReviewTeacherRegister ###");
+            $scope.resetForm();
+            $scope.toEntryMode();
+            $scope.selectedTeacherRegister = angular.copy(teacherRegister);
+        };
+    }
+</script>

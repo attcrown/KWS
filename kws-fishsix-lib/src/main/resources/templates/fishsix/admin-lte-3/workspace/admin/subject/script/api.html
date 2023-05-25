@@ -1,0 +1,673 @@
+<script th:inline="javascript">
+    function useApi($scope, $http)
+    {
+        console.info("### FishsixSubjectController.useApi ###");
+
+        $scope.search = useSearch($scope, $http);
+
+        $scope.loadSubjectProfile = useLoadSubjectProfile($scope, $http);
+
+        $scope.createSubject = useCreateSubject($scope, $http);
+        $scope.updateSubject = useUpdateSubject($scope, $http);
+        $scope.removeSubject = useRemoveSubject($scope, $http);
+
+        $scope.createChapter = useCreateChapter($scope, $http);
+        $scope.updateChapter = useUpdateChapter($scope, $http);
+        $scope.removeChapter = useRemoveChapter($scope, $http);
+
+        $scope.createMedia = useCreateMedia($scope, $http);
+        $scope.updateMedia = useUpdateMedia($scope, $http);
+        $scope.removeMedia = useRemoveMedia($scope, $http);
+    }
+
+    // ****************************** subject ****************************** //
+    function useSearch($scope, $http)
+    {
+        return () => {
+            console.log("### FishsixSubjectController.search ###");
+            console.log("criteria => " + JSON.stringify($scope.criteria));
+
+            $scope.subjectProfiles = [];
+
+            const requestMessage = {};
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/subject/fetch`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    let subjectProfiles = response.data.body.subjectProfiles;
+
+                    if(subjectProfiles && subjectProfiles.length > 0) {
+                        subjectProfiles = subjectProfiles.filter(e => e.status === 'Active');
+
+                        const subjectCategoryIds = $scope.criteria.subjectCategoryIds;
+                        const educationClassIds = $scope.criteria.educationClassIds;
+
+                        if(subjectCategoryIds && subjectCategoryIds.length > 0) {
+                            subjectProfiles = subjectProfiles.filter(e => subjectCategoryIds.includes(e.subjectCategoryId));
+                        }
+
+                        if(educationClassIds && educationClassIds.length > 0) {
+                            subjectProfiles = subjectProfiles.filter(e => educationClassIds.includes(e.educationClassId));
+                        }
+                    }
+
+                    $scope.subjectProfiles = subjectProfiles;
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถค้นหาข้อมูลคลังเนื้อหาได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถค้นหาข้อมูลคลังเนื้อหาได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+
+
+    function useLoadSubjectProfile($scope, $http)
+    {
+        return () => {
+            console.log("### FishsixSubjectController.loadSubjectProfile ###");
+            
+            if(! $scope.selectedSubjectProfile) {
+                return;
+            }
+
+            const requestMessage = {
+                subjectId: $scope.selectedSubjectProfile.id
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/subject/build-profile`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    let subjectProfile = response.data.body.subjectProfile;
+                    $scope.selectedSubjectProfile = subjectProfile;
+
+                    if($scope.selectedChapter && subjectProfile.chapters && subjectProfile.chapters.length > 0) {
+                        const selectedChapter = subjectProfile.chapters.find(e => e.id === $scope.selectedChapter.id);
+                        if(selectedChapter) {
+                            $scope.selectedChapter = selectedChapter;
+                        }
+                    }
+                } 
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+
+
+    function useCreateSubject($scope, $http)
+    {
+        return (subjectProfile) => {
+            console.log("### FishsixSubjectController.createSubject ###");
+            console.log("subjectProfile => ", subjectProfile);
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/subject/create`,
+                headers: {
+                    'Content-Type': undefined
+                },
+                data: $scope.buildSubjectFormData(subjectProfile)
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    const createdSubjectProfile = response.data.body.createdSubjectProfile;
+
+                    if(subjectProfile.chapters && subjectProfile.chapters.length > 0) {
+                        createdSubjectProfile.chapters = [];
+
+                        subjectProfile.chapters.forEach(chapter => {
+                            chapter.subjectId = createdSubjectProfile.id;
+
+                            const options = {
+                                method: 'POST',
+                                url: `${kws_contextPath}/api/fishsix/subject/chapter/create`,
+                                headers: {
+                                    'Content-Type': undefined
+                                },
+                                data: $scope.buildChapterFormData(chapter)
+                            };
+
+                            const successHandler = (response) => {
+                                console.log("response => ", response);
+                                if(response.data.head.status === "Success") {
+                                    const createdSubjectChapter = response.data.body.createdSubjectChapter;
+                                    
+                                    if(chapter.medias && chapter.medias.length > 0) {
+                                        createdSubjectChapter.medias = [];
+
+                                        chapter.medias.forEach((media, index) => {
+                                            media.subjectId = chapter.subjectId;
+                                            media.chapterId = createdSubjectChapter.id;
+                                            media.seqNo = index + 1;
+
+                                            const options = {
+                                                method: 'POST',
+                                                url: `${kws_contextPath}/api/fishsix/subject/chapter/media/create`,
+                                                headers: {
+                                                    'Content-Type': undefined
+                                                },
+                                                data: $scope.buildMediaFormData(media)
+                                            };
+
+                                            const successHandler = (response) => {
+                                                console.log("response => ", response);
+                                                if(response.data.head.status === "Success") {
+                                                    const createdSubjectChapterMedia = response.data.body.createdSubjectChapterMedia;
+                                                    createdSubjectChapter.medias.push(createdSubjectChapterMedia);
+                                                }
+                                            };
+
+                                            const errorHandler = (error) => {
+                                                console.error("error => ", error);
+                                            };
+                                            
+                                            $http(options).then(successHandler).catch(errorHandler);
+                                        });
+                                    }
+
+                                    createdSubjectProfile.chapters.push(createdSubjectChapter);
+                                } 
+                            };
+
+                            const errorHandler = (error) => {
+                                console.error("error => ", error);
+                            };
+                            
+                            $http(options).then(successHandler).catch(errorHandler);
+                        });
+                    }
+
+                    $scope.subjectProfiles.push(createdSubjectProfile);
+
+                    $scope.toListMode();
+                    swal("บันทึกข้อมูลสำเร็จ", "บันทึกข้อมูลคลังเนื้อหาสำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกข้อมูลคลังเนื้อหาได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถบันทึกข้อมูลคลังเนื้อหาได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+
+    function useUpdateSubject($scope, $http)
+    {
+        return (subjectProfile) => {
+            console.log("### FishsixSubjectController.updateSubject ###");
+            console.log("subjectProfile => ", subjectProfile);
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/subject/update`,
+                headers: {
+                    'Content-Type': undefined
+                },
+                data: $scope.buildSubjectFormData(subjectProfile)
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    const subjectProfile = response.data.body.updatedSubjectProfile;
+
+                    $scope.subjectProfiles = $scope.subjectProfiles.filter(e => e.id !== subjectProfile.id);
+                    $scope.subjectProfiles.push(subjectProfile);
+
+                    $scope.toListMode();
+                    swal("บันทึกข้อมูลสำเร็จ", "บันทึกข้อมูลคลังเนื้อหาสำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกข้อมูลคลังเนื้อหาได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถบันทึกข้อมูลคลังเนื้อหาได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+
+    function useRemoveSubject($scope, $http)
+    {
+        return (subjectProfile) => {
+            console.log("### FishsixSubjectController.removeSubject ###");
+            console.log("subjectProfile => ", subjectProfile);
+
+            const requestMessage = {
+                subjectId: subjectProfile.id
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/subject/remove`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    $scope.subjectProfiles = $scope.subjectProfiles.filter(e => e.id !== subjectProfile.id);
+                    swal("ลบข้อมูลสำเร็จ", "ลบข้อมูลคลังเนื้อหาสำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถลบข้อมูลคลังเนื้อหาได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถลบข้อมูลคลังเนื้อหาได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+    // ****************************** subject ****************************** //
+
+
+    // ****************************** chapter ****************************** //
+    function useCreateChapter($scope, $http)
+    {
+        return (chapter) => {
+            console.log("### FishsixSubjectController.createChapter ###");
+            console.log("chapter => ", chapter);
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/subject/chapter/create`,
+                headers: {
+                    'Content-Type': undefined
+                },
+                data: $scope.buildChapterFormData(chapter)
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    const createdSubjectChapter = response.data.body.createdSubjectChapter;
+                    if(! $scope.selectedSubjectProfile.chapters) {
+                        $scope.selectedSubjectProfile.chapters = [];
+                    }
+                    $scope.loadSubjectProfile();
+                    swal("บันทึกข้อมูลสำเร็จ", "บันทึกข้อมูลคลังเนื้อหาสำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกข้อมูลคลังเนื้อหาได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+
+    function useUpdateChapter($scope, $http)
+    {
+        return (chapter) => {
+            console.log("### FishsixSubjectController.updateChapter ###");
+            console.log("chapter => ", chapter);
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/subject/chapter/update`,
+                headers: {
+                    'Content-Type': undefined
+                },
+                data: $scope.buildChapterFormData(chapter)
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    const updateSubjectChapter = response.data.body.updateSubjectChapter;
+                    $scope.loadSubjectProfile();
+                    swal("บันทึกข้อมูลสำเร็จ", "บันทึกข้อมูลคลังเนื้อหาสำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกข้อมูลคลังเนื้อหาได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+
+    function useRemoveChapter($scope, $http)
+    {
+        return (chapter) => {
+            console.log("### FishsixSubjectController.removeChapter ###");
+            console.log("chapter => ", chapter);
+
+            const requestMessage = {
+                subjectChapterId: chapter.id
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/subject/chapter/remove`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    // $scope.subjectProfiles = $scope.subjectProfiles.filter(e => e.id !== subjectProfile.id);
+                    swal("ลบข้อมูลสำเร็จ", "ลบข้อมูลคลังเนื้อหาสำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถลบข้อมูลคลังเนื้อหาได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+    // ****************************** chapter ****************************** //
+
+
+    // ****************************** media ****************************** //
+    function useCreateMedia($scope, $http)
+    {
+        return (media) => {
+            console.log("### FishsixSubjectController.createMedia ###");
+            console.log("media => ", media);
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/subject/chapter/media/create`,
+                headers: {
+                    'Content-Type': undefined
+                },
+                data: $scope.buildMediaFormData(media)
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    const createdSubjectChapterMedia = response.data.body.createdSubjectChapterMedia;
+                    $scope.loadSubjectProfile();
+                    swal("บันทึกข้อมูลสำเร็จ", "บันทึกข้อมูลคลังเนื้อหาสำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกข้อมูลคลังเนื้อหาได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+
+    function useUpdateMedia($scope, $http)
+    {
+        return (media) => {
+            console.log("### FishsixSubjectController.updateMedia ###");
+            console.log("media => ", media);
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/subject/chapter/media/update`,
+                headers: {
+                    'Content-Type': undefined
+                },
+                data: $scope.buildMediaFormData(media)
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    const updatedSubjectChapterMedia = response.data.body.updatedSubjectChapterMedia;
+                    $scope.loadSubjectProfile();
+                    swal("บันทึกข้อมูลสำเร็จ", "บันทึกข้อมูลคลังเนื้อหาสำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกข้อมูลคลังเนื้อหาได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+
+    function useRemoveMedia($scope, $http)
+    {
+        return (media) => {
+            console.log("### FishsixSubjectController.removeMedia ###");
+            console.log("media => ", media);
+
+            const requestMessage = {
+                subjectChapterMediaId: media.id
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/subject/chapter/media/remove`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    swal("ลบข้อมูลสำเร็จ", "ลบข้อมูลคลังเนื้อหาสำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถลบข้อมูลคลังเนื้อหาได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+    // ****************************** media ****************************** //
+</script>

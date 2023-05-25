@@ -1,0 +1,15 @@
+<div th:replace="__${#execInfo.templateName}__/../script/controller"></div>
+
+<section ng-controller="FishsixSubjectController" ng-init="init()">
+    <div ng-if="isLoading" class="kws-loader">
+        <div class='kws-loader-spin'></div>
+    </div>
+
+    <div ng-show="mode === 'list'">
+        <div th:replace="fishsix/admin-lte-3/workspace/admin/subject/search"></div>
+        <div th:replace="fishsix/admin-lte-3/workspace/admin/subject/list"></div>
+    </div>
+    <div ng-show="mode === 'entry'">
+        <div th:replace="fishsix/admin-lte-3/workspace/admin/subject/entry"></div>
+    </div>
+</section>

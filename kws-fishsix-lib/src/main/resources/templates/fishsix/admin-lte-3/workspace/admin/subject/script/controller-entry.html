@@ -1,0 +1,122 @@
+<script th:inline="javascript">
+    function useEntryController($scope, $http)
+    {
+        console.info("### FishsixSubjectController.useEntryController ###");
+
+        $scope.requestSave = useRequestSave($scope, $http);
+        $scope.verify = useVerify($scope, $http);
+        $scope.isShowSubjectCategoryError = useIsShowSubjectCategoryError($scope, $http);
+        $scope.isShowNameError = useIsShowNameError($scope, $http);
+        $scope.isShowEducationClassError = useIsShowEducationClassError($scope, $http);
+        $scope.isShowDescriptionError = useIsShowDescriptionError($scope, $http);
+        $scope.buildSubjectFormData = useBuildSubjectFormData($scope, $http);
+    }
+
+    function useRequestSave($scope, $http)
+    {
+        return () => {
+            console.log("### FishsixCourseController.requestSave ###");
+
+            $scope.subjectForm.$submitted = true;
+
+            if($scope.verify()) {
+                const options = {
+                    title: $scope.entryMode === "add" ? "ยืนยันการบันทึกข้อมูลคลังเนื้อหา ?" : "ยืนยันการแก้ไขข้อมูลคลังเนื้อหา",
+                    text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                    icon: "warning",
+                    buttons: ["ยกเลิก", "ตกลง"],
+                    dangerMode: true
+                };
+
+                const handler = (confirm) => {
+                    if (confirm) {
+                        if($scope.entryMode === 'add') {
+                            $scope.createSubject($scope.selectedSubjectProfile);
+                        } else if($scope.entryMode === 'edit') {
+                            $scope.updateSubject($scope.selectedSubjectProfile);
+                        }
+                    }
+                };
+
+                swal(options).then(handler);
+            } else {
+                swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+            }
+        };
+    }
+
+    function useVerify($scope, $http)
+    {
+        return () => {
+            return $scope.subjectForm.$valid;
+        };
+    }
+
+    // ****************************** validate ****************************** //
+    function useIsShowSubjectCategoryError($scope, $http) 
+    {
+        return () => {
+            return $scope.subjectForm.$submitted && $scope.subjectForm.subjectCategory.$invalid;
+        };
+    }
+
+    function useIsShowNameError($scope, $http) 
+    {
+        return () => {
+            return ($scope.subjectForm.$submitted || $scope.subjectForm.name.$dirty) && $scope.subjectForm.name.$invalid;
+        };
+    }
+
+    function useIsShowEducationClassError($scope, $http) 
+    {
+        return () => {
+            return $scope.subjectForm.$submitted && $scope.subjectForm.educationClass.$invalid;
+        };
+    }
+
+    function useIsShowDescriptionError($scope, $http) 
+    {
+        return () => {
+            return ($scope.subjectForm.$submitted || $scope.subjectForm.description.$dirty) && $scope.subjectForm.description.$invalid;
+        };
+    }
+    // ****************************** validate ****************************** //
+
+    function useBuildSubjectFormData($scope, $http)
+    {
+        return (subjectProfile) => {
+            const formData = new FormData();
+
+            if(subjectProfile.id) {
+                formData.append("id", subjectProfile.id);
+            }
+
+            formData.append("subjectCategoryId", subjectProfile.subjectCategoryId);
+            formData.append("name", subjectProfile.name);
+            formData.append("description", subjectProfile.description);
+            formData.append("educationClassId", subjectProfile.educationClassId);
+
+            if(! subjectProfile.title) {
+                formData.append("title", subjectProfile.name);
+            } else {
+                formData.append("title", subjectProfile.title);
+            }
+
+            if(subjectProfile.remark) {
+                formData.append("remark", subjectProfile.remark);
+            }
+
+            if(subjectProfile.status) {
+                formData.append("status", subjectProfile.status);
+            }
+
+            const educationClass = $scope.educationClasses.find(e => e.id === subjectProfile.educationClassId);
+            if(educationClass) {
+                formData.append("educationLevelId", educationClass.educationLevelId);
+                formData.append("classLevel", educationClass.classNo);
+            }
+
+            return formData;
+        };
+    }
+</script>

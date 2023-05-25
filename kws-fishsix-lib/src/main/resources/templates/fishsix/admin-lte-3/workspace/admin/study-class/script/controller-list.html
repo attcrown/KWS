@@ -1,0 +1,46 @@
+<script th:inline="javascript">
+    function useListController($scope, $http)
+    {
+        console.info("### FishsixStudyClassController.useListController ###");
+
+        $scope.requestEdit = useRequestEdit($scope, $http);
+        $scope.requestDelete = useRequestDelete($scope, $http);
+    }
+
+    function useRequestEdit($scope, $http)
+    {
+        return (studyClassScheduleTemplate) => {
+            console.log("### FishsixStudyClassController.requestEdit ###");
+            $scope.toEntryMode();
+            $scope.entryMode = "edit";
+            $scope.selectedStudyClassScheduleTemplate = angular.copy(studyClassScheduleTemplate);
+
+            console.log("selectedStudyClassScheduleTemplate => ", $scope.selectedStudyClassScheduleTemplate);
+        };
+    }
+
+    function useRequestDelete($scope, $http)
+    {
+        return (studyClassScheduleTemplate) => {
+            console.log("### FishsixStudentCourseHistoryController.requestDeleteCourse ###");
+
+            const options = {
+                title: "ยืนยันการลบข้อมูลคลาสเรียน",
+                text: 'พิมพ์คำว่า "Confirm" และ กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                content: "input",
+                icon: "warning",
+                buttons: ["ยกเลิก", "ตกลง"],
+                dangerMode: true
+            };
+
+            swal(options)
+            .then(value => {
+                if (value === "Confirm") {
+                    $scope.remove(studyClassScheduleTemplate);
+                } else {
+                    swal("คุณพิมพ์ไม่ถูกต้อง", "ยกเลิกการลบข้อมูล", "error");
+                }
+            });
+        };
+    }
+</script>

@@ -1,0 +1,476 @@
+<!-- <div th:replace="fishsix/admin-lte-3/workspace/admin/student/schedule/script/api"></div> -->
+<div th:replace="fishsix/admin-lte-3/workspace/admin/student/schedule/script/list-controller"></div>
+<!-- <div th:replace="fishsix/admin-lte-3/workspace/admin/student/schedule/script/entry-controller"></div> -->
+
+<script th:inline="javascript">
+    app.controller("FishsixStudentScheduleController", ["$scope", "$http", ($scope, $http) => {
+        $scope.students = /*[[${students}]]*/ [];
+        $scope.teachers = /*[[${teachers}]]*/ [];
+        $scope.courses = /*[[${courses}]]*/ [];
+        $scope.subjects = /*[[${subjects}]]*/ [];
+        $scope.classTypes = /*[[${classTypes}]]*/ [];
+
+        $scope.isLoading = false;
+        $scope.criteria = {};
+        $scope.paging = {};
+        $scope.schedules = [];
+        $scope.selectedSchedule;
+        $scope.mode = "list"; // ["list", "entry"]
+        $scope.entryMode = ""; // ["add", "edit"]
+
+        $scope.init = function() {
+            console.log("### FishsixStudentScheduleController.init ###");
+
+            // useApi($scope, $http);
+            useListController($scope, $http);
+            // useEntryController($scope, $http);
+
+            $scope.criteria = {
+                studentIds: [],
+                teacherIds: [],
+                subjectIds: [],
+                classTypeIds: [],
+                fromClassDate: '',
+                toClassDate: ''
+            };
+
+            $scope.paging = {
+                pageNo: 1,
+                pageSize: 25,
+                totalPage: 0,
+                totalSize: 0
+            };
+
+            $('.select2').select2({ theme: 'bootstrap4' });
+
+            $scope.initClassTypes();
+            $scope.initSchedules();
+        };
+
+        $scope.initClassTypes = function() {
+            console.log("### FishsixStudentScheduleController.initClassTypes ###");
+
+            $scope.classTypes = [
+                {
+                    id: 'flip_online',
+                    name: 'Flipclass online'
+                },
+
+                {
+                    id: 'flip_onsite',
+                    name: 'Flipclass สาขา'
+                },
+
+                {
+                    id: 'active_class',
+                    name: 'Active class'
+                }
+            ];
+        };
+
+        $scope.initSchedules = function() {
+            console.log("### FishsixStudentScheduleController.initSchedules ###");
+
+            $scope.schedules = [
+                {
+                    studyDate: "01/10/2564",
+                    startTime: "10:00",
+                    endTime: "12:00",
+                    nextTopic: 'สมบัติของแรง',
+
+                    site: {
+                        id: "site-001",
+                        name: "สาขาสยาม"
+                    },
+
+                    course: {
+                        id: "course-001",
+                        name: "ฟิสิกส์ ม.1 Flipclass 20 ชม.",
+                        hour: 20,
+                        price: 12000,
+                        classType: {
+                            id: "flip_onsite",
+                            name: "Flipclass สาขา"
+                        }
+                    },
+
+                    subject: {
+                        id: "subject-001",
+                        name: "ฟิสิกส์ ม.1",
+                        educationLevel: {
+                            id: "JuniorHighSchool",
+                            name: "มัธยมศึกษาตอนต้น"
+                        },
+                        classLevel: 1,
+                        classLevelTitle: "ม.1"
+                    },
+
+                    student: {
+                        id: 'student-001',
+                        gender: 'male',
+                        firstName: 'Francessco',
+                        lastName: 'Totti',
+                        nickName: 'Totty',
+                        mobileNo: '0978800964',
+                        email: 'student-001@gmail.com',
+                        parentInfo: {
+                            relation: 'แม่',
+                            name: 'Alessandro Nesta',
+                            mobileNo: '0897764589',
+                            email: 'parent-001@gmail.com',
+                            expectation: 'Parent-001 Expectation'
+                        },
+                        educationInfo: {
+                            school: 'School-1',
+                            studyClassTitle: 'ป.5',
+                            studyClassLevelId: 'primarySchool',
+                            studyClassNo: 5
+                        },
+                        status: 'Active'
+                    },
+
+                    teacher: {
+                        id: 'teacher-001',
+                        firstName: 'Francessco',
+                        lastName: 'Totti',
+                        nickName: 'Totty',
+                        mobileNo: '0876645890',
+                        email: 'teacher-001@gmail.com',
+                        subjects: 'คณิตศาสตร์, ฟิสิกซ์',
+                        hireTypeId: 'permanent',
+                        worktimeTypeId: 'fulltime',
+                        subjectIds: ["001"],
+                        salary: 15000,
+                        educationInfo: {
+                            school: {
+                                id: "001",
+                                name: "มหาวิทยาลัยธรรมศาสตร์"
+                            },
+                            faculty: {
+                                id: "001",
+                                name: "วิทยาศาสตร์"
+                            },
+                            major: {
+                                id: "001",
+                                name: "ฟิสิกส์"
+                            }
+                        },
+                        paymentAccount: {
+                            bankName: 'ธนาคารไทยพานิชณ์',
+                            accountNo: '102000187'
+                        },
+                        status: 'Active'
+                    }
+                },
+
+                {
+                    studyDate: "01/10/2564",
+                    startTime: "13:00",
+                    endTime: "15:00",
+                    nextTopic: 'ของไหล',
+
+                    site: {
+                        id: "site-002",
+                        name: "สาขาเดอะมอลล์ บางกะปิ"
+                    },
+
+                    course: {
+                        id: "course-002",
+                        name: "ฟิสิกส์ ม.2 Flipclass 20 ชม.",
+                        hour: 20,
+                        price: 12000,
+                        classType: {
+                            id: "flip_onsite",
+                            name: "Flipclass สาขา"
+                        }
+                    },
+
+                    subject: {
+                        id: "subject-002",
+                        name: "ฟิสิกส์ ม.2",
+                        educationLevel: {
+                            id: "JuniorHighSchool",
+                            name: "มัธยมศึกษาตอนต้น"
+                        },
+                        classLevel: 2,
+                        classLevelTitle: "ม.2"
+                    },
+
+                    student: {
+                        id: 'student-002',
+                        gender: 'female',
+                        firstName: 'Maria',
+                        lastName: 'Stonekovski',
+                        nickName: 'Mary',
+                        mobileNo: '0978802278',
+                        email: 'student-002@gmail.com',
+                        parentInfo: {
+                            relation: 'พ่อ',
+                            name: 'Paolo Maldini',
+                            mobileNo: '0899085891',
+                            email: 'parent-002@gmail.com',
+                            expectation: 'Parent-002 Expectation'
+                        },
+                        educationInfo: {
+                            school: 'School-2',
+                            studyClassTitle: 'ม.3',
+                            studyClassLevelId: 'highSchool',
+                            studyClassNo: 3
+                        },
+                        status: 'Active'
+                    },
+
+                    teacher: {
+                        id: 'teacher-002',
+                        firstName: 'Fabio',
+                        lastName: 'Cannavaro',
+                        nickName: 'Fabio',
+                        mobileNo: '0865523671',
+                        email: 'teacher-002@gmail.com',
+                        subjects: 'ฟิสิกซ์',
+                        hireTypeId: 'contract',
+                        subjectIds: ["002"],
+                        worktimeTypeId: 'parttime',
+                        salary: 17000,
+                        educationInfo: {
+                            school: {
+                                id: "001",
+                                name: "มหาวิทยาลัยธรรมศาสตร์"
+                            },
+                            faculty: {
+                                id: "001",
+                                name: "วิทยาศาสตร์"
+                            },
+                            major: {
+                                id: "001",
+                                name: "ฟิสิกส์"
+                            }
+                        },
+                        paymentAccount: {
+                            bankName: 'ธนาคารไทยพานิชณ์',
+                            accountNo: '102000187'
+                        },
+                        status: 'Active'
+                    }
+                },
+
+                {
+                    studyDate: "01/10/2564",
+                    startTime: "15:00",
+                    endTime: "17:00",
+                    nextTopic: 'สมบัติของแสง',
+
+                    site: {
+                        id: "site-002",
+                        name: "สาขาเดอะมอลล์ บางกะปิ"
+                    },
+
+                    course: {
+                        id: "course-002",
+                        name: "ฟิสิกส์ ม.2 Flipclass 20 ชม.",
+                        hour: 20,
+                        price: 12000,
+                        classType: {
+                            id: "flip_onsite",
+                            name: "Flipclass สาขา"
+                        }
+                    },
+
+                    subject: {
+                        id: "subject-002",
+                        name: "ฟิสิกส์ ม.2",
+                        educationLevel: {
+                            id: "JuniorHighSchool",
+                            name: "มัธยมศึกษาตอนต้น"
+                        },
+                        classLevel: 2,
+                        classLevelTitle: "ม.2"
+                    },
+
+                    student: {
+                        id: 'student-003',
+                        gender: 'male',
+                        firstName: 'Filippo',
+                        lastName: 'Inzaghi',
+                        nickName: 'Pippo',
+                        mobileNo: '0978801100',
+                        email: 'student-003@gmail.com',
+                        parentInfo: {
+                            relation: 'พ่อ',
+                            name: 'Marko Cicento',
+                            mobileNo: '0899080000',
+                            email: 'parent-003@gmail.com',
+                            expectation: 'Parent-003 Expectation'
+                        },
+                        educationInfo: {
+                            school: 'School-3',
+                            studyClassTitle: 'ม.4',
+                            studyClassLevelId: 'highSchool',
+                            studyClassNo: 4
+                        },
+                        status: 'Active'
+                    },
+
+                    teacher: {
+                        id: 'teacher-003',
+                        firstName: 'Christian',
+                        lastName: 'Vieri',
+                        nickName: 'Bobo',
+                        mobileNo: '0780094561',
+                        email: 'teacher-003@gmail.com',
+                        subjects: 'คณิตศาสตร์',
+                        hireTypeId: 'freelance',
+                        worktimeTypeId: 'parttime',
+                        subjectIds: ["001", "002"],
+                        salary: 17000,
+                        educationInfo: {
+                            school: {
+                                id: "001",
+                                name: "มหาวิทยาลัยธรรมศาสตร์"
+                            },
+                            faculty: {
+                                id: "001",
+                                name: "วิทยาศาสตร์"
+                            },
+                            major: {
+                                id: "001",
+                                name: "ฟิสิกส์"
+                            }
+                        },
+                        paymentAccount: {
+                            bankName: 'ธนาคารไทยพานิชณ์',
+                            accountNo: '102000187'
+                        },
+                        status: 'Active'
+                    }
+                },
+
+                {
+                    studyDate: "02/10/2564",
+                    startTime: "17:00",
+                    endTime: "19:00",
+                    nextTopic: 'จำนวนคละ',
+
+                    site: {
+                        id: "site-002",
+                        name: "สาขาเดอะมอลล์ บางกะปิ"
+                    },
+
+                    course: {
+                        id: "course-003",
+                        name: "คณิตศาสตร์ ป.4 Flipclass 20 ชม.",
+                        hour: 20,
+                        price: 12000,
+                        classType: {
+                            id: "flip_onsite",
+                            name: "Flipclass สาขา"
+                        }
+                    },
+
+                    subject: {
+                        id: "subject-003",
+                        name: "คณิตศาสตร์ ป.4",
+                        educationLevel: {
+                            id: "SeniorPrimarySchool",
+                            name: "ประถมศึกษาตอนปลาย"
+                        },
+                        classLevel: 4,
+                        classLevelTitle: "ป.4"
+                    },
+
+                    student: {
+                        id: 'student-004',
+                        gender: 'male',
+                        firstName: 'Alehandor',
+                        lastName: 'Muarini',
+                        nickName: 'Muari',
+                        mobileNo: '0978801100',
+                        email: 'student-004@gmail.com',
+                        parentInfo: {
+                            relation: 'พ่อ',
+                            name: 'Marko Cicento',
+                            mobileNo: '0899080000',
+                            email: 'parent-003@gmail.com',
+                            expectation: 'Parent-003 Expectation'
+                        },
+                        educationInfo: {
+                            school: 'School-3',
+                            studyClassTitle: 'ม.4',
+                            studyClassLevelId: 'highSchool',
+                            studyClassNo: 4
+                        },
+                        status: 'Active'
+                    },
+
+                    teacher: {
+                        id: 'teacher-004',
+                        firstName: 'Christian',
+                        lastName: 'Siege',
+                        nickName: 'Siege',
+                        mobileNo: '0780094561',
+                        email: 'teacher-004@gmail.com',
+                        subjects: 'คณิตศาสตร์',
+                        hireTypeId: 'freelance',
+                        worktimeTypeId: 'parttime',
+                        subjectIds: ["001", "002"],
+                        salary: 17000,
+                        educationInfo: {
+                            school: {
+                                id: "001",
+                                name: "มหาวิทยาลัยธรรมศาสตร์"
+                            },
+                            faculty: {
+                                id: "001",
+                                name: "วิทยาศาสตร์"
+                            },
+                            major: {
+                                id: "001",
+                                name: "ฟิสิกส์"
+                            }
+                        },
+                        paymentAccount: {
+                            bankName: 'ธนาคารไทยพานิชณ์',
+                            accountNo: '102000187'
+                        },
+                        status: 'Active'
+                    }
+                }
+            ];
+        };
+
+        $scope.swapMode = function() {
+            if($scope.mode === 'list') {
+                $scope.toEntryMode();
+            } else if($scope.mode === 'entry') {
+                $scope.toListMode();
+            }
+        };
+
+        $scope.toListMode = function() {
+            $scope.mode = 'list';
+        };
+
+        $scope.toEntryMode = function() {
+            $scope.mode = 'entry';
+        };
+
+        $scope.requestAddSchedule = function() {
+            console.log("### FishsixStudentScheduleController.requestAddSchedule ###");
+            $scope.toEntryMode();
+            $scope.entryMode = "add";
+            $scope.selectedSchedule = {};
+            $scope.resetForm();
+        };
+
+        $scope.resetForm = function() {
+            setTimeout(() => {
+                $scope.scheduleForm.$submitted = false;
+
+                $scope.scheduleForm.courseId.$setUntouched();
+                $scope.scheduleForm.courseId.$setPristine();
+
+                $scope.$apply();
+            }, 0);
+        };
+    }]);
+</script>

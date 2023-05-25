@@ -1,0 +1,225 @@
+<div class="col-md-12">
+    <div class="card">
+        <!-- card-header -->
+        <div class="card-header">
+            <h5 class="card-title text-orange">สรุปข้อมูลรายเดือนของ Knoware</h5>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
+                        <i class="fas fa-wrench"></i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" role="menu">
+                        <a href="#" class="dropdown-item">Action</a>
+                        <a href="#" class="dropdown-item">Another action</a>
+                        <a href="#" class="dropdown-item">Something else here</a>
+                        <a class="dropdown-divider"></a>
+                        <a href="#" class="dropdown-item">Separated link</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.card-header -->
+
+        <!-- card-body -->
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8">
+                    <p class="text-center">
+                        <strong>01/05/2021 - 31/06/2021</strong>
+                    </p>
+
+                    <div class="chart">
+                        <canvas id="knowareLineChart"></canvas>
+                    </div>
+                    <!-- /.chart-responsive -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-4">
+                    <p class="text-center">
+                        <strong>เป้าหมาย</strong>
+                    </p>
+
+                    <div class="progress-group mt-4">
+                        รวมคนทักทั้งหมด
+                        <span class="float-right"><b>160</b>/200</span>
+                        <div class="progress progress-sm">
+                            <div class="progress-bar bg-primary" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    <!-- /.progress-group -->
+
+                    <div class="progress-group mt-4">
+                        รวมคนทักจริงจัง
+                        <span class="float-right"><b>310</b>/400</span>
+                        <div class="progress progress-sm">
+                            <div class="progress-bar bg-danger" style="width: 75%"></div>
+                        </div>
+                    </div>
+
+                    <!-- /.progress-group -->
+                    <div class="progress-group mt-4">
+                        <span class="progress-text">จำนวนสมัครใหม่ทั้งหมด</span>
+                        <span class="float-right"><b>480</b>/800</span>
+                        <div class="progress progress-sm">
+                            <div class="progress-bar bg-success" style="width: 60%"></div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <canvas id="knowareDoughnutChart"></canvas>
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- ./card-body -->
+
+        <div class="card-footer">
+            <div class="row">
+                <div class="col-sm-3 col-6">
+                    <div class="description-block border-right">
+                        <span class="description-percentage text-success">
+                            <i class="fas fa-caret-up"></i> 17%
+                        </span>
+                        <h5 class="description-header">35,210.43</h5>
+                        <span class="description-text">ยอดขายสะสม</span>
+                    </div>
+                </div>
+
+                <div class="col-sm-3 col-6">
+                    <div class="description-block border-right">
+                        <span class="description-percentage text-warning">
+                            <i class="fas fa-caret-left"></i> 0%
+                        </span>
+                        <h5 class="description-header">10,390.90</h5>
+                        <span class="description-text">ยอดขายใหม่สะสม</span>
+                    </div>
+                </div>
+
+                <div class="col-sm-3 col-6">
+                    <div class="description-block border-right">
+                        <span class="description-percentage text-success">
+                            <i class="fas fa-caret-up"></i> 20%
+                        </span>
+                        <h5 class="description-header">24,813.53</h5>
+                        <span class="description-text">ยอดขายต่อคอร์สสะสม</span>
+                    </div>
+                </div>
+
+                <div class="col-sm-3 col-6">
+                    <div class="description-block">
+                        <span class="description-percentage text-danger">
+                            <i class="fas fa-caret-down"></i> 18%
+                        </span>
+                        <h5 class="description-header">1200</h5>
+                        <span class="description-text">ค่า ADS รวมสะสม</span>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.card-footer -->
+    </div>
+    <!-- /.card -->
+</div>
+
+
+<script>
+    buildKnowareLineChart();
+    buildKnowareDoughnutChart();
+
+    function buildKnowareLineChart()
+    {
+        const labels = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June'
+        ];
+
+        const data = {
+            labels: [
+                'January',
+                'February',
+                'March',
+                'April',
+                'May',
+                'June'
+            ],
+
+            datasets: [
+                {
+                    label: 'คนทักทั้งหมด',
+                    backgroundColor: '#dc3545',
+                    borderColor: '#dc3545',
+                    data: [30, 19, 25, 42, 20, 30, 15],
+                },
+
+                {
+                    label: 'คนทักจริงจัง',
+                    backgroundColor: '#007bff',
+                    borderColor: '#007bff',
+                    data: [20, 39, 51, 12, 30, 37, 10],
+                },
+
+                {
+                    label: 'สมัครใหม่',
+                    backgroundColor: '#28a745',
+                    borderColor: '#28a745',
+                    data: [50, 49, 85, 62, 34, 27, 30],
+                }
+            ]
+        };
+
+        const config = {
+            type: 'line',
+            data,
+            options: {}
+        };
+
+        const knowareLineChart = new Chart(document.getElementById('knowareLineChart'), config);
+    }
+
+    function buildKnowareDoughnutChart()
+    {
+        const data = {
+            labels: [
+                'คนทักทั้งหมด',
+                'คนทักจริงจัง',
+                'สมัครใหม่'
+            ],
+
+            datasets: [
+                {
+                    label: 'My First Dataset',
+                    data: [300, 50, 100],
+                    backgroundColor: [
+                        '#dc3545',
+                        '#007bff',
+                        '#28a745'
+                    ],
+                    hoverOffset: 4
+                }
+            ]
+        };
+
+        const config = {
+            type: 'doughnut',
+            data,
+            options: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+
+        const knowareDoughnutChart = new Chart($("#knowareDoughnutChart"), config);
+    }
+</script>

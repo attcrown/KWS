@@ -1,0 +1,138 @@
+<script th:inline="javascript">
+    function useEntryController($scope, $http)
+    {
+        console.info("### FishsixStudentCourseHistoryController.useEntryController ###");
+
+        $scope.requestSave = useRequestSave($scope, $http);
+
+        $scope.verify = useVerify($scope, $http);
+        $scope.isShowStudentError = useIsShowStudentError($scope, $http);
+        $scope.isShowCourseError = useIsShowCourseError($scope, $http);
+        $scope.isShowSelectedSubjectIdsError = useIsShowSelectedSubjectIdsError($scope, $http);
+        $scope.isShowOrderStatusError = useIsShowOrderStatusError($scope, $http);
+    }
+
+    function useRequestSave($scope, $http)
+    {
+        return () => {
+            console.log("### FishsixStudentCourseHistoryController.requestSave ###");
+            //console.log("$scope.selectedCourseOrder => "+ JSON.stringify($scope.selectedCourseOrder));
+
+            $scope.courseOrderForm.$submitted = true;
+            const { valid, message } = $scope.verify();
+
+            if(valid) {
+                $scope.selectedCourseOrder.selectedSubjectIds = selectedSubjectIdsToString($scope, $http);
+
+                const options = {
+                    title: $scope.entryMode === "add" ? "ยืนยันการบันทึกข้อมูลคอร์ส ?" : "ยืนยันการแก้ไขข้อมูลคอร์ส",
+                    text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                    icon: "warning",
+                    buttons: ["ยกเลิก", "ตกลง"],
+                    dangerMode: true
+                };
+
+                const handler = (confirm) => {
+                    if (confirm) {
+                        //$scope.selectedCourseProfile.course.maxSubject = $scope.selectedCourseProfile.subjectIds.length;
+                        if($scope.entryMode === 'add') {
+                            console.log("### FishsixStudentCourseHistoryController.requestSave.add ###");
+
+                            $scope.createCourseOrder($scope.selectedCourseOrder);
+                        } else if($scope.entryMode === 'edit') {
+                            console.log("### FishsixStudentCourseHistoryController.requestSave.edit ###");
+
+                            $scope.updateCourseOrder($scope.selectedCourseOrder);
+                        }
+                    }
+                };
+
+                swal(options).then(handler);
+            } else {
+                if(message) {
+                    swal("ข้อมูลไม่ครบถ้วน", message, "error");
+                } else {
+                    swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+                }
+                // swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+            }
+        };
+    }
+
+    function useVerify($scope, $http)
+    {
+        return () => {
+
+            let validSelectSubjectIds =  $scope.selectSubjectIds.length >= 1 && $scope.selectSubjectIds.length <= $scope.getCourseMaxSubject($scope.selectedCourseOrder.courseId);
+            return {
+                valid: $scope.courseOrderForm.$valid && validSelectSubjectIds
+            };
+
+        };
+    }
+
+    function selectedSubjectIdsToString($scope, $http) 
+    {
+        let i=0;
+        let selectedSubjectIds; //Value = 'id01,id02'
+        $scope.selectSubjectIds.forEach(selectSubjectId => {
+            if(selectSubjectId){
+                if(i==0){
+                    selectedSubjectIds = selectSubjectId;
+                }
+                if(i!=0 && i!=selectSubjectIds.length){
+                    selectedSubjectIds = selectedSubjectIds + ',' + selectSubjectId;
+                }
+                if(i==selectedSubjectIds.length){
+                    selectedSubjectIds = selectedSubjectIds + selectSubjectId;
+                }
+            }
+            i++;
+            //console.log(selectedSubjectId);
+        });
+        //console.log('selectedSubjectIds => ' + selectedSubjectIds);
+        //$scope.selectedCourseOrder.selectedSubjectIds = selectedSubjectIds;
+        //console.log("$scope.selectedCourseOrder => "+ JSON.stringify($scope.selectedCourseOrder));
+        return selectedSubjectIds;
+    }    
+
+    // ****************************** validate ****************************** //
+    function useIsShowStudentError($scope, $http) 
+    {
+        return () => {
+            return $scope.courseOrderForm.$submitted && $scope.courseOrderForm.studentId.$invalid;
+        };
+    }
+
+    function useIsShowCourseError($scope, $http) 
+    {
+        return () => {
+            selectSubjectIds = [];
+            return $scope.courseOrderForm.$submitted && $scope.courseOrderForm.courseId.$invalid;
+        };
+    }
+
+    function useIsShowSelectedSubjectIdsError($scope, $http) 
+    {
+        return () => {
+            //console.log('$scope.selectSubjectIds => ' + $scope.selectSubjectIds);
+            if($scope.selectSubjectIds == undefined){ //Unselect until 0
+                $scope.selectSubjectIds = [];
+            }
+            //console.log('$scope.selectSubjectIds.length => ' + $scope.selectSubjectIds.length);
+            let validSelectSubjectIds =  $scope.selectSubjectIds.length >= 1 && $scope.selectSubjectIds.length <= $scope.getCourseMaxSubject($scope.selectedCourseOrder.courseId);
+            //console.log('validSelectSubjectIds => ' + validSelectSubjectIds);
+
+            return $scope.courseOrderForm.$submitted && ($scope.courseOrderForm.selectedSubjectIds.$invalid || !validSelectSubjectIds);
+        };
+    }
+
+    function useIsShowOrderStatusError($scope, $http) 
+    {
+        return () => {
+            return $scope.courseOrderForm.$submitted && $scope.courseOrderForm.orderStatusId.$invalid;
+        };
+    }
+
+    // ****************************** validate ****************************** //
+</script>

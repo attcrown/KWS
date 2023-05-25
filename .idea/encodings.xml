@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/kws-console/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/kws-console/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/kws-core/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/kws-core/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/kws-firstjobber-lib/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/kws-firstjobber-lib/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/kws-fishsix-lib/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/kws-fishsix-lib/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/kws-marketpet-lib/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/kws-marketpet-lib/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

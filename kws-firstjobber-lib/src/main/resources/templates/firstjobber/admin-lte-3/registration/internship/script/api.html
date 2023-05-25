@@ -1,0 +1,54 @@
+<script th:inline="javascript">
+    function useApi($scope, $http)
+    {
+        console.log("### InternshipRegistrationController.useApi ###");
+        $scope.registerInternship = useRegisterInternship($scope, $http);
+    }
+
+    function useRegisterInternship($scope, $http)
+    {
+        return () => {
+            console.log("### InternshipRegistrationController.registerInternship ###");
+
+            const options = {
+                method: 'POST',
+                url: `${kws_serverURL}/api/firstjobber/registration/internship`,
+                headers: {
+                    'Content-Type': undefined
+                },
+                data: $scope.buildFormData()
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+                $scope.internshipRegisterId = response.data.body.createdInternshipRegister.id;
+
+                if(response.data.head.status === "Success") {
+                    swal("บันทึกข้อมูลสำเร็จ", "บันทึกข้อมูลการลงทะเบียนเข้าร่วมโครงการ Internship.Co สำเร็จ, โปรดรอผลการตอบรับจากแอดมิน", "success");
+                    setTimeout(() => {
+                        $scope.gotoResultView();
+                        $scope.$apply();
+                    }, 0);
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกข้อมูลการลงทะเบียนได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+                let errorMessage = "ไม่สามารถบันทึกข้อมูลการลงทะเบียนได้ กรุณาติดต่อผู้ดูแลระบบ";
+                if(error.data && error.data.head) {
+                    errorMessage = "ไม่สามารถบันทึกข้อมูลการลงทะเบียนได้ เนื่องจาก" + error.data.head.statusMessage;
+                }
+                swal("เกิดข้อผิดพลาด", errorMessage, "error");
+            };
+
+            const doneHandler = () => {
+                $scope.isLoading = false;
+            };
+
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(doneHandler);
+        };
+    }
+</script>

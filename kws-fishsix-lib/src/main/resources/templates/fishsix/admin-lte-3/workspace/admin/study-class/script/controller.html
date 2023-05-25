@@ -1,0 +1,123 @@
+<div th:replace="__${#execInfo.templateName}__/../api"></div>
+<div th:replace="__${#execInfo.templateName}__/../controller-list"></div>
+<div th:replace="__${#execInfo.templateName}__/../controller-entry"></div>
+
+<script th:inline="javascript">
+    app.controller("FishsixStudyClassController", ["$scope", "$http", ($scope, $http) => {
+        $scope.today = /*[[${today}]]*/ '';
+        $scope.classChannels = /*[[${classChannels}]]*/ [];
+        $scope.classTypes = /*[[${classTypes}]]*/ [];
+        $scope.classLocations = /*[[${classLocations}]]*/ [];
+        $scope.studyClassScheduleTemplates = /*[[${studyClassScheduleTemplates}]]*/ [];
+
+        console.log("today => ", $scope.today);
+        console.log("classChannels => ", $scope.classChannels);
+        console.log("classTypes => ", $scope.classTypes);
+        console.log("classLocations => ", $scope.classLocations);
+        console.log("studyClassScheduleTemplates => ", $scope.studyClassScheduleTemplates);
+
+        $scope.isLoading = false;
+        $scope.criteria = {};
+        $scope.selectedStudyClassScheduleTemplate;
+        $scope.mode = "list"; // ["list", "entry"]
+        $scope.entryMode = ""; // ["add", "edit"]
+
+        $scope.init = function() {
+            console.log("### FishsixStudyClassController.init ###");
+
+            useApi($scope, $http);
+            useListController($scope, $http);
+            useEntryController($scope, $http);
+
+            $scope.criteria = {
+                startDate: $scope.today
+            };
+
+            $('#startDatePicker').datetimepicker({
+                format: 'YYYY-MM-DD'
+            });
+
+            $('#entryStartDatePicker').datetimepicker({
+                format: 'YYYY-MM-DD'
+            });
+        };
+
+        $scope.swapMode = function() {
+            if($scope.mode === 'list') {
+                $scope.toEntryMode();
+            } else if($scope.mode === 'entry') {
+                $scope.toListMode();
+            }
+        };
+
+        $scope.toListMode = function() {
+            $scope.mode = 'list';
+            $scope.selectedStudyClassScheduleTemplate = {};
+        };
+
+        $scope.toEntryMode = function() {
+            $scope.mode = 'entry';
+        };
+
+        $scope.requestAdd = function() {
+            console.log("### FishsixStudyClassController.requestAdd ###");
+            $scope.toEntryMode();
+            $scope.entryMode = "add";
+            $scope.selectedClassScheduleTemplate = {
+                status: "Active"
+            };
+            $scope.resetForm();
+        };
+
+        $scope.resetForm = function() {
+            setTimeout(() => {
+                $scope.studyClassScheduleTemplateForm.$submitted = false;
+
+                $scope.$apply();
+            }, 0);
+        };
+
+        $scope.updateStudyClassScheduleTemplates = function(studyClassScheduleTemplate){    
+            console.log("### FishsixStudyClassController.updateArray ###");
+            for (var i = 0; i < $scope.studyClassScheduleTemplates.length; i++) {
+                if ($scope.studyClassScheduleTemplates[i].id == studyClassScheduleTemplate.id) {
+                    $scope.studyClassScheduleTemplates[i] = studyClassScheduleTemplate; 
+                    break;
+                }
+            }
+        }
+
+        $scope.getClassChannelName = function(classChannelId) {
+            let classChannel = $scope.classChannels.find(e => e.id === classChannelId);
+            if(classChannel) {
+                return classChannel.name;
+            }
+        };
+
+        $scope.getClassTypeName = function(classTypeId) {
+            let classType = $scope.classTypes.find(e => e.id === classTypeId);
+            if(classType) {
+                return classType.name;
+            }
+        };
+
+        $scope.getClassLocationName = function(classLocationId) {
+            let classLocation = $scope.classLocations.find(e => e.id === classLocationId);
+            if(classLocation) {
+                return classLocation.locationName;
+            }
+        };
+
+        $scope.getThaiDay = function(day) {
+            switch(day) {
+                case 'MONDAY': return "จันทร์";
+                case 'TUESDAY': return "อังคาร";
+                case 'WEDNESDAY': return "พุธ";
+                case 'THURSDAY': return "พฤหัสบดี";
+                case 'FRIDAY': return "ศุกร์";
+                case 'SATURDAY': return "เสาร์";
+                case 'SUNDAY': return "อาทิตย์";
+            }
+        };
+    }]);
+</script>

@@ -1,0 +1,70 @@
+<div class="card">
+    <!-- card-header -->
+    <div class="card-header">
+        <h3 class="card-title text-maroon">ผลการค้นหา</h3>
+    </div>
+    <!-- /.card-header -->
+
+    <!-- card-body -->
+    <div class="card-body table-responsive p-0">
+        <table class="table table-hover text-nowrap">
+            <thead>
+                <tr>
+                    <th>ชื่อ-สกุล</th>
+                    <th>ชื่อเล่น</th>
+                    <th>โรงเรียน</th>
+                    <th>ระดับชั้น</th>
+                    <th>เบอร์มือถือ</th>
+                    <th class="text-center" style="width: 64px;">Action</th>
+                </tr>
+            </thead>
+
+            <tbody ng-if="studentProfiles.length > 0">
+                <tr ng-repeat="studentProfile in studentProfiles  | orderBy: 'name'">
+                    <td class="align-middle">{{ studentProfile.student.firstName + ' ' + studentProfile.student.lastName }}</td>
+                    <td class="align-middle">{{ studentProfile.student.nickName }}</td>
+                    <td class="align-middle">{{ studentProfile.student.educationSchool }}</td>
+                    <td class="align-middle">{{ studentProfile.student.educationLevel }}</td>
+                    <td class="align-middle">{{ studentProfile.student.mobileNo }}</td>
+                    <td class="text-center align-middle">
+                        <button class="btn btn-sm btn-outline-warning" ng-click="requestEditStudent(studentProfile)">
+                            <i class="fa fa-edit kws-table-action-icon"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger" ng-click="requestDeleteStudent(studentProfile)">
+                            <i class="fa fa-trash kws-table-action-icon"></i>
+                        </button>
+                        <!-- <a href="javascript:void(0)" ng-click="requestEditStudent(studentProfile)">
+                            <i class="fa fa-edit text-warning kws-table-action-icon"></i>
+                        </a>
+                        <a href="javascript:void(0)" ng-click="requestDeleteStudent(studentProfile)">
+                            <i class="fa fa-trash text-danger kws-table-action-icon"></i>
+                        </a> -->
+                    </td>
+                </tr>
+            </tbody>
+
+            <tfoot ng-if="studentProfiles.length == 0">
+                <tr>
+                    <td class="text-center text-orange" colspan="6">--- ไม่มีข้อมูล ---</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <!-- /.card-body -->
+
+    <!-- card-footer -->
+    <div class="card-footer clearfix" ng-show="studentProfiles.length > 0">
+        <ul class="pagination pagination-sm m-0 float-right">
+            <li class="page-item">
+                <a class="page-link" href="javascript:void(0)" ng-click="gotoPageNo(1)">&laquo;</a>
+            </li>
+            <li class="page-item" ng-repeat="pageNo in getPageNos() track by $index">
+                <a class="page-link" ng-class="{'text-bold': pageNo == paging.pageNo}" href="javascript:void(0)" ng-click="gotoPageNo(pageNo)">{{ pageNo }}</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="javascript:void(0)" ng-click="gotoPageNo(paging.totalPage)">&raquo;</a>
+            </li>
+        </ul>
+    </div>
+    <!-- /.card-footer -->
+</div>

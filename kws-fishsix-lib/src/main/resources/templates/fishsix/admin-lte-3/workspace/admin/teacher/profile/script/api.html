@@ -1,0 +1,385 @@
+<script th:inline="javascript">
+    function useApi($scope, $http)
+    {
+        $scope.search = useSearch($scope, $http);
+        $scope.createTeacher = useCreateTeacher($scope, $http);
+        $scope.updateTeacher = useUpdateTeacher($scope, $http);
+        $scope.removeTeacher = useRemoveTeacher($scope, $http);
+        $scope.uploadIdCardFile = useUploadIdCardFile($scope, $http);
+    }
+
+    function useSearch($scope, $http)
+    {
+        return () => {
+            console.log("### FishsixTeacherProfileController.search ###");
+            console.log("criteria => " + JSON.stringify($scope.criteria));
+
+            $scope.teacherProfiles = [];
+
+            const requestMessage = {
+                criteria: $scope.criteria,
+
+                paging: {
+                    pageNo: $scope.paging.pageNo,
+                    pageSize: $scope.paging.pageSize
+                },
+
+                sortBy: [
+                    {
+                        field: "name",
+                        order: "asc"
+                    }
+                ]
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/teacher/fetch`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    $scope.teacherProfiles = response.data.body.teacherProfiles;
+                    console.log("$scope.teacherProfiles => ", $scope.teacherProfiles);
+                    if($scope.teacherProfiles && $scope.teacherProfiles.length > 0) {
+                        for(let i=0; i<$scope.teacherProfiles.length; i++) {
+                            $scope.setupSubjectIds($scope.teacherProfiles[i]);
+                        }
+                    }
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถค้นหาข้อมูลครูได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถค้นหาข้อมูลครูได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).
+            then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+
+    function useCreateTeacher($scope, $http)
+    {
+        return (teacherProfile) => {
+            console.log("### FishsixTeacherProfileController.useCreateTeacher ###");
+            console.log("teacherProfile => ", teacherProfile);
+
+            const requestMessage = {
+                teacherProfile
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/teacher/create`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    const createdTeacherProfile = response.data.body.createdTeacherProfile;
+                    $scope.setupSubjectIds(createdTeacherProfile);
+                    console.log("createdTeacherProfile => ", createdTeacherProfile);
+
+                    $scope.teacherProfiles.push(createdTeacherProfile);
+                    $scope.toListMode();
+                    swal("บันทึกข้อมูลสำเร็จ", "บันทึกข้อมูลครูสำเร็จ", "success");
+
+                    if($scope.attachment.idCardFile) {
+                        $scope.uploadIdCardFile(createdTeacherProfile.teacher.id, $scope.attachment.idCardFile);
+                    }
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกข้อมูลครูได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถบันทึกข้อมูลครูได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+
+    function useUpdateTeacher($scope, $http)
+    {
+        return (teacherProfile) => {
+            console.log("### FishsixTeacherProfileController.updateTeacher ###");
+            console.log("teacherProfile => ", teacherProfile);
+
+            const requestMessage = {
+                teacherProfile
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/teacher/update`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    const updatedTeacherProfile = response.data.body.updatedTeacherProfile;
+                    $scope.setupSubjectIds(updatedTeacherProfile);
+                    console.log("updatedTeacherProfile => ", updatedTeacherProfile);
+
+                    $scope.teacherProfiles = $scope.teacherProfiles.filter(e => e.teacher.id !== updatedTeacherProfile.teacher.id);
+                    $scope.teacherProfiles.push(updatedTeacherProfile);
+                    $scope.toListMode();
+                    swal("บันทึกข้อมูลสำเร็จ", "บันทึกข้อมูลครูสำเร็จ", "success");
+
+                    if($scope.attachment.idCardFile) {
+                        $scope.uploadIdCardFile(updatedTeacherProfile.teacher.id, $scope.attachment.idCardFile);
+                    }
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกข้อมูลครูได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถบันทึกข้อมูลครูได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+
+    function useRemoveTeacher($scope, $http)
+    {
+        return (teacherProfile) => {
+            console.log("### FishsixTeacherProfileController.useRemoveTeacher ###");
+            console.log("teacherProfile => ", teacherProfile);
+
+            const requestMessage = {
+                teacherId: teacherProfile.teacher.id
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/teacher/remove`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    $scope.teacherProfiles = $scope.teacherProfiles.filter(e => e.teacher.id !== teacherProfile.teacher.id);
+                    swal("ลบข้อมูลสำเร็จ", "ลบข้อมูลครูสำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถลบข้อมูลครูได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถลบข้อมูลครูได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+
+    function useUploadIdCardFile($scope, $http)
+    {
+        return (teacherId, idCardFile) => {
+            console.log("### FishsixTeacherProfileController.useUploadIdCardFile ###");
+            console.log("teacherId => ", teacherId);
+            console.log("idCardFile.name => ", idCardFile.name);
+
+            const formData = new FormData();
+            formData.append("teacherId", teacherId);
+            formData.append("idcardFile", idCardFile);
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/fishsix/teacher/idcard/upload`,
+                headers: {
+                    'Content-Type': undefined
+                },
+                data: formData
+            };
+
+            const successHandler = (response) => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    const teacherProfile = response.data.body.teacherProfile;
+                    $scope.setupSubjectIds(teacherProfile);
+                    console.log("teacherProfile => ", teacherProfile);
+
+                    if(teacherProfile && teacherProfile.attachment && teacherProfile.attachment.idCardFileURL) {
+                        teacherProfile.attachment.idCardFileURL += "?v="+new Date().toISOString();
+                    }
+
+                    $scope.teacherProfiles = $scope.teacherProfiles.filter(e => e.teacher.id !== teacherProfile.teacher.id);
+                    $scope.teacherProfiles.push(teacherProfile);
+                    // $scope.toListMode();
+                    // swal("บันทึกข้อมูลสำเร็จ", "บันทึกข้อมูลครูสำเร็จ", "success");
+                } else {
+                    // swal("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกข้อมูลครูได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            };
+
+            const errorHandler = (error) => {
+                console.error("error => ", error);
+
+                // if(error.status == 401) {
+                //     if(error.data && error.data.head) {
+                //         const statusCode = error.data.head.statusCode;
+                //         if(statusCode == "401001" || statusCode == "401002") {
+                //             swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                //             then(value => location.reload());
+                //         } else if(statusCode == "401003") {
+                //             swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                //         } else if(statusCode == "402001") {
+                //             swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                //         } else {
+                //             swal("Access Denied", error.data.head.statusMessage, "error");
+                //         }
+                //     }
+                // } else {
+                //     let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                //     if(error.data && error.data.head) {
+                //         errorMessage = "ไม่สามารถบันทึกข้อมูลครูได้ เนื่องจาก" + error.data.head.statusMessage;
+                //     }
+                //     swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                // }
+            };
+
+            const finallyHandler = () => {
+                $scope.isLoading = false;
+            };
+            
+            $scope.isLoading = true;
+            $http(options).then(successHandler).catch(errorHandler).finally(finallyHandler);
+        };
+    }
+</script>

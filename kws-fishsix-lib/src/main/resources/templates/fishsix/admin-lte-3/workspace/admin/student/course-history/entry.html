@@ -1,0 +1,306 @@
+<!-- <h1>Student | Course History | Entry</h1> -->
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title text-maroon">เพิ่ม/แก้ไขข้อมูลคอร์ส</h3>
+    </div>
+
+    <div class="card-body p-2">
+        
+        <form name="courseOrderForm" class="form row" novalidate>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowStudentError()">นักเรียน</span>
+                        <span class="text-danger" ng-show="isShowStudentError()">กรุณาเลือกนักเรียน</span>
+                    </label>
+                    <select name="studentId" 
+                            class="form-control" 
+                            style="width: 100%;"
+                            ng-class="{'is-invalid': isShowStudentError()}" 
+                            ng-model="selectedCourseOrder.studentId" 
+                            ng-disabled="entryMode === 'edit'" 
+                            required>
+                        <option value="" selected disabled>--- กรุณาเลือกนักเรียน ---</option>
+                        <option ng-repeat="student in students | orderBy: 'seqNo'" ng-value="student.id">
+                            {{ student.firstName }} {{ student.lastName }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowCourseError()">คอร์ส</span>
+                        <span class="text-danger" ng-show="isShowCourseError()">กรุณาเลือกคอร์ส</span>
+                    </label>
+                    <select name="courseId" 
+                            class="form-control" 
+                            style="width: 100%;" 
+                            ng-class="{'is-invalid': isShowCourseError()}"
+                            ng-model="selectedCourseOrder.courseId" 
+                            ng-disabled="entryMode === 'edit'" 
+                            required>
+                        <option value="" selected disabled>--- กรุณาเลือกคอร์ส ---</option>
+                        <option ng-repeat="courseProfile in courseProfiles" ng-value="courseProfile.course.id">
+                            {{ courseProfile.course.name }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowSelectedSubjectIdsError()">วิชาที่เลือกเรียน (เลือกเรียนได้สูงสุด {{ getCourseMaxSubject(selectedCourseOrder.courseId) }} วิชา)</span>
+                        <span class="text-danger" ng-show="isShowSelectedSubjectIdsError()">กรุณาเลือกวิชาที่เลือกเรียน (เลือกเรียนได้สูงสุด {{ getCourseMaxSubject(selectedCourseOrder.courseId) }} วิชา)</span>
+                    </label>
+                    <select name="selectedSubjectIds" 
+                            class="form-control select" 
+                            style="width: 100%;" 
+                            multiple
+                            ng-disabled="!selectedCourseOrder.courseId || entryMode === 'edit'"
+                            ng-class="{'is-invalid': isShowSelectedSubjectIdsError()}" 
+                            ng-model="selectSubjectIds" 
+                            required>
+                        <option ng-repeat="subject in getCourseProfile(selectedCourseOrder.courseId).subjects" ng-value="subject.id">
+                            {{ subject.name }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>เซลล์</span>
+                    </label>
+                    <select name="salesmanId" class="form-control" style="width: 100%;" ng-model="selectedCourseOrder.salesmanId" ng-disabled="entryMode === 'edit'">
+                        <option value="" selected>--- กรุณาเลือกเซลล์ ---</option>
+                        <option ng-repeat="salesman in salesmans" ng-value="salesman.id">
+                            {{ salesman.firstName}} {{ salesman.lastName}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>ต้องการเรียนกับครู</span>
+                    </label>
+                    <select name="reserveTeacherId" 
+                            class="form-control" 
+                            style="width: 100%;" 
+                            ng-model="selectedCourseOrder.reserveTeacherId"
+                            ng-disabled="entryMode === 'edit'">
+                        <option value="" selected>--- กรุณาเลือกครูผู้สอน ---</option>
+                        <option ng-repeat="teacher in teachers" ng-value="teacher.id">
+                            {{ teacher.firstName }} {{ teacher.lastName }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowOrderStatusError()">สถานะการสั่งซื้อ</span>
+                    </label>
+                    <select name="orderStatusId" 
+                            class="form-control" 
+                            style="width: 100%;" 
+                            ng-class="{'is-invalid': isShowOrderStatusError()}"
+                            ng-model="selectedCourseOrder.orderStatusId" 
+                            ng-disabled="entryMode === 'edit'" 
+                            required>
+                        <!-- <option value="" selected disabled>--- กรุณาเลือกสถานะการสั่งซื้อ ---</option> -->
+                        <option ng-repeat="orderStatuse in orderStatuses" ng-value="orderStatuse.id">
+                            {{ orderStatuse.name }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>แนบสลิปการโอนเงิน</span>
+                    </label>
+                    <!-- <textarea rows="3" class="form-control" placeholder="แนบสลิปการโอนเงิน" ng-model="selectedCourseOrder.paymentSlipBase64"></textarea> -->
+                    <div class="input-group">
+                        <div class="custom-file" ng-show="entryMode === 'add'">
+                            <input id="paymentSlipInput" type="file" class="custom-file-input" ng-model="selectedCourseOrder.paymentSlipFile">
+                            <label ng-show="! selectedCourseOrder.paymentSlipBase64" class="custom-file-label">--- แนบสลิปการโอนเงิน ---</label>
+                            <label ng-show="selectedCourseOrder.paymentSlipFile" class="custom-file-label">{{ selectedCourseOrder.paymentSlipFile.name }}</label>
+                        </div>
+                        <div class="input-group-append">
+                            <button ng-show="selectedCourseOrder.paymentSlipFile" class="btn btn-danger" ng-click="removePaymentSlipFile()">
+                                <i class="fas fa-trash"></i> ลบ
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mt-2" ng-if="selectedCourseOrder.paymentSlipBase64">
+                        <img style="width: 100%;" ng-src="{{ selectedCourseOrder.paymentSlipBase64 }}" alt="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>แนบใบเสร็จ</span>
+                    </label>
+                    <!-- <textarea rows="3" class="form-control" placeholder="แนบใบเสร็จ" ng-model="selectedCourseOrder.receiptBase64"></textarea> -->
+                    <div class="input-group" ng-show="entryMode === 'add'">
+                        <div class="custom-file">
+                            <input id="receiptInput" type="file" class="custom-file-input" ng-model="selectedCourseOrder.receiptFile">
+                            <label ng-show="! selectedCourseOrder.receiptBase64" class="custom-file-label">--- แนบสลิปการโอนเงิน ---</label>
+                            <label ng-show="selectedCourseOrder.receiptFile" class="custom-file-label">{{ selectedCourseOrder.receiptFile.name }}</label>
+                        </div>
+                        <div class="input-group-append">
+                            <button ng-show="selectedCourseOrder.receiptFile" class="btn btn-danger" ng-click="removeReceiptFile()">
+                                <i class="fas fa-trash"></i> ลบ
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mt-2" ng-if="selectedCourseOrder.receiptBase64">
+                        <img style="width: 100%;" ng-src="{{ selectedCourseOrder.receiptBase64 }}" alt="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>หมายเหตุ การสั่งซื้อ</span>
+                    </label>
+                    <textarea rows="3" class="form-control" placeholder="ระบุหมายเหตุ การสั่งซื้อ" ng-model="selectedCourseOrder.orderedRemark" ng-disabled="entryMode === 'edit'"></textarea>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>หมายเหตุ การชำระเงิน</span>
+                    </label>
+                    <textarea rows="3" class="form-control" placeholder="ระบุหมายเหตุ การชำระเงิน" ng-model="selectedCourseOrder.paymentRemark" ng-disabled="entryMode === 'edit'"></textarea>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>โอนเข้าบัญชี</span>
+                    </label>
+                    <input  name="paymentToBankAccount" 
+                            type="text" 
+                            class="form-control" 
+                            placeholder="ระบุเลขบัญชี" 
+                            ng-model="selectedCourseOrder.paymentToBankAccount"
+                            ng-disabled="entryMode === 'edit'">
+                </div>
+            </div>
+
+        </form>
+
+        <hr>
+
+        <!-- course-quota -->
+        <div class="card card-navy" ng-if="entryMode === 'edit' && selectedCourseOrder.quotaInfo && selectedCourseOrder.quotaInfo">
+            <div class="card-header">
+                <h3 class="card-title">โควต้าชั่วโมงเรียน</h3>
+            </div>
+        
+            <div class="card-body p-2">
+
+                <h6 class="text-center my-4">
+                    โควต้าชั่วโมงเรียนได้ใช้ตั้งแต่ 
+                    <span class="text-muted">{{ selectedCourseOrder.quotaInfo.studentCourseQuota.activatedAt }}</span> 
+                    ถึง 
+                    <span class="text-muted">{{ selectedCourseOrder.quotaInfo.studentCourseQuota.expiredAt }}</span>
+                </h6>
+
+                <div class="row">
+                    <div class="col-4">
+                        <div class="info-box mb-3">
+                            <span class="info-box-icon bg-indigo elevation-1">
+                                <i class="far fa-calendar-alt"></i>
+                            </span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">ชั่วโมงเรียนทั้งหมด</span>
+                                <span class="info-box-number">{{ selectedCourseOrder.quotaInfo.totalHour }} ชั่วโมง</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="info-box mb-3">
+                            <span class="info-box-icon bg-info elevation-1">
+                                <i class="far fa-calendar-check"></i>
+                            </span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">ชั่วโมงที่เรียนไปแล้ว</span>
+                                <span class="info-box-number">{{ selectedCourseOrder.quotaInfo.studiedHour }} ชั่วโมง</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="info-box mb-3">
+                            <span class="info-box-icon bg-warning elevation-1">
+                                <i class="far fa-calendar-plus"></i>
+                            </span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">ชั่วโมงที่จองเรียนล่วงหน้า</span>
+                                <span class="info-box-number">{{ selectedCourseOrder.quotaInfo.reservedHour }} ชั่วโมง</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="info-box mb-3">
+                            <span class="info-box-icon bg-danger elevation-1">
+                                <i class="far fa-calendar-times"></i>
+                            </span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">ชั่วโมงลาฉุกเฉิน</span>
+                                <span class="info-box-number">{{ selectedCourseOrder.quotaInfo.leavedHour }} ชั่วโมง</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="info-box mb-3">
+                            <span class="info-box-icon bg-success elevation-1">
+                                <i class="far fa-calendar"></i>
+                            </span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">ชั่วโมงที่เหลือ</span>
+                                <span class="info-box-number">{{ selectedCourseOrder.quotaInfo.availableHour }} ชั่วโมง</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- course-quota -->
+    </div>
+
+    <div class="card-footer">
+        <div class="text-right">
+            <button class="btn btn-outline-danger" ng-click="toListMode()">
+                <i class="fa fa-caret-left"></i> กลับ
+            </button>
+            <button ng-if="entryMode === 'add'" class="btn btn-outline-primary" ng-click="requestSave()">
+                <i class="fa fa-save"></i> บันทึก
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="KWS Console" name="keywords">
+        <meta content="KWS Console Web Application" name="description">
+        
+        <title>KWS | Console</title>
+        
+	    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400&display=swap">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.13.1/css/OverlayScrollbars.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+        <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+	    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.0.5/dist/css/adminlte.min.css">
+	    <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+
+	    <script	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.8.2/angular-sanitize.min.js"></script>
+    	<script	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.13.1/js/jquery.overlayScrollbars.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.full.min.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.0.5/dist/js/adminlte.min.js"></script>
+
+        <script th:inline="javascript">
+            const kws_webEnv = /*[[${kws_webEnv}]]*/ '';
+            const kws_contextPath = /*[[${kws_contextPath}]]*/ '';
+            const kws_requestURI = /*[[${kws_requestURI}]]*/ '';
+            const kws_userProfile = /*[[${kws_userProfile}]]*/ undefined;
+            const kws_currentGrantedAuthority = /*[[${kws_currentGrantedAuthority}]]*/ undefined;
+            const kws_pageTitle = /*[[${kws_pageTitle}]]*/ '';
+            const kws_activeMenus = /*[[${kws_activeMenus}]]*/ [];
+            const kws_breadcrumbs = /*[[${kws_breadcrumbs}]]*/ [];
+            const kws_menus = /*[[${kws_menus}]]*/ [];
+
+            console.log("kws_userProfile => ", kws_userProfile);
+            console.log("kws_currentGrantedAuthority => ", kws_currentGrantedAuthority);
+            console.log("kws_activeMenus => ", kws_activeMenus);
+            console.log("kws_breadcrumbs => ", kws_breadcrumbs);
+            console.log("kws_menus => ", kws_menus);
+            
+            const app = angular.module("app", ["ngSanitize"]);
+        </script>
+    </head>
+
+    <body ng-app="app" class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed accent-indigo text-sm">
+    	<div class="wrapper">
+            <div th:replace="${kws_fragmentNavbarFile}"></div>
+            <div th:replace="${kws_fragmentSidebarFile}"></div>
+
+			<div class="content-wrapper">
+                <div th:replace="${kws_fragmentWorkspaceHeaderFile}"></div>
+				<section class="content">
+					<div class="container-fluid">
+                        <div th:replace="${kws_viewFile}"></div>
+                    </div>
+				</section>
+			</div>
+	
+            <div th:replace="${kws_fragmentFooterFile}"></div>
+		</div>
+
+        <script>
+            // OverlayScrollbars(document.querySelectorAll("body"), { });
+        </script>
+	</body>
+</html>

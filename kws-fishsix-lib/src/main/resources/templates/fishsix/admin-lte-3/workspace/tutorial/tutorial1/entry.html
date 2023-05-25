@@ -1,0 +1,73 @@
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title text-maroon">เพิ่ม/แก้ไขข้อมูลคอร์ส</h3>
+    </div>
+
+    <div class="card-body p-2">
+        
+        <form name="employeeForm" class="form row" novalidate>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowIdError()">EMP ID</span>
+                        <span class="text-danger" ng-show="isShowIdError()">Type Emp Id</span>
+                    </label>
+                    <input  name="id" 
+                            type="text" 
+                            class="form-control" 
+                            ng-class="{'is-invalid': isShowIdError()}" 
+                            placeholder="Type Emp Id" 
+                            ng-model="selectedEmployee.id" 
+                            required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowNameError()">EMP NAME</span>
+                        <span class="text-danger" ng-show="isShowNameError()">Type Emp Name</span>
+                    </label>
+                    <input  name="name" 
+                            type="text" 
+                            class="form-control" 
+                            ng-class="{'is-invalid': isShowNameError()}" 
+                            placeholder="Type Emp Name" 
+                            ng-model="selectedEmployee.name" 
+                            required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowSurnameError()">EMP SURNAME</span>
+                        <span class="text-danger" ng-show="isShowSurnameError()">Type Emp Surname</span>
+                    </label>
+                    <input  name="surname" 
+                            type="text" 
+                            class="form-control" 
+                            ng-class="{'is-invalid': isShowSurnameError()}" 
+                            placeholder="Type Emp Surname" 
+                            ng-model="selectedEmployee.surname" 
+                            required>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    <div class="card-footer">
+        <div class="text-right">
+            <button class="btn btn-outline-danger" ng-click="toListMode()">
+                <i class="fa fa-caret-left"></i> กลับ
+            </button>
+            <button class="btn btn-outline-primary" ng-click="requestSave()">
+                <i class="fa fa-save"></i> บันทึก
+            </button>
+        </div>
+    </div>
+</div>

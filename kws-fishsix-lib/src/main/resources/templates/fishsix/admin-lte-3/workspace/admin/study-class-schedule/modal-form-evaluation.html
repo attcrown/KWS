@@ -1,0 +1,174 @@
+<div class="modal fade" id="evaluation-form-modal" tabindex="-1" role="dialog" aria-labelledby="evaluation-form-modal-label" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="evaluation-form-modal-label">พัฒนาการ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form name="evaluateStudyClassForm" novalidate>
+
+                    <!-- ----------------- แสดงข้อมูล ---------------- -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>
+                                    <span>ชื่อผู้สอน: </span>
+                                </label>
+                                <span>{{ getTeacherByTeacherId(selectedStudyClassSchedule.teacherId).firstName }} {{ getTeacherByTeacherId(selectedStudyClassSchedule.teacherId).lastName }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>
+                                    <span>วิชาสอน: </span>
+                                </label>
+                                <span>{{ getSubjectProfile(selectedStudyClassSchedule.subjectId).name }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>
+                                    <span>ชื่อนักเรียน: </span>
+                                </label>
+                                <span>{{ getStudentFullName(selectedStudyClassSchedule.studentId) }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>
+                                    <span>เรื่องที่เรียน: </span>
+                                </label>
+                                <span>{{ getChapterInSubject(selectedStudyClassSchedule.subjectId, selectedStudyClassSchedule.subjectChapterId).name }}</span>
+                                <!-- <span>เรื่องที่เรียน</span> -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="row d-none">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>
+                                    <span>ไม่มี: </span>
+                                </label>
+                                <span>ไม่มี</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>
+                                    <span>เรื่องถัดไป: </span>
+                                </label>
+                                <span>เรื่องถัดไป</span>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <div class="row">
+                        <div class="col">
+                            <hr>
+                        </div>
+                    </div>
+
+                    <!-- ----------------- แสดงข้อมูล ---------------- -->
+
+
+                    <div class="row">
+                        <!-- Left -->
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-12" ng-repeat="evaluationDetail in getEvaluateDetailsTypeText() | orderBy: 'seqNo'">
+                                    <div class="form-group">
+                                        <label>
+                                            <span class="text-danger">*</span>
+                                            <span>{{ evaluationDetail.evaluationFactor.title }}</span>
+                                        </label>
+                                        <textarea name="{{ evaluationDetail.evaluationFactorId }}" rows="3" class="form-control"
+                                                ng-model="evaluationDetail.evaluationValue" 
+                                                required>
+                                        </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Left -->
+
+                        <!-- Right -->
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-12" ng-repeat="evaluationDetail in getEvaluateDetailsTypeScore() | orderBy: 'seqNo'">
+                                    <div class="form-group">
+                                        <label>
+                                            <span class="text-danger">*</span>
+                                            <span>{{ evaluationDetail.evaluationFactor.title }}</span>
+                                            <br>
+                                            <span class="text-muted">(คะแนน {{ evaluationDetail.evaluationFactor.minScore }} - {{ evaluationDetail.evaluationFactor.maxScore }})</span>
+                                        </label>
+                                        <input  name="{{ evaluationDetail.evaluationFactorId }}" type="number" class="form-control"
+                                                ng-model="evaluationDetail.evaluationValue"
+                                                min="{{ evaluationDetail.evaluationFactor.minScore }}"
+                                                max="{{ evaluationDetail.evaluationFactor.maxScore }}"
+                                                required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Right -->
+                    </div>
+
+                    <div style="overflow: auto;" class="d-none">
+                        {{ studyClassEvaluate }}
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <hr>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>
+                                    <span>สถานะพัฒนาการ</span>
+                                </label>
+                                <select name="evaluateStatus" class="form-control" style="width: 100%;"
+                                        ng-model="studyClassEvaluate.studyClassEvaluationProfile.studyClassEvaluation.evaluateStatus" 
+                                        required>
+                                    <!-- <option value="" selected disabled>--- เลือกนักเรียนเลือกครู ---</option> -->
+                                    <option ng-repeat="evaluateStatus in evaluateStatuses" ng-value="evaluateStatus">
+                                        {{ evaluateStatus }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>
+                                    <span>Comment / อื่น ๆ</span>
+                                </label>
+                                <textarea name="comment" rows="3" class="form-control" placeholder="Comment / อื่น ๆ" 
+                                        ng-model="studyClassEvaluate.studyClassEvaluationProfile.studyClassEvaluation.comment">
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline-danger" data-dismiss="modal">
+                    <i class="fa fa-times"></i> Close
+                </button>
+                <button class="btn btn-outline-primary" ng-click="requestSaveEvaluateStudyClass()">
+                    <i class="fa fa-save"></i> บันทึก
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

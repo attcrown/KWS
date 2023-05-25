@@ -1,0 +1,106 @@
+<div th:replace="fishsix/admin-lte-3/workspace/admin/student/new-registration/script/api"></div>
+<div th:replace="fishsix/admin-lte-3/workspace/admin/student/new-registration/script/list-controller"></div>
+<div th:replace="fishsix/admin-lte-3/workspace/admin/student/new-registration/script/entry-controller"></div>
+
+<script th:inline="javascript">
+    app.controller("FishsixStudentNewRegistrationController", ["$scope", "$http", ($scope, $http) => {
+        $scope.isLoading = false;
+        $scope.studentRegisters = /*[[${studentRegisters}]]*/ [];
+        $scope.selectedStudentRegister;
+        $scope.mode = "list"; // ["list", "entry"]
+
+        $scope.init = function() {
+            console.log("### FishsixStudentNewRegistrationController.init ###");
+
+            console.log("studentRegisters => ", $scope.studentRegisters);
+
+            useApi($scope, $http);
+            useListController($scope, $http);
+            useEntryController($scope, $http);
+
+            $('.select2').select2({ theme: 'bootstrap4' });
+
+            $scope.educationLevels = ["ป.1", "ป.2", "ป.3", "ป.4", "ป.5", "ป.6", "ม.1", "ม.2", "ม.3", "ม.4", "ม.5", "ม.6"];
+        };
+
+        $scope.swapMode = function() {
+            if($scope.mode === 'list') {
+                $scope.toEntryMode();
+            } else if($scope.mode === 'entry') {
+                $scope.toListMode();
+            }
+        };
+
+        $scope.toListMode = function() {
+            $scope.mode = 'list';
+        };
+
+        $scope.toEntryMode = function() {
+            $scope.mode = 'entry';
+        };
+
+        $scope.resetForm = function() {
+            setTimeout(() => {
+                // ****************************** userForm ****************************** //
+                $scope.userForm.$submitted = false;
+
+                $scope.userForm.email.$setUntouched();
+                $scope.userForm.email.$setPristine();
+
+                $scope.userForm.password.$setUntouched();
+                $scope.userForm.password.$setPristine();
+                // ****************************** userForm ****************************** //
+
+                // ****************************** studentForm ****************************** //
+                $scope.studentForm.$submitted = false;
+
+                $scope.studentForm.firstName.$setUntouched();
+                $scope.studentForm.lastName.$setPristine();
+
+                $scope.studentForm.lastName.$setUntouched();
+                $scope.studentForm.lastName.$setPristine();
+
+                $scope.studentForm.nickName.$setUntouched();
+                $scope.studentForm.nickName.$setPristine();
+
+                $scope.studentForm.gender.$setUntouched();
+                $scope.studentForm.gender.$setPristine();
+
+                $scope.studentForm.mobileNo.$setUntouched();
+                $scope.studentForm.mobileNo.$setPristine();
+
+                $scope.studentForm.contactAddress.$setUntouched();
+                $scope.studentForm.contactAddress.$setPristine();
+                // ****************************** studentForm ****************************** //
+
+                // ****************************** parentForm ****************************** //
+                $scope.parentForm.$submitted = false;
+
+                $scope.parentForm.name.$setUntouched();
+                $scope.parentForm.name.$setPristine();
+
+                $scope.parentForm.mobileNo.$setUntouched();
+                $scope.parentForm.mobileNo.$setPristine();
+
+                $scope.parentForm.job.$setUntouched();
+                $scope.parentForm.job.$setPristine();
+
+                $scope.parentForm.expectation.$setUntouched();
+                $scope.parentForm.expectation.$setPristine();
+                // ****************************** parentForm ****************************** //
+
+                // ****************************** educationForm ****************************** //
+                $scope.educationForm.$submitted = false;
+
+                $scope.educationForm.school.$setUntouched();
+                $scope.educationForm.school.$setPristine();
+
+                $scope.educationForm.level.$setUntouched();
+                $scope.educationForm.level.$setPristine();
+                // ****************************** educationForm ****************************** //
+
+                $scope.$apply();
+            }, 0);
+        };
+    }]);
+</script>

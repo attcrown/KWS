@@ -1,0 +1,94 @@
+<!-- <div th:replace="fishsix/admin-lte-3/workspace/tutorial/tutorial1/script/api"></div> -->
+<div th:replace="fishsix/admin-lte-3/workspace/tutorial/tutorial1/script/list-controller"></div>
+<div th:replace="fishsix/admin-lte-3/workspace/tutorial/tutorial1/script/entry-controller"></div>
+
+<script th:inline="javascript">
+    app.controller("FishsixTutorial1Controller", ["$scope", "$http", ($scope, $http) => {
+        // $scope.subjects = /*[[${subjects}]]*/ [];
+
+        $scope.isLoading = false;
+        $scope.criteria = {};
+        $scope.paging = {};
+        $scope.employees = []; // [ {"id": "001", "name": "ABC", "surname": "DEF"} ]
+        $scope.selectedEmployee;
+        $scope.mode = "list"; // ["list", "entry"]
+        $scope.entryMode = ""; // ["add", "edit"]
+
+        $scope.init = function() {
+            console.log("### FishsixTutoral1Controller.init ###");
+
+            // useApi($scope, $http);
+            useListController($scope, $http);
+            useEntryController($scope, $http);
+
+            $scope.criteria = {
+                id: "",
+                name: ""
+            };
+
+            $scope.employees.push({
+                id: "001",
+                name: "ABC",
+                surname: "DEF"
+            });
+
+            $scope.employees.push({
+                id: "002",
+                name: "ABC-2",
+                surname: "DEF-2"
+            });
+
+            $scope.paging = {
+                pageNo: 1,
+                pageSize: 25,
+                totalPage: 0,
+                totalSize: 0
+            };
+        };
+
+        $scope.swapMode = function() {
+            if($scope.mode === 'list') {
+                $scope.toEntryMode();
+            } else if($scope.mode === 'entry') {
+                $scope.toListMode();
+            }
+        };
+
+        $scope.toListMode = function() {
+            $scope.mode = 'list';
+        };
+
+        $scope.toEntryMode = function() {
+            $scope.mode = 'entry';
+        };
+
+        $scope.requestAddEmployee = function() {
+            console.log("### FishsixTutoral1Controller.requestAddEmployee ###");
+            $scope.toEntryMode();
+            $scope.entryMode = "add";
+            $scope.selectedEmployee = {
+                id: "",
+                name: "",
+                surname: ""
+            };
+            $scope.resetForm();
+        };
+
+        $scope.resetForm = function() {
+            setTimeout(() => {
+                $scope.employeeForm.$submitted = false;
+
+                $scope.employeeForm.id.$setUntouched();
+                $scope.employeeForm.id.$setPristine();
+
+                $scope.employeeForm.name.$setUntouched();
+                $scope.employeeForm.name.$setPristine();
+
+                $scope.employeeForm.surname.$setUntouched();
+                $scope.employeeForm.surname.$setPristine();
+
+                $scope.$apply();
+            }, 0);
+        };
+    }]);
+</script>

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="KWS Console" name="keywords">
+        <meta content="KWS Console | Fishsix | Registration | Student" name="description">
+
+        <title>KWS Console | Fishsix | Registration | Student</title>
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400&display=swap">
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+        <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/datepicker.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.0.5/dist/css/adminlte.min.css">
+        <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+
+        <script	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.8.2/angular-sanitize.min.js"></script>
+    	<script	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.full.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/datepicker.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/i18n/datepicker.th-TH.min.js"></script>
+        <script src="https://adminlte.io/themes/v3/plugins/inputmask/jquery.inputmask.min.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.0.5/dist/js/adminlte.min.js"></script>
+
+        <style>
+            body {
+                margin-top: 16px;
+                margin-bottom: 16px;
+                /* background-color: #ffbe76; */
+            }
+
+            .is-invalid {
+                border-color: red;
+            }
+        </style>
+
+        <div th:replace="fishsix/admin-lte-3/registration/student/script/controller"></div>
+    </head>
+
+    <body ng-app="app" ng-controller="StudentRegistrationController" ng-init="init()">
+        <div ng-if="isLoading" class="kws-loader">
+            <div class='kws-loader-spin'></div>
+        </div>
+
+        <div class="container">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">ลงทะเบียนข้อมูลนักเรียน</h3>
+                </div>
+            
+                <div class="card-body p-2">
+
+                    <!-- user -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title text-purple">ข้อมูลบัญชีเข้าใช้งานระบบ</h3>
+                        </div>
+                    
+                        <div class="card-body p-2">
+                            <form name="userForm" class="form row" novalidate>
+                                <div class="col-md-6">
+                                    <div class="form-group border rounded p-2">
+                                        <label>
+                                            <span class="text-danger">*</span>
+                                            <span ng-show="!isShowEmailError()">อีเมล์</span>
+                                            <span class="text-danger" ng-show="isShowEmailError()">กรุณาระบุอีเมล์</span>
+                                        </label>
+                                        <input 
+                                            name="email" 
+                                            type="text" 
+                                            class="form-control" 
+                                            ng-class="{'is-invalid': isShowEmailError()}" 
+                                            placeholder="ระบุอีเมล์" 
+                                            ng-model="studentProfile.email" 
+                                            required>
+                                    </div>
+                                </div>
+            
+                                <div class="col-md-6">
+                                    <div class="form-group border rounded p-2">
+                                        <label>
+                                            <span class="text-danger">*</span>
+                                            <span ng-show="!isShowPasswordError()">รหัสผ่าน</span>
+                                            <span class="text-danger" ng-show="isShowPasswordError()">กรุณาระบุรหัสผ่าน</span>
+                                        </label>
+                                        <input 
+                                            name="password" 
+                                            type="password" 
+                                            class="form-control" 
+                                            ng-class="{'is-invalid': isShowPasswordError()}" 
+                                            placeholder="ระบุรหัสผ่าน" 
+                                            ng-model="studentProfile.password" 
+                                            required>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- user -->
+            
+                    <!-- student -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title text-purple">ข้อมูลส่วนตัว</h3>
+                        </div>
+                    
+                        <div class="card-body p-2">
+                            <form name="studentForm" class="form row" novalidate>
+                                <div class="col-md-6">
+                                    <div class="form-group border rounded p-2">
+                                        <label>
+                                            <span class="text-danger">*</span>
+                                            <span ng-show="!isShowFirstNameError()">ชื่อ</span>
+                                            <span class="text-danger" ng-show="isShowFirstNameError()">กรุณาระบุชื่อ</span>
+                                        </label>
+                                        <input 
+                                            name="firstName" 
+                                            type="text" 
+                                            class="form-control" 
+                                            ng-class="{'is-invalid': isShowFirstNameError()}" 
+                                            placeholder="ระบุชื่อ" 
+                                            ng-model="studentProfile.firstName" 
+                                            required>
+                                    </div>
+                                </div>
+            
+                                <div class="col-md-6">
+                                    <div class="form-group border rounded p-2">
+                                        <label>
+                                            <span class="text-danger">*</span>
+                                            <span ng-show="!isShowLastNameError()">นามสกุล</span>
+                                            <span class="text-danger" ng-show="isShowLastNameError()">กรุณาระบุนามสกุล</span>
+                                        </label>
+                                        <input 
+                                            name="lastName" 
+                                            type="text" 
+                                            class="form-control" 
+                                            ng-class="{'is-invalid': isShowLastNameError()}" 
+                                            placeholder="ระบุนามสกุล" 
+                                            ng-model="studentProfile.lastName" 
+                                            required>
+                                    </div>
+                                </div>
+            
+                                <div class="col-md-6">
+                                    <div class="form-group border rounded p-2">
+                                        <label>
+                                            <span class="text-danger">*</span>
+                                            <span ng-show="!isShowNickNameError()">ชื่อเล่น</span>
+                                            <span class="text-danger" ng-show="isShowNickNameError()">กรุณาระบุชื่อเล่น</span>
+                                        </label>
+                                        <input 
+                                            name="nickName" 
+                                            type="text" 
+                                            class="form-control" 
+                                            ng-class="{'is-invalid': isShowNickNameError()}" 
+                                            placeholder="ระบุชื่อเล่น" 
+                                            ng-model="studentProfile.nickName" 
+                                            required>
+                                    </div>
+                                </div>
+            
+                                <div class="col-md-6">
+                                    <div class="form-group border rounded p-2">
+                                        <label>
+                                            <span class="text-danger">*</span>
+                                            <span ng-show="!isShowGenderError()">เพศ</span>
+                                            <span class="text-danger" ng-show="isShowGenderError()">กรุณาเลือกเพศ</span>
+                                        </label>
+                                        <select name="gender" class="form-control" ng-model="studentProfile.genderId">
+                                            <option value="" selected disabled>--- เลือกเพศ ---</option>
+                                            <option value="male">ชาย</option>
+                                            <option value="female">หญิง</option>
+                                        </select>
+                                    </div>
+                                </div>
+            
+                                <div class="col-md-6">
+                                    <div class="form-group border rounded p-2">
+                                        <label>
+                                            <span class="text-danger">*</span>
+                                            <span ng-show="!isShowMobileNoError()">เบอร์มือถือ</span>
+                                            <span class="text-danger" ng-show="isShowMobileNoError()">กรุณาระบุเบอร์มือถือ</span>
+                                        </label>
+                                        <input 
+                                            name="mobileNo" 
+                                            type="text" 
+                                            class="form-control" 
+                                            ng-class="{'is-invalid': isShowMobileNoError()}" 
+                                            placeholder="ระบุเบอร์มือถือ" 
+                                            ng-model="studentProfile.mobileNo" 
+                                            required>
+                                    </div>
+                                </div>
+            
+                                <div class="col-md-6">
+                                    <div class="form-group border rounded p-2">
+                                        <label>
+                                            <span class="text-danger">*</span>
+                                            <span ng-show="!isShowContactAddressError()">ที่อยู่ปัจจุบัน</span>
+                                            <span class="text-danger" ng-show="isShowContactAddressError()">กรุณาระบุที่อยู่ปัจจุบัน</span>
+                                        </label>
+                                        <textarea 
+                                                name="contactAddress" 
+                                                class="form-control" 
+                                                rows="3" 
+                                                ng-class="{'is-invalid': isShowContactAddressError()}" 
+                                                ng-model="studentProfile.contactAddress" 
+                                                required>
+                                        </textarea>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- student -->
+
+                    <!-- parent -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title text-purple">ข้อมูลผู้ปกครอง</h3>
+                        </div>
+                    
+                        <div class="card-body p-2">
+                            <form name="parentForm" class="form row" novalidate>
+                                <div class="col-md-6">
+                                    <div class="form-group border rounded p-2">
+                                        <label>
+                                            <span class="text-danger">*</span>
+                                            <span ng-show="!isShowParentNameError()">ชื่อ</span>
+                                            <span class="text-danger" ng-show="isShowParentNameError()">กรุณาระบุชื่อ</span>
+                                        </label>
+                                        <input 
+                                            name="name" 
+                                            type="text" 
+                                            class="form-control" 
+                                            ng-class="{'is-invalid': isShowParentNameError()}" 
+                                            placeholder="ระบุชื่อ" 
+                                            ng-model="studentProfile.parentName" 
+                                            required>
+                                    </div>
+                                </div>
+            
+                                <div class="col-md-6">
+                                    <div class="form-group border rounded p-2">
+                                        <label>
+                                            <span class="text-danger">*</span>
+                                            <span ng-show="!isShowParentMobileNoError()">เบอร์มือถือ</span>
+                                            <span class="text-danger" ng-show="isShowParentMobileNoError()">กรุณาระบุเบอร์มือถือ</span>
+                                        </label>
+                                        <input 
+                                            name="mobileNo" 
+                                            type="text" 
+                                            class="form-control" 
+                                            ng-class="{'is-invalid': isShowParentMobileNoError()}" 
+                                            placeholder="ระบุเบอร์มือถือ" 
+                                            ng-model="studentProfile.parentMobileNo" 
+                                            required>
+                                    </div>
+                                </div>
+            
+                                <div class="col-md-6">
+                                    <div class="form-group border rounded p-2">
+                                        <label>
+                                            <span class="text-danger">*</span>
+                                            <span ng-show="!isShowParentJobError()">อาชีพ</span>
+                                            <span class="text-danger" ng-show="isShowParentJobError()">กรุณาระบุอาชีพ</span>
+                                        </label>
+                                        <input 
+                                            name="job" 
+                                            type="text" 
+                                            class="form-control" 
+                                            ng-class="{'is-invalid': isShowParentJobError()}" 
+                                            placeholder="ระบุอาชีพ" 
+                                            ng-model="studentProfile.parentJob" 
+                                            required>
+                                    </div>
+                                </div>
+            
+                                <div class="col-md-6">
+                                    <div class="form-group border rounded p-2">
+                                        <label>
+                                            <span class="text-danger">*</span>
+                                            <span ng-show="!isShowParentExpectationError()">ความคาดหวัง</span>
+                                            <span class="text-danger" ng-show="isShowParentExpectationError()">กรุณาระบุความคาดหวัง</span>
+                                        </label>
+                                        <textarea 
+                                            name="expectation" 
+                                            rows="3" 
+                                            class="form-control" 
+                                            ng-class="{'is-invalid': isShowParentExpectationError()}" 
+                                            placeholder="ระบุความคาดหวัง" 
+                                            ng-model="studentProfile.parentExpectation" 
+                                            required>
+                                        </textarea>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- parent -->
+
+                    <!-- education -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title text-purple">ข้อมูลการศึกษา</h3>
+                        </div>
+                    
+                        <div class="card-body p-2">
+                            <form name="educationForm" class="form row" novalidate>
+                                <div class="col-md-6">
+                                    <div class="form-group border rounded p-2">
+                                        <label>
+                                            <span class="text-danger">*</span>
+                                            <span ng-show="!isShowEducationSchoolError()">โรงเรียน</span>
+                                            <span class="text-danger" ng-show="isShowEducationSchoolError()">กรุณาระบุโรงเรียน</span>
+                                        </label>
+                                        <input 
+                                            name="school" 
+                                            type="text" 
+                                            class="form-control" 
+                                            ng-class="{'is-invalid': isShowEducationSchoolError()}" 
+                                            placeholder="ระบุโรงเรียน" 
+                                            ng-model="studentProfile.educationSchool" 
+                                            required>
+                                    </div>
+                                </div>
+            
+                                <div class="col-md-6">
+                                    <div class="form-group border rounded p-2">
+                                        <label>
+                                            <span class="text-danger">*</span>
+                                            <span ng-show="!isShowEducationLevelError()">ระดับการศึกษา</span>
+                                            <span class="text-danger" ng-show="isShowEducationLevelError()">กรุณาเลือกระดับการศึกษา</span>
+                                        </label>
+                                        <select name="level" 
+                                                class="form-control" 
+                                                ng-class="{'is-invalid': isShowEducationLevelError()}" 
+                                                ng-model="studentProfile.educationLevel" 
+                                                required>
+                                            <option value="" selected disabled>--- เลือกระดับการศึกษา ---</option>
+                                            <option ng-repeat="educationLevel in educationLevels" ng-value="educationLevel">{{ educationLevel }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- education -->
+                    
+                </div>
+            
+                <div class="card-footer">
+                    <div class="text-right">
+                        <button class="btn btn-primary" ng-click="requestSubmit()">
+                            <i class="fa fa-save"></i> บันทึก
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>

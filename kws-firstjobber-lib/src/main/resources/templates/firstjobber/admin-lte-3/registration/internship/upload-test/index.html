@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="KWS Console" name="keywords">
+        <meta content="KWS Console | 90% First Jobber | Registration | Upload Test | Internship" name="description">
+
+        <title>KWS Console | 90% First Jobber | Registration | Upload Test | Internship</title>
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400&display=swap">
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.0.5/dist/css/adminlte.min.css">
+        <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+
+        <script	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.8.2/angular-sanitize.min.js"></script>
+    	<script	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.0.5/dist/js/adminlte.min.js"></script>
+
+        <style>
+            body {
+                margin-top: 16px;
+                margin-bottom: 16px;
+                background-color: #ffbe76;
+            }
+        </style>
+
+        <div th:replace="firstjobber/admin-lte-3/registration/internship/upload-test/script/controller"></div>
+    </head>
+
+    <body ng-app="app" ng-controller="InternshipRegistrationUploadTestController" ng-init="init()">
+        <div ng-if="isLoading" class="kws-loader">
+            <div class='kws-loader-spin'></div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div ng-show="mode === 'upload'" class="col-md-12">
+                    <div th:replace="firstjobber/admin-lte-3/registration/internship/upload-test/upload"></div>
+                </div>
+
+                <div ng-show="mode === 'result'" class="col-md-12">
+                    <div th:replace="firstjobber/admin-lte-3/registration/internship/upload-test/result"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>

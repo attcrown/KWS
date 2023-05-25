@@ -1,0 +1,168 @@
+<div class="card">
+    <!-- card-header -->
+    <div class="card-header">
+        <h3 class="card-title text-maroon">คลังเนื้อหา</h3>
+
+        <div class="card-tools">
+            <button type="button" class="btn btn-outline-success" ng-click="requestAddChapter()">
+                <i class="fas fa-plus"></i> เพิ่มเนื้อหา
+            </button>
+        </div>
+    </div>
+    <!-- /.card-header -->
+
+    <!-- card-body -->
+    <div class="card-body px-2 py-2">
+        <div class="table-responsive p-0">
+            <table class="table table-hover text-nowrap">
+                <thead>
+                    <tr>
+                        <th>บทที่</th>
+                        <th>ชื่อบท</th>
+                        <th>รายละเอียด</th>
+                        <th class="text-center" style="width: 64px;">Action</th>
+                    </tr>
+                </thead>
+        
+                <tbody ng-if="selectedSubjectProfile.chapters.length > 0">
+                    <tr ng-repeat="chapter in selectedSubjectProfile.chapters | orderBy: 'seqNo'">
+                        <td class="align-middle">{{ chapter.seqNo }}</td>
+                        <td class="align-middle">{{ chapter.name }}</td>
+                        <td class="align-middle">{{ chapter.description }}</td>
+                        <td class="text-center align-middle">
+                            <button class="btn btn-sm btn-outline-warning" ng-click="requestEditChapter(chapter)" title="แก้ไขข้อมูล">
+                                <i class="fa fa-edit kws-table-action-icon"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger" ng-click="requestRemoveChapter(chapter)" title="ลบข้อมูล">
+                                <i class="fa fa-trash kws-table-action-icon"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-info" ng-click="openMediaModal(chapter)" title="สื่อการสอน">
+                                <i class="fa fa-file-pdf kws-table-action-icon"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+        
+                <tfoot ng-if="selectedSubjectProfile.chapters.length === 0">
+                    <tr>
+                        <td class="text-center text-orange" colspan="4">--- ไม่มีข้อมูล ---</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="chapterModal" tabindex="-1" role="dialog" aria-labelledby="chapterModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="chapterModalTitle">เนื้อหา</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form name="chapterForm" class="form row" novalidate>
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowChapterSeqNoError()">บทที่</span>
+                                <span class="text-danger" ng-show="isShowChapterSeqNoError()">กรุณาระบุบทที่</span>
+                            </label>
+                            <input 
+                                name="seqNo" 
+                                type="number" 
+                                class="form-control" 
+                                ng-class="{'is-invalid': isShowChapterSeqNoError()}" 
+                                placeholder="ระบุบทที่" 
+                                ng-model="selectedChapter.seqNo" 
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowChapterNameError()">ชื่อบท</span>
+                                <span class="text-danger" ng-show="isShowChapterNameError()">กรุณาระบุชื่อบท</span>
+                            </label>
+                            <input 
+                                name="name" 
+                                type="text" 
+                                class="form-control" 
+                                ng-class="{'is-invalid': isShowChapterNameError()}" 
+                                placeholder="ระบุชื่อบท" 
+                                ng-model="selectedChapter.name" 
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowChapterDescriptionError()">รายละเอียดเนื้อหา</span>
+                                <span class="text-danger" ng-show="isShowChapterDescriptionError()">กรุณาระบุรายละเอียดเนื้อหา</span>
+                            </label>
+                            <textarea 
+                                name="description" 
+                                rows="5" 
+                                class="form-control" 
+                                ng-class="{'is-invalid': isShowChapterDescriptionError()}" 
+                                placeholder="ระบุรายละเอียดเนื้อหา" 
+                                ng-model="selectedChapter.description" 
+                                required>
+                            </textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group border rounded p-2">
+                            <label>
+                                <span>หมายเหตุ</span>
+                            </label>
+                            <textarea 
+                                name="remark" 
+                                rows="5" 
+                                class="form-control" 
+                                placeholder="ระบุหมายเหตุ" 
+                                ng-model="selectedChapter.remark">
+                            </textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 d-none">
+                        <div class="form-group">
+                            <label>
+                                <span>อัพโหลดรูป</span>
+                            </label>
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input resume-file" accept="image/*">
+                                    <label ng-show="!userProfile.attachmentInfo.resumeFile" class="custom-file-label">--- อัพโหลดรูป ---</label>
+                                    <label ng-show="userProfile.attachmentInfo.resumeFile" class="custom-file-label">{{ userProfile.attachmentInfo.resumeFile.name }}</label>
+                                </div>
+                                <div class="input-group-append">
+                                    <button ng-show="userProfile.attachmentInfo.resumeFile" class="btn btn-danger" ng-click="removeResumeFile()">
+                                        <i class="fas fa-trash"></i> ลบ
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">ปิด</button>
+                <button type="button" class="btn btn-outline-primary" ng-click="saveChapter()">บันทึก</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="__${#execInfo.templateName}__/../entry_media"></div>

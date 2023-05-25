@@ -1,0 +1,741 @@
+<script th:inline="javascript">
+    function useValidator($scope, $http)
+    {
+        console.log("### InternshipRegistrationController.useValidator ###");
+        $scope.verifyFormData = useVerifyFormData($scope, $http);
+        buildValidator($scope);
+    }
+
+    function buildValidator($scope)
+    {
+        console.log("### InternshipRegistrationController.buildValidator ###");
+        $scope.validator = {
+            personalInfo: {
+                photo: {
+                    isInvalid: function() {
+                        return $scope.validator.personalInfo.formalPhoto.isInvalid() && $scope.validator.personalInfo.informalPhoto.isInvalid();
+                    }
+                },
+
+                formalPhoto: {
+                    isInvalid: function() {
+                        const formalPhotoBase64 = $scope.userProfile.personalInfo.formalPhotoBase64;
+                        return $scope.submitted && (!formalPhotoBase64 || !formalPhotoBase64.trim());
+                    }
+                },
+
+                informalPhoto: {
+                    isInvalid: function() {
+                        const informalPhotoBase64 = $scope.userProfile.personalInfo.informalPhotoBase64;
+                        return $scope.submitted && (!informalPhotoBase64 || !informalPhotoBase64.trim());
+                    }
+                },
+
+                firstName: {
+                    isInvalid: function() {
+                        const firstName = $scope.userProfile.personalInfo.firstName;
+                        return $scope.submitted && (!firstName || !firstName.trim());
+                    }
+                },
+
+                lastName: {
+                    isInvalid: function() {
+                        const lastName = $scope.userProfile.personalInfo.lastName;
+                        return $scope.submitted && (!lastName || !lastName.trim());
+                    }
+                },
+
+                nickName: {
+                    isInvalid: function() {
+                        const nickName = $scope.userProfile.personalInfo.nickName;
+                        return $scope.submitted && (!nickName || !nickName.trim());
+                    }
+                },
+
+                gender: {
+                    isInvalid: function() {
+                        const gender = $scope.userProfile.personalInfo.gender;
+                        return $scope.submitted && !gender;
+                    }
+                },
+
+                birthDate: {
+                    isInvalid: function() {
+                        const birthDate = $scope.userProfile.personalInfo.birthDate;
+                        return $scope.submitted && (!birthDate || !birthDate.trim() || Number.isNaN(Date.parse(birthDate)));
+                    }
+                }
+            },
+
+            contactInfo: {
+                mobileNo: {
+                    isInvalid: function() {
+                        const mobileNo = $scope.userProfile.contactInfo.mobileNo;
+                        return $scope.submitted && (!mobileNo || !mobileNo.trim());
+                    }
+                },
+
+                email: {
+                    isInvalid: function() {
+                        const email = $scope.userProfile.contactInfo.email;
+                        return $scope.submitted && (!email || !email.trim());
+                    }
+                },
+
+                lineId: {
+                    isInvalid: function() {
+                        const lineId = $scope.userProfile.contactInfo.lineId;
+                        return $scope.submitted && (!lineId || !lineId.trim());
+                    }
+                },
+
+                addressDetail: {
+                    isInvalid: function() {
+                        const addressDetail = $scope.userProfile.contactInfo.addressDetail;
+                        return $scope.submitted && (!addressDetail || !addressDetail.trim());
+                    }
+                }
+            },
+
+            personContactInfo: {
+                name: {
+                    isInvalid: function() {
+                        const name = $scope.userProfile.personContactInfo.name;
+                        return $scope.submitted && (!name || !name.trim());
+                    }
+                },
+
+                relationship: {
+                    isInvalid: function() {
+                        return $scope.validator.personContactInfo.relationshipId.isInvalid() || $scope.validator.personContactInfo.relationshipOther.isInvalid();
+                    }
+                },
+
+                relationshipId: {
+                    isInvalid: function() {
+                        const relationshipId = $scope.userProfile.personContactInfo.relationshipId;
+                        return $scope.submitted && !relationshipId;
+                    }
+                },
+
+                relationshipOther: {
+                    isInvalid: function() {
+                        const relationshipId = $scope.userProfile.personContactInfo.relationshipId;
+                        const relationshipOther = $scope.userProfile.personContactInfo.relationshipOther;
+                        return $scope.submitted && relationshipId === 'other' && (!relationshipOther || !relationshipOther.trim());
+                    }
+                },
+
+                mobileNo: {
+                    isInvalid: function() {
+                        const mobileNo = $scope.userProfile.personContactInfo.mobileNo;
+                        return $scope.submitted && (!mobileNo || !mobileNo.trim());
+                    }
+                }
+            },
+
+            educationInfo: {
+                educationStatusId: {
+                    isInvalid: function() {
+                        const educationStatusId = $scope.userProfile.educationInfo.educationStatusId;
+                        return $scope.submitted && !educationStatusId;
+                    }
+                },
+
+                educationLevel: {
+                    isInvalid: function() {
+                        return $scope.validator.educationInfo.educationLevelId.isInvalid() || $scope.validator.educationInfo.educationLevelOther.isInvalid();
+                    }
+                },
+
+                educationLevelId: {
+                    isInvalid: function() {
+                        const educationLevelId = $scope.userProfile.educationInfo.educationLevelId;
+                        return $scope.submitted && !educationLevelId;
+                    }
+                },
+
+                educationLevelOther: {
+                    isInvalid: function() {
+                        const educationLevelId = $scope.userProfile.educationInfo.educationLevelId;
+                        const educationLevelOther = $scope.userProfile.educationInfo.educationLevelOther;
+                        return $scope.submitted && educationLevelId === 'other' && (!educationLevelOther || !educationLevelOther.trim());
+                    }
+                },
+
+                educationClass: {
+                    isInvalid: function() {
+                        const educationClass = $scope.userProfile.educationInfo.educationClass;
+                        return $scope.submitted && (!educationClass || Number.isNaN(educationClass));
+                    }
+                },
+
+                school: {
+                    isInvalid: function() {
+                        return $scope.validator.educationInfo.schoolId.isInvalid() || $scope.validator.educationInfo.schoolOther.isInvalid();
+                    }
+                },
+
+                schoolId: {
+                    isInvalid: function() {
+                        const schoolId = $scope.userProfile.educationInfo.schoolId;
+                        return $scope.submitted && !schoolId;
+                    }
+                },
+
+                schoolOther: {
+                    isInvalid: function() {
+                        const schoolOther = $scope.userProfile.educationInfo.schoolOther;
+                        const schoolId = $scope.userProfile.educationInfo.schoolId;
+                        return $scope.submitted && schoolId === 'other' && (!schoolOther || !schoolOther.trim());
+                    }
+                },
+
+                educationFaculty: {
+                    isInvalid: function() {
+                        return $scope.validator.educationInfo.educationFacultyId.isInvalid() || $scope.validator.educationInfo.educationFacultyOther.isInvalid();
+                    }
+                },
+
+                educationFacultyId: {
+                    isInvalid: function() {
+                        const educationFacultyId = $scope.userProfile.educationInfo.educationFacultyId;
+                        return $scope.submitted && !educationFacultyId;
+                    }
+                },
+
+                educationFacultyOther: {
+                    isInvalid: function() {
+                        const educationFacultyId = $scope.userProfile.educationInfo.educationFacultyId;
+                        const educationFacultyOther = $scope.userProfile.educationInfo.educationFacultyOther;
+                        return $scope.submitted && educationFacultyId === 'other' && (!educationFacultyOther || !educationFacultyOther.trim());
+                    }
+                },
+
+                educationMajor: {
+                    isInvalid: function() {
+                        return $scope.validator.educationInfo.educationMajorId.isInvalid() || $scope.validator.educationInfo.educationMajorOther.isInvalid();
+                    }
+                },
+
+                educationMajorId: {
+                    isInvalid: function() {
+                        const educationMajorId = $scope.userProfile.educationInfo.educationMajorId;
+                        return $scope.submitted && !educationMajorId;
+                    }
+                },
+
+                educationMajorOther: {
+                    isInvalid: function() {
+                        const educationMajorId = $scope.userProfile.educationInfo.educationMajorId;
+                        const educationMajorOther = $scope.userProfile.educationInfo.educationMajorOther;
+                        return $scope.submitted && educationMajorId === 'other' && (!educationMajorOther || !educationMajorOther.trim());
+                    }
+                },
+
+                gpa: {
+                    isInvalid: function() {
+                        const gpa = $scope.userProfile.educationInfo.gpa;
+                        return $scope.submitted && (!gpa || Number.isNaN(gpa));
+                    }
+                }
+            },
+
+            internInfo: {
+                internshipTypeId: {
+                    isInvalid: function() {
+                        const internshipTypeId = $scope.userProfile.internInfo.internshipTypeId;
+                        return $scope.submitted && !internshipTypeId;
+                    }
+                },
+
+                requestAckDate: {
+                    isInvalid: function() {
+                        const requestAckDate = $scope.userProfile.internInfo.requestAckDate;
+                        return $scope.submitted && (!requestAckDate || !requestAckDate.trim() || Number.isNaN(Date.parse(requestAckDate)));
+                    }
+                },
+
+                requestStartDate: {
+                    isInvalid: function() {
+                        const requestStartDate = $scope.userProfile.internInfo.requestStartDate;
+                        return $scope.submitted && (!requestStartDate || !requestStartDate.trim() || Number.isNaN(Date.parse(requestStartDate)));
+                    }
+                },
+
+                requestEndDate: {
+                    isInvalid: function() {
+                        const requestEndDate = $scope.userProfile.internInfo.requestEndDate;
+                        return $scope.submitted && (!requestEndDate || !requestEndDate.trim() || Number.isNaN(Date.parse(requestEndDate)));
+                    }
+                },
+
+                requestJob1: {
+                    isInvalid: function() {
+                        return $scope.validator.internInfo.requestJob1Id.isInvalid() || $scope.validator.internInfo.requestJob1Other.isInvalid();
+                    }
+                },
+
+                requestJob1Id: {
+                    isInvalid: function() {
+                        const requestJob1Id = $scope.userProfile.internInfo.requestJob1Id;
+                        return $scope.submitted && !requestJob1Id;
+                    }
+                },
+
+                requestJob1Other: {
+                    isInvalid: function() {
+                        const requestJob1Other = $scope.userProfile.internInfo.requestJob1Other;
+                        const requestJob1Id = $scope.userProfile.internInfo.requestJob1Id;
+                        return $scope.submitted && requestJob1Id === 'other' && (!requestJob1Other || !requestJob1Other.trim());
+                    }
+                },
+
+                requestJob2: {
+                    isInvalid: function() {
+                        return $scope.validator.internInfo.requestJob2Id.isInvalid() || $scope.validator.internInfo.requestJob2Other.isInvalid();
+                    }
+                },
+
+                requestJob2Id: {
+                    isInvalid: function() {
+                        const requestJob2Id = $scope.userProfile.internInfo.requestJob2Id;
+                        return $scope.submitted && !requestJob2Id;
+                    }
+                },
+
+                requestJob2Other: {
+                    isInvalid: function() {
+                        const requestJob2Other = $scope.userProfile.internInfo.requestJob2Other;
+                        const requestJob2Id = $scope.userProfile.internInfo.requestJob2Id;
+                        return $scope.submitted && requestJob2Id === 'other' && (!requestJob2Other || !requestJob2Other.trim());
+                    }
+                },
+
+                requestJob3: {
+                    isInvalid: function() {
+                        return $scope.validator.internInfo.requestJob3Id.isInvalid() || $scope.validator.internInfo.requestJob3Other.isInvalid();
+                    }
+                },
+
+                requestJob3Id: {
+                    isInvalid: function() {
+                        const requestJob3Id = $scope.userProfile.internInfo.requestJob3Id;
+                        return $scope.submitted && !requestJob3Id;
+                    }
+                },
+
+                requestJob3Other: {
+                    isInvalid: function() {
+                        const requestJob3Other = $scope.userProfile.internInfo.requestJob3Other;
+                        const requestJob3Id = $scope.userProfile.internInfo.requestJob3Id;
+                        return $scope.submitted && requestJob3Id === 'other' && (!requestJob3Other || !requestJob3Other.trim());
+                    }
+                },
+
+                requestDayOffNum: {
+                    isInvalid: function() {
+                        const requestDayOffNum = $scope.userProfile.internInfo.requestDayOffNum;
+                        return $scope.submitted && (!requestDayOffNum || Number.isNaN(requestDayOffNum) || requestDayOffNum <= 0 || requestDayOffNum > 7);
+                    }
+                },
+
+                skill: {
+                    isInvalid: function() {
+                        const skill = $scope.userProfile.internInfo.skill;
+                        return $scope.submitted && (!skill || !skill.trim());
+                    }
+                },
+
+                requestLocation: {
+                    isInvalid: function() {
+                        const requestLocation = $scope.userProfile.internInfo.requestLocation;
+                        return $scope.submitted && (!requestLocation || !requestLocation.trim());
+                    }
+                }
+            },
+
+            attachmentInfo: {
+                resumeFile: {
+                    isInvalid: function() {
+                        const resumeFile = $scope.userProfile.attachmentInfo.resumeFile;
+                        return $scope.submitted && !resumeFile;
+                    }
+                }
+            }
+        };
+    }
+
+    function useVerifyFormData($scope, $http)
+    {
+        return () => {
+            console.log("### InternshipRegistrationController.verifyFormData ###");
+
+            // ****************************** personalInfo ****************************** //
+            if($scope.validator.personalInfo.photo.isInvalid()) {
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'personalInfo.photo'
+                    }
+                };
+            }
+
+            /*
+            if($scope.validator.personalInfo.formalPhoto.isInvalid()) {
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'personalInfo.formalPhoto'
+                    }
+                };
+            }
+            
+            if($scope.validator.personalInfo.informalPhoto.isInvalid()) {
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'personalInfo.informalPhoto'
+                    }
+                };
+            }
+            */
+
+            if($scope.validator.personalInfo.firstName.isInvalid()) {
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'personalInfo.firstName'
+                    }
+                };
+            }
+
+            if($scope.validator.personalInfo.lastName.isInvalid()) {
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'personalInfo.lastName'
+                    }
+                };
+            }
+
+            if($scope.validator.personalInfo.nickName.isInvalid()) {
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'personalInfo.nickName'
+                    }
+                };
+            }
+
+            if($scope.validator.personalInfo.gender.isInvalid()) {
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'personalInfo.gender'
+                    }
+                };
+            }
+
+            if($scope.validator.personalInfo.birthDate.isInvalid()) {
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'personalInfo.birthDate'
+                    }
+                };
+            }
+            // ****************************** personalInfo ****************************** //
+
+            // ****************************** contactInfo ****************************** //
+            if($scope.validator.contactInfo.mobileNo.isInvalid()) {
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'contactInfo.mobileNo'
+                    }
+                };
+            }
+
+            if($scope.validator.contactInfo.email.isInvalid()) {
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'contactInfo.email'
+                    }
+                };
+            }
+
+            if($scope.validator.contactInfo.lineId.isInvalid()) {
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'contactInfo.lineId'
+                    }
+                };
+            }
+
+            if($scope.validator.contactInfo.addressDetail.isInvalid()) {
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'contactInfo.addressDetail'
+                    }
+                };
+            }
+            // ****************************** contactInfo ****************************** //
+
+            // ****************************** personContactInfo ****************************** //
+            if($scope.validator.personContactInfo.name.isInvalid()) {
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'personContactInfo.name'
+                    }
+                };
+            }
+
+            if($scope.validator.personContactInfo.relationship.isInvalid()) {
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'personContactInfo.relationship'
+                    }
+                };
+            }
+
+            if($scope.validator.personContactInfo.mobileNo.isInvalid()) {
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'personContactInfo.mobileNo'
+                    }
+                };
+            }
+            // ****************************** personContactInfo ****************************** //
+
+            // ****************************** educationInfo ****************************** //
+            if($scope.validator.educationInfo.educationStatusId.isInvalid()) {
+                $scope.gotoEducationTab();
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'educationInfo.educationStatusId'
+                    }
+                };
+            }
+
+            if($scope.validator.educationInfo.educationLevel.isInvalid()) {
+                $scope.gotoEducationTab();
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'educationInfo.educationLevel'
+                    }
+                };
+            }
+
+            if($scope.validator.educationInfo.educationClass.isInvalid()) {
+                $scope.gotoEducationTab();
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'educationInfo.educationClass'
+                    }
+                };
+            }
+
+            if($scope.validator.educationInfo.school.isInvalid()) {
+                $scope.gotoEducationTab();
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'educationInfo.school'
+                    }
+                };
+            }
+
+            if($scope.isShowEducationFaculty() && $scope.validator.educationInfo.educationFaculty.isInvalid()) {
+                $scope.gotoEducationTab();
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'educationInfo.educationFaculty'
+                    }
+                };
+            }
+
+            if($scope.isShowEducationMajor() && $scope.validator.educationInfo.educationMajor.isInvalid()) {
+                $scope.gotoEducationTab();
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'educationInfo.educationMajor'
+                    }
+                };
+            }
+
+            if($scope.validator.educationInfo.gpa.isInvalid()) {
+                $scope.gotoEducationTab();
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'educationInfo.gpa'
+                    }
+                };
+            }
+            // ****************************** educationInfo ****************************** //
+
+            // ****************************** internInfo ****************************** //
+            if($scope.validator.internInfo.internshipTypeId.isInvalid()) {
+                $scope.gotoInternTab();
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'internInfo.internshipTypeId'
+                    }
+                };
+            }
+
+            if($scope.validator.internInfo.requestAckDate.isInvalid()) {
+                $scope.gotoInternTab();
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'internInfo.requestAckDate'
+                    }
+                };
+            }
+
+            if($scope.validator.internInfo.requestStartDate.isInvalid()) {
+                $scope.gotoInternTab();
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'internInfo.requestStartDate'
+                    }
+                };
+            }
+
+            if($scope.validator.internInfo.requestEndDate.isInvalid()) {
+                $scope.gotoInternTab();
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'internInfo.requestEndDate'
+                    }
+                };
+            }
+
+            if($scope.validator.internInfo.requestJob1.isInvalid()) {
+                $scope.gotoInternTab();
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'internInfo.requestJob1'
+                    }
+                };
+            }
+
+            if($scope.validator.internInfo.requestJob2.isInvalid()) {
+                $scope.gotoInternTab();
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'internInfo.requestJob2'
+                    }
+                };
+            }
+
+            if($scope.validator.internInfo.requestJob3.isInvalid()) {
+                $scope.gotoInternTab();
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'internInfo.requestJob3'
+                    }
+                };
+            }
+
+            if($scope.validator.internInfo.requestDayOffNum.isInvalid()) {
+                $scope.gotoInternTab();
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'internInfo.requestDayOffNum'
+                    }
+                };
+            }
+
+            if($scope.validator.internInfo.skill.isInvalid()) {
+                $scope.gotoInternTab();
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'internInfo.skill'
+                    }
+                };
+            }
+
+            if($scope.validator.internInfo.requestLocation.isInvalid()) {
+                $scope.gotoInternTab();
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'internInfo.requestLocation'
+                    }
+                };
+            }
+            // ****************************** internInfo ****************************** //
+
+            // ****************************** attachmentInfo ****************************** //
+            if($scope.validator.attachmentInfo.resumeFile.isInvalid()) {
+                $scope.gotoAttachmentTab();
+                return {
+                    valid: false,
+                    error: {
+                        title: 'ข้อมูลไม่ถูกต้อง/ครบถ้วน',
+                        message: 'attachmentInfo.resumeFile'
+                    }
+                };
+            }
+            // ****************************** attachmentInfo ****************************** //
+
+            return {
+                valid: true
+            };
+        };
+    }
+</script>

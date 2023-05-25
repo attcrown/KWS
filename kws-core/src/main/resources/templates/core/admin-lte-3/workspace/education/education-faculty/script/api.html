@@ -1,0 +1,281 @@
+<script th:inline="javascript">
+    function useApi($scope, $http)
+    {
+        $scope.search = useSearch($scope, $http);
+        $scope.createEducationFaculty = useCreateEducationFaculty($scope, $http);
+        $scope.updateEducationFaculty = useUpdateEducationFaculty($scope, $http);
+        $scope.removeEducationFaculty = useRemoveEducationFaculty($scope, $http);
+    }
+
+    function useSearch($scope, $http)
+    {
+        return () => {
+            console.log("### EducationFacultyController.search ###");
+            console.log("criteria => " + JSON.stringify($scope.criteria));
+
+            $scope.educationFaculties = [];
+
+            const requestMessage = {
+                criteria: $scope.criteria,
+
+                paging: {
+                    pageNo: $scope.paging.pageNo,
+                    pageSize: $scope.paging.pageSize
+                },
+
+                sortBy: [
+                    {
+                        field: "name",
+                        order: "asc"
+                    }
+                ]
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/core/education/faculty/search`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+            
+            $scope.isLoading = true;
+            $http(options).
+            then(response => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    $scope.educationFaculties = response.data.body.datas;
+                    $scope.paging.totalPage = response.data.body.totalPage;
+                    $scope.paging.totalSize = response.data.body.totalSize;
+
+                    if($scope.educationFaculties.length === 0 && $scope.paging.pageNo > 1) {
+                        $scope.gotoPageNo(1);
+                    }
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถค้นหาคณะวิชาได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            })
+            .catch(error => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถค้นหาคณะวิชาได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            })
+            .finally(() => {
+                $scope.isLoading = false;
+            });
+        };
+    }
+
+    function useCreateEducationFaculty($scope, $http)
+    {
+        return (educationFaculty) => {
+            console.log("### EducationFacultyController.createEducationFaculty ###");
+            console.log("educationFaculty => ", educationFaculty);
+
+            const requestMessage = {
+                educationFaculty: educationFaculty
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/core/education/faculty/create`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+            
+            $scope.isLoading = true;
+            $http(options).
+            then(response => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    $scope.educationFaculties.push(response.data.body.createdEducationFaculty);
+                    $scope.toListMode();
+                    swal("บันทึกข้อมูลสำเร็จ", "บันทึกคณะวิชาสำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกคณะวิชาได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            })
+            .catch(error => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถบันทึกคณะวิชาได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            })
+            .finally(() => {
+                $scope.isLoading = false;
+            });
+        };
+    }
+
+    function useUpdateEducationFaculty($scope, $http)
+    {
+        return (educationFaculty) => {
+            console.log("### EducationFacultyController.updateEducationFaculty ###");
+            console.log("educationFaculty => ", educationFaculty);
+
+            const requestMessage = {
+                educationFacultyId: educationFaculty.id,
+                educationFaculty: educationFaculty
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/core/education/faculty/update`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+            
+            $scope.isLoading = true;
+            $http(options).
+            then(response => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    $scope.educationFaculties = $scope.educationFaculties.filter(e => e.id !== educationFaculty.id);
+                    $scope.educationFaculties.push(response.data.body.updatedEducationFaculty);
+                    $scope.toListMode();
+                    swal("บันทึกข้อมูลสำเร็จ", "บันทึกคณะวิชาสำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกคณะวิชาได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            })
+            .catch(error => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถบันทึกคณะวิชาได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            })
+            .finally(() => {
+                $scope.isLoading = false;
+            });
+        };
+    }
+
+    function useRemoveEducationFaculty($scope, $http)
+    {
+        return (educationFaculty) => {
+            console.log("### EducationFacultyController.useRemoveEducationFaculty ###");
+            console.log("educationFaculty => ", educationFaculty);
+
+            const requestMessage = {
+                educationFacultyId: educationFaculty.id
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/core/education/faculty/remove`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+            
+            $scope.isLoading = true;
+            $http(options).
+            then(response => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    $scope.educationFaculties = $scope.educationFaculties.filter(e => e.id !== educationFaculty.id);
+                    swal("ลบข้อมูลสำเร็จ", "ลบคณะวิชาสำเร็จ", "success");
+                    $scope.educationFaculties = $scope.educationFaculties.filter(e => e.id !== educationFaculty.id);
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถลบคณะวิชาได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            })
+            .catch(error => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถลบคณะวิชาได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            })
+            .finally(() => {
+                $scope.isLoading = false;
+            });
+        };
+    }
+</script>

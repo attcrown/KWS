@@ -1,0 +1,250 @@
+<script th:inline="javascript">
+    function useEntryController($scope, $http)
+    {
+        console.log("### InternshipRegistrationController.useEntryController ###");
+        $scope.isShowEducationFaculty = useIsShowEducationFaculty($scope, $http);
+        $scope.isShowEducationMajor = useIsShowEducationMajor($scope, $http);
+        $scope.addExperience = useAddExperience($scope, $http);
+        $scope.removeExperience = useRemoveExperience($scope, $http);
+        $scope.requestSave = useRequestSave($scope, $http);
+        $scope.buildFormData = useBuildFormData($scope, $http);
+    }
+
+    function useIsShowEducationFaculty($scope, $http)
+    {
+        return () => {
+            if($scope.userProfile.educationInfo.educationLevelId) {
+                if($scope.userProfile.educationInfo.educationLevelId === 'Bachelor') {
+                    return true;
+                }
+
+                if($scope.userProfile.educationInfo.educationLevelId === 'Master') {
+                    return true;
+                }
+
+                if($scope.userProfile.educationInfo.educationLevelId === 'Doctor') {
+                    return true;
+                }
+            }
+            return false;
+        };
+    }
+
+    function useIsShowEducationMajor($scope, $http)
+    {
+        return () => {
+            if($scope.userProfile.educationInfo.educationLevelId) {
+                if($scope.userProfile.educationInfo.educationLevelId === 'Bachelor') {
+                    return true;
+                }
+
+                if($scope.userProfile.educationInfo.educationLevelId === 'Master') {
+                    return true;
+                }
+
+                if($scope.userProfile.educationInfo.educationLevelId === 'Doctor') {
+                    return true;
+                }
+            }
+            return false;
+        };
+    }
+
+    function useAddExperience($scope, $http)
+    {
+        return () => {
+            console.log("### InternshipRegistrationController.addExperience ###");
+            $scope.userProfile.internInfo.experiences.push({
+                experienceInfo: ''
+            });
+        };
+    }
+
+    function useRemoveExperience($scope, $http)
+    {
+        return (experience) => {
+            console.log("### InternshipRegistrationController.removeExperience ###");
+            console.log("experience => ", experience);
+            // if($scope.userProfile.internInfo.experiences.length === 1) {
+            //     return;
+            // }
+            $scope.userProfile.internInfo.experiences = $scope.userProfile.internInfo.experiences.filter(e => e != experience);
+        };
+    }
+
+    function useRequestSave($scope, $http)
+    {
+        return () => {
+            console.log("### InternshipRegistrationController.requestSave ###");
+
+            $scope.submitted = true;
+
+            const verify = $scope.verifyFormData();
+            // verify.valid = true;
+
+            if(verify.valid === true) {
+                const options = {
+                    title: "ยืนยันบันทึกข้อมูลการลงทะเบียน ?",
+                    // text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                    text: 'กรุณาตรวจสอบความถูกต้องของข้อมูล และยืนยันว่าข้อมูลที่กรอกเป็นความจริงทุกประการ กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                    icon: "warning",
+                    buttons: ["ยกเลิก", "ตกลง"],
+                    dangerMode: true
+                };
+
+                swal(options).
+                then(confirm => {
+                    if (confirm) {
+                        $scope.registerInternship();
+                        // swal("บันทึกข้อมูลสำเร็จ", "บันทึกข้อมูลการลงทะเบียนเข้าร่วมโครงการ Internship.Co สำเร็จ, โปรดรอผลการตอบรับจากแอดมิน", "success");
+                        // setTimeout(() => {
+                        //     $scope.gotoResultView();
+                        //     $scope.$apply();
+                        // }, 0);
+                    }
+                });
+            } else {
+                // swal(verify.error.title, verify.error.message, "error");
+                swal("ข้อมูลไม่ถูกต้อง/ครบถ้วน", "กรุณาระบุข้อมูลให้ถูกต้อง/ครบถ้วน", "error");
+            }
+        };
+    }
+
+    function useBuildFormData($scope, $http)
+    {
+        return () => {
+            console.log("### InternshipRegistrationController.buildFormData ###");
+
+            const formData = new FormData();
+
+            // ****************************** personal-info ****************************** //
+            formData.append('gender', $scope.userProfile.personalInfo.gender);
+            formData.append('firstName', $scope.userProfile.personalInfo.firstName);
+            formData.append('lastName', $scope.userProfile.personalInfo.lastName);
+            formData.append('nickName', $scope.userProfile.personalInfo.nickName);
+            formData.append('birthDate', $scope.userProfile.personalInfo.birthDate);
+            if($scope.userProfile.personalInfo.formalPhotoFile) {
+                formData.append('formalPhotoFile', $scope.userProfile.personalInfo.formalPhotoFile);
+            }
+            if($scope.userProfile.personalInfo.informalPhotoFile) {
+                formData.append('informalPhotoFile', $scope.userProfile.personalInfo.informalPhotoFile) 
+            }
+            // ****************************** personal-info ****************************** //
+
+
+            // ****************************** contact-info ****************************** //
+            formData.append('mobileNo', $scope.userProfile.contactInfo.mobileNo);
+            formData.append('email', $scope.userProfile.contactInfo.email);
+            formData.append('lineId', $scope.userProfile.contactInfo.lineId);
+            formData.append('contactAddressDetail', $scope.userProfile.contactInfo.addressDetail);
+            // ****************************** contact-info ****************************** //
+
+
+            // ****************************** person-contact-info ****************************** //
+            formData.append('contactPersonName', $scope.userProfile.personContactInfo.name);
+            if($scope.userProfile.personContactInfo.relationshipId) {
+                formData.append('contactPersonRelationshipId', $scope.userProfile.personContactInfo.relationshipId);
+            } else {
+                formData.append('contactPersonRelationshipOther', $scope.userProfile.personContactInfo.relationshipOther);
+            }
+            formData.append('contactPersonMobileNo', $scope.userProfile.personContactInfo.mobileNo);
+            // ****************************** person-contact-info ****************************** //
+
+
+            // ****************************** education-info ****************************** //
+            formData.append('educationStatusId', $scope.userProfile.educationInfo.educationStatusId);
+
+            if($scope.userProfile.educationInfo.educationLevelId) {
+                formData.append('educationLevelId', $scope.userProfile.educationInfo.educationLevelId);
+            } else {
+                formData.append('educationLevelOther', $scope.userProfile.educationInfo.educationLevelOther);
+            }
+
+            formData.append('educationClass', $scope.userProfile.educationInfo.educationClass);
+
+            if($scope.userProfile.educationInfo.educationFacultyId !== 'other') {
+                formData.append('educationFacultyId', $scope.userProfile.educationInfo.educationFacultyId);
+            } else {
+                formData.append('educationFacultyOther', $scope.userProfile.educationInfo.educationFacultyOther);
+            }
+
+            if($scope.userProfile.educationInfo.educationMajorId !== 'other') {
+                formData.append('educationMajorId', $scope.userProfile.educationInfo.educationMajorId);
+            } else {
+                formData.append('educationMajorOther', $scope.userProfile.educationInfo.educationMajorOther);
+            }
+
+            if($scope.userProfile.educationInfo.schoolId !== 'other') {
+                formData.append('schoolId', $scope.userProfile.educationInfo.schoolId);
+            } else {
+                formData.append('schoolOther', $scope.userProfile.educationInfo.schoolOther);
+            }
+
+            formData.append('gpa', $scope.userProfile.educationInfo.gpa);
+            // ****************************** education-info ****************************** //
+
+
+            // ****************************** intern-info ****************************** //
+            formData.append('internshipTypeId', $scope.userProfile.internInfo.internshipTypeId);
+            formData.append('requestAckDate', $scope.userProfile.internInfo.requestAckDate);
+            formData.append('requestStartDate', $scope.userProfile.internInfo.requestStartDate);
+            formData.append('requestEndDate', $scope.userProfile.internInfo.requestEndDate);
+
+            if($scope.userProfile.internInfo.requestJob1Id !== 'other') {
+                formData.append('requestJob1Id', $scope.userProfile.internInfo.requestJob1Id);
+            } else {
+                formData.append('requestJob1Other', $scope.userProfile.internInfo.requestJob1Other);
+            }
+
+            if($scope.userProfile.internInfo.requestJob2Id !== 'other') {
+                formData.append('requestJob2Id', $scope.userProfile.internInfo.requestJob2Id);
+            } else {
+                formData.append('requestJob2Other', $scope.userProfile.internInfo.requestJob2Other);
+            }
+
+            if($scope.userProfile.internInfo.requestJob3Id !== 'other') {
+                formData.append('requestJob3Id', $scope.userProfile.internInfo.requestJob3Id);
+            } else {
+                formData.append('requestJob3Other', $scope.userProfile.internInfo.requestJob3Other);
+            }
+
+            formData.append('requestDayOffNum', $scope.userProfile.internInfo.requestDayOffNum);
+            formData.append('skill', $scope.userProfile.internInfo.skill);
+
+            if($scope.userProfile.internInfo.experiences.length > 0) {
+                let experiences = [];
+                for(let i=0; i<$scope.userProfile.internInfo.experiences.length; i++) {
+                    experiences.push({
+                        seqNo: i + 1,
+                        experienceInfo: $scope.userProfile.internInfo.experiences[i].experienceInfo,
+                        status: "Active"
+                    });
+                }
+                console.log("experiences => ", experiences);
+
+                formData.append("experienceInfosJSON", JSON.stringify(experiences));
+            }
+
+            formData.append('requestLocation', $scope.userProfile.internInfo.requestLocation);
+            if($scope.userProfile.internInfo.portfolioDescription) {
+                formData.append('portfolioDescription', $scope.userProfile.internInfo.portfolioDescription);
+            }
+            // ****************************** intern-info ****************************** //
+
+
+            // ****************************** attachment-info ****************************** //
+            formData.append('resumeFile', $scope.userProfile.attachmentInfo.resumeFile);
+            if($scope.userProfile.attachmentInfo.portfolioFiles && $scope.userProfile.attachmentInfo.portfolioFiles.length > 0) {
+                for(let i=0; i<$scope.userProfile.attachmentInfo.portfolioFiles.length; i++) {
+                    formData.append('portfolioFiles[]', $scope.userProfile.attachmentInfo.portfolioFiles[i]);
+                }
+            }
+            if($scope.userProfile.attachmentInfo.internLetterFile) {
+                formData.append('internLetterFile', $scope.userProfile.attachmentInfo.internLetterFile);
+            }
+            // ****************************** attachment-info ****************************** //
+
+            return formData;
+        };
+    }
+</script>

@@ -1,0 +1,203 @@
+<div th:replace="fishsix/admin-lte-3/workspace/admin/course/script/api"></div>
+<div th:replace="fishsix/admin-lte-3/workspace/admin/course/script/list-controller"></div>
+<div th:replace="fishsix/admin-lte-3/workspace/admin/course/script/entry-controller"></div>
+
+<script th:inline="javascript">
+    app.controller("FishsixCourseController", ["$scope", "$http", ($scope, $http) => {
+        $scope.classChannels = /*[[${classChannels}]]*/ [];
+        $scope.classTypes = /*[[${classTypes}]]*/ [];
+        $scope.classLevels = /*[[${classLevels}]]*/ [];
+        $scope.educationClasses = /*[[${educationClasses}]]*/ [];
+        $scope.subjectCategories = /*[[${subjectCategories}]]*/ [];
+        $scope.subjects = /*[[${subjects}]]*/ [];
+        $scope.classHours = /*[[${classHours}]]*/ [];
+
+        console.log("classLevels => ", $scope.classLevels);
+        console.log("educationClasses => ", $scope.educationClasses);
+        console.log("subjectCategories => ", $scope.subjectCategories);
+        console.log("subjects => ", $scope.subjects);
+
+        $scope.isLoading = false;
+        $scope.criteria = {};
+        $scope.paging = {};
+        $scope.courseProfiles = [];
+        $scope.selectedCourseProfile;
+        $scope.mode = "list"; // ["list", "entry"]
+        $scope.entryMode = ""; // ["add", "edit"]
+
+        $scope.init = function() {
+            console.log("### FishsixCourseController.init ###");
+
+            useApi($scope, $http);
+            useListController($scope, $http);
+            useEntryController($scope, $http);
+
+            $scope.criteria = {
+                statuses: ["Active"],
+                classChannelIds: [],
+                classTypeIds: [],
+                classLevelIds: [],
+                classHours: [],
+                subjectIds: []
+            };
+
+            $scope.paging = {
+                pageNo: 1,
+                pageSize: 25,
+                totalPage: 0,
+                totalSize: 0
+            };
+
+            $('.select2').select2({ theme: 'bootstrap4' });
+
+            $scope.initClassHours();
+        };
+
+        $scope.initClassHours = function() {
+            console.log("### FishsixCourseController.initClassHours ###");
+
+            $scope.classHours = [
+                {
+                    id: '001',
+                    hour: 32,
+                    name: '32 ชั่วโมง',
+                    period: {
+                        id: '4M',
+                        value: '4 เดือน'
+                    }
+                },
+
+                {
+                    id: '002',
+                    hour: 48,
+                    name: '48 ชั่วโมง',
+                    period: {
+                        id: '6M',
+                        value: '6 เดือน'
+                    }
+                },
+
+                {
+                    id: '003',
+                    hour: 96,
+                    name: '96 ชั่วโมง',
+                    period: {
+                        id: '1Y',
+                        value: '1 ปี'
+                    }
+                }
+            ];
+        };
+
+        $scope.getClassChannelName = function(courseProfile) {
+            let classChannel = $scope.classChannels.find(e => e.id === courseProfile.course.classChannelId);
+            if(classChannel) {
+                return classChannel.name;
+            }
+        };
+
+        $scope.getClassTypeName = function(courseProfile) {
+            let classType = $scope.classTypes.find(e => e.id === courseProfile.course.classTypeId);
+            if(classType) {
+                return classType.name;
+            }
+        };
+
+        $scope.getClassLevelTitle = function(subject) {
+            let educationClass = $scope.educationClasses.find(e => e.id === subject.educationClassId);
+            if(educationClass) {
+                return educationClass.title;
+            }
+        };
+
+        // $scope.getSubjectsByCategoryId = function(subjectCategoryId) {
+        //     let subjects = $scope.subjects.filter(e => e.subjectCategoryId === subjectCategoryId);
+        //     if(subjects && subjects.length > 0) {
+        //         subjects = subjects.sort((s1, s2) => s1.seqNo - s2.seqNo);
+        //         return subjects;
+        //     }
+        //     return [];
+        // };
+
+        $scope.getSubjectsByCategoryId = function(subjectCategoryId) {
+            let subjects = $scope.subjects.filter(e => e.subjectCategoryId === subjectCategoryId);
+            if(subjects && subjects.length > 0) {
+                subjects = subjects.sort((s1, s2) => {
+                    const educationClass1 = $scope.educationClasses.find(e => e.id === s1.educationClassId);
+                    const educationClass2 = $scope.educationClasses.find(e => e.id === s2.educationClassId);
+                    return educationClass1.seqNo - educationClass2.seqNo;
+                });
+                return subjects;
+            }
+            return [];
+        };
+
+        $scope.swapMode = function() {
+            if($scope.mode === 'list') {
+                $scope.toEntryMode();
+            } else if($scope.mode === 'entry') {
+                $scope.toListMode();
+            }
+        };
+
+        $scope.toListMode = function() {
+            $scope.mode = 'list';
+        };
+
+        $scope.toEntryMode = function() {
+            $scope.mode = 'entry';
+        };
+
+        $scope.requestAddCourse = function() {
+            console.log("### FishsixCourseController.requestAddCourse ###");
+            $scope.toEntryMode();
+            $scope.entryMode = "add";
+            $scope.selectedCourseProfile = {
+                subjectIds: [],
+                course: {
+                    extraHour: 0,
+                    discountPrice: 0
+                }
+            };
+            $scope.resetForm();
+        };
+
+        $scope.resetForm = function() {
+            setTimeout(() => {
+                $scope.courseForm.$submitted = false;
+
+                $scope.courseForm.name.$setUntouched();
+                $scope.courseForm.name.$setPristine();
+
+                $scope.courseForm.classChannel.$setUntouched();
+                $scope.courseForm.classChannel.$setPristine();
+
+                $scope.courseForm.classType.$setUntouched();
+                $scope.courseForm.classType.$setPristine();
+
+                $scope.courseForm.hour.$setUntouched();
+                $scope.courseForm.hour.$setPristine();
+                
+                $scope.courseForm.extraHour.$setUntouched();
+                $scope.courseForm.extraHour.$setPristine();
+
+                $scope.courseForm.price.$setUntouched();
+                $scope.courseForm.price.$setPristine();
+
+                $scope.courseForm.discountPrice.$setUntouched();
+                $scope.courseForm.discountPrice.$setPristine();
+
+                $scope.courseForm.expirationPeriod.$setUntouched();
+                $scope.courseForm.expirationPeriod.$setPristine();
+
+                $scope.courseForm.maxSubject.$setUntouched();
+                $scope.courseForm.maxSubject.$setPristine();
+
+                // $scope.courseForm.selectableSubjects.$setUntouched();
+                // $scope.courseForm.selectableSubjects.$setPristine();
+
+                $scope.$apply();
+            }, 0);
+        };
+    }]);
+</script>

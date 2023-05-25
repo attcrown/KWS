@@ -1,0 +1,199 @@
+<form class="form-horizontal">
+    <!-- resume-file -->
+    <div>
+        <div class="form-group row" ng-show="formStyle === 'column'">
+            <label class="col-sm-4 col-form-label">
+                <span class="text-danger">*</span> เรซูเม่
+            </label>
+            <div class="col-sm-8">
+                <div class="input-group">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input resume-file" accept="application/pdf">
+                        <label ng-show="!userProfile.attachmentInfo.resumeFile" class="custom-file-label">--- อัพโหลดไฟล์ (PDF) ---</label>
+                        <label ng-show="userProfile.attachmentInfo.resumeFile" class="custom-file-label">{{ userProfile.attachmentInfo.resumeFile.name }}</label>
+                    </div>
+                    <div class="input-group-append">
+                        <button ng-show="userProfile.attachmentInfo.resumeFile" class="btn btn-danger" ng-click="removeResumeFile()">
+                            <i class="fas fa-trash"></i> ลบ
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="form-group border rounded p-2" ng-show="formStyle === 'row'" ng-class="{'border-danger': validator.attachmentInfo.resumeFile.isInvalid()}">
+            <div>
+                <label class="col-form-label">
+                    <span class="text-danger">*</span>
+                    <span ng-show="!validator.attachmentInfo.resumeFile.isInvalid()">เรซูเม่</span>
+                    <span ng-show="validator.attachmentInfo.resumeFile.isInvalid()" class="text-danger">กรุณาอัพโหลดเรซูเม่</span>
+                </label>
+                <small class="text-muted">กรุณาอัพโหลดเรซูเม่ (ไฟล์ PDF)</small>
+            </div>
+            <div>
+                <div class="input-group">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input resume-file" accept="application/pdf">
+                        <label ng-show="!userProfile.attachmentInfo.resumeFile" class="custom-file-label">--- อัพโหลดไฟล์ (PDF) ---</label>
+                        <label ng-show="userProfile.attachmentInfo.resumeFile" class="custom-file-label">{{ userProfile.attachmentInfo.resumeFile.name }}</label>
+                    </div>
+                    <div class="input-group-append">
+                        <button ng-show="userProfile.attachmentInfo.resumeFile" class="btn btn-danger" ng-click="removeResumeFile()">
+                            <i class="fas fa-trash"></i> ลบ
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.resume-file -->
+
+    <!-- intern-letter-file -->
+    <div ng-if="false">
+        <div class="form-group row" ng-show="formStyle === 'column'">
+            <label class="col-sm-4 col-form-label">เอกสารรับรองการขอฝึกงาน (ถ้ามี)</label>
+            <div class="col-sm-8">
+                <div class="input-group">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input intern-letter-file" accept="application/pdf">
+                        <label ng-show="!userProfile.attachmentInfo.internLetterFile" class="custom-file-label">--- อัพโหลดไฟล์ (PDF) ---</label>
+                        <label ng-show="userProfile.attachmentInfo.internLetterFile" class="custom-file-label">{{ userProfile.attachmentInfo.internLetterFile.name }}</label>
+                    </div>
+                    <div class="input-group-append">
+                        <button ng-show="userProfile.attachmentInfo.internLetterFile" class="btn btn-danger" ng-click="removeInternLetterFile()">
+                            <i class="fas fa-trash"></i> ลบ
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="form-group border rounded p-2" ng-show="formStyle === 'row'">
+            <div>
+                <label class="col-form-label">เอกสารรับรองการขอฝึกงาน (ถ้ามี)</label>
+                <small class="text-muted">กรุณาอัพโหลดเอกสารรับรองการขอฝึกงานเป็นไฟล์ PDF</small>
+            </div>
+            <div>
+                <div class="input-group">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input intern-letter-file" accept="application/pdf">
+                        <label ng-show="!userProfile.attachmentInfo.internLetterFile" class="custom-file-label">--- อัพโหลดไฟล์ (PDF) ---</label>
+                        <label ng-show="userProfile.attachmentInfo.internLetterFile" class="custom-file-label">{{ userProfile.attachmentInfo.internLetterFile.name }}</label>
+                    </div>
+                    <div class="input-group-append">
+                        <button ng-show="userProfile.attachmentInfo.internLetterFile" class="btn btn-danger" ng-click="removeInternLetterFile()">
+                            <i class="fas fa-trash"></i> ลบ
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.intern-letter-file -->
+
+    <!-- portfolio-files -->
+    <div>
+        <div class="form-group row" ng-show="formStyle === 'column'">
+            <label class="col-sm-4 col-form-label">พอร์ตโฟลิโอ (ถ้ามี)</label>
+            <div class="col-sm-8">
+                <div class="input-group">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input portfolio-files" accept="application/pdf" multiple>
+                        <label ng-show="userProfile.attachmentInfo.portfolioFiles.length === 0" class="custom-file-label">--- อัพโหลดไฟล์ (PDF) ---</label>
+                        <label ng-show="userProfile.attachmentInfo.portfolioFiles.length > 0" class="custom-file-label">{{ userProfile.attachmentInfo.portfolioFiles.length }} Files</label>
+                    </div>
+                    <div class="input-group-append">
+                        <button ng-show="userProfile.attachmentInfo.portfolioFiles.length > 0" class="btn btn-danger" ng-click="removePortfolioFiles()">
+                            <i class="fas fa-trash"></i> ลบ
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="form-group border rounded p-2" ng-show="formStyle === 'row'">
+            <div>
+                <label class="col-form-label">พอร์ตโฟลิโอ (ถ้ามี)</label>
+                <small class="text-muted">กรุณาอัพโหลดพอร์ตโฟลิโอเป็นไฟล์ PDF (สูงสุด 5 ไฟล์)</small>
+            </div>
+            <div>
+                <div class="input-group">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input portfolio-files" accept="application/pdf" multiple>
+                        <label ng-show="userProfile.attachmentInfo.portfolioFiles.length === 0" class="custom-file-label">--- อัพโหลดไฟล์ (PDF) ---</label>
+                        <label ng-show="userProfile.attachmentInfo.portfolioFiles.length > 0" class="custom-file-label">{{ userProfile.attachmentInfo.portfolioFiles.length }} Files</label>
+                    </div>
+                    <div class="input-group-append">
+                        <button ng-show="userProfile.attachmentInfo.portfolioFiles.length > 0" class="btn btn-danger" ng-click="removePortfolioFiles()">
+                            <i class="fas fa-trash"></i> ลบ
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.portfolio-files -->
+
+    <!-- portfolio-description -->
+    <div>
+        <div class="form-group row" ng-show="formStyle === 'column'">
+            <label class="col-sm-4 col-form-label">
+                ผลงาน
+            </label>
+            <div class="col-sm-8">
+                <textarea class="form-control" rows="5" placeholder="อธิบายผลงาน หรือระบุลิงค์ที่เก็บผลงาน" ng-model="userProfile.internInfo.portfolioDescription"></textarea>
+            </div>
+        </div>
+    
+        <div class="form-group border rounded p-2" ng-show="formStyle === 'row'">
+            <div>
+                <label class="col-form-label">ผลงาน</label>
+                <small class="text-muted">อธิบายผลงาน หรือระบุลิงค์ที่เก็บผลงาน</small>
+            </div>
+            <div>
+                <textarea class="form-control" rows="5" placeholder="อธิบายผลงาน หรือระบุลิงค์ที่เก็บผลงาน" ng-model="userProfile.internInfo.portfolioDescription"></textarea>
+            </div>
+        </div>
+    </div>
+    <!-- /.portfolio-description -->
+
+    <div class="card d-none">
+        <div class="card-header">
+            <h3 class="card-title text-maroon">Resume</h3>
+        </div>
+    
+        <div class="card-body">
+            <object data="https://sac.kku.ac.th/kmsac/word/w5.pdf" type="application/pdf" width="100%" height="760">
+                Resume : <a href="https://sac.kku.ac.th/kmsac/word/w5.pdf">เปิด</a>
+            </object>
+        </div>
+
+        <div class="card-footer">
+            <div class="text-right">
+                <a href="https://sac.kku.ac.th/kmsac/word/w5.pdf" target="_blank" class="btn btn-primary btn-sm">
+                    <i class="fas fa-external-link-alt"></i> เปิด
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card d-none">
+        <div class="card-header">
+            <h3 class="card-title text-maroon">เอกสารรับรองการขอฝึกงาน</h3>
+        </div>
+    
+        <div class="card-body">
+            <object data="https://sac.kku.ac.th/kmsac/word/w5.pdf" type="application/pdf" width="100%" height="760">
+                เอกสารรับรองการขอฝึกงาน : <a href="https://sac.kku.ac.th/kmsac/word/w5.pdf">เปิด</a>
+            </object>
+        </div>
+
+        <div class="card-footer">
+            <div class="text-right">
+                <a href="https://sac.kku.ac.th/kmsac/word/w5.pdf" target="_blank" class="btn btn-primary btn-sm">
+                    <i class="fas fa-external-link-alt"></i> เปิด
+                </a>
+            </div>
+        </div>
+    </div>
+</form>

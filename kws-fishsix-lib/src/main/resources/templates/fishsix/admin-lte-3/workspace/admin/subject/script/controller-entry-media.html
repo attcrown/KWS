@@ -1,0 +1,220 @@
+<script th:inline="javascript">
+    function useEntryMediaController($scope, $http)
+    {
+        console.info("### FishsixSubjectController.useEntryMediaController ###");
+
+        $scope.mediaMode = 'list'; // ['list', 'entry']
+        $scope.mediaEntryMode = 'add'; // ['add', 'edit']
+
+        $scope.openMediaModal = useOpenMediaModal($scope, $http);
+        $scope.toMediaListMode = useToMediaListMode($scope, $http);
+        $scope.requestAddMedia = useRequestAddMedia($scope, $http);
+        $scope.requestEditMedia = useRequestEditMedia($scope, $http);
+        $scope.requestRemoveMedia = useRequestRemoveMedia($scope, $http);
+        $scope.handleMediaFileChanged = useHandleMediaFileChanged($scope, $http);
+        $scope.removeMediaFile = useRemoveMediaFile($scope, $http);
+        $scope.openMediaSourceFile = useOpenMediaSourceFile($scope, $http);
+        $scope.saveMedia = useSaveMedia($scope, $http);
+        $scope.buildMediaFormData = useBuildMediaFormData($scope, $http);
+    }
+
+    function useOpenMediaModal($scope, $http)
+    {
+        return (chapter) => {
+            console.log("### FishsixSubjectController.openMediaModal ###");
+
+            $scope.selectedChapter = chapter;
+            $scope.mediaMode = 'list';
+
+            showMediaModal();
+            registerMediaFileChangedHandler($scope);
+        };
+    }
+
+    function useToMediaListMode($scope, $http)
+    {
+        return () => {
+            $scope.mediaMode = 'list';
+            $scope.mediaEntryMode = 'add';
+            resetSelectedMedia($scope);
+        };
+    }
+
+    function useRequestAddMedia($scope, $http)
+    {
+        return () => {
+            console.log("### FishsixSubjectController.requestAddMedia ###");
+
+            $scope.mediaMode = 'entry';
+            $scope.mediaEntryMode = 'add';
+
+            if(! $scope.selectedChapter.medias) {
+                $scope.selectedChapter.medias = [];
+            }
+
+            resetSelectedMedia($scope);
+            $scope.selectedMedia.seqNo = 1;
+
+            if($scope.selectedChapter.medias.length > 0) {
+                $scope.selectedMedia.seqNo = $scope.selectedChapter.medias.length + 1;
+            }
+        };
+    }
+
+    function useRequestEditMedia($scope, $http)
+    {
+        return (media) => {
+            console.log("### FishsixSubjectController.requestEditMedia ###");
+
+            $scope.mediaMode = 'entry';
+            $scope.mediaEntryMode = 'edit';
+            $scope.selectedMedia = media;
+            
+            showMediaModal();
+        };
+    }
+
+    function useRequestRemoveMedia($scope, $http)
+    {
+        return (media) => {
+            console.log("### FishsixSubjectController.requestRemoveMedia ###");
+
+            let medias = $scope.selectedChapter.medias;
+            
+            $scope.selectedChapter.medias = medias.filter(_media => _media.seqNo !== media.seqNo);
+
+            if($scope.entryMode === 'edit') {
+                $scope.removeMedia(media);
+            }
+        };
+    }
+
+    function useHandleMediaFileChanged($scope, $http)
+    {
+        return ($event) => {
+            console.log("### FishsixSubjectController.handleMediaFileChanged ###");
+
+            var file = $event.target.files[0];
+            if(file) {
+                media.file = file;
+                console.log("fileName => " + file.name);
+            }
+
+            $scope.$apply();
+        };
+    }
+
+    function useSaveMedia($scope, $http)
+    {
+        return () => {
+            if($scope.mediaEntryMode === 'add') {
+                $scope.selectedChapter.medias.push($scope.selectedMedia);
+    
+                if($scope.entryMode === 'edit') {
+                    $scope.selectedMedia.subjectId = $scope.selectedChapter.subjectId;
+                    $scope.selectedMedia.chapterId = $scope.selectedChapter.id;
+                    $scope.createMedia($scope.selectedMedia);
+                }
+
+                resetSelectedMedia($scope);
+            } else if($scope.mediaEntryMode === 'edit') {
+                if($scope.entryMode === 'edit') {
+                    $scope.updateMedia($scope.selectedMedia);
+                }
+            }
+
+            $scope.mediaMode = 'list';
+            $scope.mediaEntryMode = 'add';
+        };
+    }
+
+    function useRemoveMediaFile($scope, $http)
+    {
+        return (media) => {
+            console.log("### FishsixSubjectController.removeMediaFile ###");
+            media.file = null;
+        };
+    }
+
+    function useOpenMediaSourceFile($scope, $http)
+    {
+        return (media) => {
+            console.log("### FishsixSubjectController.openMediaSourceFile ###");
+            console.log(media);
+            window.open(media.mediaSourceURL, '_blank');
+        };
+    }
+
+    function useBuildMediaFormData($scope, $http)
+    {
+        return (media) => {
+            console.log("### FishsixSubjectController.buildMediaFormData ###");
+            console.log(media);
+
+            const formData = new FormData();
+
+            if(media.id) {
+                formData.append("id", media.id);
+            }
+
+            formData.append("subjectId", media.subjectId);
+            formData.append("chapterId", media.chapterId);
+            formData.append("mediaType", media.mediaType);
+            formData.append("title", media.title);
+            formData.append("description", media.description);
+            formData.append("seqNo", media.seqNo);
+            formData.append("remark", media.remark);
+
+            if(media.mediaSourceURI) {
+                formData.append("mediaSourceURI", media.mediaSourceURI);
+            }
+
+            if(media.file) {
+                formData.append("mediaSourceFile", media.file);
+            }
+
+            return formData;
+        };
+    }
+
+    function resetSelectedMedia($scope)
+    {
+        $scope.selectedMedia = {
+            mediaType: '',
+            mediaSourceURI: '',
+            title: '',
+        };
+    }
+
+    function showMediaModal()
+    {
+        $('#mediaModal').modal({
+            backdrop: 'static'
+        });
+    }
+
+    function hideMediaModal()
+    {
+        $('#mediaModal').modal("hide");
+    }
+
+    function registerMediaFileChangedHandler($scope)
+    {
+        console.log("### FishsixSubjectController.registerMediaFileChangedHandler ###");
+
+        setTimeout(() => {
+            $(".media-file").on('change', ($event) => {
+                console.log("### media_file.changed ###");
+                
+                $scope.selectedMedia.file = null;
+                const file = $event.target.files[0];
+                if(file) {
+                    $scope.selectedMedia.file = file;
+                    console.log("fileName => " + file.name);
+                }
+
+                $scope.$apply();
+            });
+        }, 0);
+    }
+</script>

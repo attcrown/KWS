@@ -1,0 +1,64 @@
+<script th:inline="javascript">
+    function useEntryController($scope, $http)
+    {
+        $scope.requestSave = useRequestSave($scope, $http);
+        $scope.verify = useVerify($scope, $http);
+        $scope.isShowEducationFacultyError = useIsShowEducationFacultyError($scope, $http);
+        $scope.isShowNameError = useIsShowNameError($scope, $http);
+    }
+
+    function useRequestSave($scope, $http)
+    {
+        return () => {
+            console.log("### EducationMajorController.requestSave ###");
+
+            $scope.educationMajorForm.$submitted = true;
+
+            if($scope.verify()) {
+                const options = {
+                    title: $scope.entryMode === "add" ? "ยืนยันการบันทึกข้อมูลสาขาวิชา ?" : "ยืนยันการแก้ไขข้อมูลสาขาวิชา",
+                    text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                    icon: "warning",
+                    buttons: ["ยกเลิก", "ตกลง"],
+                    dangerMode: true
+                };
+
+                swal(options)
+                .then(confirm => {
+                    if (confirm) {
+                        if($scope.entryMode === 'add') {
+                            $scope.createEducationMajor($scope.selectedEducationMajor);
+                        } else if($scope.entryMode === 'edit') {
+                            $scope.updateEducationMajor($scope.selectedEducationMajor);
+                        }
+                    }
+                });
+            } else {
+                swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+            }
+        };
+    }
+
+    function useVerify($scope, $http)
+    {
+        return () => {
+            return $scope.educationMajorForm.$valid;
+        };
+    }
+
+    // ****************************** validate ****************************** //
+    function useIsShowEducationFacultyError($scope, $http) 
+    {
+        return () => {
+            return $scope.educationMajorForm.$submitted && $scope.educationMajorForm.educationFaculty.$invalid;
+        };
+    }
+
+    function useIsShowNameError($scope, $http) 
+    {
+        return () => {
+            return ($scope.educationMajorForm.$submitted || $scope.educationMajorForm.name.$dirty) && $scope.educationMajorForm.name.$invalid;
+        };
+    }
+    // ****************************** validate ****************************** //
+</script>

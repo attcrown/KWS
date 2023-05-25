@@ -1,0 +1,450 @@
+<form class="form-horizontal">
+    <!-- internship-type -->
+    <div>
+        <div class="form-group row" ng-show="formStyle === 'column'">
+            <label class="col-sm-4 col-form-label">
+                <span class="text-danger">*</span>
+                ประเภทการฝึกงาน
+            </label>
+            <div class="col-sm-8">
+                <select class="form-control" data-placeholder="--- เลือกประเภทการฝึกงาน ---" ng-model="userProfile.internInfo.internshipTypeId">
+                    <option value="" selected disabled>--- เลือกประเภทการฝึกงาน ---</option>
+                    <option ng-repeat="internshipType in internshipTypes | orderBy: 'seqNo'" ng-value="internshipType.id">{{ internshipType.name }}</option>
+                </select>
+            </div>
+        </div>
+    
+        <div class="form-group border rounded p-2" ng-show="formStyle === 'row'" ng-class="{'border-danger': validator.internInfo.internshipTypeId.isInvalid()}">
+            <div>
+                <label class="col-form-label">
+                    <span class="text-danger">*</span>
+                    <span ng-show="!validator.internInfo.internshipTypeId.isInvalid()">ประเภทการฝึกงาน</span>
+                    <span ng-show="validator.internInfo.internshipTypeId.isInvalid()" class="text-danger">กรุณาเลือกประเภทการฝึกงาน</span>
+                </label>
+                <small class="text-muted">กรุณาเลือกประเภทการฝึกงาน</small>
+            </div>
+            <div>
+                <select class="form-control" ng-model="userProfile.internInfo.internshipTypeId">
+                    <option value="" selected disabled>--- เลือกประเภทการฝึกงาน ---</option>
+                    <option ng-repeat="internshipType in internshipTypes | orderBy: 'seqNo'" ng-value="internshipType.id">{{ internshipType.name }}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <!-- /.internship-type -->
+
+    <!-- ack-date -->
+    <div>
+        <div class="form-group row" ng-show="formStyle === 'column'">
+            <label class="col-sm-4 col-form-label">
+                <span class="text-danger">*</span>
+                ต้องการทราบผลตอบรับภายใน
+            </label>
+            <div class="col-sm-8">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="far fa-calendar-alt"></i>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control kws-datepicker" placeholder="ระบุวันที่ที่ต้องการทราบผล" data-mask data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy-mm-dd" ng-model="userProfile.internInfo.requestAckDate" />
+                </div>
+            </div>
+        </div>
+    
+        <div class="form-group border rounded p-2" ng-show="formStyle === 'row'" ng-class="{'border-danger': validator.internInfo.requestAckDate.isInvalid()}">
+            <div>
+                <label class="col-form-label">
+                    <span class="text-danger">*</span>
+                    <span ng-show="!validator.internInfo.requestAckDate.isInvalid()">ต้องการทราบผลตอบรับภายใน</span>
+                    <span ng-show="validator.internInfo.requestAckDate.isInvalid()" class="text-danger">กรุณาระบุวันที่ที่ต้องการทราบผล</span>
+                </label>
+                <small class="text-muted">กรุณาระบุวันที่ที่ต้องการทราบผลการรับเข้าร่วมการฝึกงาน</small>
+            </div>
+            <div>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="far fa-calendar-alt"></i>
+                        </span>
+                    </div>
+                    <input 
+                        type="text" 
+                        class="form-control kws-datepicker" 
+                        placeholder="ระบุวันที่ต้องการเริ่มฝึกงาน" 
+                        data-mask 
+                        data-inputmask-alias="datetime" 
+                        data-inputmask-inputformat="yyyy-mm-dd" 
+                        ng-model="userProfile.internInfo.requestAckDate" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.ack-date -->
+
+    <!-- start-date -->
+    <div>
+        <div class="form-group row" ng-show="formStyle === 'column'">
+            <label class="col-sm-4 col-form-label">
+                <span class="text-danger">*</span>
+                วันที่เริ่มฝึกงาน
+            </label>
+            <div class="col-sm-8">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="far fa-calendar-alt"></i>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control kws-datepicker" placeholder="ระบุวันที่เริ่มฝึกงาน" data-mask data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy-mm-dd" ng-model="userProfile.internInfo.requestStartDate" />
+                </div>
+            </div>
+        </div>
+    
+        <div class="form-group border rounded p-2" ng-show="formStyle === 'row'" ng-class="{'border-danger': validator.internInfo.requestStartDate.isInvalid()}">
+            <div>
+                <label class="col-form-label">
+                    <span class="text-danger">*</span>
+                    <span ng-show="!validator.internInfo.requestStartDate.isInvalid()">วันที่ต้องการเริ่มฝึกงาน</span>
+                    <span ng-show="validator.internInfo.requestStartDate.isInvalid()" class="text-danger">กรุณาระบุวันที่ต้องการเริ่มฝึกงาน</span>
+                </label>
+                <small class="text-muted">กรุณาระบุวันที่ต้องการเริ่มฝึกงาน</small>
+            </div>
+            <div>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="far fa-calendar-alt"></i>
+                        </span>
+                    </div>
+                    <input 
+                        type="text" 
+                        class="form-control kws-datepicker" 
+                        placeholder="ระบุวันที่ต้องการเริ่มฝึกงาน" 
+                        data-mask 
+                        data-inputmask-alias="datetime" 
+                        data-inputmask-inputformat="yyyy-mm-dd" 
+                        ng-model="userProfile.internInfo.requestStartDate" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.start-date -->
+
+    <!-- end-date -->
+    <div>
+        <div class="form-group row" ng-show="formStyle === 'column'">
+            <label class="col-sm-4 col-form-label">
+                <span class="text-danger">*</span>
+                วันที่สิ้นสุดการฝึกงาน
+            </label>
+            <div class="col-sm-8">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="far fa-calendar-alt"></i>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control kws-datepicker" placeholder="ระบุวันที่สิ้นสุดการฝึกงาน" data-mask data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy-mm-dd" ng-model="userProfile.internInfo.requestEndDate" />
+                </div>
+            </div>
+        </div>
+    
+        <div class="form-group border rounded p-2" ng-show="formStyle === 'row'" ng-class="{'border-danger': validator.internInfo.requestEndDate.isInvalid()}">
+            <div>
+                <label class="col-form-label">
+                    <span class="text-danger">*</span>
+                    <span ng-show="!validator.internInfo.requestEndDate.isInvalid()">วันที่ต้องการจบการฝึกงาน</span>
+                    <span ng-show="validator.internInfo.requestEndDate.isInvalid()" class="text-danger">กรุณาระบุวันที่ต้องการจบการฝึกงาน</span>
+                </label>
+                <small class="text-muted">กรุณาระบุวันที่ต้องการจบการฝึกงาน</small>
+            </div>
+            <div>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="far fa-calendar-alt"></i>
+                        </span>
+                    </div>
+                    <input 
+                        type="text" 
+                        class="form-control kws-datepicker" 
+                        placeholder="ระบุวันที่ต้องการจบการฝึกงาน" 
+                        data-mask 
+                        data-inputmask-alias="datetime" 
+                        data-inputmask-inputformat="yyyy-mm-dd" 
+                        ng-model="userProfile.internInfo.requestEndDate" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.end-date -->
+
+    <!-- job-1 -->
+    <div>
+        <div class="form-group row" ng-show="formStyle === 'column'">
+            <label class="col-sm-4 col-form-label">
+                <span class="text-danger">*</span>
+                ตำแหน่งที่สนใจสมัครฝึกงานอันดับ 1
+            </label>
+            <div class="col-sm-8">
+                <select class="form-control select2" data-placeholder="--- เลือกตำแหน่งที่สนใจสมัครฝึกงานอันดับ 1 ---" ng-model="userProfile.internInfo.requestJob1Id">
+                    <option value="" selected disabled>--- เลือกตำแหน่งที่สนใจสมัครฝึกงานอันดับ 1 ---</option>
+                    <option ng-repeat="job in jobs | orderBy: 'name'" ng-value="job.id">{{ job.name }}</option>
+                    <option value="other">--- อื่นๆ ---</option>
+                </select>
+    
+                <div class="my-2" ng-show="userProfile.internInfo.requestJob1Id === 'other'">
+                    <input type="text" class="form-control" placeholder="ระบุตำแหน่งที่สนใจสมัครฝึกงานอันดับ 1" ng-model="userProfile.internInfo.requestJob1Other" />
+                </div>
+            </div>
+        </div>
+    
+        <div class="form-group border rounded p-2" ng-show="formStyle === 'row'" ng-class="{'border-danger': validator.internInfo.requestJob1.isInvalid()}">
+            <div>
+                <label class="col-form-label">
+                    <span class="text-danger">*</span>
+                    <span ng-show="!validator.internInfo.requestJob1.isInvalid()">ตำแหน่งที่สนใจสมัครฝึกงานอันดับ 1</span>
+                    <span ng-show="validator.internInfo.requestJob1.isInvalid()" class="text-danger">กรุณาเลือกตำแหน่งที่สนใจสมัครฝึกงานอันดับ 1</span>
+                </label>
+                <small class="text-muted">กรุณาเลือกตำแหน่งที่สนใจสมัครฝึกงานอันดับ 1</small>
+            </div>
+            <div>
+                <select class="form-control select2" data-placeholder="--- เลือกตำแหน่งที่สนใจสมัครฝึกงานอันดับ 1 ---" ng-model="userProfile.internInfo.requestJob1Id">
+                    <option value="" selected disabled>--- เลือกตำแหน่งที่สนใจสมัครฝึกงานอันดับ 1 ---</option>
+                    <option ng-repeat="job in jobs | orderBy: 'name'" ng-value="job.id">{{ job.name }}</option>
+                    <option value="other">--- อื่นๆ ---</option>
+                </select>
+    
+                <div class="my-2" ng-show="userProfile.internInfo.requestJob1Id === 'other'">
+                    <input type="text" class="form-control" placeholder="ระบุตำแหน่งที่สนใจสมัครฝึกงานอันดับ 1" ng-model="userProfile.internInfo.requestJob1Other" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.job-1 -->
+
+    <!-- job-2 -->
+    <div>
+        <div class="form-group row" ng-show="formStyle === 'column'">
+            <label class="col-sm-4 col-form-label">
+                <span class="text-danger">*</span>
+                ตำแหน่งที่สนใจสมัครฝึกงานอันดับ 2
+            </label>
+            <div class="col-sm-8">
+                <select class="form-control select2" data-placeholder="--- เลือกตำแหน่งที่สนใจสมัครฝึกงานอันดับ 2 ---" ng-model="userProfile.internInfo.requestJob2Id">
+                    <option value="" selected disabled>--- เลือกตำแหน่งที่สนใจสมัครฝึกงานอันดับ 2 ---</option>
+                    <option ng-repeat="job in jobs | orderBy: 'name'" ng-value="job.id">{{ job.name }}</option>
+                    <option value="other">--- อื่นๆ ---</option>
+                </select>
+    
+                <div class="my-2" ng-show="userProfile.internInfo.requestJob2Id === 'other'">
+                    <input type="text" class="form-control" placeholder="ระบุตำแหน่งที่สนใจสมัครฝึกงานอันดับ 2" ng-model="userProfile.internInfo.requestJob2Other" />
+                </div>
+            </div>
+        </div>
+    
+        <div class="form-group border rounded p-2" ng-show="formStyle === 'row'" ng-class="{'border-danger': validator.internInfo.requestJob2.isInvalid()}">
+            <div>
+                <label class="col-form-label">
+                    <span class="text-danger">*</span>
+                    <span ng-show="!validator.internInfo.requestJob2.isInvalid()">ตำแหน่งที่สนใจสมัครฝึกงานอันดับ 2</span>
+                    <span ng-show="validator.internInfo.requestJob2.isInvalid()" class="text-danger">กรุณาเลือกตำแหน่งที่สนใจสมัครฝึกงานอันดับ 2</span>
+                </label>
+                <small class="text-muted">กรุณาเลือกตำแหน่งที่สนใจสมัครฝึกงานอันดับ 2</small>
+            </div>
+            <div>
+                <select class="form-control select2" data-placeholder="--- เลือกตำแหน่งที่สนใจสมัครฝึกงานอันดับ 2 ---" ng-model="userProfile.internInfo.requestJob2Id">
+                    <option value="" selected disabled>--- เลือกตำแหน่งที่สนใจสมัครฝึกงานอันดับ 2 ---</option>
+                    <option ng-repeat="job in jobs | orderBy: 'name'" ng-value="job.id">{{ job.name }}</option>
+                    <option value="other">--- อื่นๆ ---</option>
+                </select>
+    
+                <div class="my-2" ng-show="userProfile.internInfo.requestJob2Id === 'other'">
+                    <input type="text" class="form-control" placeholder="ระบุตำแหน่งที่สนใจสมัครฝึกงานอันดับ 2" ng-model="userProfile.internInfo.requestJob2Other" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.job-2 -->
+
+    <!-- job-3 -->
+    <div>
+        <div class="form-group row" ng-show="formStyle === 'column'">
+            <label class="col-sm-4 col-form-label">
+                <span class="text-danger">*</span>
+                ตำแหน่งที่สนใจสมัครฝึกงานอันดับ 3
+            </label>
+            <div class="col-sm-8">
+                <select class="form-control select2" data-placeholder="--- เลือกตำแหน่งที่สนใจสมัครฝึกงานอันดับ 3 ---" ng-model="userProfile.internInfo.requestJob3Id">
+                    <option value="" selected disabled>--- เลือกตำแหน่งที่สนใจสมัครฝึกงานอันดับ 3 ---</option>
+                    <option ng-repeat="job in jobs | orderBy: 'name'" ng-value="job.id">{{ job.name }}</option>
+                    <option value="other">--- อื่นๆ ---</option>
+                </select>
+    
+                <div class="my-2" ng-show="userProfile.internInfo.requestJob3Id === 'other'">
+                    <input type="text" class="form-control" placeholder="ระบุตำแหน่งที่สนใจสมัครฝึกงานอันดับ 3" ng-model="userProfile.internInfo.requestJob3Other" />
+                </div>
+            </div>
+        </div>
+    
+        <div class="form-group border rounded p-2" ng-show="formStyle === 'row'" ng-class="{'border-danger': validator.internInfo.requestJob3.isInvalid()}">
+            <div>
+                <label class="col-form-label">
+                    <span class="text-danger">*</span>
+                    <span ng-show="!validator.internInfo.requestJob3.isInvalid()">ตำแหน่งที่สนใจสมัครฝึกงานอันดับ 3</span>
+                    <span ng-show="validator.internInfo.requestJob3.isInvalid()" class="text-danger">กรุณาเลือกตำแหน่งที่สนใจสมัครฝึกงานอันดับ 3</span>
+                </label>
+                <small class="text-muted">กรุณาเลือกตำแหน่งที่สนใจสมัครฝึกงานอันดับ 3</small>
+            </div>
+            <div>
+                <select class="form-control select2" data-placeholder="--- เลือกตำแหน่งที่สนใจสมัครฝึกงานอันดับ 3 ---" ng-model="userProfile.internInfo.requestJob3Id">
+                    <option value="" selected disabled>--- เลือกตำแหน่งที่สนใจสมัครฝึกงานอันดับ 3 ---</option>
+                    <option ng-repeat="job in jobs | orderBy: 'name'" ng-value="job.id">{{ job.name }}</option>
+                    <option value="other">--- อื่นๆ ---</option>
+                </select>
+    
+                <div class="my-2" ng-show="userProfile.internInfo.requestJob3Id === 'other'">
+                    <input type="text" class="form-control" placeholder="ระบุตำแหน่งที่สนใจสมัครฝึกงานอันดับ 3" ng-model="userProfile.internInfo.requestJob3Other" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.job-3 -->
+
+    <!-- dayoff-num -->
+    <div>
+        <div class="form-group row" ng-show="formStyle === 'column'">
+            <label class="col-sm-4 col-form-label">
+                <span class="text-danger">*</span>
+                จำนวนวันหยุดที่ต้องการ
+            </label>
+            <div class="col-sm-8">
+                <input type="number" class="form-control" placeholder="ระบุจำนวนวันหยุดที่ต้องการ" ng-model="userProfile.internInfo.requestDayOffNum" />
+            </div>
+        </div>
+    
+        <div class="form-group border rounded p-2" ng-show="formStyle === 'row'" ng-class="{'border-danger': validator.internInfo.requestDayOffNum.isInvalid()}">
+            <div>
+                <label class="col-form-label">
+                    <span class="text-danger">*</span>
+                    <span ng-show="!validator.internInfo.requestDayOffNum.isInvalid()">จำนวนวันหยุดที่ต้องการ</span>
+                    <span ng-show="validator.internInfo.requestDayOffNum.isInvalid()" class="text-danger">กรุณาระบุจำนวนวันหยุดที่ต้องการ</span>
+                </label>
+                <small class="text-muted">กรุณาระบุจำนวนวันหยุดที่ต้องการ</small>
+            </div>
+            <div>
+                <input type="number" class="form-control" placeholder="ระบุจำนวนวันหยุดที่ต้องการ" ng-model="userProfile.internInfo.requestDayOffNum" />
+            </div>
+        </div>
+    </div>
+    <!-- /.dayoff-num -->
+
+    <!-- skill -->
+    <div>
+        <div class="form-group row" ng-show="formStyle === 'column'">
+            <label class="col-sm-4 col-form-label">
+                <span class="text-danger">*</span>
+                ทักษะ/ความสามารถ
+            </label>
+            <div class="col-sm-8">
+                <textarea class="form-control" rows="5" placeholder="ระบุทักษะ/ความสามารถ" ng-model="userProfile.internInfo.skill"></textarea>
+            </div>
+        </div>
+    
+        <div class="form-group border rounded p-2" ng-show="formStyle === 'row'" ng-class="{'border-danger': validator.internInfo.skill.isInvalid()}">
+            <div>
+                <label class="col-form-label">
+                    <span class="text-danger">*</span>
+                    <span ng-show="!validator.internInfo.skill.isInvalid()">ทักษะ/ความสามารถ</span>
+                    <span ng-show="validator.internInfo.skill.isInvalid()" class="text-danger">กรุณาระบุทักษะ/ความสามารถ</span>
+                </label>
+                <small class="text-muted">กรุณาระบุทักษะ/ความสามารถ</small>
+            </div>
+            <div>
+                <textarea class="form-control" rows="5" placeholder="ระบุทักษะ/ความสามารถ" ng-model="userProfile.internInfo.skill"></textarea>
+            </div>
+        </div>
+    </div>
+    <!-- /.skill -->
+
+    <!-- experiences -->
+    <div>
+        <div ng-show="mode === 'entry'" class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    ประสบการณ์ที่ผ่านมา
+                    <small class="text-muted">ตย. กิจกรรมที่เคยเข้าร่วมกับมหาลัย งานพาทไทม์ เป็นต้น</small>
+                </h3>
+
+                <div ng-if="false" class="card-tools">
+                    <button type="button" class="btn btn-tool" ng-click="addExperience()">
+                        <i class="fas fa-plus-circle"></i>
+                    </button>
+                </div>
+            </div>
+        
+            <div class="card-body p-2">
+                <div class="form-group row" ng-show="formStyle === 'column'">
+                    <label class="col-sm-4 col-form-label">
+                        <span class="text-danger">*</span>
+                        ประสบการณ์ที่ผ่านมา
+                    </label>
+                    <div class="col-sm-8">
+                        <textarea class="form-control" rows="3" placeholder="ระบุประสบการณ์ที่ผ่านมา" ng-model="userProfile.internInfo.experiences[0].experienceInfo"></textarea>
+                    </div>
+                </div>
+            
+                <div ng-repeat="experience in userProfile.internInfo.experiences" class="form-group border rounded p-2" ng-show="formStyle === 'row'">
+                    <div>
+                        <label class="col-form-label">
+                            ข้อ {{ $index+1 }}.
+                        </label>
+                        <small class="text-muted">(ระบุข้อละไม่เกิน 200 ตัวอักษร)</small>
+                        <button class="btn btn-outline-danger btn-sm" ng-show="$index >= 0" ng-click="removeExperience(experience)">
+                            <i class="fas fa-minus-circle"></i> ลบ
+                        </button>
+                    </div>
+                    <div>
+                        <textarea class="form-control" rows="3" placeholder="ระบุประสบการณ์ที่ผ่านมา" ng-model="experience.experienceInfo"></textarea>
+                    </div>
+                </div>
+
+                <div class="mt-2 text-right">
+                    <button class="btn btn-outline-success" ng-click="addExperience()">
+                        <i class="fas fa-plus-circle"></i> เพิ่ม
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- experiences -->
+
+    <!-- location -->
+    <div>
+        <div class="form-group row" ng-show="formStyle === 'column'">
+            <label class="col-sm-4 col-form-label">
+                <span class="text-danger">*</span>
+                สถานที่สะดวกเดินทางไปฝึกงาน
+            </label>
+            <div class="col-sm-8">
+                <textarea class="form-control" rows="5" placeholder="ระบุสถานที่สะดวกเดินทางไปฝึกงาน" ng-model="userProfile.internInfo.requestLocation"></textarea>
+            </div>
+        </div>
+    
+        <div class="form-group border rounded p-2" ng-show="formStyle === 'row'" ng-class="{'border-danger': validator.internInfo.requestLocation.isInvalid()}">
+            <div>
+                <label class="col-form-label">
+                    <span class="text-danger">*</span>
+                    <span ng-show="!validator.internInfo.requestLocation.isInvalid()">สถานที่สะดวกเดินทางไปฝึกงาน</span>
+                    <span ng-show="validator.internInfo.requestLocation.isInvalid()" class="text-danger">กรุณาระบุสถานที่สะดวกเดินทางไปฝึกงาน</span>
+                </label>
+                <small class="text-muted">กรุณาระบุสถานที่สะดวกเดินทางไปฝึกงาน</small>
+            </div>
+            <div>
+                <textarea class="form-control" rows="5" placeholder="ระบุสถานที่สะดวกเดินทางไปฝึกงาน" ng-model="userProfile.internInfo.requestLocation"></textarea>
+            </div>
+        </div>
+    </div>
+    <!-- /.location -->
+</form>

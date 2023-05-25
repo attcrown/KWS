@@ -1,0 +1,51 @@
+<div class="card">
+    <!-- card-header -->
+    <div class="card-header">
+        <h3 class="card-title text-maroon">ระบุเงื่อนไขการค้นหา</h3>
+    </div>
+    <!-- /.card-header -->
+
+    <!-- card-body -->
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6 col-lg-4">
+                <div class="form-group">
+                    <label>ประเภทบริษัท/ลูกค้า</label>
+                    <select class="form-control select2" multiple="multiple" data-placeholder="--- กรุณาเลือกประเภทบริษัท/ลูกค้า ---" style="width: 100%;" ng-model="criteria.employerTypeIds">
+                        <option ng-repeat="employerType in employerTypes | orderBy: 'seqNo'" ng-value="employerType.id">{{ employerType.name }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="form-group">
+                    <label>ชื่อบริษัท/ลูกค้า</label>
+                    <input type="text" class="form-control" ng-model="criteria.name">
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="form-group">
+                    <label>สถานะ</label>
+                    <select class="form-control select2" multiple="multiple" data-placeholder="--- กรุณาเลือกสถานะ ---" style="width: 100%;" ng-model="criteria.statuses">
+                        <option ng-repeat="status in masterStatuses | orderBy: 'seqNo'" ng-value="status.id">{{ status.title }}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.card-body -->
+
+    <!-- card-footer -->
+    <div class="card-footer">
+        <div class="text-right">
+            <button class="btn btn-outline-success" ng-click="requestAddEmployer()">
+                <i class="fa fa-plus"></i> เพิ่มข้อมูล
+            </button>
+            <button class="btn btn-outline-primary" ng-click="search()">
+                <i class="fa fa-search"></i> ค้นหา
+            </button>
+        </div>
+    </div>
+    <!-- /.card-footer -->
+</div>
