@@ -1,429 +1,99 @@
-<div th:replace="core/admin-lte-3/workspace/hr/candidate/script/entry-controller"></div>
+<div
+  th:replace="core/admin-lte-3/workspace/hr/candidate/script/category2-controller"
+></div>
+<div
+  th:replace="core/admin-lte-3/workspace/hr/candidate/script/category-controller"
+></div>
 
 <script th:inline="javascript">
-    app.controller("CandidateUserController", ["$scope", "$http", ($scope, $http) => {
-        $scope.hireTypes = /*[[${hireTypes}]]*/ [];
-        $scope.worktimeTypes = /*[[${worktimeTypes}]]*/ [];
-        $scope.educationClasses = /*[[${educationClasses}]]*/ [];
-        $scope.subjectCategories = /*[[${subjectCategories}]]*/ [];
-        $scope.subjects = /*[[${subjects}]]*/ [];
+  app.controller("CandidateUserController", [
+    "$scope",
+    "$http",
+    ($scope, $http) => {
+      $scope.prefix = [
+        { id: "001", name: "นาย" },
+        { id: "002", name: "นาง" },
+        { id: "003", name: "นางสาว" },
+        { id: "004", name: "อื่นๆ" },
+      ];
+      $scope.selectedEmployeeProfile;
+      $scope.entryMode = "add";
+      $scope.isLoading = false;
+      $scope.criteria = {
+        car: undefined,
+        car_not: undefined,
+        drive_other: undefined,
+      };
+      $scope.mode = "list"; // ["list", "entry" , "next2"]
+      $scope.read = "close";
+      $scope.category = ""; // (พนักงาน,ครูFishsix,ครูESC,Scout)
+      $scope.isShowDriveError = false;
 
-        console.log("educationClasses => ", $scope.educationClasses);
-        console.log("subjectCategories => ", $scope.subjectCategories);
-        console.log("subjects => ", $scope.subjects);
+      $scope.init = function () {
+        usecategoryController($scope, $http);
+        usecategory2Controller($scope, $http);
+        $(".select2").select2({ theme: "bootstrap4" });
+      };
 
-        $scope.isLoading = false;
-        $scope.criteria = {};
-        $scope.paging = {};
-        $scope.teacherProfiles = [];
-        $scope.selectedTeacherProfile;
-        $scope.attachment = {};
-        $scope.mode = "list"; // ["list", "entry"]
-        $scope.entryMode = ""; // ["add", "edit"]
-
-        $scope.init = function(){
-            useEntryController($scope, $http);
-            $('.select2').select2({ theme: 'bootstrap4' });            
+      function checkdrive() {
+        if (
+          $scope.criteria.car == true ||
+          $scope.criteria.car_not == true ||
+          $scope.criteria.drive_other == true
+        ) {
+          return $scope.isShowDriveError = false;
+        } else {
+          return $scope.isShowDriveError = true;
         }
-        // $scope.init = function() {
-        //     console.log("### FishsixTeacherProfileController.init ###");
+      }
 
-        //     // useListController($scope, $http);
-        //     useEntryController($scope, $http);
+      $scope.changeMessage = function (a) {
+        $scope.read = "open";
+        if (a == 1) {
+          $scope.message = employee();
+          $scope.criteria.category = "พนักงาน";
+        } else if (a == 2) {
+          $scope.message = Fishsix();
+          $scope.criteria.category = "ครูFishsix";
+        } else if (a == 3) {
+          $scope.message = Esc();
+          $scope.criteria.category = "ครูESC";
+        } else if (a == 4) {
+          $scope.message = Scout();
+          $scope.criteria.category = "Scout";
+        } else {
+          $scope.criteria.category = "";
+        }
+      };
 
-        //     $scope.criteria = {
-        //         firstName: '',
-        //         lastName: '',
-        //         nickName: '',
-        //         statuses: ["Active"]
-        //     };
+      $scope.nextpage2 = function () {
+        $scope.mode = "next2";
+        $scope.Cvalue();
+      };
 
-        //     $scope.paging = {
-        //         pageNo: 1,
-        //         pageSize: 25,
-        //         totalPage: 0,
-        //         totalSize: 0
-        //     };
+      $scope.sum = function () {
+        $scope.Cvalue();
+        checkdrive();
+      };
 
-        //     $('.select2').select2({ theme: 'bootstrap4' });
-        //     $('[data-mask]').inputmask();
-
-        //     // $scope.initHireTypes();
-        //     // $scope.initWorktimeTypes();
-        //     // $scope.initSubjects();
-        //     // $scope.initTeachers();
-
-        //     $(".idcard-file").on('change', ($event) => {
-        //         console.log("### attach idcard file ###");
-                
-        //         $scope.attachment.idCardFile = null;
-
-        //         var file = $event.target.files[0];
-        //         if(file) {
-        //             $scope.attachment.idCardFile = file;
-        //             console.log("fileName => " + file.name);
-        //         }
-
-        //         const idCardImage = document.getElementById("idCardImage");
-
-        //         var reader = new FileReader();
-        //         reader.onload = function(event) {
-        //             idCardImage.src = event.target.result;
-        //         };
-        //         reader.readAsDataURL(file);
-
-        //         $scope.$apply();
-        //     });
-        // };
-
-        // $scope.initHireTypes = function() {
-        //     console.log("### FishsixTeacherProfileController.initHireTypes ###");
-
-        //     $scope.hireTypes = [
-        //         {
-        //             id: 'permanent',
-        //             name: 'พนง.ประจำ',
-        //             seqNo: 1
-        //         },
-        //         {
-        //             id: 'contract',
-        //             name: 'พนง.สัญญาจ้าง',
-        //             seqNo: 2
-        //         },
-        //         {
-        //             id: 'freelance',
-        //             name: 'ฟรีแลนซ์',
-        //             seqNo: 3
-        //         }
-        //     ];
-        // };
-
-        // $scope.initWorktimeTypes = function() {
-        //     console.log("### FishsixProfileController.initWorktimeTypes ###");
-
-        //     $scope.worktimeTypes = [
-        //         {
-        //             id: 'fulltime',
-        //             name: 'Full Time',
-        //             seqNo: 1
-        //         },
-        //         {
-        //             id: 'parttime',
-        //             name: 'Part Time',
-        //             seqNo: 2
-        //         }
-        //     ];
-        // };
-
-        // $scope.initSubjects = function() {
-        //     console.log("### FishsixProfileController.initSubjects ###");
-
-        //     $scope.subjects = [
-        //         {
-        //             id: '001',
-        //             name: 'คณิตศาสตร์',
-        //             seqNo: 1
-        //         },
-        //         {
-        //             id: '002',
-        //             name: 'ฟิสิกส์',
-        //             seqNo: 2
-        //         }
-        //     ];
-        // };
-
-        // $scope.initTeachers = function() {
-        //     $scope.teachers = [
-        //         {
-        //             id: 'teacher-001',
-        //             firstName: 'Francessco',
-        //             lastName: 'Totti',
-        //             nickName: 'Totty',
-        //             mobileNo: '0876645890',
-        //             email: 'teacher-001@gmail.com',
-        //             subjects: 'คณิตศาสตร์, ฟิสิกซ์',
-        //             hireTypeId: 'permanent',
-        //             worktimeTypeId: 'fulltime',
-        //             subjectIds: ["001"],
-        //             salary: 15000,
-        //             educationInfo: {
-        //                 school: {
-        //                     id: "001",
-        //                     name: "มหาวิทยาลัยธรรมศาสตร์"
-        //                 },
-        //                 faculty: {
-        //                     id: "001",
-        //                     name: "วิทยาศาสตร์"
-        //                 },
-        //                 major: {
-        //                     id: "001",
-        //                     name: "ฟิสิกส์"
-        //                 }
-        //             },
-        //             paymentAccount: {
-        //                 bankName: 'ธนาคารไทยพานิชณ์',
-        //                 accountNo: '102000187'
-        //             },
-        //             status: 'Active'
-        //         },
-
-        //         {
-        //             id: 'teacher-002',
-        //             firstName: 'Fabio',
-        //             lastName: 'Cannavaro',
-        //             nickName: 'Fabio',
-        //             mobileNo: '0865523671',
-        //             email: 'teacher-002@gmail.com',
-        //             subjects: 'ฟิสิกซ์',
-        //             hireTypeId: 'contract',
-        //             subjectIds: ["002"],
-        //             worktimeTypeId: 'parttime',
-        //             salary: 17000,
-        //             educationInfo: {
-        //                 school: {
-        //                     id: "001",
-        //                     name: "มหาวิทยาลัยธรรมศาสตร์"
-        //                 },
-        //                 faculty: {
-        //                     id: "001",
-        //                     name: "วิทยาศาสตร์"
-        //                 },
-        //                 major: {
-        //                     id: "001",
-        //                     name: "ฟิสิกส์"
-        //                 }
-        //             },
-        //             paymentAccount: {
-        //                 bankName: 'ธนาคารไทยพานิชณ์',
-        //                 accountNo: '102000187'
-        //             },
-        //             status: 'Active'
-        //         },
-
-        //         {
-        //             id: 'teacher-003',
-        //             firstName: 'Christian',
-        //             lastName: 'Vieri',
-        //             nickName: 'Bobo',
-        //             mobileNo: '0780094561',
-        //             email: 'teacher-003@gmail.com',
-        //             subjects: 'คณิตศาสตร์',
-        //             hireTypeId: 'freelance',
-        //             worktimeTypeId: 'parttime',
-        //             subjectIds: ["001", "002"],
-        //             salary: 17000,
-        //             educationInfo: {
-        //                 school: {
-        //                     id: "001",
-        //                     name: "มหาวิทยาลัยธรรมศาสตร์"
-        //                 },
-        //                 faculty: {
-        //                     id: "001",
-        //                     name: "วิทยาศาสตร์"
-        //                 },
-        //                 major: {
-        //                     id: "001",
-        //                     name: "ฟิสิกส์"
-        //                 }
-        //             },
-        //             paymentAccount: {
-        //                 bankName: 'ธนาคารไทยพานิชณ์',
-        //                 accountNo: '102000187'
-        //             },
-        //             status: 'Active'
-        //         }
-        //     ];
-        // };
-
-        $scope.getHireTypeName = function(teacher) {
-            const hireType = $scope.hireTypes.find(e => e.id === teacher.hireTypeId);
-            if(hireType) {
-                return hireType.name;
-            }
-        };
-
-        $scope.getWorktimeTypeName = function(teacher) {
-            const worktimeType = $scope.worktimeTypes.find(e => e.id === teacher.worktimeTypeId);
-            if(worktimeType) {
-                return worktimeType.name;
-            }
-        };
-
-        $scope.getSubjectNames = function(teacher) {
-            const subjects = $scope.subjects.filter(e => teacher.subjectIds.includes(subject.id));
-            if(subjects && subjects.length > 0) {
-                let subjectNames = subjects.map(e => e.name);
-                return subjectNames.join();
-            }
-        };
-
-        $scope.getSubjects = function(teacherProfile) {
-            if(teacherProfile.teacherSubjectMappers && teacherProfile.teacherSubjectMappers.length > 0) {
-                let subjectIds = teacherProfile.teacherSubjectMappers.map(e => e.subjectId);
-                return $scope.subjects.filter(e => subjectIds.includes(e.id));
-            }
-            return [];
-        };
-
-        $scope.setupTeacherSubjectMapper = function(teacherProfile) {
-            console.log("### FishsixTeacherProfileController.setupTeacherSubjectMapper ###");
-            console.log(teacherProfile);
-
-            if(teacherProfile && teacherProfile.subjectIds && teacherProfile.subjectIds.length > 0) {
-                let teacherSubjectMappers = teacherProfile.subjectIds.map(e => {
-                    return {
-                        subjectId: e
-                    };
-                });
-                teacherProfile.teacherSubjectMappers = teacherSubjectMappers;
-            }
-        };
-
-        $scope.setupSubjectIds = function(teacherProfile) {
-            console.log("### FishsixTeacherProfileController.setupSubjectIds ###");
-            console.log(teacherProfile);
-
-            if(teacherProfile && teacherProfile.teacherSubjectMappers && teacherProfile.teacherSubjectMappers.length > 0) {
-                teacherProfile.subjectIds = teacherProfile.teacherSubjectMappers.map(e => e.subjectId);
-            }
-        };
-
-        $scope.getTeacherWageType = function(teacherProfile) {
-            if(teacherProfile && teacherProfile.teacher) {
-                const hireType = $scope.hireTypes.find(e => e.id === teacherProfile.teacher.hireTypeId);
-                if(hireType) {
-                    return hireType.wageType;
-                }
-            }
-        };
-
-        $scope.getClassLevelTitle = function(subject) {
-            let educationClass = $scope.educationClasses.find(e => e.id === subject.educationClassId);
-            if(educationClass) {
-                return educationClass.title;
-            }
-        };
-
-        $scope.getSubjectsByCategoryId = function(subjectCategoryId) {
-            let subjects = $scope.subjects.filter(e => e.subjectCategoryId === subjectCategoryId);
-            if(subjects && subjects.length > 0) {
-                subjects = subjects.sort((s1, s2) => s1.seqNo - s2.seqNo);
-                return subjects;
-            }
-            return [];
-        };
-
-        $scope.removeIdCardFile = function() {
-            $scope.attachment.idCardFile = null;
-        };
-
-        $scope.swapMode = function() {
-            if($scope.mode === 'list') {
-                $scope.toEntryMode();
-            } else if($scope.mode === 'entry') {
-                $scope.toListMode();
-            }
-        };
-
-        $scope.toListMode = function() {
-            $scope.mode = 'list';
-        };
-
-        $scope.toEntryMode = function() {
-            $scope.mode = 'entry';
-        };
-
-        $scope.requestAddTeacher = function() {
-            console.log("### FishsixTeacherProfileController.requestAddTeacher ###");
-            $scope.toEntryMode();
-            $scope.entryMode = "add";
-            $scope.selectedTeacherProfile = {
-                subjectIds: []
-            };
-            $scope.resetForm();
-        };
-
-        $scope.resetForm = function() {
-            setTimeout(() => {
-                // ********** teacherForm ********** //
-                $scope.teacherForm.$submitted = false;
-
-                $scope.teacherForm.firstName.$setUntouched();
-                $scope.teacherForm.firstName.$setPristine();
-
-                $scope.teacherForm.lastName.$setUntouched();
-                $scope.teacherForm.lastName.$setPristine();
-
-                $scope.teacherForm.nickName.$setUntouched();
-                $scope.teacherForm.nickName.$setPristine();
-
-                $scope.teacherForm.mobileNo.$setUntouched();
-                $scope.teacherForm.mobileNo.$setPristine();
-
-                $scope.teacherForm.email.$setUntouched();
-                $scope.teacherForm.email.$setPristine();
-
-                $scope.teacherForm.occupation.$setUntouched();
-                $scope.teacherForm.occupation.$setPristine();
-
-                $scope.teacherForm.registAddress.$setUntouched();
-                $scope.teacherForm.registAddress.$setPristine();
-
-                $scope.teacherForm.contactAddress.$setUntouched();
-                $scope.teacherForm.contactAddress.$setPristine();
-                // ********** teacherForm ********** //
-
-                // ********** employInfoForm ********** //
-                $scope.employInfoForm.$submitted = false;
-
-                $scope.employInfoForm.hireType.$setUntouched();
-                $scope.employInfoForm.hireType.$setPristine();
-
-                $scope.employInfoForm.worktimeType.$setUntouched();
-                $scope.employInfoForm.worktimeType.$setPristine();
-
-                $scope.employInfoForm.startWorkDate.$setUntouched();
-                $scope.employInfoForm.startWorkDate.$setPristine();
-
-                $scope.employInfoForm.startWorkDate.$setUntouched();
-                $scope.employInfoForm.startWorkDate.$setPristine();
-
-                $scope.employInfoForm.workHourMonth.$setUntouched();
-                $scope.employInfoForm.workHourMonth.$setPristine();
-
-                $scope.employInfoForm.salary.$setUntouched();
-                $scope.employInfoForm.salary.$setPristine();
-
-                $scope.employInfoForm.wageHourRate.$setUntouched();
-                $scope.employInfoForm.wageHourRate.$setPristine();
-
-                $scope.employInfoForm.bankAccountName.$setUntouched();
-                $scope.employInfoForm.bankAccountName.$setPristine();
-
-                $scope.employInfoForm.bankAccountNo.$setUntouched();
-                $scope.employInfoForm.bankAccountNo.$setPristine();
-                // ********** employInfoForm ********** //
-
-                // ********** educationInfoForm ********** //
-                $scope.educationInfoForm.$submitted = false;
-
-                $scope.educationInfoForm.educationSchool.$setUntouched();
-                $scope.educationInfoForm.educationSchool.$setPristine();
-
-                $scope.educationInfoForm.educationFaculty.$setUntouched();
-                $scope.educationInfoForm.educationFaculty.$setPristine();
-
-                $scope.educationInfoForm.educationMajor.$setUntouched();
-                $scope.educationInfoForm.educationMajor.$setPristine();
-
-                // $scope.educationInfoForm.subjects.$setUntouched();
-                // $scope.educationInfoForm.subjects.$setPristine();
-                // ********** educationInfoForm ********** //
-
-                $scope.removeIdCardFile();
-
-                $scope.$apply();
-            }, 0);
-        };
-    }]);
+      $scope.Cvalue = function () {
+        setTimeout(() => {
+          $scope.$apply();
+        }, 0);
+      };
+    },
+  ]);
 </script>
+
+<style>
+  .font-bg {
+    font-size: 50px;
+  }
+  .btn[disabled] {
+    background-color: #dddddd; /* กำหนดสีเทาที่คุณต้องการ */
+    color: #888888; /* กำหนดสีตัวอักษรที่คุณต้องการ */
+  }
+  .red-asterisk {
+    color: red;
+  }
+</style>

@@ -1,284 +1,470 @@
 <div class="card mx-5">
   <div class="card-header">
-    <h3 class="card-title">ข้อมูลส่วนตัว</h3>
+    <h3 class="card-title px-3">ข้อมูลส่วนตัว</h3>
   </div>
 
-  <div class="card-body">
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>คำนำหน้า</label><span class="red-asterisk"> *</span>
-          <select
-            class="form-control"
-            style="width: 100%"
-            ng-model="criteria.prefix"
-          >
-            <option value="" disabled selected hidden>
-              --- กรุณาเลือก ---
-            </option>
-            <option
-              ng-repeat="prefix in prefix | orderBy: 'name'"
-              ng-value="prefix.name"
+  <div class="card-body px-5">
+    <br />
+    <form name="employeeForm" class="form row" novalidate>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span ng-show="!isShowTypeNameError()">คำนำหน้า</span>
+              <span class="text-danger" ng-show="isShowTypeNameError()"
+                >กรุณาระบุคำนำหน้า</span
+              >
+            </label>
+            <select
+              name="typeName"
+              class="form-control"
+              style="width: 100%"
+              ng-class="{'is-invalid': isShowTypeNameError()}"
+              ng-model="selectedEmployeeProfile.typeName"
+              required
             >
-              {{ prefix.name }}
-            </option>
-          </select>
-          <div class="text-danger" ng-show="!criteria.prefix">
-            กรุณาเลือกคำนำหน้า
+              <option value="" disabled selected hidden>
+                --- กรุณาเลือก ---
+              </option>
+              <option
+                ng-repeat="prefix in prefix | orderBy: 'name'"
+                ng-value="prefix.name"
+              >
+                {{ prefix.name }}
+              </option>
+            </select>
           </div>
         </div>
-      </div>
 
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>ชื่อ - นามสกุล (ภาษาไทยเท่านั้น)</label
-          ><span class="red-asterisk"> *</span>
-          <input
-            type="text"
-            class="form-control"
-            ng-model="criteria.name"
-            required
-          />
-          <div class="text-danger" ng-show="!criteria.name">
-            กรุณาระบุชื่อ-นามสกุล (ภาษาไทยเท่านั้น)
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span ng-show="!isShowFirstNameError()"
+                >ชื่อ-นามสกุล (ภาษาไทยเท่านั้น)</span
+              >
+              <span class="text-danger" ng-show="isShowFirstNameError()"
+                >กรุณาระบุชื่อ-นามสกุล (ภาษาไทยเท่านั้น)</span
+              >
+            </label>
+            <input
+              name="firstName"
+              type="text"
+              class="form-control"
+              ng-class="{'is-invalid': isShowFirstNameError()}"
+              placeholder="ระบุชื่อ-นามสกุล"
+              ng-model="selectedEmployeeProfile.firstName"
+              required
+            />
           </div>
         </div>
-      </div>
 
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>ชื่อเล่น (ภาษาไทยเท่านั้น)</label
-          ><span class="red-asterisk"> *</span>
-          <input
-            type="text"
-            class="form-control"
-            ng-model="criteria.nickname"
-          />
-          <div class="text-danger" ng-show="!criteria.nickname">
-            กรุณาระบุชื่อเล่น (ภาษาไทยเท่านั้น)
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span ng-show="!isShowNickNameError()"
+                >ชื่อเล่น (ภาษาไทยเท่านั้น)</span
+              >
+              <span class="text-danger" ng-show="isShowNickNameError()"
+                >กรุณาระบุชื่อเล่น (ภาษาไทยเท่านั้น)</span
+              >
+            </label>
+            <input
+              name="nickName"
+              type="text"
+              class="form-control"
+              ng-class="{'is-invalid': isShowNickNameError()}"
+              placeholder="ระบุชื่อเล่น"
+              ng-model="selectedEmployeeProfile.nickName"
+              required
+            />
           </div>
         </div>
-      </div>
 
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>เบอร์โทรศัพท์</label><span class="red-asterisk"> *</span>
-          <input
-            type="text"
-            class="form-control"
-            ng-model="criteria.phone"
-            ng-pattern="/^[0-9]{10}$/"
-            ng-required="true"
-          />
-          <div ng-show="!criteria.phone" class="text-danger">
-            เบอร์โทรศัพท์ต้องประกอบด้วยตัวเลข 10 หลัก
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span ng-show="!isShowPhoneError()">เบอร์โทรศัพท์</span>
+              <span class="text-danger" ng-show="isShowPhoneError()"
+                >เบอร์โทรศัพท์ต้องประกอบด้วยตัวเลข 10 หลัก</span
+              >
+            </label>
+            <input
+              name="phone"
+              type="text"
+              class="form-control"
+              ng-class="{'is-invalid': isShowPhoneError()}"
+              placeholder="ระบุเบอร์โทรศัพท์"
+              ng-model="selectedEmployeeProfile.phone"
+              ng-pattern="/^[0-9]{10}$/"
+              ng-required="true"
+            />
           </div>
         </div>
-      </div>
 
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>อายุ</label>
-          <input type="number" class="form-control" ng-model="criteria.old" />
-          <div ng-show="!criteria.old" class="text-danger">กรุณาระบุอายุ</div>
-        </div>
-      </div>
-
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>ที่อยู่ปัจจุบัน</label>
-          <input
-            type="text"
-            class="form-control"
-            ng-model="criteria.location"
-          />
-          <div ng-show="!criteria.location" class="text-danger">
-            กรุณากรอกที่อยู่ปัจจุบัน
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span ng-show="!isShowOldError()">อายุ</span>
+              <span class="text-danger" ng-show="isShowOldError()"
+                >กรุณาระบุอายุ</span
+              >
+            </label>
+            <input
+              name="old"
+              type="number"
+              class="form-control"
+              ng-class="{'is-invalid': isShowOldError()}"
+              placeholder="ระบุอายุ"
+              ng-model="selectedEmployeeProfile.old"
+              required
+            />
           </div>
         </div>
-      </div>
 
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>ชื่อ Line (Line ที่ใช้แอดกับทางบริษัท)</label>
-          <input type="text" class="form-control" ng-model="criteria.line" />
-        </div>
-      </div>
-
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>ชื่อ Facebook</label>
-          <input
-            type="text"
-            class="form-control"
-            ng-model="criteria.facebook"
-          />
-        </div>
-      </div>
-
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>สัญชาติ</label>
-          <input
-            type="text"
-            class="form-control"
-            ng-model="criteria.nationality"
-          />
-          <div ng-show="!criteria.nationality" class="text-danger">
-            กรุณาระบุสัญชาติ
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span ng-show="!isShowLocationError()">ที่อยู่ปัจจุบัน</span>
+              <span class="text-danger" ng-show="isShowLocationError()"
+                >กรุณาระบุที่อยู่ปัจจุบัน</span
+              >
+            </label>
+            <input
+              name="location"
+              type="text"
+              class="form-control"
+              ng-class="{'is-invalid': isShowLocationError()}"
+              placeholder="ระบุที่อยู่ปัจจุบัน"
+              ng-model="selectedEmployeeProfile.location"
+              required
+            />
           </div>
         </div>
-      </div>
 
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>เชื้อชาติ</label>
-          <input
-            type="text"
-            class="form-control"
-            ng-model="criteria.ethnicity"
-          />
-          <div ng-show="!criteria.ethnicity" class="text-danger">
-            กรุณาระบุเชื้อชาติ
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span ng-show="!isShowLineError()"
+                >ชื่อ Line (Line ที่ใช้แอดกับทางบริษัท)</span
+              >
+              <span class="text-danger" ng-show="isShowLineError()"
+                >กรุณาระบุชื่อ Line</span
+              >
+            </label>
+            <input
+              name="line"
+              type="text"
+              class="form-control"
+              ng-class="{'is-invalid': isShowLineError()}"
+              placeholder="ระบุชื่อ Line"
+              ng-model="selectedEmployeeProfile.line"
+              required
+            />
           </div>
         </div>
-      </div>
 
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>Line ID สำหรับติดต่อประสานงาน และส่งข้อมูลเพิ่มเติม</label>
-          <input
-            type="text"
-            class="form-control"
-            ng-model="criteria.linework"
-          />
-          <div ng-show="!criteria.linework" class="text-danger">
-            กรุณาระบุ Line ID สำหรับติดต่อประสานงาน
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span ng-show="!isShowFacebookError()">ชื่อ Facebook</span>
+              <span class="text-danger" ng-show="isShowFacebookError()"
+                >กรุณาระบุชื่อ Facebook</span
+              >
+            </label>
+            <input
+              name="facebook"
+              type="text"
+              class="form-control"
+              ng-class="{'is-invalid': isShowFacebookError()}"
+              placeholder="ระบุ Facebook"
+              ng-model="selectedEmployeeProfile.facebook"
+              required
+            />
           </div>
         </div>
-      </div>
 
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>งานอดิเรก/สิ่งที่สนใจเป็นพิเศษ</label>
-          <input type="text" class="form-control" ng-model="criteria.Wishes" />
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span ng-show="!isShowNationalityError()">สัญชาติ</span>
+              <span class="text-danger" ng-show="isShowNationalityError()"
+                >กรุณาระบุสัญชาติ</span
+              >
+            </label>
+            <input
+              name="nationality"
+              type="text"
+              class="form-control"
+              ng-class="{'is-invalid': isShowNationalityError()}"
+              placeholder="ระบุสัญชาติ"
+              ng-model="selectedEmployeeProfile.nationality"
+              required
+            />
+          </div>
         </div>
-      </div>
 
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>ประเภทบุคคล</label>
-          <select
-            class="form-control"
-            style="width: 100%"
-            ng-model="criteria.indtype"
-          >
-            <option value="" disabled selected hidden>
-              --- กรุณาเลือก ---
-            </option>
-            <option
-              ng-repeat="prefix in prefix | orderBy: 'name'"
-              ng-value="prefix.name"
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span ng-show="!isShowEthnicityError()">เชื้อชาติ</span>
+              <span class="text-danger" ng-show="isShowEthnicityError()"
+                >กรุณาระบุเชื้อชาติ</span
+              >
+            </label>
+            <input
+              name="ethnicity"
+              type="text"
+              class="form-control"
+              ng-class="{'is-invalid': isShowEthnicityError()}"
+              placeholder="ระบุเชื้อชาติ"
+              ng-model="selectedEmployeeProfile.ethnicity"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span ng-show="!isShowLineIdError()"
+                >Line ID สำหรับติดต่อประสานงาน และส่งข้อมูลเพิ่มเติม</span
+              >
+              <span class="text-danger" ng-show="isShowLineIdError()"
+                >กรุณาระบุ Line ID สำหรับติดต่อประสานงาน</span
+              >
+            </label>
+            <input
+              name="lineID"
+              type="text"
+              class="form-control"
+              ng-class="{'is-invalid': isShowLineIdError()}"
+              placeholder="ระบุชื่อ LineID"
+              ng-model="selectedEmployeeProfile.lineID"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span ng-show="!isShowWishesError()"
+                >งานอดิเรก/สิ่งที่สนใจเป็นพิเศษ</span
+              >
+              <span class="text-danger" ng-show="isShowWishesError()"
+                >กรุณาระบุงานอดิเรก/สิ่งที่สนใจเป็นพิเศษ</span
+              >
+            </label>
+            <input
+              name="wishes"
+              type="text"
+              class="form-control"
+              ng-class="{'is-invalid': isShowWishesError()}"
+              placeholder="ระบุงานอดิเรก/สิ่งที่สนใจเป็นพิเศษ"
+              ng-model="selectedEmployeeProfile.wishes"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span ng-show="!isShowIndtypeError()">ประเภทบุคคล</span>
+              <span class="text-danger" ng-show="isShowIndtypeError()"
+                >กรุณาเลือกประเภทบุคคล</span
+              >
+            </label>
+            <select
+              name="indtype"
+              class="form-control"
+              style="width: 100%"
+              ng-class="{'is-invalid': isShowIndtypeError()}"
+              ng-model="selectedEmployeeProfile.indtype"
+              required
             >
-              {{ prefix.name }}
-            </option>
-          </select>
-          <div ng-show="!criteria.indtype" class="text-danger">
-            กรุณาเลือกประเภทบุคคล
+              <option value="" disabled selected hidden>
+                --- กรุณาเลือก ---
+              </option>
+              <option
+                ng-repeat="prefix in prefix | orderBy: 'name'"
+                ng-value="prefix.name"
+              >
+                {{ prefix.name }}
+              </option>
+            </select>
           </div>
         </div>
-      </div>
 
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>คุณมีอาการดังนี้ หรือไม่</label>
-          <select
-            class="form-control"
-            style="width: 100%"
-            ng-model="criteria.sick"
-          >
-            <option value="" disabled selected hidden>
-              --- กรุณาเลือก ---
-            </option>
-            <option
-              ng-repeat="prefix in prefix | orderBy: 'name'"
-              ng-value="prefix.name"
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span ng-show="!isShowSickError()">คุณมีอาการดังนี้ หรือไม่</span>
+              <span class="text-danger" ng-show="isShowSickError()"
+                >กรุณาเลือกประเภทอาการ</span
+              >
+            </label>
+            <select
+              name="sick"
+              class="form-control"
+              style="width: 100%"
+              ng-class="{'is-invalid': isShowSickError()}"
+              ng-model="selectedEmployeeProfile.sick"
+              required
             >
-              {{ prefix.name }}
-            </option>
-          </select>
-          <div ng-show="!criteria.sick" class="text-danger">
-            กรุณาเลือกอาการ
+              <option value="" disabled selected hidden>
+                --- กรุณาเลือก ---
+              </option>
+              <option
+                ng-repeat="prefix in prefix | orderBy: 'name'"
+                ng-value="prefix.name"
+              >
+                {{ prefix.name }}
+              </option>
+            </select>
           </div>
         </div>
-      </div>
 
-      <div class="col-md-6 mb-3">
-        <label>ขับรถอะไรได้บ้าง</label>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            ng-model="criteria.car"
-          />
-          <label class="form-check-label">ขับรถยนต์ได้ / มีใบขับขี่</label>
-        </div>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            ng-model="criteria.car_not"
-          />
-          <label class="form-check-label">ขับรถยนต์ได้ / ไม่มีใบขับขี่</label>
-        </div>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            ng-model="criteria.moto"
-          />
-          <label class="form-check-label">ขับมอเตอร์ไซด์ได้ / มีใบขับขี่</label>
-        </div>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            ng-model="criteria.moto_not"
-          />
-          <label class="form-check-label"
-            >ขับมอเตอร์ไซด์ได้ / ไม่มีใบขับขี่</label
-          >
-        </div>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            ng-model="criteria.notdrive"
-          />
-          <label class="form-check-label">ขับรถไม่เป็น</label>
-        </div>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            ng-model="criteria.drive_other"
-          />
-          <label class="form-check-label">อื่นๆ</label>
-        </div>
-      </div>
+        <!-- <div class="col-md-6 mb-3">
+          <label>
+            <span class="text-danger">*</span>
+            <span ng-show="!isShowDriveError()">ขับรถอะไรได้บ้าง</span>
+            <span class="text-danger" ng-show="isShowDriveError()"
+              >กรุณาระบุประเภทรถที่ขับ</span
+            >
+          </label>
+          <div class="form-check">
+            <input
+              name="drive"
+              class="form-check-input"
+              type="checkbox"
+              ng-class="{'is-invalid': isShowDriveError()}"
+              ng-model="selectedEmployeeProfile.drive.car"
+              required
+            />
+            <label class="form-check-label">ขับรถยนต์ได้ / มีใบขับขี่</label>
+          </div>
+          <div class="form-check">
+            <input
+              name="drive"
+              class="form-check-input"
+              type="checkbox"
+              ng-class="{'is-invalid': isShowDriveError()}"
+              ng-model="selectedEmployeeProfile.drive.car_not"
+              required
+            />
+            <label class="form-check-label">ขับรถยนต์ได้ / ไม่มีใบขับขี่</label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              name="drive"
+              ng-class="{'is-invalid': isShowDriveError()}"
+              ng-model="selectedEmployeeProfile.drive.moto"
+              required
+            />
+            <label class="form-check-label"
+              >ขับมอเตอร์ไซด์ได้ / มีใบขับขี่</label
+            >
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              name="drive"
+              ng-class="{'is-invalid': isShowDriveError()}"
+              ng-model="selectedEmployeeProfile.drive.moto_not"
+              required
+            />
+            <label class="form-check-label"
+              >ขับมอเตอร์ไซด์ได้ / ไม่มีใบขับขี่</label
+            >
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              name="drive"
+              ng-class="{'is-invalid': isShowDriveError()}"
+              ng-model="selectedEmployeeProfile.drive.notdrive"
+              required
+            />
+            <label class="form-check-label">ขับรถไม่เป็น</label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              name="drive"
+              ng-class="{'is-invalid': isShowDriveError()}"
+              ng-model="selectedEmployeeProfile.drive.drive_other"
+              required
+            />
+            <label class="form-check-label">อื่นๆ</label>
+          </div>
+        </div>   -->
 
-      <div class="col-md-6"></div>
+        <div class="col-md-6"></div>
+      </div>
+    </form>
+  </div>
+  <!-- <div class="card-body m-2"> -->
+    <div class="col-md-6 mx-4">
+      <label>
+        <span class="text-danger">*</span>
+        <span ng-show="!isShowDriveError">ขับรถอะไรได้บ้าง</span>
+        <span class="text-danger" ng-show="isShowDriveError"
+          >กรุณาระบุประเภทรถที่ขับ</span
+        >
+      </label>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          ng-model="criteria.car"
+          required
+        />
+        <label class="form-check-label">ขับรถยนต์ได้ / มีใบขับขี่</label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          ng-model="criteria.car_not"
+          required
+        />
+        <label class="form-check-label">ขับรถยนต์ได้ / ไม่มีใบขับขี่</label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          ng-model="criteria.drive_other"
+          required
+        />
+        <label class="form-check-label">อื่นๆ</label>
+      </div>
     </div>
-  </div>
+  <!-- </div> -->
+</div>
 
-  <div class="card-footer">
-    <div class="text-right">
-      <!-- <button class="btn btn-success" ng-click="requestAddInternshipProfile()">
-                <i class="fa fa-plus"></i> เพิ่มข้อมูล
-            </button> -->
-      <button class="btn btn-primary" ng-click="sum()">
-        <i class="fa fa-search"></i> shows
-      </button>
-    </div>
-  </div>
+<div class="text-right">
+  <button class="btn btn-primary" ng-click="sum(); requestSave()">
+    <i class="fa fa-search"></i> shows
+  </button>
 </div>

@@ -1,0 +1,32 @@
+<div>
+    <form name="employeeForm" class="form row" novalidate>
+    <div class="col-md-6">
+        <div class="form-group border rounded p-2">
+        <label>
+            <span class="text-danger">*</span>
+            <span ng-show="!isShowFirstNameError()">ชื่อ</span>
+            <span class="text-danger" ng-show="isShowFirstNameError()"
+            >กรุณาระบุชื่อ</span
+            >
+        </label>
+        <input
+            name="firstName"
+            type="text"
+            class="form-control"
+            ng-class="{'is-invalid': isShowFirstNameError()}"
+            placeholder="ระบุชื่อ"
+            ng-model = "selectedEmployeeProfile.firstName"
+            required
+        />
+        </div>
+    </div>
+    </form>
+</div>
+<div class="text-right">
+  <button class="btn btn-outline-danger">
+    <i class="fa fa-caret-left"></i> กลับ
+  </button>
+  <button class="btn btn-outline-primary" ng-click="requestSave()">
+    <i class="fa fa-save"></i> บันทึก
+  </button>
+</div>
