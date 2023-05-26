@@ -1,0 +1,69 @@
+<!-- <div th:replace="fishsix/admin-lte-3/workspace/tutorial/tutorial1/script/api"></div> -->
+<!-- <div th:replace="core/admin-lte-3/workspace/candidate/script/list-controller"></div> -->
+<div th:replace="core/admin-lte-3/workspace/hr/candidate/script/category2-controller"></div>
+<div th:replace="core/admin-lte-3/workspace/hr/candidate/script/category-controller"></div>
+
+<script th:inline="javascript">
+    app.controller("CandidateUserController", ["$scope", "$http", ($scope, $http) => {
+        $scope.prefix = [{id: "001",name: "นาย"},{id: "002",name: "นาง"},{id: "003",name: "นางสาว"},{id: "004",name: "อื่นๆ"}];
+
+        $scope.isLoading = false;
+        $scope.criteria = {};
+        $scope.mode = "list"; // ["list", "entry" , "next2"]
+        $scope.read = "close";
+        $scope.category = ""; // (พนักงาน,ครูFishsix,ครูESC,Scout)        
+        
+
+        $scope.init = function(){
+            usecategoryController($scope, $http);
+            usecategory2Controller($scope, $http);
+            $('.select2').select2({ theme: 'bootstrap4' });            
+        }
+
+        $scope.changeMessage = function(a) {
+            $scope.read = 'open';
+            if(a == 1){
+                $scope.message = employee();
+                $scope.criteria.category = "พนักงาน";
+            }else if(a == 2){
+                $scope.message = Fishsix();
+                $scope.criteria.category = "ครูFishsix";
+            }else if(a == 3){
+                $scope.message = Esc();
+                $scope.criteria.category = "ครูESC";
+            }else if(a == 4){
+                $scope.message = Scout();
+                $scope.criteria.category = "Scout";
+            }else{$scope.criteria.category = "";};
+        };
+
+        $scope.nextpage2 = function(){
+            $scope.mode = "next2";
+            $scope.Cvalue();
+        }
+
+        $scope.sum = function(){
+            console.log($scope.criteria);
+            $scope.Cvalue();
+        }
+
+        $scope.Cvalue = function() {
+            setTimeout(() => {
+                $scope.$apply();
+            }, 0);
+        };
+    }]);
+</script>
+
+<style>
+    .font-bg{
+        font-size: 50px;
+    }
+    .btn[disabled] {
+        background-color: #dddddd; /* กำหนดสีเทาที่คุณต้องการ */
+        color: #888888; /* กำหนดสีตัวอักษรที่คุณต้องการ */
+    }
+    .red-asterisk {
+        color: red;
+    }
+</style>
