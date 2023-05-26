@@ -1,0 +1,43 @@
+<script th:inline="javascript">
+    app.controller("NegotiateController", ["$scope", "$http", ($scope, $http) => {
+        $scope.prefix = [{ id: "001", name: "นาย" }, { id: "002", name: "นาง" }, { id: "003", name: "นางสาว" }, { id: "004", name: "อื่นๆ" }];
+
+
+        $scope.isLoading = false;
+        $scope.criteria = {};
+        $scope.mode = "list"; // ["list", "addDate" , ""]
+        $scope.read = "close";
+        $scope.category = "";
+        $scope.candidates = [
+            { id: "1", name: 'arin',surname: 'test1', position: "Developer",datetime: null ,negotiate_status: "wait"},
+            { id: "1", name: 'arin',surname: 'test1', position: "Developer",datetime: null ,negotiate_status: "wait"},
+        
+            { id: "57", name: 'arin',surname: 'test1', position: "Developer",datetime: null,negotiate_status: "success"},
+            { id: "327", name: 'arin',surname: 'test1', position: "Developer",datetime: null,negotiate_status: "failed"},
+            { id: "14", name: 'arin',surname: 'test1', position: "Developer",datetime: null,negotiate_status: "null"},
+            { id: "18", name: 'arin',surname: 'test1', position: "Developer",datetime: null,negotiate_status: "null"},
+            { id: "14", name: 'arin',surname: 'test1', position: "Developer",datetime: null,negotiate_status: "null"},
+            { id: "18", name: 'arin',surname: 'test1', position: "Developer",datetime: null,negotiate_status: "null"},
+            { id: "18", name: 'arin',surname: 'test1', position: "Developer",datetime: null,negotiate_status: "null"},
+            { id: "14", name: 'arin',surname: 'test1', position: "Developer",datetime: null,negotiate_status: "null"},
+            { id: "14", name: 'arin',surname: 'test1', position: "Developer",datetime: null,negotiate_status: "null"},
+            { id: "14", name: 'arin',surname: 'test1', position: "Developer",datetime: null,negotiate_status: "null"},
+        
+        ];
+        $scope.setDatetime = function (candidate) {
+            candidate.datetime = new Date();
+        };
+        
+        $scope.goSetDateNegotiate = function(candidate){
+            $scope.mode = "addDate";    
+            candidate.negotiate_status = "addDate";
+        }
+
+        $scope.setDateNegotiate = function(candidate){
+                
+            candidate.datetime = "";
+        }
+
+
+    }]);
+</script>
