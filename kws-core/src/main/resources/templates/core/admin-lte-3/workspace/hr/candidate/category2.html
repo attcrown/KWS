@@ -280,7 +280,7 @@
               <span ng-show="!isShowGradeHighschoolError()">เกรดเฉลี่ย</span>
               <span class="text-danger" ng-show="isShowGradeHighschoolError()">กรุณาระบุเกรดเฉลี่ย</span>
             </label>
-            <input name="grade_highschool" type="text" class="form-control" ng-class="{'is-invalid': isShowGradeHighschoolError()}"
+            <input name="grade_highschool" type="number" class="form-control" ng-class="{'is-invalid': isShowGradeHighschoolError()}"
               placeholder="ระบุเกรดเฉลี่ย" ng-model="selectedEmployeeProfile.grade_highschool" required />
           </div>
         </div>
@@ -312,7 +312,7 @@
             <label>
               <span>เกรดเฉลี่ย</span>
             </label>
-            <input name="grade_vocational_education" type="text" class="form-control" 
+            <input name="grade_vocational_education" type="number" class="form-control" 
               placeholder="ระบุเกรดเฉลี่ย" ng-model="selectedEmployeeProfile.grade_vocational_education"/>
           </div>
         </div>
