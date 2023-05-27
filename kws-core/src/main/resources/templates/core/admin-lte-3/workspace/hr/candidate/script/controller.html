@@ -44,17 +44,29 @@
         $(".select2").select2({ theme: "bootstrap4" });
       };
 
-      function checkdrive() {
+      $scope.checkdrive = function() {
         if (
-          $scope.criteria.car == true ||
-          $scope.criteria.car_not == true ||
-          $scope.criteria.drive_other == true
+          $scope.criteria.car === true ||
+          $scope.criteria.car_not === true ||
+          $scope.criteria.drive_other === true
         ) {
-          return ($scope.isShowDriveError = false);
+          $scope.isShowDriveError = false;
         } else {
-          return ($scope.isShowDriveError = true);
+          $scope.isShowDriveError = true;
         }
-      }
+      };
+      
+      // function checkdrive() {
+      //   if (
+      //     $scope.criteria.car == true ||
+      //     $scope.criteria.car_not == true ||
+      //     $scope.criteria.drive_other == true
+      //   ) {
+      //     return ($scope.isShowDriveError = false);
+      //   } else {
+      //     return ($scope.isShowDriveError = true);
+      //   }
+      // }
 
       $scope.changeMessage = function (a) {
         if (a == 1) {
@@ -108,7 +120,7 @@
 
       $scope.sum = function () {
         $scope.Cvalue();
-        checkdrive();
+        $scope.checkdrive();
       };
 
       $scope.Cvalue = function () {
