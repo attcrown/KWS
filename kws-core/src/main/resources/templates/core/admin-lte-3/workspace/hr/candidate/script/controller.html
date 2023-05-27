@@ -29,6 +29,15 @@
       $scope.category = ""; // (พนักงาน,ครูFishsix,ครูESC,Scout)
       $scope.isShowDriveError = false;
 
+      $scope.clickcategory = false;
+      $scope.clickcategory1 = false;
+      $scope.clickcategory2 = false;
+      $scope.clickcategory3 = false;
+
+      $scope.isButtonClicked = function (buttonIndex) {
+        return $scope.clickedButton === buttonIndex;
+      };
+
       $scope.init = function () {
         usecategoryController($scope, $http);
         usecategory2Controller($scope, $http);
@@ -41,28 +50,54 @@
           $scope.criteria.car_not == true ||
           $scope.criteria.drive_other == true
         ) {
-          return $scope.isShowDriveError = false;
+          return ($scope.isShowDriveError = false);
         } else {
-          return $scope.isShowDriveError = true;
+          return ($scope.isShowDriveError = true);
         }
       }
 
       $scope.changeMessage = function (a) {
-        $scope.read = "open";
         if (a == 1) {
           $scope.message = employee();
           $scope.criteria.category = "พนักงาน";
+          $scope.clickcategory1 = false;
+          $scope.clickcategory2 = false;
+          $scope.clickcategory3 = false;
         } else if (a == 2) {
           $scope.message = Fishsix();
           $scope.criteria.category = "ครูFishsix";
+          $scope.clickcategory = false;
+          $scope.clickcategory2 = false;
+          $scope.clickcategory3 = false;
         } else if (a == 3) {
           $scope.message = Esc();
           $scope.criteria.category = "ครูESC";
+          $scope.clickcategory = false;
+          $scope.clickcategory1 = false;
+          $scope.clickcategory3 = false;
         } else if (a == 4) {
           $scope.message = Scout();
           $scope.criteria.category = "Scout";
+          $scope.clickcategory = false;
+          $scope.clickcategory1 = false;
+          $scope.clickcategory2 = false;
         } else {
           $scope.criteria.category = "";
+        }
+
+        // เปลี่ยนค่า read เมื่อมีปุ่มถูกคลิก
+        $scope.read = "close";
+
+        // ตรวจสอบว่ามีปุ่มที่อยู่ในสถานะเปิดหรือไม่
+        var anyButtonOpen =
+          $scope.clickcategory ||
+          $scope.clickcategory1 ||
+          $scope.clickcategory2 ||
+          $scope.clickcategory3;
+
+        // หากไม่มีปุ่มใดเปิดอยู่ให้เปลี่ยนค่า read เป็น "close"
+        if (!anyButtonOpen) {
+          $scope.read = "open";
         }
       };
 
@@ -95,5 +130,8 @@
   }
   .red-asterisk {
     color: red;
+  }
+  button.btn {
+    transition: background-color 0.3s ease, border-color 0.3s ease;
   }
 </style>
