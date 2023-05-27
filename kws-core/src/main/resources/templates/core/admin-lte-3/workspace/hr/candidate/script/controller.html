@@ -19,11 +19,7 @@
       $scope.selectedEmployeeProfile;
       $scope.entryMode = "add";
       $scope.isLoading = false;
-      $scope.criteria = {
-        car: undefined,
-        car_not: undefined,
-        drive_other: undefined,
-      };
+      $scope.criteria = {};
       $scope.mode = "list"; // ["list", "entry" , "next2"]
       $scope.read = "close";
       $scope.category = ""; // (พนักงาน,ครูFishsix,ครูESC,Scout)
@@ -46,8 +42,11 @@
 
       $scope.checkdrive = function() {
         if (
-          $scope.criteria.car === true ||
-          $scope.criteria.car_not === true ||
+          $scope.criteria.car_license === true ||
+          $scope.criteria.car_not_license === true ||
+          $scope.criteria.moto_license === true ||
+          $scope.criteria.moto_not_license === true ||
+          $scope.criteria.not_drive === true ||
           $scope.criteria.drive_other === true
         ) {
           $scope.isShowDriveError = false;

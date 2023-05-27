@@ -25,6 +25,14 @@
     $scope.isShowIndtypeError = useIsShowSelectError($scope, $http, "indtype");
     $scope.isShowSickError = useIsShowSelectError($scope, $http, "sick");
 
+    //employee3
+    $scope.isShowCurrentEducationError = useIsShowError3($scope, $http, "current_education");
+    $scope.isShowCurrentBachelorEducationError = useIsShowError3($scope, $http, "current_bachelor_education");
+    $scope.isShowGradeHighschoolError = useIsShowError3($scope, $http, "grade_highschool");
+    $scope.isShowAcademyBachelorDegreeError = useIsShowError3($scope, $http, "academy_bachelor_degree");
+    $scope.isShowMajorBachelorDegreeError = useIsShowError3($scope, $http, "major_bachelor_degree");
+    $scope.isShowGradeBachelorDegreeError = useIsShowError3($scope, $http, "grade_bachelor_degree");
+
     //Save
     $scope.requestSave = useRequestSave($scope, $http);
     $scope.verify = useVerify($scope, $http);
@@ -44,6 +52,32 @@
     };
   }
 
+  function useIsShowError3($scope, $http, fieldName) {
+    return () => {
+      if ($scope.employeeForm3[fieldName]) {
+        return (
+          ($scope.employeeForm3.$submitted ||
+            $scope.employeeForm3[fieldName].$dirty) &&
+          $scope.employeeForm3[fieldName].$invalid
+        );
+      }
+      return false;
+    };
+  }
+
+  function useIsShowError4($scope, $http, fieldName) {
+    return () => {
+      if ($scope.employeeForm4[fieldName]) {
+        return (
+          ($scope.employeeForm4.$submitted ||
+            $scope.employeeForm4[fieldName].$dirty) &&
+          $scope.employeeForm4[fieldName].$invalid
+        );
+      }
+      return false;
+    };
+  }
+
   function useIsShowSelectError($scope, $http, fieldName) {
     return () => {
       if ($scope.employeeForm[fieldName]) {
@@ -57,8 +91,8 @@
 
   function useVerify($scope, $http) {
     return () => {
-        if($scope.isShowDriveError != true){
-            return $scope.employeeForm.$valid;
+        if($scope.isShowDriveError != true && $scope.employeeForm3.$valid && $scope.employeeForm.$valid){
+            return true;
         }
     };
   }
@@ -70,6 +104,7 @@
       console.log($scope.isShowDriveError);
       console.log($scope.selectedEmployeeProfile);
       $scope.employeeForm.$submitted = true;
+      $scope.employeeForm3.$submitted = true;
 
       if ($scope.verify()) {
         const options = {
