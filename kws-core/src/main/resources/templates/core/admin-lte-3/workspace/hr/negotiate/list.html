@@ -1,9 +1,9 @@
 <div class="container-fluid bg-white rounded">
     <div class="row gx-5 text-center">
-        <div class="col-sm-3 mt-3 rounded ">
-            <div class="p-3 bg-light ">
-                <div ng-repeat="candidate in candidates | orderBy:'id'" ng-if="candidate.negotiate_status == 'addDate'"
-                    class="card mb-3">
+        <div class="col-sm-3 mt-3  ">
+            <div class="p-3 bg-light rounded ">
+                <div ng-repeat="candidate in candidates | orderBy:'sortCandidatesById'"
+                    ng-if="candidate.negotiate_status == 'addDate'" class="card mb-3">
                     <div class="card-body">
                         <h5 class="card-title"><span class="badge float-right"
                                 style="background-color: #E5E9EB;">{{candidate.id}}</span></h5>
@@ -12,53 +12,69 @@
                     </div>
                 </div>
             </div>
-            <div class="p-3 mt-3 mb-3 bg-light">
-                <div ng-repeat="candidate in candidates | orderBy:'id'" class="card mb-3"
-                    ng-if="candidate.negotiate_status == 'null'">
-                    <div class="card-body hover-overlay" ng-click="goSetDateNegotiate(candidate)">
-                        <h5 class="card-title"><span class="badge float-right"
-                                style="background-color: #E5E9EB;">{{candidate.id}}</span></h5>
-                        <p class="card-text text-left">{{candidate.name}}
-                            {{candidate.surname}}<br>{{candidate.position}}</p>
+            <div class="p-3 mt-3 mb-3 bg-light rounded">
+                <a href="">
+                    <div ng-repeat="candidate in candidates | orderBy:'sortCandidatesById'" class="card mb-3"
+                        ng-if="candidate.negotiate_status == 'null'">
+                        <div class="card-body " ng-click="goSetDateNegotiate(candidate)">
+                            <h5 class="card-title"><span class="badge float-right"
+                                    style="background-color: #E5E9EB;">{{candidate.id}}</span></h5>
+                            <p class="card-text text-left">{{candidate.name}}
+                                {{candidate.surname}}<br>{{candidate.position}}</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
-        <div class="col-sm-3 mt-3 mb-3 px-2 rounded">
+        <div class="col-sm-3 mt-3 mb-3 px-2 ">
 
-            <div class="p-3 bg-light h-100  " style="background-color: #E5E9EB;">
+            <div class="p-3 bg-light h-100 rounded " style="background-color: #E5E9EB;">
                 <p class="text-left" style="color: #6E7C87;">รอเจรจาสัญญาจ้าง</p>
-                <div ng-repeat="candidate in candidates | orderBy:'id'" class="card mb-3 mt-1"
+                <a href="">
+                <div ng-repeat="candidate in candidates | orderBy:'sortCandidatesById'" class="card mb-3 mt-1"
                     ng-if="candidate.negotiate_status == 'wait'">
-                    <div class="card-body hover-overlay">
+
+                    <div class="card-body " ng-click="toDetailMode(candidate)">
                         <h5 class="card-title"><span class="badge float-right"
                                 style="background-color: #E5E9EB;">{{candidate.id}}</span></h5>
                         <p class="card-text text-left">{{candidate.name}}
                             {{candidate.surname}}<br>{{candidate.position}}
                         </p>
                     </div>
+                    
+                    <div  class="p-3"ng-click="toNegotiateMode(candidate)">
+                        <small> <span class="label rounded float-left" ng-style="{'background-color': '#FDFBEC',
+                            'color': '#AC7710'}">{{candidate.day}} : {{candidate.startTime}} -
+                                {{candidate.endTime}}</span></small>
+                        <button type="button" class="btn  ml-3 round btn-light btn-xs "
+                        >เริ่มเจรจา</button>
+                    </div>
                 </div>
+            </a>
             </div>
         </div>
-        <div class="col-sm-3 mt-3 mb-3 px-2 rounded">
-            <div class="p-3 bg-light h-100  " style="background-color: #E5E9EB;">
+        <div class="col-sm-3 mt-3 mb-3 px-2 ">
+            <div class="p-3 bg-light h-100 rounded " style="background-color: #E5E9EB;">
                 <p class="text-left" style="color: #6E7C87;">เจรจาสัญญาจ้างสำเร็จ</p>
-                <div ng-repeat="candidate in candidates | orderBy:'id'" class="card mb-3 mt-1"
+                <div ng-repeat="candidate in candidates | orderBy:'sortCandidatesById'" class="card mb-3 mt-1"
                     ng-if="candidate.negotiate_status == 'success'">
-                    <div class="card-body hover-overlay">
+                    <div class="card-body ">
                         <h5 class="card-title"><span class="badge float-right"
                                 style="background-color: #E5E9EB;">{{candidate.id}}</span></h5>
                         <p class="card-text text-left">{{candidate.name}}
                             {{candidate.surname}}<br>{{candidate.position}}
                         </p>
+                        <small><span class="label rounded float-left " ng-style="{'background-color': '#ECFDF3',
+                        'color': '#12B76A','border-radius': '50px'}">{{candidate.day}} : {{candidate.startTime}} -
+                                {{candidate.endTime}} </span></small>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-3 mt-3 mb-3 px-2 rounded">
-            <div class="p-3 bg-light h-100  " style="background-color: #E5E9EB;">
+        <div class="col-sm-3 mt-3 mb-3 px-2 ">
+            <div class="p-3 bg-light h-100  rounded" style="background-color: #E5E9EB;">
                 <p class="text-left" style="color: #6E7C87;">เจรจาสัญญาจ้างไม่สำเร็จ</p>
-                <div ng-repeat="candidate in candidates | orderBy:'id'" class="card mb-3 mt-1"
+                <div ng-repeat="candidate in candidates | orderBy:'sortCandidatesById'" class="card mb-3 mt-1"
                     ng-if="candidate.negotiate_status == 'failed'">
                     <div class="card-body hover-overlay">
                         <h5 class="card-title"><span class="badge float-right"
@@ -66,6 +82,9 @@
                         <p class="card-text text-left">{{candidate.name}}
                             {{candidate.surname}}<br>{{candidate.position}}
                         </p>
+                        <small><span class="label rounded float-left " ng-style="{'background-color': '#F9D2D7',
+                            'color': '#E44345','border-radius': '50px'}">{{candidate.day}} : {{candidate.startTime}} -
+                                {{candidate.endTime}}</span></small>
                     </div>
                 </div>
             </div>

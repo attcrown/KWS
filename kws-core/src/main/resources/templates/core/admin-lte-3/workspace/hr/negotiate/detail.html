@@ -1,0 +1,112 @@
+<div class="container-fluid" ng-show="selectedCandidate"></div>
+<div class="row gx-1 text-center">
+    <div class="col-sm-3 mt-3  ">
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><span class="badge float-right"
+                        style="background-color: #E5E9EB;">{{selectedCandidateProfile.id}}</span></h5>
+                <p class="card-text text-left">{{selectedCandidateProfile.name}}
+                    {{selectedCandidateProfile.surname}}<br>{{selectedCandidateProfile.position}}
+                </p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <p class="card-text text-left"> เจรจาสัญญาจ้าง
+                </p>
+                <div>
+                    <small> <span class="label rounded float-left " ng-style="{'background-color': '#FDFBEC',
+                'color': '#AC7710'}">{{selectedCandidateProfile.day}} : {{selectedCandidateProfile.startTime}} -
+                            {{selectedCandidateProfile.endTime}}</span></small>
+                </div>
+            </div>
+            <div class="card-body">
+                <form name="dateForm" class="form row p-1" novalidate>
+                    <div class="form-group border rounded p-2">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowDateError()">วันที่เจรจา</span>
+                        <span class="text-danger" ng-show="isShowDateError()">กรุณาระบุวันที่</span>
+                    </label>
+
+                    <input name="day" class="form-control " type="text"
+                        placeholder="เลือกวันที่ต้องการเจรจา" ng-class="{'is-invalid': isShowDateError()}"
+                        ng-model="candidate.day" required>
+
+                    <input name="timeRange" class="form-control mt-1" type="text"
+                        placeholder="เลือกช่วงเวลา" ng-class="{'is-invalid': isShowTimeRangeError()}"
+                        ng-model="candidate.startTime" required>
+
+                    <div class="container p-2">
+                        <button class="btn btn-outline-danger" ng-click="toListMode(candidate)">
+                            <i class="fa "></i> ยกเลิก
+                        </button>
+                        <button class="btn btn-outline-success " ng-click="requestSave()">
+                            <i class="fa"></i> ยืนยัน
+                        </button>
+                    </div></div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="col-sm-3 mt-3  ">
+        <div class="card text-center">
+            <div class="card-body ">
+                <p class="card-text ">ข้อมูลการศึกษา</p>
+            </div>
+            <div class="card-body ">
+                <h5 class="card-text ">รูป</h5>
+            </div>
+            <div class="card-body ">
+                <p class="card-text text-left">สังกัด :  temp</p>
+                <p class="card-text text-left">Direct report :  temp</p>
+                <p class="card-text text-left">Consultant :  temp</p>
+                <p class="card-text text-left">วันทีเริ่มงานได้ :  temp</p>
+                <p class="card-text text-left">เบอร์โทรศัพท์ :  temp</p>
+                <p class="card-text text-left">Line ID :  temp</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">ข้อมูลการศึกษา</h5>
+            </div>
+            <div class="card-body ">
+                <p class="card-text text-left">สายการเรียนชั้นมัธยม :  temp</p>
+                <p class="card-text text-left">มหาวิทยาลัย :  temp</p>
+                <p class="card-text text-left">คณะ :  temp</p>
+                <p class="card-text text-left">สาขา :  temp</p>
+                <p class="card-text text-left">เกรดเฉลี่ย ณ มัธยม :  temp</p>
+                <p class="card-text text-left">เกรดเฉลี่ย ณ ป.ตรี :  temp</p>
+                <p class="card-text text-left">เกรดเฉลี่ย ณ ป.โท :  temp</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 mt-3  ">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">ข้อมูลการศึกษา</h5>
+            </div>
+            <div class="card-body ">
+                <p class="card-text text-left">ผลงานที่เคยทำได้ :  temp</p>
+                <p class="card-text text-left">งานอดิเรก/สิ่งที่สนใจ :  temp</p>
+                <p class="card-text text-left">Passion ในการทำงาน : temp</p>
+                <p class="card-text text-left">คิดว่าตัวเองเป็น type ไหน : temp</p>
+                <p class="card-text text-left">อยากทำงานลักษณะไหน type : temp</p>
+                <p class="card-text text-left">คุณกล้าปล่อยงานของคุณมากแค่ไหน : temp</p>
+                <p class="card-text text-left">คุณรู้สึกอย่างไรเวลาไม่ประสบความสำเร็จในแบบที่ตั้งใจไว้ : temp</p>
+                <p class="card-text text-left">มีอาการโรคซึมเศร้า/panic ไหม : temp</p>
+                <p class="card-text text-left">ทัศนคติเรื่องการตอบแชทนอกเวลางาน : temp</p>
+                <p class="card-text text-left">Background ครอบครัว (พอสังเขป) : temp</p>
+                <p class="card-text text-left">เคยทำ part time ไหม : temp</p>
+                <p class="card-text text-left">รุปแบบการทำงานที่ต้องการ : temp</p>
+            </div>
+        </div>
+    </div>
+    
+</div>

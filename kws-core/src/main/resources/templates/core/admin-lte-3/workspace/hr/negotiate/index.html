@@ -7,14 +7,26 @@
     </div>
 
     <div ng-show="mode === 'list'">
-        <!-- <div th:replace="core/admin-lte-3/workspace/hr/candidate/category"></div> -->
+      
         <div th:replace="core/admin-lte-3/workspace/hr/negotiate/list"></div>
-        <!-- <div th:replace="core/admin-lte-3/workspace/candidate/category2"></div> -->
+       
     </div>
 
     <div ng-show="mode === 'addDate'">
-        <!-- <div th:replace="core/admin-lte-3/workspace/hr/candidate/category"></div> -->
+       
         <div th:replace="core/admin-lte-3/workspace/hr/negotiate/addDate"></div>
-        <!-- <div th:replace="core/admin-lte-3/workspace/candidate/category2"></div> -->
+      
+    </div>
+
+    <div ng-show="mode === 'detail'">
+       
+        <div th:replace="core/admin-lte-3/workspace/hr/negotiate/detail"></div>
+       
+    </div>
+
+    <div ng-show="mode === 'negotiate'">
+       
+        <div th:replace="core/admin-lte-3/workspace/hr/negotiate/negotiate"></div>
+       
     </div>
 </section>
