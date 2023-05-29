@@ -25,6 +25,7 @@
       $scope.read = "close";
       $scope.category = ""; // (พนักงาน,ครูFishsix,ครูESC,Scout)
       $scope.isShowDriveError = false;
+      $scope.isShowCvFileError = false;
 
       $scope.clickcategory = false;
       $scope.clickcategory1 = false;
@@ -35,28 +36,43 @@
         usecategoryController($scope, $http);
         usecategory2Controller($scope, $http);
         $(".select2").select2({ theme: "bootstrap4" });
-        $(".idcard-file").on('change', ($event) => {
-          $scope.attachment.CvPdf = null;
+
+        $(".idcard-file").on("change", ($event) => {
           var file = $event.target.files[0];
-          if(file) {
-              $scope.attachment.CvPdf = file;
-              console.log("fileName => " + file.name);
+          if (file) {
+            $scope.attachment.idPdf = file;
+            console.log("idPdf fileName => " + file.name);
           }
-          const CvPdf = document.getElementById("CvPdf");
+          const idPdf = document.getElementById("idPdf");
           var reader = new FileReader();
-          reader.onload = function(event) {
-            CvPdf.src = event.target.result;
+          reader.onload = function (event) {
+            idPdf.src = event.target.result;
+          };
+          reader.readAsDataURL(file);
+          $scope.$apply();
+        });
+
+        $(".cv-file").on("change", ($event) => {
+          var file = $event.target.files[0];
+          if (file) {
+            $scope.attachment.cvPdf = file;
+            console.log("cvPdf fileName => " + file.name);
+          }
+          const cvPdf = document.getElementById("cvPdf");
+          var reader = new FileReader();
+          reader.onload = function (event) {
+            cvPdf.src = event.target.result;
           };
           reader.readAsDataURL(file);
           $scope.$apply();
         });
       };
 
-      $scope.removeIdCardFile = function() {
-        $scope.attachment.CvPdf = null;
+      $scope.removeFile = function (a) {
+        $scope.attachment[a] = null;
       };
 
-      $scope.checkdrive = function() {
+      $scope.checkdrive = function () {
         if (
           $scope.criteria.car_license === true ||
           $scope.criteria.car_not_license === true ||
@@ -69,8 +85,12 @@
         } else {
           $scope.isShowDriveError = true;
         }
+
+        if($scope.attachment.cvPdf == null){
+          $scope.isShowCvFileError = true;
+        }else{$scope.isShowCvFileError = false;}
       };
-      
+
       $scope.changeMessage = function (a) {
         if (a == 1) {
           $scope.message = employee();
@@ -109,8 +129,6 @@
           $scope.read = "open";
         }
       };
-
-
 
       $scope.nextpage2 = function () {
         $scope.mode = "next2";

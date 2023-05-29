@@ -43,6 +43,9 @@
     $scope.isShowLongevityError = useIsShowError4($scope, $http, "longevity");
     $scope.isShowJobPostingError = useIsShowSelectError4($scope, $http, "job_posting");
 
+    //employee5
+    // $scope.isShowCvFileError = useIsFileError5($scope, $http, "cvPdf");
+    
     //Save
     $scope.requestSave = useRequestSave($scope, $http);
     $scope.verify = useVerify($scope, $http);
@@ -107,9 +110,32 @@
     };
   }
 
+  function useIsShowError5($scope, $http, fieldName) {
+    return () => {
+      if ($scope.employeeForm5[fieldName]) {
+        return (
+          ($scope.employeeForm5.$submitted ||
+            $scope.employeeForm5[fieldName].$dirty) &&
+          $scope.employeeForm5[fieldName].$invalid
+        );
+      }
+      return false;
+    };
+  }
+  function useIsFileError5($scope, $http, fieldName) {
+    return () => {
+      if ($scope.employeeForm5[fieldName]) {
+        return ( $scope.employeeForm5.$submitted &&
+          $scope.employeeForm5[fieldName].$invalid);
+      }
+    };
+  }
+
   function useVerify($scope, $http) {
     return () => {
-      if ($scope.isShowDriveError != true && $scope.employeeForm3.$valid && $scope.employeeForm.$valid && $scope.employeeForm4.$valid) {
+      if ($scope.isShowDriveError != true && $scope.employeeForm3.$valid 
+          && $scope.employeeForm.$valid && $scope.employeeForm4.$valid
+          && $scope.employeeForm5.$valid) {
         return true;
       }
     };
@@ -125,6 +151,7 @@
       $scope.employeeForm.$submitted = true;
       $scope.employeeForm3.$submitted = true;
       $scope.employeeForm4.$submitted = true;
+      $scope.employeeForm5.$submitted = true;
 
       if ($scope.verify()) {
         const options = {

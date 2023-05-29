@@ -706,55 +706,49 @@
       <div class="col-md-6">
         <label>
           <span class="text-danger">*</span>
-          <span ng-show="!isShowError()">CV / Resume</span>
-          <span class="text-danger" ng-show="isShowIdCardFileError()">กรุณาอัพโหลดไฟล์ CV / Resume</span>
+          <span ng-show="!isShowCvFileError || attachment.cvPdf != null">CV / Resume</span>
+          <span class="text-danger" ng-show="isShowCvFileError && attachment.cvPdf == null">กรุณาอัพโหลดไฟล์ CV / Resume</span>
         </label>
         <div class="input-group">
           <div class="custom-file">
-            <input type="file" class="custom-file-input idcard-file" />
-            <label ng-show="!attachment.CvPdf" class="custom-file-label">อัพโหลดไฟล์</label>
-            <label ng-show="attachment.CvPdf" class="custom-file-label">{{ attachment.CvPdf.name }}</label>
+            <input type="file" class="custom-file-input cv-file" name="cvPdf" accept=".pdf,.jpg" onchange="checkFileSize(this)" required />
+            <label ng-show="!attachment.cvPdf" class="custom-file-label">อัพโหลดไฟล์</label>
+            <label ng-show="attachment.cvPdf" class="custom-file-label">{{ attachment.cvPdf.name }}</label>
           </div>
           <div class="input-group-append">
-            <button ng-show="attachment.CvPdf" class="btn btn-danger" ng-click="removeIdCardFile()">
+            <button ng-show="attachment.cvPdf" class="btn btn-danger" ng-click="removeFile('cvPdf')">
               <i class="fas fa-trash"></i> ลบ
             </button>
           </div>
         </div>
-        <div class="p-2"
-          ng-show="attachment.CvPdf || (selectedEmployeeProfile.attachment && selectedEmployeeProfile.attachment.CvPdfURL)">
-          <img ng-show="attachment.CvPdf" id="CvPdf" class="img-fluid" />
-          <img ng-show="!attachment.CvPdf && selectedEmployeeProfile.attachment.CvPdfURL" id="CvPdf" class="img-fluid"
-            ng-src="{{ selectedEmployeeProfile.attachment.CvPdfURL }}" />
-        </div>
       </div>
-
-      <div class="col-md-6">
+      
+      
+      <!-- <div class="col-md-6">
         <label>
           <span class="text-danger">*</span>
-          <span ng-show="!isShowError()">สำเนาบัตรปชช.</span>
-          <span class="text-danger" ng-show="isShowIdCardFileError()">กรุณาอัพโหลดไฟล์สำเนาบัตรปชช.</span>
+          <span ng-show="!isShowCvFileError || attachment.cvPdf != null">Portfolio</span>
+          <span class="text-danger" ng-show="isShowCvFileError && attachment.cvPdf == null">กรุณาอัพโหลดไฟล์ Portfolio</span>
         </label>
         <div class="input-group">
           <div class="custom-file">
-            <input type="file" class="custom-file-input idcard-file" />
-            <label ng-show="!attachment.idPdf" class="custom-file-label">--- อัพโหลดไฟล์ไฟล์สำเนาบัตรปชช.
-              ---</label>
-            <label ng-show="attachment.idPdf" class="custom-file-label">{{ attachment.idPdf.name }}</label>
+            <input type="file" class="custom-file-input cv-file" name="cvPdf" required/>
+            <label ng-show="!attachment.cvPdf" class="custom-file-label">อัพโหลดไฟล์</label>
+            <label ng-show="attachment.cvPdf" class="custom-file-label">{{ attachment.cvPdf.name }}</label>
           </div>
           <div class="input-group-append">
-            <button ng-show="attachment.idPdf" class="btn btn-danger" ng-click="removeIdCardFile()">
+            <button ng-show="attachment.cvPdf" class="btn btn-danger" ng-click="removeFile('cvPdf')">
               <i class="fas fa-trash"></i> ลบ
             </button>
           </div>
         </div>
-        <div class="p-2"
-          ng-show="attachment.idPdf || (selectedEmployeeProfile.attachment && selectedEmployeeProfile.attachment.idPdfURL)">
-          <img ng-show="attachment.idPdf" id="idPdf" class="img-fluid" />
-          <img ng-show="!attachment.idPdf && selectedEmployeeProfile.attachment.idPdfURL" id="idPdf" class="img-fluid"
-            ng-src="{{ selectedEmployeeProfile.attachment.idPdfURL }}" />
+        <div class="p-2" ng-show="attachment.cvPdf ">
+          <img ng-show="attachment.cvPdf" id="cvPdf" class="img-fluid" />
+          <img ng-show="!attachment.cvPdf" id="cvPdf" class="img-fluid"
+            ng-src="{{ selectedEmployeeProfile.attachment.cvPdfURL }}" />
         </div>
-      </div>
+      </div> -->
+      
 
     </form>
   </div>
@@ -779,3 +773,18 @@
     <i class="fa fa-search"></i> shows
   </button>
 </div>
+
+
+<script>
+function checkFileSize(input) {
+if (input.files && input.files[0]) {
+    var file = input.files[0];
+    var maxSize = 5 * 1024 * 1024; // 5MB in bytes
+
+    if (file.size > maxSize) {
+      alert('ไฟล์มีขนาดเกินกำหนด (ไม่เกิน 5MB)');
+      input.value = ''; // รีเซ็ตค่าไฟล์ที่เลือกใหม่
+    }
+  }
+}
+</script>
