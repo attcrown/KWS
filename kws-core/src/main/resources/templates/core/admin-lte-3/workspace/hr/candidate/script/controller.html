@@ -31,40 +31,29 @@
       $scope.clickcategory2 = false;
       $scope.clickcategory3 = false;
 
-      $scope.isButtonClicked = function (buttonIndex) {
-        return $scope.clickedButton === buttonIndex;
-      };
-
       $scope.init = function () {
         usecategoryController($scope, $http);
         usecategory2Controller($scope, $http);
         $(".select2").select2({ theme: "bootstrap4" });
-
         $(".idcard-file").on('change', ($event) => {
-          console.log("### attach idcard file ###");
-          
-          $scope.attachment.idCardFile = null;
-
+          $scope.attachment.CvPdf = null;
           var file = $event.target.files[0];
           if(file) {
-              $scope.attachment.idCardFile = file;
+              $scope.attachment.CvPdf = file;
               console.log("fileName => " + file.name);
           }
-
-          const idCardImage = document.getElementById("idCardImage");
-
+          const CvPdf = document.getElementById("CvPdf");
           var reader = new FileReader();
-          // reader.onload = function(event) {
-          //     idCardImage.src = event.target.result;
-          // };
+          reader.onload = function(event) {
+            CvPdf.src = event.target.result;
+          };
           reader.readAsDataURL(file);
-
           $scope.$apply();
         });
       };
 
       $scope.removeIdCardFile = function() {
-        $scope.attachment.idCardFile = null;
+        $scope.attachment.CvPdf = null;
       };
 
       $scope.checkdrive = function() {
@@ -82,18 +71,6 @@
         }
       };
       
-      // function checkdrive() {
-      //   if (
-      //     $scope.criteria.car == true ||
-      //     $scope.criteria.car_not == true ||
-      //     $scope.criteria.drive_other == true
-      //   ) {
-      //     return ($scope.isShowDriveError = false);
-      //   } else {
-      //     return ($scope.isShowDriveError = true);
-      //   }
-      // }
-
       $scope.changeMessage = function (a) {
         if (a == 1) {
           $scope.message = employee();
@@ -122,22 +99,18 @@
         } else {
           $scope.criteria.category = "";
         }
-
-        // เปลี่ยนค่า read เมื่อมีปุ่มถูกคลิก
         $scope.read = "close";
-
-        // ตรวจสอบว่ามีปุ่มที่อยู่ในสถานะเปิดหรือไม่
         var anyButtonOpen =
           $scope.clickcategory ||
           $scope.clickcategory1 ||
           $scope.clickcategory2 ||
           $scope.clickcategory3;
-
-        // หากไม่มีปุ่มใดเปิดอยู่ให้เปลี่ยนค่า read เป็น "close"
         if (!anyButtonOpen) {
           $scope.read = "open";
         }
       };
+
+
 
       $scope.nextpage2 = function () {
         $scope.mode = "next2";
