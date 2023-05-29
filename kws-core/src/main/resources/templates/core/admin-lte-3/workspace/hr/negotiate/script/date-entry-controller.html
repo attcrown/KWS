@@ -1,0 +1,63 @@
+<script th:inline="javascript">
+    function useEntryController($scope, $http) {
+        $scope.requestSave = useRequestSave($scope, $http);
+        $scope.verify = useVerify($scope, $http);
+        $scope.isShowDateError = useIsShowDateError($scope, $http);
+        $scope.isShowTimeRangeError = useIsShowTimeRangeError($scope, $http);
+    }
+
+
+    function useRequestSave($scope, $http) {
+        return () => {
+            console.log("### dateCandidateNegotiateController.requestSave ###");
+                $scope.dateForm.$submitted = true;
+
+            if ($scope.verify()) {
+                const options = {
+                    title: "ยืนยันการบันทึกข้อมูลเจรจา",
+                    text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                    icon: "warning",
+                    buttons: ["ยกเลิก", "ตกลง"],
+                    dangerMode: true
+                };
+                const handler = (confirm) => {
+                    if (confirm) {
+                        $scope.candidates.push($scope,dateForm);
+                       // $scope.updateNegotiate($scope.candidates);
+                        
+                    }
+                };
+
+                swal(options).then(handler);
+
+            }
+            else {
+                swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+            }
+        };
+    }
+
+    function useVerify($scope, $http) {
+        return () => {
+            console.log("### dateCandidateNegotiateController.VERIFY ###");
+            return $scope.dateForm.$valid;
+        };
+    }
+
+    function useIsShowDateError($scope, $http) {
+        return () => {
+            return ($scope.dateForm.$submitted
+                || $scope.dateForm.day.$dirty)
+                && $scope.dateForm.day.$invalid;
+        };
+    }
+
+    function useIsShowTimeRangeError($scope, $http) {
+        return () => {
+            return ($scope.dateForm.$submitted
+                || $scope.dateForm.timeRange.$dirty)
+                && $scope.dateForm.timeRange.$invalid;
+        };
+    }
+
+</script>
