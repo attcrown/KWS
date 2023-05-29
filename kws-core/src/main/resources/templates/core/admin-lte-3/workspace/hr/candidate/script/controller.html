@@ -20,6 +20,7 @@
       $scope.entryMode = "add";
       $scope.isLoading = false;
       $scope.criteria = {};
+      $scope.attachment = {};
       $scope.mode = "list"; // ["list", "entry" , "next2"]
       $scope.read = "close";
       $scope.category = ""; // (พนักงาน,ครูFishsix,ครูESC,Scout)
@@ -38,6 +39,32 @@
         usecategoryController($scope, $http);
         usecategory2Controller($scope, $http);
         $(".select2").select2({ theme: "bootstrap4" });
+
+        $(".idcard-file").on('change', ($event) => {
+          console.log("### attach idcard file ###");
+          
+          $scope.attachment.idCardFile = null;
+
+          var file = $event.target.files[0];
+          if(file) {
+              $scope.attachment.idCardFile = file;
+              console.log("fileName => " + file.name);
+          }
+
+          const idCardImage = document.getElementById("idCardImage");
+
+          var reader = new FileReader();
+          // reader.onload = function(event) {
+          //     idCardImage.src = event.target.result;
+          // };
+          reader.readAsDataURL(file);
+
+          $scope.$apply();
+        });
+      };
+
+      $scope.removeIdCardFile = function() {
+        $scope.attachment.idCardFile = null;
       };
 
       $scope.checkdrive = function() {

@@ -8,20 +8,12 @@
     $scope.isShowLocationError = useIsShowError($scope, $http, "location");
     $scope.isShowLineError = useIsShowError($scope, $http, "line");
     $scope.isShowFacebookError = useIsShowError($scope, $http, "facebook");
-    $scope.isShowNationalityError = useIsShowError(
-      $scope,
-      $http,
-      "nationality"
-    );
+    $scope.isShowNationalityError = useIsShowError($scope, $http, "nationality");
     $scope.isShowEthnicityError = useIsShowError($scope, $http, "ethnicity");
     $scope.isShowLineIdError = useIsShowError($scope, $http, "lineID");
     $scope.isShowWishesError = useIsShowError($scope, $http, "wishes");
     //Error selected
-    $scope.isShowTypeNameError = useIsShowSelectError(
-      $scope,
-      $http,
-      "typeName"
-    );
+    $scope.isShowTypeNameError = useIsShowSelectError($scope, $http, "typeName");
     $scope.isShowIndtypeError = useIsShowSelectError($scope, $http, "indtype");
     $scope.isShowSickError = useIsShowSelectError($scope, $http, "sick");
 
@@ -32,11 +24,28 @@
     $scope.isShowAcademyBachelorDegreeError = useIsShowError3($scope, $http, "academy_bachelor_degree");
     $scope.isShowMajorBachelorDegreeError = useIsShowError3($scope, $http, "major_bachelor_degree");
     $scope.isShowGradeBachelorDegreeError = useIsShowError3($scope, $http, "grade_bachelor_degree");
+    $scope.isShowCollegeActivitiesError = useIsShowError3($scope, $http, "college_activities");
+
+    //employee4
+    $scope.isShowJobPosition1Error = useIsShowSelectError4($scope, $http, "job_position1");
+    $scope.isShowBusiness1Error = useIsShowSelectError4($scope, $http, "business1");
+    $scope.isShowJobPosition2Error = useIsShowSelectError4($scope, $http, "job_position2");
+    $scope.isShowBusiness2Error = useIsShowSelectError4($scope, $http, "business2");
+    $scope.isShowJobPosition3Error = useIsShowSelectError4($scope, $http, "job_position3");
+    $scope.isShowBusiness3Error = useIsShowSelectError4($scope, $http, "business3");
+    $scope.isShowWorkingStyleError = useIsShowSelectError4($scope, $http, "working_style");
+    $scope.isShowEmployeeTypeError = useIsShowSelectError4($scope, $http, "employee_type");
+    $scope.isShowExpectedSalaryError = useIsShowError4($scope, $http, "expected_salary");
+    $scope.isShowMinimumSalaryError = useIsShowError4($scope, $http, "minimum_salary");
+    $scope.isShowCurrentSalaryError = useIsShowError4($scope, $http, "current_salary");
+    $scope.isShowCandidateStartdateError = useIsShowError4($scope, $http, "candidate_startdate");
+    $scope.isShowPerformanceError = useIsShowError4($scope, $http, "performance");
+    $scope.isShowLongevityError = useIsShowError4($scope, $http, "longevity");
+    $scope.isShowJobPostingError = useIsShowSelectError4($scope, $http, "job_posting");
 
     //Save
     $scope.requestSave = useRequestSave($scope, $http);
     $scope.verify = useVerify($scope, $http);
-
   }
 
   function useIsShowError($scope, $http, fieldName) {
@@ -49,6 +58,16 @@
         );
       }
       return false;
+    };
+  }
+  function useIsShowSelectError($scope, $http, fieldName) {
+    return () => {
+      if ($scope.employeeForm[fieldName]) {
+        return (
+          $scope.employeeForm.$submitted &&
+          $scope.employeeForm[fieldName].$invalid
+        );
+      }
     };
   }
 
@@ -78,12 +97,12 @@
     };
   }
 
-  function useIsShowSelectError($scope, $http, fieldName) {
+  function useIsShowSelectError4($scope, $http, fieldName) {
     return () => {
-      if ($scope.employeeForm[fieldName]) {
+      if ($scope.employeeForm4[fieldName]) {
         return (
-          $scope.employeeForm.$submitted &&
-          $scope.employeeForm[fieldName].$invalid
+          $scope.employeeForm4.$submitted &&
+          $scope.employeeForm4[fieldName].$invalid
         );
       }
     };
@@ -91,9 +110,9 @@
 
   function useVerify($scope, $http) {
     return () => {
-        if($scope.isShowDriveError != true && $scope.employeeForm3.$valid && $scope.employeeForm.$valid){
-            return true;
-        }
+      if ($scope.isShowDriveError != true && $scope.employeeForm3.$valid && $scope.employeeForm.$valid && $scope.employeeForm4.$valid) {
+        return true;
+      }
     };
   }
 
@@ -103,8 +122,10 @@
       console.log($scope.criteria);
       console.log($scope.isShowDriveError);
       console.log($scope.selectedEmployeeProfile);
+      console.log($scope.attachment);
       $scope.employeeForm.$submitted = true;
       $scope.employeeForm3.$submitted = true;
+      $scope.employeeForm4.$submitted = true;
 
       if ($scope.verify()) {
         const options = {
