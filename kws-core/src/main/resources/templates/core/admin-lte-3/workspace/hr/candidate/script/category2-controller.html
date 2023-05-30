@@ -44,14 +44,40 @@
     $scope.isShowJobPostingError = useIsShowSelectError4($scope, $http, "job_posting");
 
     //employee5
-    // $scope.isShowCvFileError = useIsFileError5($scope, $http, "cvPdf");
-    
+    $scope.isShowCandidateMBTIError = useIsShowSelectError5($scope, $http, "candidate_MBTI");
+    $scope.isShowCandidateDISCError = useIsShowSelectError5($scope, $http, "candidate_DISC");
+    $scope.isShowFormerSupervisorError = useIsShowError5($scope, $http, "former_supervisor");
+    $scope.isShowLookingJobError = useIsShowError5($scope, $http, "looking_job");
+    $scope.isShowPassionError = useIsShowError5($scope, $http, "passion");
+    $scope.isShowAptitudeError = useIsShowSelectError5($scope, $http, "aptitude");
+    $scope.isShowNeedWorkingError = useIsShowError5($scope, $http, "need_working");
+    $scope.isShowNotWorkingError = useIsShowError5($scope, $http, "not_working");
+    $scope.isShowTypeError = useIsShowSelectError5($scope, $http, "type");
+    $scope.isShowFillingError = useIsShowSelectError5($scope, $http, "filling");
+    $scope.isShowlike_workingError = useIsShowSelectError5($scope, $http, "like_working");
+    $scope.isShowwont_workingError = useIsShowSelectError5($scope, $http, "wont_working");
+    $scope.isShowlet_pass_workError = useIsShowSelectError5($scope, $http, "let_pass_work");
+    $scope.isShowbackground_familyError = useIsShowError5($scope, $http, "background_family");
+    $scope.isShowemployee_welfareError = useIsShowError5($scope, $http, "employee_welfare");
+    $scope.isShowemployee_welfareError = useIsShowError5($scope, $http, "employee_welfare1");
+    $scope.isShowemployee_welfareError = useIsShowError5($scope, $http, "employee_welfare2");
+    $scope.isShowcomment_day_offError = useIsShowError5($scope, $http, "comment_day_off");
+    $scope.isShowrecommend_name1Error = useIsShowError5($scope, $http, "recommend_name1");
+    $scope.isShowrecommend_name2Error = useIsShowError5($scope, $http, "recommend_name2");
+    $scope.isShowrecommend_name3Error = useIsShowError5($scope, $http, "recommend_name3");
+    $scope.isShowrecommend_phone1Error = useIsShowError5($scope, $http, "recommend_phone1");
+    $scope.isShowrecommend_phone2Error = useIsShowError5($scope, $http, "recommend_phone2");
+    $scope.isShowrecommend_phone3Error = useIsShowError5($scope, $http, "recommend_phone3");
+    $scope.isShowrecommend_position1Error = useIsShowError5($scope, $http, "recommend_position1");
+    $scope.isShowrecommend_position2Error = useIsShowError5($scope, $http, "recommend_position2");
+    $scope.isShowrecommend_position3Error = useIsShowError5($scope, $http, "recommend_position3");
+
     //Save
     $scope.requestSave = useRequestSave($scope, $http);
     $scope.verify = useVerify($scope, $http);
   }
 
-  function useIsShowError($scope, $http, fieldName) {
+  function useIsShowError($scope, $http, fieldName){
     return () => {
       if ($scope.employeeForm[fieldName]) {
         return (
@@ -63,7 +89,7 @@
       return false;
     };
   }
-  function useIsShowSelectError($scope, $http, fieldName) {
+  function useIsShowSelectError($scope, $http, fieldName){
     return () => {
       if ($scope.employeeForm[fieldName]) {
         return (
@@ -122,20 +148,32 @@
       return false;
     };
   }
-  function useIsFileError5($scope, $http, fieldName) {
+  function useIsShowSelectError5($scope, $http, fieldName) {
     return () => {
       if ($scope.employeeForm5[fieldName]) {
-        return ( $scope.employeeForm5.$submitted &&
-          $scope.employeeForm5[fieldName].$invalid);
+        return (
+          $scope.employeeForm5.$submitted &&
+          $scope.employeeForm5[fieldName].$invalid
+        );
       }
     };
   }
 
   function useVerify($scope, $http) {
     return () => {
-      if ($scope.isShowDriveError != true && $scope.employeeForm3.$valid 
-          && $scope.employeeForm.$valid && $scope.employeeForm4.$valid
-          && $scope.employeeForm5.$valid) {
+      if ( //$scope.isShowDriveError != true 
+          // && $scope.isShowPolicyDecisionError == false
+          // && $scope.isShowCvFileError == false
+          // && $scope.isShowPortFileError == false 
+          // && $scope.isShowOtherPresentFileError == false
+          // && $scope.isShowImgProfileFileError == false
+          // && $scope.isShowImgMBTIFileError == false
+          // && $scope.isShowImgDISCFileError == false
+          // && $scope.isShowtribe_choiceError == false
+          // && $scope.employeeForm3.$valid 
+          // && $scope.employeeForm.$valid 
+          // && $scope.employeeForm4.$valid
+           $scope.employeeForm5.$valid) {
         return true;
       }
     };
@@ -145,12 +183,10 @@
     return () => {
       console.log("Save");
       console.log($scope.criteria);
-      console.log($scope.isShowDriveError);
       console.log($scope.selectedEmployeeProfile);
-      console.log($scope.attachment);
-      $scope.employeeForm.$submitted = true;
-      $scope.employeeForm3.$submitted = true;
-      $scope.employeeForm4.$submitted = true;
+      // $scope.employeeForm.$submitted = true;
+      // $scope.employeeForm3.$submitted = true;
+      // $scope.employeeForm4.$submitted = true;
       $scope.employeeForm5.$submitted = true;
 
       if ($scope.verify()) {

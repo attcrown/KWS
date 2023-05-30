@@ -25,53 +25,119 @@
       $scope.read = "close";
       $scope.category = ""; // (พนักงาน,ครูFishsix,ครูESC,Scout)
       $scope.isShowDriveError = false;
+      $scope.isShowtribe_choiceError = false;
+      $scope.isShowelec_choiceError = false;
+
       $scope.isShowCvFileError = false;
+      $scope.isShowPortFileError = false;
+      $scope.isShowOtherPresentFileError = false;
+      $scope.isShowImgProfileFileError = false;
+      $scope.isShowImgMBTIFileError = false;
+      $scope.isShowImgDISCFileError = false;
+      $scope.isShowPolicyDecisionError = false;
 
       $scope.clickcategory = false;
       $scope.clickcategory1 = false;
       $scope.clickcategory2 = false;
       $scope.clickcategory3 = false;
 
-      $scope.init = function () {
+      $scope.init = function() {
         usecategoryController($scope, $http);
         usecategory2Controller($scope, $http);
         $(".select2").select2({ theme: "bootstrap4" });
 
-        $(".idcard-file").on("change", ($event) => {
-          var file = $event.target.files[0];
+        function handleFileChange(event, property, elementId) {
+          var file = event.target.files[0];
           if (file) {
-            $scope.attachment.idPdf = file;
-            console.log("idPdf fileName => " + file.name);
+            $scope.attachment[property] = file;
+            console.log(property + " fileName => " + file.name);
           }
-          const idPdf = document.getElementById("idPdf");
+          const element = document.getElementById(elementId);
           var reader = new FileReader();
-          reader.onload = function (event) {
-            idPdf.src = event.target.result;
+          reader.onload = function(event) {
+            element.src = event.target.result;
           };
           reader.readAsDataURL(file);
           $scope.$apply();
+        }
+
+        $(".port-file").on("change", function($event) {
+          handleFileChange($event, "portPdf", "portPdf");
         });
 
-        $(".cv-file").on("change", ($event) => {
-          var file = $event.target.files[0];
-          if (file) {
-            $scope.attachment.cvPdf = file;
-            console.log("cvPdf fileName => " + file.name);
-          }
-          const cvPdf = document.getElementById("cvPdf");
-          var reader = new FileReader();
-          reader.onload = function (event) {
-            cvPdf.src = event.target.result;
-          };
-          reader.readAsDataURL(file);
-          $scope.$apply();
+        $(".cv-file").on("change", function($event) {
+          handleFileChange($event, "cvPdf", "cvPdf");
+        });
+
+        $(".otherpresent-file").on("change", function($event) {
+          handleFileChange($event, "otherpresent", "otherpresent");
+        });
+
+        $(".img_MBTI-file").on("change", function($event) {
+          handleFileChange($event, "img_MBTI", "img_MBTI");
+        });
+
+        $(".img_profile-file").on("change", function($event) {
+          handleFileChange($event, "img_profile", "img_profile");
+        });
+
+        $(".img_DISC-file").on("change", function($event) {
+          handleFileChange($event, "img_DISC", "img_DISC");
         });
       };
 
       $scope.removeFile = function (a) {
         $scope.attachment[a] = null;
       };
+      
+      $scope.checktribe = function(){
+        $scope.sumtribe = 0;
+        if($scope.criteria.tribe_choice1 == true){
+          $scope.sumtribe += 1;
+        }if($scope.criteria.tribe_choice2 == true){
+          $scope.sumtribe += 1;
+        }if($scope.criteria.tribe_choice3 == true){
+          $scope.sumtribe += 1;
+        }if($scope.criteria.tribe_choice4 == true){
+          $scope.sumtribe += 1;
+        }if($scope.criteria.tribe_choice5 == true){
+          $scope.sumtribe += 1;
+        }if($scope.criteria.tribe_choice6 == true){
+          $scope.sumtribe += 1;
+        }if($scope.criteria.tribe_choice7 == true){
+          $scope.sumtribe += 1;
+        }if($scope.criteria.tribe_choice8 == true){
+          $scope.sumtribe += 1;
+        }if($scope.criteria.tribe_choice9 == true){
+          $scope.sumtribe += 1;
+        }if($scope.criteria.tribe_choice10 == true){
+          $scope.sumtribe += 1;
+        }if($scope.criteria.tribe_choice11 == true){
+          $scope.sumtribe += 1;
+        }if($scope.criteria.tribe_choice12 == true){
+          $scope.sumtribe += 1;
+        }
 
+        if ($scope.sumtribe > 1) {
+          $scope.isShowtribe_choiceError = false;
+        } else {
+          $scope.isShowtribe_choiceError = true;
+        }
+
+        console.log(" = " + $scope.sumtribe);
+      }
+
+      $scope.checkelec = function () {
+        if(
+          $scope.criteria.elec_choice1 === true ||
+          $scope.criteria.elec_choice2 === true ||
+          $scope.criteria.elec_choice3 === true ||
+          $scope.criteria.elec_choice4 === true ||
+          $scope.criteria.elec_choice5 === true
+        ){
+          $scope.isShowelec_choiceError = false;
+        }else{$scope.isShowelec_choiceError = true;}
+      }
       $scope.checkdrive = function () {
         if (
           $scope.criteria.car_license === true ||
@@ -86,9 +152,33 @@
           $scope.isShowDriveError = true;
         }
 
+        if($scope.criteria.policy_decision == undefined || $scope.criteria.policy_decision == null){
+          $scope.isShowPolicyDecisionError = true;
+        }else{$scope.isShowPolicyDecisionError = false;}
+
         if($scope.attachment.cvPdf == null){
           $scope.isShowCvFileError = true;
         }else{$scope.isShowCvFileError = false;}
+
+        if($scope.attachment.portPdf == null){
+          $scope.isShowPortFileError = true;
+        }else{$scope.isShowPortFileError = false;}
+
+        if($scope.attachment.otherpresent == null){
+          $scope.isShowOtherPresentFileError = true;
+        }else{$scope.isShowOtherPresentFileError = false;}
+
+        if($scope.attachment.img_profile == null){
+          $scope.isShowImgProfileFileError = true;
+        }else{$scope.isShowImgProfileFileError = false;}
+
+        if($scope.attachment.img_MBTI == null){
+          $scope.isShowImgMBTIFileError = true;
+        }else{$scope.isShowImgMBTIFileError = false;}
+
+        if($scope.attachment.img_DISC == null){
+          $scope.isShowImgDISCFileError = true;
+        }else{$scope.isShowImgDISCFileError = false;}
       };
 
       $scope.changeMessage = function (a) {
@@ -138,6 +228,8 @@
       $scope.sum = function () {
         $scope.Cvalue();
         $scope.checkdrive();
+        $scope.checkelec();
+        $scope.checktribe();
       };
 
       $scope.Cvalue = function () {
