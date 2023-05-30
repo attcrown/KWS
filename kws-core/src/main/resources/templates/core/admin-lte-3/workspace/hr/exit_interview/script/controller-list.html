@@ -1,0 +1,66 @@
+<script th:inline="javascript">
+    function useControllerList($scope, $http)
+    {
+        $scope.getPageNos = useGetPageNos($scope, $http);
+        $scope.gotoPageNo = useGotoPageNo($scope, $http);
+        $scope.requestEditEmployee = useRequestEditEmployee($scope, $http);
+        $scope.requestDeleteEmployee = useRequestDeleteEmployee($scope, $http);
+    }
+
+    function useGetPageNos($scope, $http)
+    {
+        return () => {
+            let pageNos = [];
+            if($scope.paging.totalPage > 0) {
+                for(let i=1; i<=$scope.paging.totalPage; i++) {
+                    pageNos.push(i);
+                }
+            }
+            return pageNos;
+        };
+    }
+
+    function useGotoPageNo($scope, $http)
+    {
+        return (pageNo) => {
+            $scope.paging.pageNo = pageNo;
+            $scope.search();
+        };
+    }
+
+    function useRequestEditEmployee($scope, $http)
+    {
+        return (salesman) => {
+            console.log("### EmployeeProfileController.requestEditEmployee ###");
+            $scope.toEntryMode();
+            $scope.entryMode = "edit";
+            $scope.selectedSalesman = angular.copy(salesman);
+        };
+    }
+
+    function useRequestDeleteEmployee($scope, $http)
+    {
+        return (employee) => {
+            console.log("### EmployeeProfileController.requestDeleteEmployee ###");
+
+            const options = {
+                title: "ยืนยันการลบข้อมูล",
+                text: 'พิมพ์คำว่า "Confirm" และ กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                content: "input",
+                icon: "warning",
+                buttons: ["ยกเลิก", "ตกลง"],
+                dangerMode: true
+            };
+
+            swal(options)
+            .then(value => {
+                if (value === "Confirm") {
+                    console.log("### DeleteEmployee ###");
+                    //$scope.removeEmployee(employee);
+                } else {
+                    swal("คุณพิมพ์ไม่ถูกต้อง", "ยกเลิกการลบข้อมูล", "error");
+                }
+            });
+        };
+    }
+</script>
