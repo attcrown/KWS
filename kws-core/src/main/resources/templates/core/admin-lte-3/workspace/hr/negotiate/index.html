@@ -1,5 +1,190 @@
-<div th:replace="core/admin-lte-3/workspace/hr/negotiate/script/controller"></div>
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+    <link rel="stylesheet"
+        href="https://adminlte.io/themes/v3/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/datepicker.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.0.5/dist/css/adminlte.min.css">
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.8.2/angular-sanitize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/i18n/datepicker.th-TH.min.js"></script>
+    <script src="https://adminlte.io/themes/v3/plugins/inputmask/jquery.inputmask.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+    <style>
+        body {
+            margin-top: 16px;
+            margin-bottom: 16px;
+            /* background-color: #ffbe76; */
+        }
+
+        .is-invalid {
+            border-color: red;
+        }
+    </style>
+
+    <div th:replace="core/admin-lte-3/workspace/hr/negotiate/script/controller"></div>
+</head>
+<style>
+    .badgeInfo {
+        font-weight: 600;
+        font-size: 14px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 0px 8px;
+        position: absolute;
+        width: auto;
+        min-width: 32px;
+        height: 24px;
+        left: 16px;
+        top: 16px;
+        background: #E5E9EB;
+        border-radius: 12px;
+    }
+
+    .spanTime {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 0px 8px;
+        width: auto;
+        height: 24px;
+        border-radius: 12px;
+    }
+
+    /* button  */
+    .button {
+
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 8px;
+        margin: 4px 2px;
+        cursor: pointer;
+        width: auto;
+        height: 24px;
+        color: black;
+        background: #FFFFFF;
+    }
+
+    /* Bottom page negotiate*/
+    .buttonNegotiate {
+        width: 130px;
+        height: 47px;
+        border-radius: 10px;
+    }
+
+
+    /*  page list*/
+    .buttonYes {
+        border: 1px solid #2AB514;
+        border-radius: 5px;
+    }
+
+    .buttonYes:hover {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .buttonNo {
+        border: 1px solid #FF0000;
+        border-radius: 5px;
+    }
+
+    .buttonNo:hover {
+        background-color: #f44336;
+        color: white;
+    }
+
+    .buttonBlue {
+
+        border: 1px solid #283EFF;
+        border-radius: 5px;
+    }
+
+    .buttonBlue:hover {
+        background-color: #283EFF;
+        color: white;
+    }
+
+    .bgYellow {
+        background: #FDFBEC;
+    }
+
+
+    .bgGreen {
+        background: #ECFDF3;
+    }
+
+    /* Font  */
+    .p10 {
+        font-size: 10px;
+    }
+
+    .p20 {
+        font-size: 20px;
+    }
+
+    .p400 {
+        font-weight: 400;
+    }
+
+    .p600 {
+        font-weight: 600;
+    }
+
+    .p700 {
+        font-weight: 700;
+    }
+
+    .is-invalid {
+        border-color: red;
+    }
+
+    h5>.badge {
+        vertical-align: middle
+    }
+
+    .hoverEffect {
+
+
+        &:hover {
+            transition: all 0.2s ease-out;
+            box-shadow: 0px 4px 8px rgba(38, 38, 38, 0.2);
+            top: -4px;
+            border: 1px solid #cccccc;
+            background-color: white;
+        }
+
+        &:before {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            top: -16px;
+            right: -16px;
+            background: #00838d;
+            height: 32px;
+            width: 32px;
+            border-radius: 32px;
+            transform: scale(2);
+            transform-origin: 50% 50%;
+            transition: transform 0.15s ease-out;
+        }
+
+        &:hover:before {
+            transform: scale(2.15);
+        }
+    }
+</style>
 
 <section ng-controller="NegotiateController" ng-init="init()">
     <div ng-if="isLoading" class="kws-loader">
@@ -7,26 +192,26 @@
     </div>
 
     <div ng-show="mode === 'list'">
-      
+
         <div th:replace="core/admin-lte-3/workspace/hr/negotiate/list"></div>
-       
+
     </div>
 
     <div ng-show="mode === 'addDate'">
-       
+
         <div th:replace="core/admin-lte-3/workspace/hr/negotiate/addDate"></div>
-      
+
     </div>
 
     <div ng-show="mode === 'detail'">
-       
+
         <div th:replace="core/admin-lte-3/workspace/hr/negotiate/detail"></div>
-       
+
     </div>
 
     <div ng-show="mode === 'negotiate'">
-       
+
         <div th:replace="core/admin-lte-3/workspace/hr/negotiate/negotiate"></div>
-       
+
     </div>
 </section>

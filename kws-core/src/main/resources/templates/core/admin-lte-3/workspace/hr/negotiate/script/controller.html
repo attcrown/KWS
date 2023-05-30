@@ -12,13 +12,14 @@
         $scope.category = "";
         
         $scope.candidates = [
-            { id: "1", name: 'arin', surname: 'test1', position: "Developer", day: "24/06/23",startTime : '08:00',endTime :'9:00', negotiate_status: "wait" },
-            { id: "2", name: 'peet', surname: 'terst2', position: "Developer",  day: "24/06/23",startTime : '08:00',endTime :'9:00', negotiate_status: "wait" },
-            { id: "57", name: 'arin', surname: 'test1', position: "Developer",  day: "24/06/23",startTime : '08:00',endTime :'9:00', negotiate_status: "success" },
+            { id: "1", name: 'arin', surname: 'test1', position: "Developer", day: "24/06/23",startTime : "8 PM",endTime :"9 PM", negotiate_status: "wait" },
+            { id: "2", name: 'peet', surname: 'terst2', position: "Developer",  day: "24/06/23",startTime : "8 PM",endTime :"9 PM", negotiate_status: "wait" },
+            { id: "57", name: 'arin', surname: 'test1', position: "Developer",  day: "24/06/23",startTime : "8 PM",endTime :"9 PM", negotiate_status: "success" },
             { id: "42", name: 'arin', surname: 'test2', position: "Developer",  day: null,startTime : null,endTime :null, negotiate_status: "null" },
             { id: "52", name: 'arin', surname: 'test2', position: "Developer",  day: null,startTime : null,endTime :null,  negotiate_status: "null" },
-            { id: "81", name: 'arin', surname: 'test2', position: "Developer",  day: null,startTime : null,endTime :null,  negotiate_status: "null" },
-            { id: "427", name: 'arin', surname: 'test1', position: "Developer",  day: "24/06/23",startTime : '08:00',endTime :'9:00', negotiate_status: "failed" },
+            { id: "5", name: 'arin', surname: 'test2', position: "Developer",  day: null,startTime : null,endTime :null,  negotiate_status: "null" },
+            { id: "3", name: 'arin', surname: 'test2', position: "Developer",  day: null,startTime : null,endTime :null,  negotiate_status: "null" },
+            { id: "427", name: 'arin', surname: 'test1', position: "Developer",  day: "24/06/23",startTime : "8 PM",endTime :"9 PM", negotiate_status: "failed" },
 
 
         ];
@@ -37,24 +38,17 @@
         };
 
         $scope.goSetDateNegotiate = function (candidate) {
-            angular.forEach($scope.candidates, function (candidate) {
-                if (candidate.negotiate_status === "addDate") {
-                    candidate.negotiate_status = "null";
-                }
-            });
+            $scope.selectedCandidateProfile = candidate;
             $scope.mode = "addDate";
-            candidate.negotiate_status = "addDate";
           
         }
 
-        $scope.toListMode = function(candidate) {
-            candidate.negotiate_status = "null";
+        $scope.toListMode = function() {
             $scope.mode = 'list';
         };
 
         $scope.toDetailMode = function(candidate) {
             $scope.selectedCandidateProfile = candidate;
-
             $scope.mode = 'detail';
         };
 
@@ -79,6 +73,7 @@
                 $scope.dateForm.startTime.$setPristine();
 
                 $scope.$apply();
+                
             }, 0);
         };
 
