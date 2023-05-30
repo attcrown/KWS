@@ -1,14 +1,14 @@
-<div class="container-fluid bg-white rounded">
-    <div class="row gx-5 text-center">
-        <div class="col-sm-3 mt-3 ">
-            <div class="p-3 bg-light">
-                <div ng-repeat="candidate in candidates | orderBy:'sortCandidatesById'"
-                    ng-if="candidate.negotiate_status == 'addDate'" class="card mb-3">
+<div class="container-fluid" ng-show="selectedCandidateProfile"></div>
+<div class="container-fluid bg-white rounded " >
+    <div class="row g-0 text-center">
+        <div class="col-sm-3 mt-3  ">
+            <div class="p-3 bg-light rounded ">
+                <div  class="card mb-3">
                     <div class="card-body">
                         <h5 class="card-title"><span class="badge float-right"
-                                style="background-color: #E5E9EB;">{{candidate.id}}</span></h5>
-                        <p class="card-text text-left">{{candidate.name}}
-                            {{candidate.surname}}<br>{{candidate.position}}</p>
+                                style="background-color: #E5E9EB;">{{selectedCandidateProfile.id}}</span></h5>
+                        <p class="card-text text-left">{{selectedCandidateProfile.name}}
+                            {{selectedCandidateProfile.surname}}<br>{{selectedCandidateProfile.position}}</p>
 
                         <div class="row-sm-6 ">
                             <form name="dateForm" class="form row p-1" novalidate>
@@ -21,14 +21,15 @@
 
                                     <input name="day" class="form-control " type="text"
                                         placeholder="เลือกวันที่ต้องการเจรจา"
-                                        ng-class="{'is-invalid': isShowDateError()}" ng-model="candidate.day" required>
+                                        ng-class="{'is-invalid': isShowDateError()}" ng-model="selectedCandidateProfile.day" required>
 
                                     <input name="timeRange" class="form-control mt-1" type="text"
                                         placeholder="เลือกช่วงเวลา" ng-class="{'is-invalid': isShowTimeRangeError()}"
-                                        ng-model="candidate.startTime" required>
+                                        ng-model="selectedCandidateProfile.startTime" required>
 
                                     <div class="container p-2">
-                                        <button class="btn btn-outline-danger text-dark" ng-click="toListMode(candidate)">
+                                        <button class="btn btn-outline-danger text-dark"
+                                            ng-click="toListMode()">
                                             <i class="fa "></i>ยกเลิก
                                         </button>
                                         <button class="btn btn-outline-success text-dark " ng-click="requestSave()">
@@ -42,78 +43,124 @@
                     </div>
                 </div>
             </div>
-            <div class="p-3 mt-3 mb-3 bg-light">
+            <div class="p-3 mt-3 mb-3 bg-light rounded">
                 <a href="">
-                    <div ng-repeat="candidate in candidates | orderBy:'sortCandidatesById'" class="card mb-3"
-                        ng-if="candidate.negotiate_status == 'null'">
+                    <div ng-repeat="candidate in candidates | orderBy:'sortCandidatesById'"
+                        class="card  hoverEffect mb-3" ng-if="candidate.negotiate_status == 'null' && candidate.id != selectedCandidateProfile.id">
                         <div class="card-body " ng-click="goSetDateNegotiate(candidate)">
-                            <h5 class="card-title"><span class="badge float-right"
-                                    style="background-color: #E5E9EB;">{{candidate.id}}</span></h5>
-                            <p class="card-text text-left">{{candidate.name}}
-                                {{candidate.surname}}<br>{{candidate.position}}</p>
+                            <h5 class="card-title"><span class="badgeInfo ">{{candidate.id}}</span></h5><br>
+                            <p class="card-text text-left ">{{candidate.name}}
+                                {{candidate.surname}}<br>({{candidate.position}})</p>
                         </div>
                     </div>
                 </a>
             </div>
         </div>
-        <div class="col-sm-3 mt-3 mb-3 px-2 ">
+        <!--  col-9 -->
+        <div class="col-sm-9 mt-3 mb-3 px-2 ">
+            <div class="row gx-5 text-center">
+                <!--  รอเจรจาสัญญาจ้าง-->
+                <div class="col-sm-3  mb-3 px-1 ">
+                    <div class="p-2 bg-light h-100 rounded " style="background-color: #E5E9EB;">
+                        <p class="text-left pInterBold" style="color: #6E7C87;">รอเจรจาสัญญาจ้าง</p>
+                        <a href="">
+                            <div ng-repeat="candidate in candidates | orderBy:'sortCandidatesById'"
+                                class="card hoverEffect mb-3 mt-1" ng-if="candidate.negotiate_status == 'wait'">
 
-            <div class="p-3 bg-light h-100 rounded " style="background-color: #E5E9EB;">
-                <p class="text-left" style="color: #6E7C87;">รอเจรจาสัญญาจ้าง</p>
-                <a href="">
-                    <div ng-repeat="candidate in candidates | orderBy:'sortCandidatesById'" class="card mb-3 mt-1"
-                        ng-if="candidate.negotiate_status == 'wait'">
+                                <div class="card-body  " ng-click="toDetailMode(candidate)">
+                                    <h5 class="card-title"><span class="badgeInfo">{{candidate.id}}</span></h5><br>
+                                    <p class="card-text text-left ">{{candidate.name}}
+                                        {{candidate.surname}}<br>({{candidate.position}})
+                                    </p>
+                                </div>
 
-                        <div class="card-body " ng-click="toDetailMode(candidate)">
-                            <h5 class="card-title"><span class="badge float-right"
-                                    style="background-color: #E5E9EB;">{{candidate.id}}</span></h5>
-                            <p class="card-text text-left">{{candidate.name}}
-                                {{candidate.surname}}<br>{{candidate.position}}
-                            </p>
-                        </div>
-
-                        <div class="p-3" ng-click="toNegotiateMode(candidate)">
-                            <small> <span class="label rounded float-left" ng-style="{'background-color': '#FDFBEC',
-                            'color': '#AC7710'}">{{candidate.day}} : {{candidate.startTime}} -
-                                    {{candidate.endTime}}</span></small>
-                            <button type="button" class="btn  ml-3 round btn-light btn-xs ">เริ่มเจรจา</button>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-        <div class="col-sm-3 mt-3 mb-3 px-2 ">
-            <div class="p-3 bg-light h-100 rounded " style="background-color: #E5E9EB;">
-                <p class="text-left" style="color: #6E7C87;">เจรจาสัญญาจ้างสำเร็จ</p>
-                <div ng-repeat="candidate in candidates | orderBy:'sortCandidatesById'" class="card mb-3 mt-1"
-                    ng-if="candidate.negotiate_status == 'success'">
-                    <div class="card-body ">
-                        <h5 class="card-title"><span class="badge float-right"
-                                style="background-color: #E5E9EB;">{{candidate.id}}</span></h5>
-                        <p class="card-text text-left">{{candidate.name}}
-                            {{candidate.surname}}<br>{{candidate.position}}
-                        </p>
-                        <small><span class="label rounded float-left " ng-style="{'background-color': '#ECFDF3',
-                        'color': '#12B76A','border-radius': '50px'}">{{candidate.day}} : {{candidate.startTime}} -
-                                {{candidate.endTime}} </span></small>
+                                <div class="p-1">
+                                    <div style="text-align: center;" ng-click="toDetailMode(candidate)">
+                                        <span class="spanTime float-left  bgYellow p10 p700"
+                                            ng-style="{'color': '#AC7710'}">
+                                            {{candidate.day}} :
+                                            {{candidate.startTime}} -
+                                            {{candidate.endTime}}
+                                        </span>
+                                    </div>
+                                    <button class="button buttonYes p700" ng-click="toNegotiateMode(candidate)">
+                                        เริ่มเจรจา
+                                    </button>
+                                </div>
+                            </div>
+                        </a>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-sm-3 mt-3 mb-3 px-2 ">
-            <div class="p-3 bg-light h-100  rounded" style="background-color: #E5E9EB;">
-                <p class="text-left" style="color: #6E7C87;">เจรจาสัญญาจ้างไม่สำเร็จ</p>
-                <div ng-repeat="candidate in candidates | orderBy:'sortCandidatesById'" class="card mb-3 mt-1"
-                    ng-if="candidate.negotiate_status == 'failed'">
-                    <div class="card-body hover-overlay">
-                        <h5 class="card-title"><span class="badge float-right"
-                                style="background-color: #E5E9EB;">{{candidate.id}}</span></h5>
-                        <p class="card-text text-left">{{candidate.name}}
-                            {{candidate.surname}}<br>{{candidate.position}}
-                        </p>
-                        <small><span class="label rounded float-left " ng-style="{'background-color': '#F9D2D7',
-                            'color': '#E44345','border-radius': '50px'}">{{candidate.day}} : {{candidate.startTime}} -
-                                {{candidate.endTime}} </span></small>
+                <!--  รอตกลงเซ็นสัญญาจ้าง-->
+                <div class="col-sm-3  mb-3 px-2 ">
+                    <div class="p-2 bg-light h-100  rounded" style="background-color: #E5E9EB;">
+                        <p class="text-left pInterBold" style="color: #6E7C87;">รอตกลงเซ็นสัญญาจ้าง</p>
+                        <a href="">
+                            <div ng-repeat="candidate in candidates | orderBy:'sortCandidatesById'"
+                                class="card hoverEffect mb-3 mt-1" ng-if="candidate.negotiate_status == 'failed'">
+                                <div class="card-body" ng-click="toDetailMode(candidate)">
+                                    <h5 class="card-title"><span class="badgeInfo">{{candidate.id}}</span></h5><br>
+                                    <p class="card-text text-left ">{{candidate.name}}
+                                        {{candidate.surname}}<br>({{candidate.position}})
+                                    </p>
+
+                                </div>
+                                <!-- ใส่ฟังก์ชั่น ลบ เพิ่ม-->
+
+                                <div class="p-1">
+                                    <button class="button buttonYes p700" ng-click="">
+                                        ตกลง
+                                    </button>
+                                    <button class="button buttonNo p700" ng-click="">
+                                        ไม่ตกลง
+                                    </button>
+                                </div>
+
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!--  เจรจาสัญญาจ้างสำเร็จ-->
+                <div class="col-sm-3 mb-3 px-2 ">
+                    <div class="p-2 bg-light h-100 rounded " style="background-color: #E5E9EB;">
+                        <p class="text-left pInterBold" style="color: #6E7C87;">เจรจาสัญญาจ้างสำเร็จ</p>
+                        <a href="">
+                            <div ng-repeat="candidate in candidates | orderBy:'sortCandidatesById'"
+                                class="card hoverEffect mb-3 mt-1" ng-if="candidate.negotiate_status == 'success'">
+                                <div class="card-body " ng-click="toDetailMode(candidate)">
+                                    <h5 class="card-title"><span class="badgeInfo">{{candidate.id}}</span></h5><br>
+                                    <p class="card-text text-left ">{{candidate.name}}
+                                        {{candidate.surname}}<br>({{candidate.position}})
+                                    </p>
+                                    <div style="text-align: center;">
+                                        <span class="spanTime float-left  bgGreen p10 p700"
+                                            ng-style="{'color': '#12B76A'}">
+                                            {{candidate.day}} :
+                                            {{candidate.startTime}} -
+                                            {{candidate.endTime}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!--  เจรจาสัญญาจ้างไม่สำเร็จ-->
+                <div class="col-sm-3 mb-3 px-2 ">
+                    <div class="p-2 bg-light h-100  rounded" style="background-color: #E5E9EB;">
+                        <p class="text-left pInterBold" style="color: #6E7C87;">เจรจาสัญญาจ้างไม่สำเร็จ</p>
+                        <a href="">
+                            <div ng-repeat="candidate in candidates | orderBy:'sortCandidatesById'"
+                                class="card hoverEffect mb-3 mt-1" ng-if="candidate.negotiate_status == 'failed'">
+                                <div class="card-body" ng-click="toDetailMode(candidate)">
+                                    <h5 class="card-title"><span class="badgeInfo">{{candidate.id}}</span></h5><br>
+                                    <p class="card-text text-left ">{{candidate.name}}
+                                        {{candidate.surname}}<br>({{candidate.position}})
+                                    </p>
+
+                                </div>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
