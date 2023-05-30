@@ -27,6 +27,7 @@
       $scope.isShowDriveError = false;
       $scope.isShowtribe_choiceError = false;
       $scope.isShowelec_choiceError = false;
+      $scope.isShowChoiceError = false;
 
       $scope.isShowCvFileError = false;
       $scope.isShowPortFileError = false;
@@ -138,24 +139,24 @@
           $scope.isShowelec_choiceError = false;
         }else{$scope.isShowelec_choiceError = true;}
       }
-      $scope.checkdrive = function () {
-        if (
-          $scope.criteria.car_license === true ||
-          $scope.criteria.car_not_license === true ||
-          $scope.criteria.moto_license === true ||
-          $scope.criteria.moto_not_license === true ||
-          $scope.criteria.not_drive === true ||
-          $scope.criteria.drive_other === true
-        ) {
-          $scope.isShowDriveError = false;
-        } else {
-          $scope.isShowDriveError = true;
-        }
 
+      $scope.checkchoice = function(){
+        if($scope.criteria.choice1 == undefined || $scope.criteria.choice1 == null
+          && $scope.criteria.choice2 == undefined || $scope.criteria.choice2 == null
+          && $scope.criteria.choice3 == undefined || $scope.criteria.choice3 == null){
+          $scope.isShowChoiceError = true;
+        }else{
+          $scope.isShowChoiceError = false;
+        }
+      }
+
+      $scope.checkpolicy = function(){
         if($scope.criteria.policy_decision == undefined || $scope.criteria.policy_decision == null){
           $scope.isShowPolicyDecisionError = true;
         }else{$scope.isShowPolicyDecisionError = false;}
+      }
 
+      $scope.checkfile = function(){
         if($scope.attachment.cvPdf == null){
           $scope.isShowCvFileError = true;
         }else{$scope.isShowCvFileError = false;}
@@ -179,29 +180,44 @@
         if($scope.attachment.img_DISC == null){
           $scope.isShowImgDISCFileError = true;
         }else{$scope.isShowImgDISCFileError = false;}
+      }
+
+      $scope.checkdrive = function () {
+        if (
+          $scope.criteria.car_license === true ||
+          $scope.criteria.car_not_license === true ||
+          $scope.criteria.moto_license === true ||
+          $scope.criteria.moto_not_license === true ||
+          $scope.criteria.not_drive === true ||
+          $scope.criteria.drive_other === true
+        ) {
+          $scope.isShowDriveError = false;
+        } else {
+          $scope.isShowDriveError = true;
+        }
       };
 
       $scope.changeMessage = function (a) {
         if (a == 1) {
-          $scope.message = employee();
+          // $scope.message = employee();
           $scope.criteria.category = "พนักงาน";
           $scope.clickcategory1 = false;
           $scope.clickcategory2 = false;
           $scope.clickcategory3 = false;
         } else if (a == 2) {
-          $scope.message = Fishsix();
+          // $scope.message = Fishsix();
           $scope.criteria.category = "ครูFishsix";
           $scope.clickcategory = false;
           $scope.clickcategory2 = false;
           $scope.clickcategory3 = false;
         } else if (a == 3) {
-          $scope.message = Esc();
+          // $scope.message = Esc();
           $scope.criteria.category = "ครูESC";
           $scope.clickcategory = false;
           $scope.clickcategory1 = false;
           $scope.clickcategory3 = false;
         } else if (a == 4) {
-          $scope.message = Scout();
+          // $scope.message = Scout();
           $scope.criteria.category = "Scout";
           $scope.clickcategory = false;
           $scope.clickcategory1 = false;
@@ -220,8 +236,20 @@
         }
       };
 
+      $scope.nextpage1 = function () {
+        $scope.mode = "next1";
+        $scope.Cvalue();
+      };
       $scope.nextpage2 = function () {
         $scope.mode = "next2";
+        $scope.Cvalue();
+      };
+      $scope.nextpage3 = function () {
+        $scope.mode = "next3";
+        $scope.Cvalue();
+      };
+      $scope.nextpage4 = function () {
+        $scope.mode = "next4";
         $scope.Cvalue();
       };
 
@@ -230,6 +258,9 @@
         $scope.checkdrive();
         $scope.checkelec();
         $scope.checktribe();
+        $scope.checkchoice();
+        $scope.checkpolicy();
+        $scope.checkfile();
       };
 
       $scope.Cvalue = function () {

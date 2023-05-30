@@ -364,6 +364,8 @@
         </div>
       </div>
 
+      <div class="col-md-6"></div>
+
       <div class="col-md-6">
         <div class="form-group">
           <label>
@@ -602,7 +604,7 @@
             <span ng-show="!isShowExpectedSalaryError()">เงินเดือนที่คาดหวัง</span>
             <span class="text-danger" ng-show="isShowExpectedSalaryError()">กรุณาระบุเงินเดือนที่คาดหวัง</span>
           </label>
-          <input name="expected_salary" type="text" class="form-control"
+          <input name="expected_salary" type="number" class="form-control"
             ng-class="{'is-invalid': isShowExpectedSalaryError()}" placeholder="ระบุเงินเดือนที่คาดหวัง"
             ng-model="selectedEmployeeProfile.expected_salary" required />
         </div>
@@ -616,7 +618,7 @@
             <span class="text-danger"
               ng-show="isShowMinimumSalaryError()">กรุณาระบุเงินเดือนขั้นต่ำที่ท่านรับได้ที่สุด</span>
           </label>
-          <input name="minimum_salary" type="text" class="form-control"
+          <input name="minimum_salary" type="number" class="form-control"
             ng-class="{'is-invalid': isShowMinimumSalaryError()}" placeholder="ระบุเงินเดือนขั้นต่ำที่ท่านรับได้ที่สุด"
             ng-model="selectedEmployeeProfile.minimum_salary" required />
         </div>
@@ -629,7 +631,7 @@
             <span ng-show="!isShowCurrentSalaryError()">เงินเดือน ณ ปัจจุปันที่ได้รับ</span>
             <span class="text-danger" ng-show="isShowCurrentSalaryError()">กรุณาระบุเงินเดือน ณ ปัจจุปันที่ได้รับ</span>
           </label>
-          <input name="current_salary" type="text" class="form-control"
+          <input name="current_salary" type="number" class="form-control"
             ng-class="{'is-invalid': isShowCurrentSalaryError()}" placeholder="ระบุเงินเดือน ณ ปัจจุปันที่ได้รับ"
             ng-model="selectedEmployeeProfile.current_salary" required />
         </div>
@@ -864,11 +866,11 @@
           <span class="text-danger" ng-show="isShowPolicyDecisionError">กรุณาเลือกยินยอมให้โทรถามความคิดเห็มจากหัวหน้าเก่า กรณีผ่านสัมภาษณ์รอบแรกหรือไม่ *</span>
         </label>
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="policyDecision" ng-model="criteria.policy_decision" ng-value="true" ng-change="checkdrive()"/>
+          <input class="form-check-input" type="radio" name="policyDecision" ng-model="criteria.policy_decision" ng-value="true" ng-change="checkpolicy()"/>
           <label class="form-check-label">ยินยอม</label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="policyDecision" ng-model="criteria.policy_decision" ng-value="false" ng-change="checkdrive()"/>
+          <input class="form-check-input" type="radio" name="policyDecision" ng-model="criteria.policy_decision" ng-value="false" ng-change="checkpolicy()"/>
           <label class="form-check-label">ไม่ยินยอม</label>
         </div>
       </div>
@@ -1311,7 +1313,80 @@
   </div>
   <div class="card-body mx-4">
     <br />
-    <form name="employeeForm6" class="form row" novalidate></form>
+    <form name="employeeForm6" class="form row" novalidate>
+      <div class="col-md-12" style="background-color: #F4F6F9; border-radius: 20px;">
+        <label class="p-3">
+          <span class="text-danger">*</span>
+          <span ng-show="!isShowChoiceError">โจทย์</span>
+          <span class="text-danger" ng-show="isShowChoiceError">กรุณาทำโจทย์</span>
+          <br>
+          <br>
+          <span class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;สัตวแพทย์ได้ให้สัมภาษณ์กับผู้สื่อข่าวว่า ปัจจุบันอาหารหมีมีจำนวนลดลงมาก ทำให้คิดเป็นสัดส่วนแล้วไม่เพียงพอกับความต้องการต่อวันของหมีที่มีอยู่ ผู้สื่อข่าวจึงกล่าวว่า ถ้าอย่างนั้นเราก็จะเห็นหมีเพียงในรูปถ่ายเหมือนกับไดโนเสาร์</span>
+        </label>
+      </div>  
+
+      <div class="col-md-6 mt-3">
+        <label>
+          <span class="text-danger">*</span>
+          <span>จากสถานการณ์ข้างต้น สามารถสรุปได้ว่า "หมีต้องอพยพไปหาที่อยู่ใหม่" ข้อสรุปดังกล่าวตรงกับข้อใด</span>
+        </label>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="choice" ng-model="criteria.choice1" value="A"/>
+          <label class="form-check-label">ก. ข้อสรุป เป็นจริง</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="choice" ng-model="criteria.choice1" value="B"/>
+          <label class="form-check-label">ข. ข้อสรุป เป็นเท็จ</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="choice" ng-model="criteria.choice1" value="C"/>
+          <label class="form-check-label">ค. ข้อมูลที่สนับสนุนไม่เพียงพอ</label>
+        </div>
+      </div>
+
+      <div class="col-md-6"></div>
+
+      <div class="col-md-6 mt-3">
+        <label>
+          <span class="text-danger">*</span>
+          <span>เหตุผลในข้อใดที่เป็นเงื่อนไขสำคัญที่ทำให้หมีลดจำนวนลง</span>
+        </label>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="choice1" ng-model="criteria.choice2" value="A"/>
+          <label class="form-check-label">ก. ไม่มีอาหารกิน</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="choice1" ng-model="criteria.choice2" value="B"/>
+          <label class="form-check-label">ข. ตัวใหญ่เกินไป</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="choice1" ng-model="criteria.choice2" value="C"/>
+          <label class="form-check-label">ค. ไม่มีที่อยู่อาศัย</label>
+        </div>
+      </div>
+
+      <div class="col-md-6"></div>
+
+      <div class="col-md-6 mt-3">
+        <label>
+          <span class="text-danger">*</span>
+          <span>สาระสำคัญของสถานการณ์ คือข้อใด</span>
+        </label>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="choice2" ng-model="criteria.choice3" value="A" ng-change="checkchoice()"/>
+          <label class="form-check-label">ก. ป่าไม้ถูกทำลาย</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="choice2" ng-model="criteria.choice3" value="B" ng-change="checkchoice()"/>
+          <label class="form-check-label">ข. ช้างมีปริมาณเพิ่มขึ้น</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="choice2" ng-model="criteria.choice3" value="C" ng-change="checkchoice()"/>
+          <label class="form-check-label">ค. ช้างต้องสูญพันธุ์เหมือนไดโนเสาร์</label>
+        </div>
+      </div>    
+      
+    </form>
   </div>
 </div>
 <br />

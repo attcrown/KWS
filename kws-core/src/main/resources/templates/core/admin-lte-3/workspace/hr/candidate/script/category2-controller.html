@@ -161,7 +161,7 @@
 
   function useVerify($scope, $http) {
     return () => {
-      if ( $scope.isShowDriveError != true 
+      if ( $scope.isShowDriveError == false 
           && $scope.isShowPolicyDecisionError == false
           && $scope.isShowCvFileError == false
           && $scope.isShowPortFileError == false 
@@ -170,10 +170,13 @@
           && $scope.isShowImgMBTIFileError == false
           && $scope.isShowImgDISCFileError == false
           && $scope.isShowtribe_choiceError == false
+          && $scope.isShowChoiceError == false
+          && $scope.isShowPolicyDecisionError == false
           && $scope.employeeForm3.$valid 
           && $scope.employeeForm.$valid 
           && $scope.employeeForm4.$valid
-          && $scope.employeeForm5.$valid) {
+          && $scope.employeeForm5.$valid
+          && $scope.employeeForm6.$valid) {
         return true;
       }
     };
@@ -188,7 +191,7 @@
       $scope.employeeForm3.$submitted = true;
       $scope.employeeForm4.$submitted = true;
       $scope.employeeForm5.$submitted = true;
-
+      $scope.employeeForm6.$submitted = true;
       if ($scope.verify()) {
         const options = {
           title:
