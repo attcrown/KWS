@@ -16,6 +16,148 @@
         { id: "003", name: "นางสาว" },
         { id: "004", name: "อื่นๆ" },
       ];
+
+      $scope.indtype = [
+        { id: "1", name: "บุคคลทั่วไป" },
+        { id: "2", name: "ผู้พิการทางการมองเห็น" },
+        { id: "3", name: "ผู้พิการทางการได้ยิน หรือ สื่อความหมาย" },
+        { id: "4", name: "ผู้พิการทางการเคลื่อนไหว หรือทางร่างกาย" },
+        { id: "5", name: "ผู้พิการจิตใจหรือพฤติกรรม" },
+        { id: "6", name: "ผู้พิการทางสติปัญญา" },
+        { id: "7", name: "ผู้พิการทางการเรียนรู้" },
+        { id: "8", name: "ผู้พิการทางการออทิสติก" },
+      ];
+
+      $scope.sick = [
+        { id: "1", name: "อาการซึมเศร้า" },
+        { id: "2", name: "อาการแพนิค" },
+        { id: "3", name: "ไม่มี" },
+      ];
+
+      $scope.job_position = [
+        { id: "1", name: "Operation ออนไลน์" },
+        { id: "2", name: "Admin ประจำสาขา วันเสาร์ อาทิตย์" },
+        { id: "3", name: "Accounting officer" },
+        { id: "4", name: "Accounting manager " },
+        { id: "5", name: "Academic Supervisor/ Management" },
+        { id: "6", name: "Assistant project manager " },
+        { id: "7", name: "Business Data Analysis" },
+        { id: "8", name: "Content creator (Education)" },
+        { id: "9", name: "Digital Marketing" },
+        { id: "10", name: "Influencer/Partnership/Event Marketing officer" },
+        { id: "11", name: "Marketing manager" },
+        { id: "12", name: "Video creator (Education)" },
+        { id: "13", name: "Graphic Design" },
+        { id: "14", name: "Programmer / Developer" },
+        { id: "15", name: "Project Coordinator" },
+        { id: "16", name: "Project manager" },
+        { id: "17", name: "Sales & AE ประจำ CCN" },
+        { id: "18", name: "Sales Course Consultant" },
+        { id: "19", name: "Sales manager FS" },
+        { id: "20", name: "HR recruiter" },
+        { id: "21", name: "HRD" },
+        { id: "22", name: "HRM" },
+        { id: "23", name: "Trainee recruiter" },
+        { id: "24", name: "Tour operation" },
+      ];
+
+      $scope.business = [
+        { id: "1", name: "KnowAre Learning (ส่วนกลาง)" },
+        { id: "2", name: "FISHSIX สถาบันสอนคณิตศาสตร์-วิทยาศาสตร์" },
+        { id: "3", name: "ESC โรงเรียนคู่ขนาน (สถาบันสอน Soft Skills)" },
+        { id: "4", name: "KNOW-ARE (ค่ายค้นหาตัวตน)" },
+        { id: "5", name: "เชี่ยว - ชาญ - แนว (Content marketing agency)" },
+        { id: "6", name: "NxGn (Recruitment agency)" },
+        { id: "7", name: "Pro Go Go (Traveling agency)" },
+        { id: "8", name: "YX - Why Expensive by Billion Share (Delivery Services)" },
+      ];
+
+      $scope.working_style = [
+        { id: "1", name: "Work From Anywhere 100%"},
+        { id: "2", name: "Hybrid (ออฟฟิศ50/ออนไลน์50)"},
+        { id: "3", name: "Office100%"},
+      ];
+
+      $scope.employee_type = [
+        { id: "1", name: "Fulltime"},
+        { id: "2", name: "Freelance"},
+      ];
+
+      $scope.job_posting = [
+        { id: "1", name: "Facebook page ประกาศรับสมัครงาน"},
+        { id: "2", name: "Post จากกลุ่มFBมหาลัยหรือชมรมต่างๆ (สโมสรนิสิต/สมาคมศิษย์เก่า/ฯลฯ)"},
+        { id: "3", name: "Line Official Account"},
+        { id: "4", name: "Line Openchat"},
+        { id: "5", name: "IG Story ของเพื่อนหรือคนรู้จัก"},
+        { id: "6", name: "Post ที่มาจากหน้า FB ของเพื่อนหรือคนรู้จัก"},
+        { id: "7", name: "คนรู้จักแนะนำ"},
+        { id: "8", name: "จาก Facebook comment (เห็นคนคอมเม้นในโพสบน Facebook)"},
+        { id: "9", name: "LinkedIn"},
+      ];
+
+      $scope.candidate_MBTI = [
+        { id: "1", name: "INTJ"},
+        { id: "2", name: "INTP"},
+        { id: "3", name: "ENTJ"},
+        { id: "4", name: "ENTP"},
+        { id: "5", name: "INFJ"},
+        { id: "6", name: "INFP"},
+        { id: "7", name: "ENFJ"},
+        { id: "8", name: "ENFP"},
+        { id: "9", name: "ISTJ"},
+        { id: "10", name: "ISFJ"},
+        { id: "11", name: "ESTJ"},
+        { id: "12", name: "ESFJ"},
+        { id: "13", name: "ISTP"},
+        { id: "14", name: "ISFP"},
+        { id: "15", name: "ESTP"},
+        { id: "16", name: "ESFP"},
+      ];
+
+      $scope.candidate_DISC = [
+        { id: "1", name: "มนุษย์กลุ่ม D (Dominance)"},
+        { id: "2", name: "มนุษย์กลุ่ม I (Influence)"},
+        { id: "3", name: "มนุษย์กลุ่ม S (Steadiness)"},
+        { id: "4", name: "มนุษย์กลุ่ม C (Compliance)"},
+      ];
+
+      $scope.aptitude = [
+        { id: "1", name: "ถนัดงาน Step 0-1 งานคิดไอเดีย"},
+        { id: "2", name: "ถนัดงาน Step 1-2 งานนำไปเดียต่อยอด"},
+      ];
+
+      $scope.type = [
+        { id: "1", name: "Type 1 : อยากทำงานไปในแต่ละวัน ไม่ได้อยากGrowthอะไรมากมายนัก ทำงานแลกเงินเดือนเอาเวลาแลกเงินเดือน คือทำงานได้ดีนะ แต่ไม่ได้เน้นผลลัพธ์เน้นประสิทธิภาพ เน้นการเติบโตของตัวเอง เหมือน officer ทั่วไป"},
+        { id: "2", name: "Type 2 : อยากเติบโตแหละ แต่ไม่ถึงกับต้องมาให้เรียนรู้อะไรใหม่ๆทุกวัน สัปดาห์ละ 1-2ครั้งได้นะ แต่ถ้ามากไปก็เหนื่อย"},
+        { id: "3", name: "Type 3 : Agressiveกับการเติบโตมาก ฉันอยากเรียนรู้อะไรใหม่ๆทุกวัน มาเลยแม้นอกเวลางาน มีความอยากเรียนเป็นนิสัย อยากเพิ่มประสิทธิภาพให้ตนเอง ทำผลลัพธ์ต่อหน่วยเวลาได้มากกว่าเดิมในทุก ๆ วัน"},
+      ];
+
+      $scope.filling = [
+        { id: "1", name: "Type 1 : ไม่รู้สึกอะไร ไม่สำเร็จก็แค่ลองทำใหม่อีกครั้ง"},
+        { id: "2", name: "Type 2 : ก็รู้สึกหงุดหงิดหรือเศร้านะ แต่เดี๋ยวเริ่มใหม่ได้"},
+        { id: "3", name: "Type 3 : รู้สึกเสียใจและเศร้ามาก รู้สึกอยากล้มเลิกไม่ไปต่อในแผนที่วางไว้ และเปลี่ยนแผนใหม่ทันที"},
+      ];
+
+      $scope.like_working = [
+        { id: "1", name: "Type1:  ฉันชอบทำงานในขอบข่ายที่กำหนดเท่านั้นเพราะอยากโฟกัสอย่างใดอย่างหนึ่ง"},
+        { id: "2", name: "Type2: ฉันชอบทำงานในขอบข่ายของตนเองแต่สามารถช่วยเหลือนอกเหนือจากขอบข่ายงานตัวเองนิดๆหน่อยๆได้ แต่ต้องไม่ยากและมากเกินไป"},
+        { id: "3", name: "Type3: ฉันไม่สนขอบข่ายงานฉันคืออะไร สนแต่ว่างานต้องออกมาดี"},
+      ];
+
+      $scope.wont_working = [
+        { id: "1", name: "Type 1 : ขอทำงานRoutineซ้ำ ๆ เดิม ๆ มีระบบวางไว้แล้วให้เดินตามขั้นตอน"},
+        { id: "2", name: "Type 2 : อยากทำงานที่มีระบบ ตามขั้นตอน ชิวบ้างบางเวลา กดดันน้อย เพราะมีระบบอยู่แล้วระดับนึง"},
+        { id: "3", name: "Type 3 : ของานแบบกดดันกลางๆ มีงาน rountine สลับ งานผลลัพธ์ในระยะกลางๆ"},
+        { id: "4", name: "Type 4 : ของานที่กดดันเพราะมุ่งผลลัพธ์ในระยะ 3 วัน 7 วัน จะเรียกว่าเริ่มบ้างาน ทุ่มเทกว่าคนรอบข้าง" },
+        { id: "5", name: "Type 5 : ลุยๆ บางทีก็เหมือนบ้างานเพราะจะมุ่งผลลัพธ์ อยากให้งานเกิด อยากมีเงินเดือนเป็นแสนตอนอายุ 30" },
+      ];
+
+      $scope.let_pass_work = [
+        { id: "1", name: "Type 1 : งานเสร็จประมาน 20-30% ก็พอ ก็ปล่อยโครงการ/งานนี้ได้แล้ว แล้วค่อยนำข้อผิดพลาด หรือข้อปรับปรุงมาปรับเพิ่มทีหลัง"},
+        { id: "2", name: "Type 2 : งานต้องเสร็จสมบูรณ์100%เท่านั้น ถึงจะปล่อยโครงการ/งานนั้นดำเนินการต่อ"},
+      ];
+
+
       $scope.selectedEmployeeProfile;
       $scope.entryMode = "add";
       $scope.isLoading = false;
@@ -262,6 +404,9 @@
         $scope.checkpolicy();
         $scope.checkfile();
       };
+      $scope.tobackpage = function(){
+        $scope.mode = "list";
+      }
 
       $scope.Cvalue = function () {
         setTimeout(() => {
@@ -279,6 +424,7 @@
   .btn[disabled] {
     background-color: #dddddd; /* กำหนดสีเทาที่คุณต้องการ */
     color: #888888; /* กำหนดสีตัวอักษรที่คุณต้องการ */
+    border: #888888;
   }
   .red-asterisk {
     color: red;

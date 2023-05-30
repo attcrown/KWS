@@ -173,8 +173,8 @@
               <option value="" disabled selected hidden>
                 --- กรุณาเลือก ---
               </option>
-              <option ng-repeat="prefix in prefix | orderBy: 'name'" ng-value="prefix.name">
-                {{ prefix.name }}
+              <option ng-repeat="indtype in indtype | orderBy: 'name'" ng-value="indtype.name">
+                {{ indtype.name }}
               </option>
             </select>
           </div>
@@ -192,8 +192,8 @@
               <option value="" disabled selected hidden>
                 --- กรุณาเลือก ---
               </option>
-              <option ng-repeat="prefix in prefix | orderBy: 'name'" ng-value="prefix.name">
-                {{ prefix.name }}
+              <option ng-repeat="sick in sick | orderBy: 'name'" ng-value="sick.name">
+                {{ sick.name }}
               </option>
             </select>
           </div>
@@ -396,6 +396,8 @@
         </div>
       </div>
 
+      <div class="col-md-6"></div>
+
       <div class="col-md-6">
         <div class="form-group">
           <label>
@@ -465,8 +467,8 @@
             ng-class="{'is-invalid': isShowJobPosition1Error()}" ng-model="selectedEmployeeProfile.job_position1"
             required>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
-            <option ng-repeat="prefix in prefix | orderBy: 'name'" ng-value="prefix.name">
-              {{ prefix.name }}
+            <option ng-repeat="job_position in job_position | orderBy: 'name'" ng-value="job_position.name">
+              {{ job_position.name }}
             </option>
           </select>
         </div>
@@ -482,8 +484,8 @@
           <select name="business1" class="form-control" style="width: 100%"
             ng-class="{'is-invalid': isShowBusiness1Error()}" ng-model="selectedEmployeeProfile.business1" required>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
-            <option ng-repeat="prefix in prefix | orderBy: 'name'" ng-value="prefix.name">
-              {{ prefix.name }}
+            <option ng-repeat="business in business | orderBy: 'name'" ng-value="business.name">
+              {{ business.name }}
             </option>
           </select>
         </div>
@@ -501,8 +503,8 @@
             ng-class="{'is-invalid': isShowJobPosition2Error()}" ng-model="selectedEmployeeProfile.job_position2"
             required>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
-            <option ng-repeat="prefix in prefix | orderBy: 'name'" ng-value="prefix.name">
-              {{ prefix.name }}
+            <option ng-repeat="job_position in job_position | orderBy: 'name'" ng-value="job_position.name">
+              {{ job_position.name }}
             </option>
           </select>
         </div>
@@ -518,8 +520,8 @@
           <select name="business2" class="form-control" style="width: 100%"
             ng-class="{'is-invalid': isShowBusiness2Error()}" ng-model="selectedEmployeeProfile.business2" required>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
-            <option ng-repeat="prefix in prefix | orderBy: 'name'" ng-value="prefix.name">
-              {{ prefix.name }}
+            <option ng-repeat="business in business | orderBy: 'name'" ng-value="business.name">
+              {{ business.name }}
             </option>
           </select>
         </div>
@@ -537,8 +539,8 @@
             ng-class="{'is-invalid': isShowJobPosition3Error()}" ng-model="selectedEmployeeProfile.job_position3"
             required>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
-            <option ng-repeat="prefix in prefix | orderBy: 'name'" ng-value="prefix.name">
-              {{ prefix.name }}
+            <option ng-repeat="job_position in job_position | orderBy: 'name'" ng-value="job_position.name">
+              {{ job_position.name }}
             </option>
           </select>
         </div>
@@ -554,8 +556,8 @@
           <select name="business3" class="form-control" style="width: 100%"
             ng-class="{'is-invalid': isShowBusiness3Error()}" ng-model="selectedEmployeeProfile.business3" required>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
-            <option ng-repeat="prefix in prefix | orderBy: 'name'" ng-value="prefix.name">
-              {{ prefix.name }}
+            <option ng-repeat="business in business | orderBy: 'name'" ng-value="business.name">
+              {{ business.name }}
             </option>
           </select>
         </div>
@@ -572,8 +574,8 @@
             ng-class="{'is-invalid': isShowWorkingStyleError()}" ng-model="selectedEmployeeProfile.working_style"
             required>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
-            <option ng-repeat="prefix in prefix | orderBy: 'name'" ng-value="prefix.name">
-              {{ prefix.name }}
+            <option ng-repeat="working_style in working_style | orderBy: 'name'" ng-value="working_style.name">
+              {{ working_style.name }}
             </option>
           </select>
         </div>
@@ -590,8 +592,8 @@
             ng-class="{'is-invalid': isShowEmployeeTypeError()}" ng-model="selectedEmployeeProfile.employee_type"
             required>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
-            <option ng-repeat="prefix in prefix | orderBy: 'name'" ng-value="prefix.name">
-              {{ prefix.name }}
+            <option ng-repeat="employee_type in employee_type | orderBy: 'name'" ng-value="employee_type.name">
+              {{ employee_type.name }}
             </option>
           </select>
         </div>
@@ -686,8 +688,8 @@
           <select name="job_posting" class="form-control" style="width: 100%"
             ng-class="{'is-invalid': isShowJobPostingError()}" ng-model="selectedEmployeeProfile.job_posting" required>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
-            <option ng-repeat="prefix in prefix | orderBy: 'name'" ng-value="prefix.name">
-              {{ prefix.name }}
+            <option ng-repeat="job_posting in job_posting | orderBy: 'name'" ng-value="job_posting.name">
+              {{ job_posting.name }}
             </option>
           </select>
         </div>
@@ -795,8 +797,8 @@
           <select name="candidate_MBTI" class="form-control" style="width: 100%"
             ng-class="{'is-invalid': isShowCandidateMBTIError()}" ng-model="selectedEmployeeProfile.candidate_MBTI" required>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
-            <option ng-repeat="prefix in prefix | orderBy: 'name'" ng-value="prefix.name">
-              {{ prefix.name }}
+            <option ng-repeat="candidate_MBTI in candidate_MBTI | orderBy: 'name'" ng-value="candidate_MBTI.name">
+              {{ candidate_MBTI.name }}
             </option>
           </select>
         </div>
@@ -832,8 +834,8 @@
           <select name="candidate_DISC" class="form-control" style="width: 100%"
             ng-class="{'is-invalid': isShowCandidateDISCError()}" ng-model="selectedEmployeeProfile.candidate_DISC" required>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
-            <option ng-repeat="prefix in prefix | orderBy: 'name'" ng-value="prefix.name">
-              {{ prefix.name }}
+            <option ng-repeat="candidate_DISC in candidate_DISC | orderBy: 'name'" ng-value="candidate_DISC.name">
+              {{ candidate_DISC.name }}
             </option>
           </select>
         </div>
@@ -923,8 +925,8 @@
           <select name="aptitude" class="form-control" style="width: 100%"
             ng-class="{'is-invalid': isShowAptitudeError()}" ng-model="selectedEmployeeProfile.aptitude" required>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
-            <option ng-repeat="prefix in prefix | orderBy: 'name'" ng-value="prefix.name">
-              {{ prefix.name }}
+            <option ng-repeat="aptitude in aptitude | orderBy: 'name'" ng-value="aptitude.name">
+              {{ aptitude.name }}
             </option>
           </select>
         </div>
@@ -964,8 +966,8 @@
           <select name="type" class="form-control" style="width: 100%"
             ng-class="{'is-invalid': isShowTypeError()}" ng-model="selectedEmployeeProfile.type" required>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
-            <option ng-repeat="prefix in prefix | orderBy: 'name'" ng-value="prefix.name">
-              {{ prefix.name }}
+            <option ng-repeat="type in type | orderBy: 'name'" ng-value="type.name">
+              {{ type.name }}
             </option>
           </select>
         </div>
@@ -981,8 +983,8 @@
           <select name="filling" class="form-control" style="width: 100%"
             ng-class="{'is-invalid': isShowFillingError()}" ng-model="selectedEmployeeProfile.filling" required>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
-            <option ng-repeat="prefix in prefix | orderBy: 'name'" ng-value="prefix.name">
-              {{ prefix.name }}
+            <option ng-repeat="filling in filling | orderBy: 'name'" ng-value="filling.name">
+              {{ filling.name }}
             </option>
           </select>
         </div>
@@ -998,8 +1000,8 @@
           <select name="like_working" class="form-control" style="width: 100%"
             ng-class="{'is-invalid': isShowlike_workingError()}" ng-model="selectedEmployeeProfile.like_working" required>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
-            <option ng-repeat="prefix in prefix | orderBy: 'name'" ng-value="prefix.name">
-              {{ prefix.name }}
+            <option ng-repeat="like_working in like_working | orderBy: 'name'" ng-value="like_working.name">
+              {{ like_working.name }}
             </option>
           </select>
         </div>
@@ -1015,8 +1017,8 @@
           <select name="wont_working" class="form-control" style="width: 100%"
             ng-class="{'is-invalid': isShowwont_workingError()}" ng-model="selectedEmployeeProfile.wont_working" required>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
-            <option ng-repeat="prefix in prefix | orderBy: 'name'" ng-value="prefix.name">
-              {{ prefix.name }}
+            <option ng-repeat="wont_working in wont_working | orderBy: 'name'" ng-value="wont_working.name">
+              {{ wont_working.name }}
             </option>
           </select>
         </div>
@@ -1032,8 +1034,8 @@
           <select name="let_pass_work" class="form-control" style="width: 100%"
             ng-class="{'is-invalid': isShowlet_pass_workError()}" ng-model="selectedEmployeeProfile.let_pass_work" required>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
-            <option ng-repeat="prefix in prefix | orderBy: 'name'" ng-value="prefix.name">
-              {{ prefix.name }}
+            <option ng-repeat="let_pass_work in let_pass_work | orderBy: 'name'" ng-value="let_pass_work.name">
+              {{ let_pass_work.name }}
             </option>
           </select>
         </div>
@@ -1390,15 +1392,15 @@
   </div>
 </div>
 <br />
-<div class="text-right mx-5">
-  <button class="btn btn-primary mb-5" ng-click="sum(); requestSave()">
-    <i class="fa fa-search"></i> shows
-  </button>
-  <button class="btn btn-primary mb-5" ng-click="sum(); requestSave()">
-    <i class="fa fa-search"></i> shows
-  </button>
-</div>
 
+<div class="text-right mx-5">
+    <button class="btn btn-outline-danger" ng-click="tobackpage()">
+        <i class="fa fa-caret-left"></i> กลับ
+    </button>
+    <button class="btn btn-outline-primary" ng-click="sum(); requestSave()">
+        <i class="fa fa-save"></i> บันทึก
+    </button>
+</div>
 
 <script>
 function checkFileSize(input) {
