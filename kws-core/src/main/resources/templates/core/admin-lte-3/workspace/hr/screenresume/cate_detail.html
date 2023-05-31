@@ -1,0 +1,1294 @@
+<!-- --------------------------ข้อมูลส่วนตัว--------------------------------- -->
+<div class="card mx-5">
+  <div class="card-header">
+    <h3 class="card-title px-3">ข้อมูลส่วนตัว</h3>
+  </div>
+
+  <div class="card-body px-5">
+    <br />
+    <form name="employeeForm" class="form row" novalidate>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span>คำนำหน้า</span>
+            </label>
+            <select name="typeName" class="form-control" style="width: 100%" ng-model="selectedEmployeeProfile.typeName"
+              disabled>
+              <option value="" disabled selected hidden>
+                --- กรุณาเลือก ---
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span>ชื่อ-นามสกุล (ภาษาไทยเท่านั้น)</span>
+            </label>
+            <input name="firstName" type="text" class="form-control" placeholder="ระบุชื่อ-นามสกุล"
+              ng-model="show_datapage.name" disabled />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span>ชื่อเล่น (ภาษาไทยเท่านั้น)</span>
+            </label>
+            <input name="nickName" type="text" class="form-control" placeholder="ระบุชื่อเล่น"
+              ng-model="selectedEmployeeProfile.nickName" disabled />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span>เบอร์โทรศัพท์</span>
+            </label>
+            <input name="phone" type="text" class="form-control" placeholder="ระบุเบอร์โทรศัพท์"
+              ng-model="selectedEmployeeProfile.phone" disabled />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span>อายุ</span>
+            </label>
+            <input name="old" type="number" class="form-control" placeholder="ระบุอายุ"
+              ng-model="selectedEmployeeProfile.old" disabled />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span>ที่อยู่ปัจจุบัน</span>
+            </label>
+            <input name="location" type="text" class="form-control" placeholder="ระบุที่อยู่ปัจจุบัน"
+              ng-model="selectedEmployeeProfile.location" disabled />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span>ชื่อ Line (Line ที่ใช้แอดกับทางบริษัท)</span>
+            </label>
+            <input name="line" type="text" class="form-control" placeholder="ระบุชื่อ Line"
+              ng-model="selectedEmployeeProfile.line" disabled />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span>ชื่อ Facebook</span>
+            </label>
+            <input name="facebook" type="text" class="form-control" placeholder="ระบุ Facebook"
+              ng-model="selectedEmployeeProfile.facebook" disabled />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span>สัญชาติ</span>
+            </label>
+            <input name="nationality" type="text" class="form-control" placeholder="ระบุสัญชาติ"
+              ng-model="selectedEmployeeProfile.nationality" disabled />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span>เชื้อชาติ</span>
+            </label>
+            <input name="ethnicity" type="text" class="form-control" placeholder="ระบุเชื้อชาติ"
+              ng-model="selectedEmployeeProfile.ethnicity" disabled />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span>Line ID สำหรับติดต่อประสานงาน และส่งข้อมูลเพิ่มเติม</span>
+            </label>
+            <input name="lineID" type="text" class="form-control" placeholder="ระบุชื่อ LineID"
+              ng-model="selectedEmployeeProfile.lineID" disabled />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span>งานอดิเรก/สิ่งที่สนใจเป็นพิเศษ</span>
+            </label>
+            <input name="wishes" type="text" class="form-control" placeholder="ระบุงานอดิเรก/สิ่งที่สนใจเป็นพิเศษ"
+              ng-model="selectedEmployeeProfile.wishes" disabled />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span>ประเภทบุคคล</span>
+            </label>
+            <select name="indtype" class="form-control" style="width: 100%" ng-model="selectedEmployeeProfile.indtype"
+              disabled>
+              <option value="" disabled selected hidden>
+                --- กรุณาเลือก ---
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span>คุณมีอาการดังนี้ หรือไม่</span>
+            </label>
+            <select name="sick" class="form-control" style="width: 100%" ng-model="selectedEmployeeProfile.sick"
+              disabled>
+              <option value="" disabled selected hidden>
+                --- กรุณาเลือก ---
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <form name="employeeForm2" class="form row" novalidate>
+    <div class="col-md-6 px-5">
+      <label>
+        <span class="text-danger">*</span>
+        <span>ขับรถอะไรได้บ้าง</span>
+      </label>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" ng-model="criteria.car_license" disabled />
+        <label class="form-check-label">ขับรถยนต์ได้ / มีใบขับขี่</label>
+      </div>
+      <div class="form-check mt-2">
+        <input class="form-check-input" type="checkbox" ng-model="criteria.car_not_license" disabled />
+        <label class="form-check-label">ขับรถยนต์ได้ / ไม่มีใบขับขี่</label>
+      </div>
+      <div class="form-check mt-2">
+        <input class="form-check-input" type="checkbox" ng-model="criteria.moto_license" disabled />
+        <label class="form-check-label">ขับมอเตอร์ไซด์ได้ / มีใบขับขี่</label>
+      </div>
+      <div class="form-check mt-2">
+        <input class="form-check-input" type="checkbox" ng-model="criteria.moto_not_license" disabled />
+        <label class="form-check-label">ขับมอเตอร์ไซด์ได้ / ไม่มีใบขับขี่</label>
+      </div>
+      <div class="form-check mt-2">
+        <input class="form-check-input" type="checkbox" ng-model="criteria.not_drive" disabled />
+        <label class="form-check-label">ขับรถไม่เป็น</label>
+      </div>
+      <div class="form-check mt-2 mb-5">
+        <input class="form-check-input" type="checkbox" ng-model="criteria.drive_other" disabled />
+        <label class="form-check-label">อื่นๆ</label>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- --------------------------ข้อมูลการศึกษา--------------------------------- -->
+<div class="card mx-5">
+  <div class="card-header">
+    <h3 class="card-title px-3">ข้อมูลการศึกษา</h3>
+  </div>
+  <div class="card-body mx-4">
+    <br />
+    <form name="employeeForm3" class="form row" novalidate>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>สถาบันการศึกษามัธยมปลาย</span>
+          </label>
+          <input name="current_education" type="text" class="form-control" placeholder="ระบุสถาบันการศึกษามัธยมปลาย"
+            ng-model="selectedEmployeeProfile.current_education" disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>สาขาวิชา</span>
+          </label>
+          <input name="current_bachelor_education" type="text" class="form-control" placeholder="ระบุสาขาวิชา"
+            ng-model="selectedEmployeeProfile.current_bachelor_education" disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>เกรดเฉลี่ย</span>
+          </label>
+          <input name="grade_highschool" type="number" class="form-control" placeholder="ระบุเกรดเฉลี่ย"
+            ng-model="selectedEmployeeProfile.grade_highschool" disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6"></div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span>สถาบันการศึกษาปวช/ปวส</span>
+          </label>
+          <input name="academy_vocational_education" type="text" class="form-control"
+            placeholder="ระบุสถาบันการศึกษาปวช/ปวส" ng-model="selectedEmployeeProfile.academy_vocational_education"
+            disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span>สาขาวิชา</span>
+          </label>
+          <input name="major_vocational_education" type="text" class="form-control" placeholder="ระบุสาขาวิชา"
+            ng-model="selectedEmployeeProfile.major_vocational_education" disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span>เกรดเฉลี่ย</span>
+          </label>
+          <input name="grade_vocational_education" type="number" class="form-control" placeholder="ระบุเกรดเฉลี่ย"
+            ng-model="selectedEmployeeProfile.grade_vocational_education" disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6"></div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>สถาบันการศึกษาปริญญาตรี</span>
+          </label>
+          <input name="academy_bachelor_degree" type="text" class="form-control"
+            placeholder="ระบุสถาบันการศึกษาปริญญาตรี" ng-model="selectedEmployeeProfile.academy_bachelor_degree"
+            disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>สาขาวิชา</span>
+          </label>
+          <input name="major_bachelor_degree" type="text" class="form-control" placeholder="ระบุสาขาวิชา"
+            ng-model="selectedEmployeeProfile.major_bachelor_degree" disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>เกรดเฉลี่ย</span>
+          </label>
+          <input name="grade_bachelor_degree" type="number" class="form-control" placeholder="ระบุเกรดเฉลี่ย"
+            ng-model="selectedEmployeeProfile.grade_bachelor_degree" disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6"></div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span>สถาบันการศึกษาปริญญาโท</span>
+          </label>
+          <input name="academy_master_degree" type="text" class="form-control" placeholder="ระบุสถาบันการศึกษาปริญญาโท"
+            ng-model="selectedEmployeeProfile.academy_master_degree" disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span>สาขาวิชา</span>
+          </label>
+          <input name="major_master_degree" type="text" class="form-control" placeholder="ระบุสาขาวิชา"
+            ng-model="selectedEmployeeProfile.major_master_degree" disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span>เกรดเฉลี่ย</span>
+          </label>
+          <input name="grade_master_degree" type="number" class="form-control" placeholder="ระบุเกรดเฉลี่ย"
+            ng-model="selectedEmployeeProfile.grade_master_degree" disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6"></div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span>สถาบันการศึกษาปริญญาเอก</span>
+          </label>
+          <input name="academy_PhD" type="text" class="form-control" placeholder="ระบุสถาบันการศึกษาปริญญาเอก"
+            ng-model="selectedEmployeeProfile.academy_PhD" disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span>สาขาวิชา</span>
+          </label>
+          <input name="major_PhD" type="text" class="form-control" placeholder="ระบุสาขาวิชา"
+            ng-model="selectedEmployeeProfile.major_PhD" disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span>เกรดเฉลี่ย</span>
+          </label>
+          <input name="grade_PhD" type="number" class="form-control" placeholder="ระบุเกรดเฉลี่ย"
+            ng-model="selectedEmployeeProfile.grade_PhD" disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6"></div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>ประสบการณ์ทำกิจกรรมในมหาวิทยาลัย</span>
+          </label>
+          <input name="college_activities" type="text" class="form-control"
+            placeholder="ระบุประสบการณ์ทำกิจกรรมในมหาวิทยาลัย" ng-model="selectedEmployeeProfile.college_activities"
+            disabled />
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- --------------------------รายละเอียดการสมัครงาน--------------------------------- -->
+<div class="card mx-5">
+  <div class="card-header">
+    <h3 class="card-title px-3">รายละเอียดการสมัครงาน</h3>
+  </div>
+  <div class="card-body mx-4">
+    <br />
+    <form name="employeeForm4" class="form row" novalidate>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>ตำแหน่งงานที่ท่านสนใจสมัครตำแหน่งที่ 1</span>
+          </label>
+          <select name="job_position1" class="form-control" style="width: 100%"
+            ng-model="selectedEmployeeProfile.job_position1" disabled>
+            <option value="" disabled selected hidden>กรุณาเลือก</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>สังกัดธุรกิจ</span>
+          </label>
+          <select name="business1" class="form-control" style="width: 100%" ng-model="selectedEmployeeProfile.business1"
+            disabled>
+            <option value="" disabled selected hidden>กรุณาเลือก</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>ตำแหน่งงานที่ท่านสนใจสมัครตำแหน่งที่ 2</span>
+          </label>
+          <select name="job_position2" class="form-control" style="width: 100%"
+            ng-model="selectedEmployeeProfile.job_position2" disabled>
+            <option value="" disabled selected hidden>กรุณาเลือก</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>สังกัดธุรกิจ</span>
+          </label>
+          <select name="business2" class="form-control" style="width: 100%" ng-model="selectedEmployeeProfile.business2"
+            disabled>
+            <option value="" disabled selected hidden>กรุณาเลือก</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>ตำแหน่งงานที่ท่านสนใจสมัครตำแหน่งที่ 3</span>
+          </label>
+          <select name="job_position3" class="form-control" style="width: 100%"
+            ng-model="selectedEmployeeProfile.job_position3" disabled>
+            <option value="" disabled selected hidden>กรุณาเลือก</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>สังกัดธุรกิจ</span>
+          </label>
+          <select name="business3" class="form-control" style="width: 100%" ng-model="selectedEmployeeProfile.business3"
+            disabled>
+            <option value="" disabled selected hidden>กรุณาเลือก</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>รูปแบบการทำงานที่ต้องการ</span>
+          </label>
+          <select name="working_style" class="form-control" style="width: 100%"
+            ng-model="selectedEmployeeProfile.working_style" disabled>
+            <option value="" disabled selected hidden>กรุณาเลือก</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>ประเภทพนักงาน</span>
+          </label>
+          <select name="employee_type" class="form-control" style="width: 100%"
+            ng-model="selectedEmployeeProfile.employee_type" disabled>
+            <option value="" disabled selected hidden>กรุณาเลือก</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>เงินเดือนที่คาดหวัง</span>
+          </label>
+          <input name="expected_salary" type="number" class="form-control" placeholder="ระบุเงินเดือนที่คาดหวัง"
+            ng-model="selectedEmployeeProfile.expected_salary" disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>เงินเดือนขั้นต่ำที่ท่านรับได้ที่สุด</span>
+          </label>
+          <input name="minimum_salary" type="number" class="form-control"
+            placeholder="ระบุเงินเดือนขั้นต่ำที่ท่านรับได้ที่สุด" ng-model="selectedEmployeeProfile.minimum_salary"
+            disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>เงินเดือน ณ ปัจจุปันที่ได้รับ</span>
+          </label>
+          <input name="current_salary" type="number" class="form-control"
+            placeholder="ระบุเงินเดือน ณ ปัจจุปันที่ได้รับ" ng-model="selectedEmployeeProfile.current_salary"
+            disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>วันที่สะดวกเริ่มงาน</span>
+          </label>
+          <input name="candidate_startdate" type="date" class="form-control" placeholder="ระบุวันที่สะดวกเริ่มงาน"
+            ng-model="selectedEmployeeProfile.candidate_startdate" disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>อายุงานของตำแหน่งที่สมัคร</span>
+          </label>
+          <input name="longevity" type="text" class="form-control" placeholder="ระบุอายุงานของตำแหน่งที่สมัคร"
+            ng-model="selectedEmployeeProfile.longevity" disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>ผลงานที่เคยทำได้ (สอดคล้องกับตำแหน่งที่สมัคร)</span>
+          </label>
+          <input name="performance" type="text" class="form-control"
+            placeholder="ระบุผลงานที่เคยทำได้ (สอดคล้องกับตำแหน่งที่สมัคร)"
+            ng-model="selectedEmployeeProfile.performance" disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>ช่องทางที่เห็นประกาศรับสมัครงาน</span>
+          </label>
+          <select name="job_posting" class="form-control" style="width: 100%"
+            ng-model="selectedEmployeeProfile.job_posting" disabled>
+            <option value="" disabled selected hidden>กรุณาเลือก</option>
+          </select>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- --------------------------เอกสารการสมัครงาน--------------------------------- -->
+<div class="card mx-5">
+  <div class="card-header">
+    <h3 class="card-title px-3">เอกสารการสมัครงาน</h3>
+  </div>
+  <div class="card-body mx-4">
+    <br />
+    <form name="employeeForm5" class="form row" novalidate>
+      <div class="col-md-6">
+        <label>
+          <span class="text-danger">*</span>
+          <span>CV / Resume</span>
+        </label>
+        <div class="input-group">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input cv-file" name="cvPdf" accept=".pdf,.jpg"
+              onchange="checkFileSize(this)" disabled />
+            <label ng-show="!attachment.cvPdf" class="custom-file-label">อัพโหลดไฟล์</label>
+            <label ng-show="attachment.cvPdf" class="custom-file-label">{{ attachment.cvPdf.name }}</label>
+          </div>
+          <div class="input-group-append">
+            <button ng-show="attachment.cvPdf" class="btn btn-danger" ng-click="removeFile('cvPdf')" disabled>
+              <i class="fas fa-trash"></i> ลบ
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label>
+          <span class="text-danger">*</span>
+          <span>Portfolio</span>
+        </label>
+        <div class="input-group">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input port-file" name="portPdf" accept=".pdf,.jpg"
+              onchange="checkFileSize(this)" disabled />
+            <label ng-show="!attachment.portPdf" class="custom-file-label">อัพโหลดไฟล์</label>
+            <label ng-show="attachment.portPdf" class="custom-file-label">{{ attachment.portPdf.name }}</label>
+          </div>
+          <div class="input-group-append">
+            <button ng-show="attachment.portPdf" class="btn btn-danger" ng-click="removeFile('portPdf')" disabled>
+              <i class="fas fa-trash"></i> ลบ
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 mt-3">
+        <label>
+          <span class="text-danger">*</span>
+          <span>ผลงานอื่นๆที่อยากนำเสนอ</span>
+        </label>
+        <div class="input-group">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input otherpresent-file" name="otherpresent" accept=".pdf,.jpg"
+              onchange="checkFileSize(this)" disabled />
+            <label ng-show="!attachment.otherpresent" class="custom-file-label">อัพโหลดไฟล์</label>
+            <label ng-show="attachment.otherpresent" class="custom-file-label">{{ attachment.otherpresent.name
+              }}</label>
+          </div>
+          <div class="input-group-append">
+            <button ng-show="attachment.otherpresent" class="btn btn-danger" ng-click="removeFile('otherpresent')"
+              disabled>
+              <i class="fas fa-trash"></i> ลบ
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 mt-3">
+        <label>
+          <span class="text-danger">*</span>
+          <span>รูปถ่าย</span>
+        </label>
+        <div class="input-group">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input img_profile-file" name="img_profile" accept=".jpg ,.png"
+              onchange="checkFileSize(this)" disabled />
+            <label ng-show="!attachment.img_profile" class="custom-file-label">อัพโหลดไฟล์</label>
+            <label ng-show="attachment.img_profile" class="custom-file-label">{{ attachment.img_profile.name }}</label>
+          </div>
+          <div class="input-group-append">
+            <button ng-show="attachment.img_profile" class="btn btn-danger" ng-click="removeFile('img_profile')"
+              disabled>
+              <i class="fas fa-trash"></i> ลบ
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 mt-3">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>ผลการทำแบบทดสอบ 16 Personality (MBTI)</span>
+          </label>
+          <select name="candidate_MBTI" class="form-control" style="width: 100%"
+            ng-class="{'is-invalid': isShowCandidateMBTIError()}" ng-model="selectedEmployeeProfile.candidate_MBTI"
+            disabled>
+            <option value="" disabled selected hidden>กรุณาเลือก</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-6 mt-3">
+        <label>
+          <span class="text-danger">*</span>
+          <span>รูปผลการทำแบบทดสอบ 16 Personality (MBTI)</span>
+        </label>
+        <div class="input-group">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input img_MBTI-file" name="img_MBTI" accept=".jpg ,.pdf"
+              onchange="checkFileSize(this)" disabled />
+            <label ng-show="!attachment.img_MBTI" class="custom-file-label">อัพโหลดไฟล์</label>
+            <label ng-show="attachment.img_MBTI" class="custom-file-label">{{ attachment.img_MBTI.name }}</label>
+          </div>
+          <div class="input-group-append">
+            <button ng-show="attachment.img_MBTI" class="btn btn-danger" ng-click="removeFile('img_MBTI')" disabled>
+              <i class="fas fa-trash"></i> ลบ
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>ผลการทำแบบทดสอบ DISC</span>
+          </label>
+          <select name="candidate_DISC" class="form-control" style="width: 100%"
+            ng-model="selectedEmployeeProfile.candidate_DISC" disabled>
+            <option value="" disabled selected hidden>
+              {{ candidate_DISC.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label>
+          <span class="text-danger">*</span>
+          <span>รูปผลการทำแบบทดสอบ DISC</span>
+        </label>
+        <div class="input-group">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input img_DISC-file" name="img_DISC" accept=".jpg ,.pdf"
+              onchange="checkFileSize(this)" disabled />
+            <label ng-show="!attachment.img_DISC" class="custom-file-label">อัพโหลดไฟล์</label>
+            <label ng-show="attachment.img_DISC" class="custom-file-label">{{ attachment.img_DISC.name }}</label>
+          </div>
+          <div class="input-group-append">
+            <button ng-show="attachment.img_DISC" class="btn btn-danger" ng-click="removeFile('img_DISC')" disabled>
+              <i class="fas fa-trash"></i> ลบ
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label>
+          <span class="text-danger">*</span>
+          <span>ยินยอมให้โทรถามความคิดเห็นเพิ่มเติมจากหัวหน้าเก่า
+            กรณีผ่านสัมภาษณ์รอบแรกหรือไม่</span>
+        </label>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="policyDecision" ng-model="criteria.policy_decision"
+            ng-value="true" ng-change="checkpolicy()" disabled />
+          <label class="form-check-label">ยินยอม</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="policyDecision" ng-model="criteria.policy_decision"
+            ng-value="false" ng-change="checkpolicy()" disabled />
+          <label class="form-check-label">ไม่ยินยอม</label>
+        </div>
+      </div>
+
+      <div class="col-md-6"></div>
+
+      <div class="col-md-6 mt-3">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>References
+              หัวหน้างานผู้ใหญ่ที่เชื่อถือได้ที่สามารถติดต่อได้</span>
+          </label>
+          <input name="former_supervisor" type="text" class="form-control"
+            placeholder="ระบุ References หัวหน้างานผู้ใหญ่ที่เชื่อถือได้ที่สามารถติดต่อได้"
+            ng-model="selectedEmployeeProfile.former_supervisor" disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6 mt-3">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>คุณมองหาอะไรจากการเปลี่ยนงานครั้งนี้</span>
+          </label>
+          <input name="looking_job" type="text" class="form-control"
+            placeholder="ระบุคุณมองหาอะไรจากการเปลี่ยนงานครั้งนี้" ng-model="selectedEmployeeProfile.looking_job"
+            disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>เล่าถึง passion ของตัวเองที่เกี่ยวกับงานให้ฟังหน่อย</span>
+          </label>
+          <input name="passion" type="text" class="form-control"
+            placeholder="ระบุเล่าถึง passion ของตัวเองที่เกี่ยวกับงานให้ฟังหน่อย"
+            ng-model="selectedEmployeeProfile.passion" disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>คุณนิยามความถนัดของคุณไว้อยู่ใน Step ไหน</span>
+          </label>
+          <select name="aptitude" class="form-control" style="width: 100%" ng-model="selectedEmployeeProfile.aptitude"
+            disabled>
+            <option value="" disabled selected hidden>
+              {{ aptitude.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>งานแบบไหนที่วิ่งเข้าหา ทำแน่ๆไม่มีปฏิเสธ</span>
+          </label>
+          <input name="need_working" type="text" class="form-control"
+            placeholder="ระบุงานแบบไหนที่วิ่งเข้าหา ทำแน่ๆไม่มีปฏิเสธ" ng-model="selectedEmployeeProfile.need_working"
+            disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>งานแบบไหนที่วิ่งหนี ไม่ชอบที่จะทำ</span>
+          </label>
+          <input name="not_working" type="text" class="form-control" placeholder="ระบุงานแบบไหนที่วิ่งหนี ไม่ชอบที่จะทำ"
+            ng-model="selectedEmployeeProfile.not_working" disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>คิดว่าตัวเองเป็นคน Type ไหน</span>
+          </label>
+          <select name="type" class="form-control" style="width: 100%" ng-model="selectedEmployeeProfile.type" disabled>
+            <option value="" disabled selected hidden>{{ type.name }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>คุณรู้สึกอย่างไรเวลาไม่ประสบความสำเร็จในแบบที่ตั้งใจไว้</span>
+          </label>
+          <select name="filling" class="form-control" style="width: 100%" ng-model="selectedEmployeeProfile.filling"
+            disabled>
+            <option value="" disabled selected hidden>
+              {{ filling.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>คุณชอบทำงานรูปแบบไหน</span>
+          </label>
+          <select name="like_working" class="form-control" style="width: 100%"
+            ng-model="selectedEmployeeProfile.like_working" disabled>
+            <option value="" disabled selected hidden>
+              {{ like_working.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>คุณอยากทำงานลักษณะไหน</span>
+          </label>
+          <select name="wont_working" class="form-control" style="width: 100%"
+            ng-model="selectedEmployeeProfile.wont_working" disabled>
+            <option value="" disabled selected hidden>
+              {{ wont_working.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>คุณกล้าปล่อยผ่านงานของคุณมากแค่ไหน</span>
+          </label>
+          <select name="let_pass_work" class="form-control" style="width: 100%"
+            ng-model="selectedEmployeeProfile.let_pass_work" disabled>
+            <option value="" disabled selected hidden>
+              {{ let_pass_work.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>Background ครอบครัว (พอสังเขป)</span>
+          </label>
+          <input name="background_family" type="text" class="form-control"
+            placeholder="ระบุ Background ครอบครัว (พอสังเขป)" ng-model="selectedEmployeeProfile.background_family"
+            disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>สวัสดิการ 3 อันดับแรกที่คุณให้ความสำคัญที่สุด ได้แก่</span>
+          </label>
+          <input name="employee_welfare" type="text" class="form-control" placeholder="ระบุสวัสดิการที่ 1"
+            ng-model="selectedEmployeeProfile.employee_welfare1" disabled />
+          <input name="employee_welfare1" type="text" class="form-control mt-2" placeholder="ระบุสวัสดิการที่ 2"
+            ng-model="selectedEmployeeProfile.employee_welfare2" disabled />
+          <input name="employee_welfare2" type="text" class="form-control mt-2" placeholder="ระบุสวัสดิการที่ 3"
+            ng-model="selectedEmployeeProfile.employee_welfare3" disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6"></div>
+
+      <div class="col-md-12">
+        <label>
+          <span class="text-danger">*</span>
+          <span>คุณนิยามตนเองเป็นคนเผ่าไหน?(เลือกอย่างน้อย 2 ข้อ)</span>
+        </label>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" ng-model="criteria.tribe_choice1" disabled />
+          <label class="form-check-label">1.นักปฏิบัติการ (Routine Specialist) นิยาม :ชอบทำงานประจำวัน
+            ตามที่กำหนดให้ดีที่สุด
+            ไม่ชอบความแปลกใหม่ที่ผิดไปจากความปกติเดิมมากนัก</label>
+        </div>
+        <div class="form-check mt-2">
+          <input class="form-check-input" type="checkbox" ng-model="criteria.tribe_choice2" disabled />
+          <label class="form-check-label">2.นักบริหารจัดการ(Manager) นิยาม : เน้นประสิทธิภาพ ตัดสินใจได้ดี
+            เด็ดขาด กล้าตัดสินใจ กล้าออกคำสั่ง เรียนรู้เร็ว พัฒนาการสูง
+            ไม่กลัวที่จะพูดในเรื่องที่จำเป็นต้องพูดในเรื่องที่กระอักกระอ่วนหรืออ่อนไหว
+            แต่ถ้าต้องพูดเพื่อให้งานออกมาดีก็จะพูด</label>
+        </div>
+        <div class="form-check mt-2">
+          <input class="form-check-input" type="checkbox" ng-model="criteria.tribe_choice3" disabled />
+          <label class="form-check-label">3.นักสื่อสารคุณค่า (Value Communicator) นิยาม:
+            มีความสามารถในการส่งมอบคุณค่าให้ผู้อื่นรู้สึกได้สูงกว่าคนทั่วไป</label>
+        </div>
+        <div class="form-check mt-2">
+          <input class="form-check-input" type="checkbox" ng-model="criteria.tribe_choice4" disabled />
+          <label class="form-check-label">4.นักเริ่มสิ่งใหม่ (Initiator)นิยาม:ไอเดียเยอะ จ้าวโปรเจค
+            จินตนาการสูง นักนวัตกรรม อินทรีย์ เหมาะกับการ Prototype
+            อะไรที่ยังไม่เคยมีคนทำ ไม่ติดกรอบกล้าลอง ทำเร็ว ครีเอทีฟ
+            แล้วให้นักทำระบบมาสานต่อ</label>
+        </div>
+        <div class="form-check mt-2">
+          <input class="form-check-input" type="checkbox" ng-model="criteria.tribe_choice5" disabled />
+          <label class="form-check-label">5.นักประสานงาน(Runner)นิยาม:ความไวสูง
+            ทั้งการรับข้อมูลและการสื่อสารต่อ อ่านไว ตอบแชทไว สื่อสารไวไม่รีรอ
+            ซอกแซกเก่ง เข้าหาจุดที่ต้องการได้ง่ายเร็ว หลากหลาย
+            พร้อมวิ่งไปช่วยทุกคนทุกจุดได้ผลลัพธ์กลับมาเร็ว</label>
+        </div>
+        <div class="form-check mt-2">
+          <input class="form-check-input" type="checkbox" ng-model="criteria.tribe_choice6" disabled />
+          <label class="form-check-label">6.นักวิเคราะห์(Analyst) นิยาม:ชอบวิเคราะห์ตัวเลข คน สถานการณ์
+            อย่างใดอย่างหนึ่ง ชอบการ research
+            เพิ่มเติมเพื่อทำความเข้าใจสิ่งใดสิ่งหนึ่งอยากลึกซึ้ง</label>
+        </div>
+        <div class="form-check mt-2">
+          <input class="form-check-input" type="checkbox" ng-model="criteria.tribe_choice7" disabled />
+          <label class="form-check-label">7.นักเป๊ะ(Compliance) นิยาม: เป๊ะกับตัวเลข ตัวอักษร รายละเอียด
+            ไม่หลุดไม่ผิดพลาด เหมาะกับงานที่ต้องการความละเอียดรอบคอบสูง
+            ทำตามระบบที่ถูกวางไว้ได้อย่างสมบูรณ์ไม่ผิดพลาดตกหล่น</label>
+        </div>
+        <div class="form-check mt-2">
+          <input class="form-check-input" type="checkbox" ng-model="criteria.tribe_choice8" disabled />
+          <label class="form-check-label">8.มุ่งผลลัพธ์ (Dominant)นิยาม: มุ่งผลลัพธ์ จัดการ Process ได้เร็ว
+            ก้าวข้ามทุกปัญหา ไม่กลัวความขัดแย้ง</label>
+        </div>
+        <div class="form-check mt-2">
+          <input class="form-check-input" type="checkbox" ng-model="criteria.tribe_choice9" disabled />
+          <label class="form-check-label">9.นักสอน นักกิจกรรม(Coach) นิยาม : ชอบสอน ชอบให้ความรู้
+            มีความเป็นครูในตัว ชอบให้ทัศนคติคน นำกิจกรรม ทำค่าย ชอบเจียระไนคน
+            อยากเห็นคนเติบโตและประสบความสำเร็จ</label>
+        </div>
+        <div class="form-check mt-2">
+          <input class="form-check-input" type="checkbox" ng-model="criteria.tribe_choice10" disabled />
+          <label class="form-check-label">10.นักเจรจาปิดดีล(Negotiator) นิยาม :เจรจาต่อรองเก่ง มีลูกล่อลูกชน
+            แก้ปัญหาเฉพาะหน้าได้ดี มีเทคนิคการเล่าเรื่องให้คนคล้อยตาม</label>
+        </div>
+        <div class="form-check mt-2">
+          <input class="form-check-input" type="checkbox" ng-model="criteria.tribe_choice11" disabled />
+          <label class="form-check-label">11.นักบริการ (Server) นิยาม: มี Service mind เป็น Supporter
+            อยากเห็นคนอื่นๆมีความสุข อยากดูแลเทคแคร์ความรู้สึกของผู้คน
+            ให้ความร่วมมือดีเยี่ยม มีน้ำใจสูง</label>
+        </div>
+        <div class="form-check mt-2">
+          <input class="form-check-input" type="checkbox" ng-model="criteria.tribe_choice12" disabled />
+          <label class="form-check-label">12.นักพัฒนาระบบ (Systems Development) นิยาม :
+            สามารถรวบรวมสิ่งที่กระจัดกระจายมาจัดเรียงให้เป็นระบบระเบียบ
+            คนใช้งานง่าย ป้องกัน error ที่อาจจะเกิดได้</label>
+        </div>
+      </div>
+
+      <div class="col-md-6 mt-3">
+        <div class="form-group">
+          <label>
+            <span class="text-danger">*</span>
+            <span>ความคิดเห็นอย่างไรกับการตอบไลน์นอกเวลางาน หรือวันหยุดวันลา</span>
+          </label>
+          <input name="comment_day_off" type="text" class="form-control"
+            placeholder="ระบุ ความคิดเห็นอย่างไรกับการตอบไลน์นอกเวลางาน หรือวันหยุดวันลา"
+            ng-model="selectedEmployeeProfile.comment_day_off" disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6"></div>
+
+      <div class="col-md-12">
+        <label>
+          <span class="text-danger">*</span>
+          <span>แนะนำเพื่อนๆพี่ๆที่กำลังมองหางานอยู่ หรือ
+            คนรู้จักที่สนใจตำแหน่งครูหรือตำแหน่งอื่น ๆ อย่างน้อย 3 คนขึ้นไป
+            ตอบโดยพิมพ์(ชื่อ/ตำแหน่ง/เบอร์โทร) เพื่อช่วยเหลือบุคคลอื่นๆ
+            ที่กำลังมองหางานให้ได้งานทำในอนาคต</span>
+        </label>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span>คนที่ 1</span>
+            <br />
+            <span>ชื่อ - นามสกุล</span>
+          </label>
+          <input name="recommend_name1" type="text" class="form-control"
+            ng-model="selectedEmployeeProfile.recommend_name1" disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span>คนที่ 2</span>
+            <br />
+            <span>ชื่อ - นามสกุล</span>
+          </label>
+          <input name="recommend_name2" type="text" class="form-control"
+            ng-model="selectedEmployeeProfile.recommend_name2" disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span>ตำแหน่ง</span>
+          </label>
+          <input name="recommend_position1" type="text" class="form-control"
+            ng-model="selectedEmployeeProfile.recommend_position1" disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span>ตำแหน่ง</span>
+          </label>
+          <input name="recommend_position2" type="text" class="form-control"
+            ng-model="selectedEmployeeProfile.recommend_position2" disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span>เบอร์โทรศัพท์</span>
+          </label>
+          <input name="recommend_phone1" type="text" class="form-control"
+            ng-model="selectedEmployeeProfile.recommend_phone1" disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span>เบอร์โทรศัพท์</span>
+          </label>
+          <input name="recommend_phone2" type="text" class="form-control"
+            ng-model="selectedEmployeeProfile.recommend_phone2" disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span>คนที่ 3</span>
+            <br />
+            <span>ชื่อ - นามสกุล</span>
+          </label>
+          <input name="recommend_name3" type="text" class="form-control"
+            ng-model="selectedEmployeeProfile.recommend_name3" disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6"></div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span>ตำแหน่ง</span>
+          </label>
+          <input name="recommend_position3" type="text" class="form-control"
+            ng-model="selectedEmployeeProfile.recommend_position3" disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6"></div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span>เบอร์โทรศัพท์</span>
+          </label>
+          <input name="recommend_phone3" type="text" class="form-control"
+            ng-model="selectedEmployeeProfile.recommend_phone3" disabled />
+        </div>
+      </div>
+
+      <div class="col-md-6"></div>
+
+      <div class="col-md-6">
+        <label>
+          <span class="text-danger">*</span>
+          <span>ท่านสะดวกที่จะใช้อุปกรณ์ส่วนตัวในการทำงานชิ้นไหนบ้าง</span>
+        </label>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" ng-model="criteria.elec_choice1" disabled />
+          <label class="form-check-label">โน๊ตบุ๊ค/ คอมพิวเตอร์ส่วนตัว</label>
+        </div>
+        <div class="form-check mt-2">
+          <input class="form-check-input" type="checkbox" ng-model="criteria.elec_choice2" disabled />
+          <label class="form-check-label">โทรศัพท์มือถือ (ส่วนนี้ไม่เกี่ยวกับค่าโทรศัพท์)</label>
+        </div>
+        <div class="form-check mt-2">
+          <input class="form-check-input" type="checkbox" ng-model="criteria.elec_choice3" disabled />
+          <label class="form-check-label">Ipad</label>
+        </div>
+        <div class="form-check mt-2">
+          <input class="form-check-input" type="checkbox" ng-model="criteria.elec_choice4" disabled />
+          <label class="form-check-label">กล้อง</label>
+        </div>
+        <div class="form-check mt-2">
+          <input class="form-check-input" type="checkbox" ng-model="criteria.elec_choice5" disabled />
+          <label class="form-check-label">ไม่สะดวก ขอใช้ของบริษัทเท่านั้น</label>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- --------------------------ชุดคำถามเชิงวิพากษ์ --------------------------------- -->
+<div class="card mx-5">
+  <div class="card-header">
+    <h3 class="card-title px-3">ชุดคำถามเชิงวิพากษ์</h3>
+  </div>
+  <div class="card-body mx-4">
+    <br />
+    <form name="employeeForm6" class="form row" novalidate>
+      <div class="col-md-12" style="background-color: #f4f6f9; border-radius: 20px">
+        <label class="p-3">
+          <span class="text-danger">*</span>
+          <span>โจทย์</span>
+          <br />
+          <br />
+          <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;สัตวแพทย์ได้ให้สัมภาษณ์กับผู้สื่อข่าวว่า
+            ปัจจุบันอาหารหมีมีจำนวนลดลงมาก
+            ทำให้คิดเป็นสัดส่วนแล้วไม่เพียงพอกับความต้องการต่อวันของหมีที่มีอยู่
+            ผู้สื่อข่าวจึงกล่าวว่า
+            ถ้าอย่างนั้นเราก็จะเห็นหมีเพียงในรูปถ่ายเหมือนกับไดโนเสาร์</span>
+        </label>
+      </div>
+
+      <div class="col-md-6 mt-3">
+        <label>
+          <span class="text-danger">*</span>
+          <span>จากสถานการณ์ข้างต้น สามารถสรุปได้ว่า "หมีต้องอพยพไปหาที่อยู่ใหม่"
+            ข้อสรุปดังกล่าวตรงกับข้อใด</span>
+        </label>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="choice" ng-model="criteria.choice1" value="A" disabled />
+          <label class="form-check-label">ก. ข้อสรุป เป็นจริง</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="choice" ng-model="criteria.choice1" value="B" disabled />
+          <label class="form-check-label">ข. ข้อสรุป เป็นเท็จ</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="choice" ng-model="criteria.choice1" value="C" disabled />
+          <label class="form-check-label">ค. ข้อมูลที่สนับสนุนไม่เพียงพอ</label>
+        </div>
+      </div>
+
+      <div class="col-md-6"></div>
+
+      <div class="col-md-6 mt-3">
+        <label>
+          <span class="text-danger">*</span>
+          <span>เหตุผลในข้อใดที่เป็นเงื่อนไขสำคัญที่ทำให้หมีลดจำนวนลง</span>
+        </label>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="choice1" ng-model="criteria.choice2" value="A" disabled />
+          <label class="form-check-label">ก. ไม่มีอาหารกิน</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="choice1" ng-model="criteria.choice2" value="B" disabled />
+          <label class="form-check-label">ข. ตัวใหญ่เกินไป</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="choice1" ng-model="criteria.choice2" value="C" disabled />
+          <label class="form-check-label">ค. ไม่มีที่อยู่อาศัย</label>
+        </div>
+      </div>
+
+      <div class="col-md-6"></div>
+
+      <div class="col-md-6 mt-3">
+        <label>
+          <span class="text-danger">*</span>
+          <span>สาระสำคัญของสถานการณ์ คือข้อใด</span>
+        </label>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="choice2" ng-model="criteria.choice3" value="A" disabled />
+          <label class="form-check-label">ก. ป่าไม้ถูกทำลาย</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="choice2" ng-model="criteria.choice3" value="B" disabled />
+          <label class="form-check-label">ข. ช้างมีปริมาณเพิ่มขึ้น</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="choice2" ng-model="criteria.choice3" value="C" disabled />
+          <label class="form-check-label">ค. ช้างต้องสูญพันธุ์เหมือนไดโนเสาร์</label>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<br />
+
+<div class="text-right mx-5 pb-4">
+  <button class="btn btn-outline-primary" ng-click="non_success_user()">
+    <i class="fa fa-caret-left"></i> ย้อนกลับ
+  </button>
+  <button class="btn btn-outline-danger" ng-click="non_success_user()">
+    <i class="fa fa-times" aria-hidden="true"></i> ไม่ผ่าน
+  </button>
+  <button class="btn btn-outline-warning" ng-click="non_success_user()">
+    <i class="fa fa-file-text" aria-hidden="true"></i> ผ่านแต่ stock
+  </button>
+  <button class="btn btn-outline-success" ng-click="success_user()">
+    <i class="fa fa-check" aria-hidden="true"></i> ผ่าน
+  </button>
+</div>
