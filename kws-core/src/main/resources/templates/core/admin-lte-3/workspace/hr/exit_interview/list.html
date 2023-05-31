@@ -1,12 +1,8 @@
 <div class="card">
-    <div class="card-header">
-        <h3 class="card-title text-maroon">ผลการค้นหา</h3>
-    </div>
-
     <div class="card-body table-responsive p-0">
         <table class="table table-hover text-nowrap ">
             <thead>
-                <tr>
+                <tr ng-style ="{'color':'#667085'}">
                     <th>รหัสพนักงาน</th>
                     <th>วันที่ลาออก</th>
                     <th>ชื่อ - นามสกุล</th>
@@ -19,18 +15,18 @@
 
             <tbody ng-if="employees.length > 0">
                 <tr ng-repeat="employee in employees  | orderBy: 'firstName'">
-                    <td class="align-middle">{{ employee.id }} </td>
-                    <td class="align-middle">{{ employee.date_exit }} </td>
-                    <td class="align-middle">{{ employee.firstName }} {{ employee.lastName }}</td>
-                    <td class="align-middle">{{ employee.position }} </td>     
-                    <td class="align-middle">{{ employee.affiliation }} </td>   
-                    <td class="align-middle">{{ employee.kpi }}</td>
+                    <td class="align-middle" ng-style ="{'color':'#667085'}">{{ employee.id }} </td>
+                    <td class="align-middle" ng-style ="{'color':'#667085'}">{{ employee.date_exit }} </td>
+                    <td class="align-middle" ng-style ="{'color':'#000000'}">{{ employee.firstName }} {{ employee.lastName }}</td>
+                    <td class="align-middle" ng-style ="{'color':'#667085'}">{{ employee.position }} </td>     
+                    <td class="align-middle" ng-style ="{'color':'#667085'}">{{ employee.affiliation }} </td>   
+                    <td class="align-middle" ng-style ="{'color':'#667085'}">{{ employee.kpi }}</td>
                 
                     <td class="text-center align-middle">
-                        <button class="btn btn-sm btn-outline-warning" ng-click="toDetailMode(employee)" title="ดูข้อมูล">
+                        <button class="btn btn-sm" ng-click="toDetailMode(employee)" title="ดูข้อมูล">
                             <i class="fa fa-eye "></i>
                         </button>
-                        <button class="btn btn-sm btn-outline-danger" ng-click="requestDeleteEmployee(employee)" title="ลบข้อมูล">
+                        <button class="btn btn-sm " ng-click="requestDeleteEmployee(employee)" title="ลบข้อมูล">
                             <i class="fa fa-trash kws-table-action-icon"></i>
                         </button>
                     </td>

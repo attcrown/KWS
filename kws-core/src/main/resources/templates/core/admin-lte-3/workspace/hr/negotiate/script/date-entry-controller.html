@@ -1,18 +1,18 @@
 <script th:inline="javascript">
-    function useEntryController($scope, $http) {
-        $scope.requestSave = useRequestSave($scope, $http);
-        $scope.verify = useVerify($scope, $http);
+    function useDateEntryController($scope, $http) {
+        $scope.requestSaveDate = useRequestSaveDate($scope, $http);
+        $scope.verifyDate = useVerifyDate($scope, $http);
         $scope.isShowDateError = useIsShowDateError($scope, $http);
-        $scope.isShowTimeRangeError = useIsShowTimeRangeError($scope, $http);
+        // $scope.isShowTimeRangeError = useIsShowTimeRangeError($scope, $http);
     }
 
 
-    function useRequestSave($scope, $http) {
+    function useRequestSaveDate($scope, $http) {
         return () => {
             console.log("### dateCandidateNegotiateController.requestSave ###");
                 $scope.dateForm.$submitted = true;
 
-            if ($scope.verify()) {
+            if ($scope.verifyDate()) {
                 const options = {
                     title: "ยืนยันการบันทึกข้อมูลเจรจา",
                     text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
@@ -22,7 +22,6 @@
                 };
                 const handler = (confirm) => {
                     if (confirm) {
-                        $scope.candidates.push($scope,dateForm);
                        // $scope.updateNegotiate($scope.candidates);
                         
                     }
@@ -37,10 +36,10 @@
         };
     }
 
-    function useVerify($scope, $http) {
+    function useVerifyDate($scope, $http) {
         return () => {
             console.log("### dateCandidateNegotiateController.VERIFY ###");
-            
+            console.log($scope.dateForm.$valid);
             return $scope.dateForm.$valid;
         };
     }
@@ -53,12 +52,12 @@
         };
     }
 
-    function useIsShowTimeRangeError($scope, $http) {
-        return () => {
-            return ($scope.dateForm.$submitted
-                || $scope.dateForm.timeRange.$dirty)
-                && $scope.dateForm.timeRange.$invalid;
-        };
-    }
+    // function useIsShowTimeRangeError($scope, $http) {
+    //     return () => {
+    //         return ($scope.dateForm.$submitted
+    //             || $scope.dateForm.timeRange.$dirty)
+    //             && $scope.dateForm.timeRange.$invalid;
+    //     };
+    // }
 
 </script>
