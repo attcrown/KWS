@@ -68,9 +68,9 @@
                         ng-class="{'btn-outline-success': user.status === 'ผ่าน',
                                    'btn-outline-danger': user.status === 'ไม่ผ่าน',
                                    'btn-outline-warning': user.status === 'ผ่านแต่ stock',
-                                   'btn-outline-info': user.status === 'รอดำเนินการ'}"
+                                   'btn-outline-info': user.status === undefined || user.status === 'รอดำเนินการ'}"
                         ><i class="fa fa-circle fa-xs" aria-hidden="true"></i>
-                        {{ user.status }}
+                        {{ user.status || 'รอดำเนินการ' }}
                     </button>
                 </td>                  
                 <td class="p-2">
@@ -87,3 +87,4 @@
           
     </div>
 </div>
+
