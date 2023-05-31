@@ -1,38 +1,39 @@
 <div class="container-fluid" ng-show="selectedCandidateProfile"></div>
-<div class="container-fluid bg-white rounded " >
+<div class="container-fluid bg-white rounded ">
     <div class="row g-0 text-center">
         <div class="col-sm-3 mt-3  ">
             <div class="p-3 bg-light rounded ">
-                <div  class="card mb-3">
+                <div class="card mb-3">
                     <div class="card-body">
-                        <h5 class="card-title"><span class="badge float-right"
-                                style="background-color: #E5E9EB;">{{selectedCandidateProfile.id}}</span></h5>
-                        <p class="card-text text-left">{{selectedCandidateProfile.name}}
-                            {{selectedCandidateProfile.surname}}<br>{{selectedCandidateProfile.position}}</p>
+                        <h5 class="card-title"><span class="badgeInfo ">{{selectedCandidateProfile.id}}</span></h5><br>
+                        <p class="card-text text-left">{{selectedCandidateProfile.firstName}}
+                            {{selectedCandidateProfile.lastName}}<br>{{selectedCandidateProfile.job_position}}</p>
 
                         <div class="row-sm-6 ">
                             <form name="dateForm" class="form row p-1" novalidate>
                                 <div class="form-group border rounded p-2">
+                                  
                                     <label>
                                         <span class="text-danger">*</span>
                                         <span ng-show="!isShowDateError()">วันที่เจรจา</span>
                                         <span class="text-danger" ng-show="isShowDateError()">กรุณาระบุวันที่</span>
                                     </label>
 
-                                    <input name="day" class="form-control " type="text"
-                                        placeholder="เลือกวันที่ต้องการเจรจา"
-                                        ng-class="{'is-invalid': isShowDateError()}" ng-model="selectedCandidateProfile.day" required>
-
-                                    <input name="timeRange" class="form-control mt-1" type="text"
-                                        placeholder="เลือกช่วงเวลา" ng-class="{'is-invalid': isShowTimeRangeError()}"
-                                        ng-model="selectedCandidateProfile.startTime" required>
-
+                                    <div class="input-group date" id="entryStartDatePicker" data-target-input="nearest">
+                                        <input name="day"  class="form-control datetimepicker-input"
+                                            data-target="#entryStartDatePicker"
+                                            ng-class="{'is-invalid': isShowDateError()}"
+                                            ng-model="selectedCandidateProfile.day" value= "08/05/2015" required />
+                                        <div class="input-group-append" data-target="#entryStartDatePicker"
+                                            data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
                                     <div class="container p-2">
-                                        <button class="btn btn-outline-danger text-dark"
-                                            ng-click="toListMode()">
+                                        <button class="btn btn-outline-danger text-dark" ng-click="toListMode()">
                                             <i class="fa "></i>ยกเลิก
                                         </button>
-                                        <button class="btn btn-outline-success text-dark " ng-click="requestSave()">
+                                        <button class="btn btn-outline-success text-dark " ng-click="requestSaveDate()">
                                             <i class="fa"></i>ยืนยัน
                                         </button>
                                     </div>
@@ -46,11 +47,12 @@
             <div class="p-3 mt-3 mb-3 bg-light rounded">
                 <a href="">
                     <div ng-repeat="candidate in candidates | orderBy:'sortCandidatesById'"
-                        class="card  hoverEffect mb-3" ng-if="candidate.negotiate_status == 'null' && candidate.id != selectedCandidateProfile.id">
+                        class="card  hoverEffect mb-3"
+                        ng-if="candidate.negotiate_status == 'null' && candidate.id != selectedCandidateProfile.id">
                         <div class="card-body " ng-click="goSetDateNegotiate(candidate)">
                             <h5 class="card-title"><span class="badgeInfo ">{{candidate.id}}</span></h5><br>
-                            <p class="card-text text-left ">{{candidate.name}}
-                                {{candidate.surname}}<br>({{candidate.position}})</p>
+                            <p class="card-text text-left ">{{candidate.firstName}}
+                                {{candidate.lastName}}<br>({{candidate.job_position}})</p>
                         </div>
                     </div>
                 </a>
@@ -69,8 +71,8 @@
 
                                 <div class="card-body  " ng-click="toDetailMode(candidate)">
                                     <h5 class="card-title"><span class="badgeInfo">{{candidate.id}}</span></h5><br>
-                                    <p class="card-text text-left ">{{candidate.name}}
-                                        {{candidate.surname}}<br>({{candidate.position}})
+                                    <p class="card-text text-left ">{{candidate.firstName}}
+                                        {{candidate.lastName}}<br>({{candidate.job_position}})
                                     </p>
                                 </div>
 
@@ -100,8 +102,8 @@
                                 class="card hoverEffect mb-3 mt-1" ng-if="candidate.negotiate_status == 'failed'">
                                 <div class="card-body" ng-click="toDetailMode(candidate)">
                                     <h5 class="card-title"><span class="badgeInfo">{{candidate.id}}</span></h5><br>
-                                    <p class="card-text text-left ">{{candidate.name}}
-                                        {{candidate.surname}}<br>({{candidate.position}})
+                                    <p class="card-text text-left ">{{candidate.firstName}}
+                                        {{candidate.lastName}}<br>({{candidate.job_position}})
                                     </p>
 
                                 </div>
@@ -129,8 +131,8 @@
                                 class="card hoverEffect mb-3 mt-1" ng-if="candidate.negotiate_status == 'success'">
                                 <div class="card-body " ng-click="toDetailMode(candidate)">
                                     <h5 class="card-title"><span class="badgeInfo">{{candidate.id}}</span></h5><br>
-                                    <p class="card-text text-left ">{{candidate.name}}
-                                        {{candidate.surname}}<br>({{candidate.position}})
+                                    <p class="card-text text-left ">{{candidate.firstName}}
+                                        {{candidate.lastName}}<br>({{candidate.job_position}})
                                     </p>
                                     <div style="text-align: center;">
                                         <span class="spanTime float-left  bgGreen p10 p700"
@@ -154,8 +156,8 @@
                                 class="card hoverEffect mb-3 mt-1" ng-if="candidate.negotiate_status == 'failed'">
                                 <div class="card-body" ng-click="toDetailMode(candidate)">
                                     <h5 class="card-title"><span class="badgeInfo">{{candidate.id}}</span></h5><br>
-                                    <p class="card-text text-left ">{{candidate.name}}
-                                        {{candidate.surname}}<br>({{candidate.position}})
+                                    <p class="card-text text-left ">{{candidate.firstName}}
+                                        {{candidate.lastName}}<br>({{candidate.job_position}})
                                     </p>
 
                                 </div>

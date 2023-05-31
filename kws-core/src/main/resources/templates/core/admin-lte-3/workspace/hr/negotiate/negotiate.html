@@ -1,5 +1,4 @@
-<div class="container-fluid" ng-show="selectedCandidateProfile"></div>
-<div class="container-fluid bg-white rounded">
+<div class="container-fluid bg-white rounded" ng-show="selectedCandidateProfile">
     <div class="row gx-5 text-center">
         <div class="col-sm-4 p-3  ">
             <div class="p-3 bg-light rounded ">
@@ -43,16 +42,17 @@
             </div>
         </div>
         <div class="col-sm-8 p-3  ">
-            <div class="card collapsed-card card-success">
-                <div class="card-header rounded ">
-                    <p class="card-text text-left text-dark ">ผลผ่านสกรีน Resume
-                    </p>
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse"
-                            style="color: rgb(0, 0, 0);">
-                            <i class="fas fa-plus fa-2x"></i></button>
-                    </div>
+            <div class="card collapsed-card ">
+                <div class="card-header rounded " ng-style="{'background-color': '#2AB514'}">
+                    <div style="text-align: center; ">
 
+                        <p class="card-text text-left text-dark p20">ผลผ่านสกรีน Resume
+                            <button type="button" class="btn btn-tool float-right " data-card-widget="collapse"
+                                style="color: rgb(0, 0, 0);">
+                                <i class="fas fa-plus fa-2x mt-1"></i></button>
+                        </p>
+
+                    </div>
                 </div>
 
                 <div class="card-body">
@@ -63,14 +63,16 @@
 
             </div>
             <!--         สัมภาษณ์ครั้งที่1     -->
-            <div class="card collapsed-card card-success">
-                <div class="card-header rounded ">
-                    <p class="card-text text-left text-dark ">ผลสัมภาษณ์ครั้งที่ 1
-                    </p>
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse"
-                            style="color: rgb(0, 0, 0);">
-                            <i class="fas fa-plus fa-2x"></i></button>
+            <div class="card collapsed-card " ng>
+                <div class="card-header rounded " ng-style="{'background-color': '#2AB514'}">
+                    <div style="text-align: center; ">
+
+                        <p class="card-text text-left text-dark p20">ผลสัมภาษณ์ครั้งที่ 1
+                            <button type="button" class="btn btn-tool float-right " data-card-widget="collapse"
+                                style="color: rgb(0, 0, 0);">
+                                <i class="fas fa-plus fa-2x mt-1"></i></button>
+                        </p>
+
                     </div>
 
                 </div>
@@ -81,30 +83,26 @@
                         <div class="col-sm-4">
                             <form name="interviewForm" class="form row p-1" novalidate>
                                 <label> ผ่าน/ไม่ผ่าน</label>
-                                <input class="form-control" type="text" disabled placeholder="test">
+                                <input name="status" class="form-control" type="text" disabled placeholder="test">
                             </form>
                         </div>
                         <div class="col-sm-4">
                             <form name="interviewForm" class="form row p-1" novalidate>
                                 <label> ..../10 (Level)</label>
-                                <select class="form-control" disabled="" placeholder="test">
-                                    <option>option 1</option>
-                                    <option>option 2</option>
-                                    <option>option 3</option>
-                                    <option>option 4</option>
-                                    <option>option 5</option>
+                                <select name="score" class="form-control" disabled="" placeholder="test">
+                                    <option value="" disabled selected hidden>
+                                        {{selectedCandidateProfile.score}}
+                                    </option>
                                 </select>
                             </form>
                         </div>
                         <div class="col-sm-4">
                             <form name="interviewForm" class="form row p-1" novalidate>
                                 <label> คะแนนความอยากได้ </label>
-                                <select class="form-control" disabled="" placeholder="test">
-                                    <option>option 1</option>
-                                    <option>option 2</option>
-                                    <option>option 3</option>
-                                    <option>option 4</option>
-                                    <option>option 5</option>
+                                <select name="wanted_score" class="form-control" disabled="" placeholder="test">
+                                    <option value="" disabled selected hidden>
+                                        {{selectedCandidateProfile.score}}
+                                    </option>
                                 </select>
                             </form>
                         </div>
@@ -113,19 +111,18 @@
                         <div class="col-sm-8">
                             <form name="interviewForm" class="form row p-1" novalidate>
                                 <label class="text-left">อยากได้เพราะเรื่องอะไร</label>
-                                <textarea class="form-control" rows="3" placeholder="Enter ..." disabled></textarea>
+                                <textarea name="wanted_for" class="form-control" rows="3" placeholder="Enter ..."
+                                    disabled></textarea>
                             </form>
                         </div>
 
                         <div class="col-sm-4">
                             <form name="interviewForm" class="form row p-1" novalidate>
                                 <label>คะแนน</label>
-                                <select class="form-control" disabled="" placeholder="test">
-                                    <option>option 1</option>
-                                    <option>option 2</option>
-                                    <option>option 3</option>
-                                    <option>option 4</option>
-                                    <option>option 5</option>
+                                <select name="score_wanted_for" class="form-control" disabled="" placeholder="test">
+                                    <option value="" disabled selected hidden>
+                                        {{selectedCandidateProfile.score}}
+                                    </option>
                                 </select>
                             </form>
                         </div>
@@ -135,14 +132,16 @@
 
             <!--         สัมภาษณ์ครั้งที่ 2     -->
 
-            <div class="card collapsed-card card-success">
-                <div class="card-header rounded ">
-                    <p class="card-text text-left text-dark ">ผลสัมภาษณ์ครั้งที่ 2
-                    </p>
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse"
-                            style="color: rgb(0, 0, 0);">
-                            <i class="fas fa-plus fa-2x"></i></button>
+            <div class="card collapsed-card ">
+                <div class="card-header rounded " ng-style="{'background-color': '#2AB514'}">
+                    <div style="text-align: center; ">
+
+                        <p class="card-text text-left text-dark p20">ผลสัมภาษณ์ครั้งที่ 2
+                            <button type="button" class="btn btn-tool float-right " data-card-widget="collapse"
+                                style="color: rgb(0, 0, 0);">
+                                <i class="fas fa-plus fa-2x mt-1"></i></button>
+                        </p>
+
                     </div>
 
                 </div>
@@ -153,30 +152,26 @@
                         <div class="col-sm-4">
                             <form name="interviewForm" class="form row p-1" novalidate>
                                 <label> ผ่าน/ไม่ผ่าน</label>
-                                <input class="form-control" type="text" disabled placeholder="test">
+                                <input name="status" class="form-control" type="text" disabled placeholder="test">
                             </form>
                         </div>
                         <div class="col-sm-4">
                             <form name="interviewForm" class="form row p-1" novalidate>
                                 <label> ..../10 (Level)</label>
-                                <select class="form-control" disabled="" placeholder="test">
-                                    <option>option 1</option>
-                                    <option>option 2</option>
-                                    <option>option 3</option>
-                                    <option>option 4</option>
-                                    <option>option 5</option>
+                                <select name="score" class="form-control" disabled="" placeholder="test">
+                                    <option value="" disabled selected hidden>
+                                        {{selectedCandidateProfile.score}}
+                                    </option>
                                 </select>
                             </form>
                         </div>
                         <div class="col-sm-4">
                             <form name="interviewForm" class="form row p-1" novalidate>
                                 <label> คะแนนความอยากได้ </label>
-                                <select class="form-control" disabled="" placeholder="test">
-                                    <option>option 1</option>
-                                    <option>option 2</option>
-                                    <option>option 3</option>
-                                    <option>option 4</option>
-                                    <option>option 5</option>
+                                <select name="wanted_score" class="form-control" disabled="" placeholder="test">
+                                    <option value="" disabled selected hidden>
+                                        {{selectedCandidateProfile.score}}
+                                    </option>
                                 </select>
                             </form>
                         </div>
@@ -185,19 +180,18 @@
                         <div class="col-sm-8">
                             <form name="interviewForm" class="form row p-1" novalidate>
                                 <label class="text-left">อยากได้เพราะเรื่องอะไร</label>
-                                <textarea class="form-control" rows="3" placeholder="Enter ..." disabled></textarea>
+                                <textarea name="wanted_for" class="form-control" rows="3" placeholder="Enter ..."
+                                    disabled></textarea>
                             </form>
                         </div>
 
                         <div class="col-sm-4">
                             <form name="interviewForm" class="form row p-1" novalidate>
                                 <label>คะแนน</label>
-                                <select class="form-control" disabled="" placeholder="test">
-                                    <option>option 1</option>
-                                    <option>option 2</option>
-                                    <option>option 3</option>
-                                    <option>option 4</option>
-                                    <option>option 5</option>
+                                <select name="score_wanted_for" class="form-control" disabled="" placeholder="test">
+                                    <option value="" disabled selected hidden>
+                                        {{selectedCandidateProfile.score}}
+                                    </option>
                                 </select>
                             </form>
                         </div>
@@ -207,14 +201,16 @@
 
             </div>
             <!--         สัมภาษณ์ครั้งที่ 3     -->
-            <div class="card collapsed-card card-success">
-                <div class="card-header rounded ">
-                    <p class="card-text text-left text-dark ">ผลสัมภาษณ์ครั้งที่ 3
-                    </p>
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse"
-                            style="color: rgb(0, 0, 0);">
-                            <i class="fas fa-plus fa-2x"></i></button>
+            <div class="card collapsed-card ">
+                <div class="card-header rounded " ng-style="{'background-color': '#2AB514'}">
+                    <div style="text-align: center; ">
+
+                        <p class="card-text text-left text-dark p20">ผลสัมภาษณ์ครั้งที่ 3
+                            <button type="button" class="btn btn-tool float-right " data-card-widget="collapse"
+                                style="color: rgb(0, 0, 0);">
+                                <i class="fas fa-plus fa-2x mt-1"></i></button>
+                        </p>
+
                     </div>
 
                 </div>
@@ -225,30 +221,26 @@
                         <div class="col-sm-4">
                             <form name="interviewForm" class="form row p-1" novalidate>
                                 <label> ผ่าน/ไม่ผ่าน</label>
-                                <input class="form-control" type="text" disabled placeholder="test">
+                                <input name="status" class="form-control" type="text" disabled placeholder="test">
                             </form>
                         </div>
                         <div class="col-sm-4">
                             <form name="interviewForm" class="form row p-1" novalidate>
                                 <label> ..../10 (Level)</label>
-                                <select class="form-control" disabled="" placeholder="test">
-                                    <option>option 1</option>
-                                    <option>option 2</option>
-                                    <option>option 3</option>
-                                    <option>option 4</option>
-                                    <option>option 5</option>
+                                <select name="score" class="form-control" disabled="" placeholder="test">
+                                    <option value="" disabled selected hidden>
+                                        {{selectedCandidateProfile.score}}
+                                    </option>
                                 </select>
                             </form>
                         </div>
                         <div class="col-sm-4">
                             <form name="interviewForm" class="form row p-1" novalidate>
                                 <label> คะแนนความอยากได้ </label>
-                                <select class="form-control" disabled="" placeholder="test">
-                                    <option>option 1</option>
-                                    <option>option 2</option>
-                                    <option>option 3</option>
-                                    <option>option 4</option>
-                                    <option>option 5</option>
+                                <select name="wanted_score" class="form-control" disabled="" placeholder="test">
+                                    <option value="" disabled selected hidden>
+                                        {{selectedCandidateProfile.score}}
+                                    </option>
                                 </select>
                             </form>
                         </div>
@@ -257,19 +249,18 @@
                         <div class="col-sm-8">
                             <form name="interviewForm" class="form row p-1" novalidate>
                                 <label class="text-left">อยากได้เพราะเรื่องอะไร</label>
-                                <textarea class="form-control" rows="3" placeholder="Enter ..." disabled></textarea>
+                                <textarea name="wanted_for" class="form-control" rows="3" placeholder="Enter ..."
+                                    disabled></textarea>
                             </form>
                         </div>
 
                         <div class="col-sm-4">
                             <form name="interviewForm" class="form row p-1" novalidate>
                                 <label>คะแนน</label>
-                                <select class="form-control" disabled="" placeholder="test">
-                                    <option>option 1</option>
-                                    <option>option 2</option>
-                                    <option>option 3</option>
-                                    <option>option 4</option>
-                                    <option>option 5</option>
+                                <select name="score_wanted_for" class="form-control" disabled="" placeholder="test">
+                                    <option value="" disabled selected hidden>
+                                        {{selectedCandidateProfile.score}}
+                                    </option>
                                 </select>
                             </form>
                         </div>
@@ -279,19 +270,174 @@
 
             </div>
             <!-- เจรจาสัญญาจ้าง -->
-            <div class="card collapsed-card card-warning">
-                <div class="card-header rounded ">
-                    <p class="card-text text-left text-dark ">เจรจาสัญญาจ้าง
-                    </p>
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse"
-                            style="color: rgb(0, 0, 0);">
-                            <i class="fas fa-plus fa-2x"></i></button>
+            <div class="card ">
+                <div class="card-header rounded " ng-style="{'background-color': '#FFDD28'}">
+                    <div style="text-align: center; ">
+
+                        <p class="card-text text-left text-dark p20">เจรจาสัญญาจ้าง
+                            <button type="button" class="btn btn-tool float-right " data-card-widget="collapse"
+                                style="color: rgb(0, 0, 0);">
+                                <i class="fas fa-plus fa-2x mt-1"></i></button>
+                        </p>
+
                     </div>
 
                 </div>
 
                 <div class="card-body">
+                    <form name="negotiateForm" class="form row" novalidate>
+                        <div class="col-sm-12">
+                            <div class="form row ">
+                                <label>
+                                    <span ng-show="!isShowJobPositionError()">ตำแหน่ง</span>
+                                    <span class="text-danger" ng-show="isShowJobPositionError()">ตำแหน่ง *</span>
+                                </label>
+                                <input name="job_position" class="form-control"
+                                    ng-model="selectedEmployeeProfile.job_position"
+                                    ng-class="{'is-invalid': isShowJobPositionError()}" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowBusinessError()">สังกัด</span>
+                                    <span class="text-danger" ng-show="isShowBusinessError()">สังกัด *</span>
+                                </label>
+                                <input name="business" class="form-control" 
+                                ng-model="selectedEmployeeProfile.business"
+                                ng-class="{'is-invalid': isShowBusinessError()}" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowDirectToError()">Direct to</span>
+                                    <span class="text-danger" ng-show="isShowDirectToError()">Direct to *</span>
+                                </label>
+                                <input name="direct_to" class="form-control"
+                                    ng-model="selectedEmployeeProfile.direct_to"
+                                    ng-class="{'is-invalid': isShowDirectToError()}" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowConsultError()">Consult</span>
+                                    <span class="text-danger" ng-show="isShowConsultError()">Consult *</span>
+                                </label>
+                                <input name="consult" class="form-control" ng-model="selectedEmployeeProfile.consult"
+                                ng-class="{'is-invalid': isShowConsultError()}" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowJobDescriptionError()">Job description</span>
+                                    <span class="text-danger" ng-show="isShowJobDescriptionError()">Job description *</span>
+                                </label>
+                                <textarea name="job_description" class="form-control"
+                                    ng-model="selectedEmployeeProfile.job_description"
+                                    ng-class="{'is-invalid': isShowJobDescriptionError()}" required>
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowMissionError()">Mission</span>
+                                    <span class="text-danger" ng-show="isShowMissionError()">Mission *</span>
+                                </label>
+                                <input name="mission" class="form-control" ng-model="selectedEmployeeProfile.mission"
+                                ng-class="{'is-invalid': isShowMissionError()}" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowKpiError()">KPI</span>
+                                    <span class="text-danger" ng-show="isShowKpiError()">KPI *</span>
+                                </label>
+                                <input name="kpi" class="form-control" ng-model="selectedEmployeeProfile.kpi"
+                                ng-class="{'is-invalid': isShowKpiError()}" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowWorkDayError()">วันทำงาน</span>
+                                    <span class="text-danger" ng-show="isShowWorkDayError()">วันทำงาน *</span>
+                                </label>
+                                <input name="work_day" class="form-control" ng-model="selectedEmployeeProfile.work_day"
+                                ng-class="{'is-invalid': isShowWorkDayError()}" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowWorkTimeError()">เวลาทำงาน</span>
+                                    <span class="text-danger" ng-show="isShowWorkTimeError()">เวลาทำงาน *</span>
+                                </label>
+                                <input name="work_time" class="form-control"
+                                    ng-model="selectedEmployeeProfile.work_time"
+                                    ng-class="{'is-invalid': isShowWorkTimeError()}" required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form row mt-1 mr-2">
+
+                                <label>
+                                    <span ng-show="!isShowStartWorkDateError()">วันเริ่มงาน</span>
+                                    <span class="text-danger" ng-show="isShowStartWorkDateError()">วันเริ่มงาน *</span>
+                                </label>
+
+                                <div class="input-group date" id="startDatePicker" data-target-input="nearest">
+                                    <input name="start_work_date" class="form-control datetimepicker-input"
+                                        data-target="#startDatePicker"
+                                        ng-model="selectedCandidateProfile.start_work_date" 
+                                        ng-class="{'is-invalid': isShowStartWorkDateError()}" 
+                                        required />
+                                    <div class="input-group-append" data-target="#startDatePicker"
+                                        data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowNegotiateTypeError()">รูปแบบสัญญาจ้าง</span>
+                                    <span class="text-danger" ng-show="isShowNegotiateTypeError()">รูปแบบสัญญาจ้าง *</span>
+                                </label>
+                                <select name="negotiate_type" class="form-control"  ng-class="{'is-invalid': isShowNegotiateTypeError()}" 
+                                ng-model="selectedCandidateProfile.negotiate_type" required>
+                                    <option value="" disabled selected hidden>
+                                        กรุณาเลือก
+                                      </option>
+                                    <option ng-repeat="negotiate_type in negotiate_type | orderBy: 'name'"
+                                        ng-value="negotiate_type.name">
+                                        {{ negotiate_type.name }}
+                                    </option>
+                                    </option>
+                                </select>
+
+                                
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowBenefitError()">Benefit</span>
+                                    <span class="text-danger" ng-show="isShowBenefitError()">Benefit *</span>
+                                </label>
+                                <input name="benefit" class="form-control" ng-model="selectedEmployeeProfile.benefit"
+                                ng-class="{'is-invalid': isShowBenefitError()}" required>
+                            </div>
+                        </div>
+                    </form>
 
 
                 </div>
@@ -303,18 +449,19 @@
     </div>
 </div>
 <div class="d-flex flex-row-reverse bd-highlight">
-    <button class="button buttonYes  buttonNegotiate p700 p20" ng-style="{  'border-width': '2px'}"
-        ng-click="toListMode()">
+    <!-- responsive bug-->
+    <button class="button buttonYes  buttonNegotiate p400 p20" ng-style="{  'border-width': '2px'}"
+        ng-click="requestSaveNegotiate()">
         เจรจาสำเร็จ
     </button>
+<!-- failed negotiation-->
+    <button class="button buttonNo buttonNegotiate p400 p20" ng-style="{ 'min-width': '150px', 'border-width': '2px'}"
+        ng-click="toListMode()">
+        เจรจาไม่สำเร็จ
+    </button>
 
-<button class="button buttonNo buttonNegotiate p700 p20" ng-style="{ 'min-width': '150px', 'border-width': '2px'}"
-    ng-click="toListMode()">
-    เจรจาไม่สำเร็จ
-</button>
-
-<button class="button buttonBlue buttonNegotiate p700 p20" ng-style="{ 'border-width': '2px'}"
-    ng-click="toListMode()">
-    ย้อนกลับ
-</button>
+    <button class="button buttonBlue buttonNegotiate p400 p20" ng-style="{ 'border-width': '2px'}"
+        ng-click="toListMode()">
+        ย้อนกลับ
+    </button>
 </div>
