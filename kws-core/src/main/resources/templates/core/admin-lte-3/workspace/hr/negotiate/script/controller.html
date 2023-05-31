@@ -1,8 +1,9 @@
 <div th:replace="core/admin-lte-3/workspace/hr/negotiate/script/date-entry-controller"></div>
+<div th:replace="core/admin-lte-3/workspace/hr/negotiate/script/controller-entry"></div>
 
 <script th:inline="javascript">
     app.controller("NegotiateController", ["$scope", "$http", ($scope, $http) => {
-       
+
         $scope.isLoading = false;
         $scope.criteria = {};
         $scope.mode = "list"; // ["list", "addDate" , ""]
@@ -10,23 +11,57 @@
         $scope.selectedCandidateProfile;
         //$scope.candidates = [];
         $scope.category = "";
-        
-        $scope.candidates = [
-            { id: "1", name: 'arin', surname: 'test1', position: "Developer", day: "24/06/23",startTime : "8 PM",endTime :"9 PM", negotiate_status: "wait" },
-            { id: "2", name: 'peet', surname: 'terst2', position: "Developer",  day: "24/06/23",startTime : "8 PM",endTime :"9 PM", negotiate_status: "wait" },
-            { id: "57", name: 'arin', surname: 'test1', position: "Developer",  day: "24/06/23",startTime : "8 PM",endTime :"9 PM", negotiate_status: "success" },
-            { id: "42", name: 'arin', surname: 'test2', position: "Developer",  day: null,startTime : null,endTime :null, negotiate_status: "null" },
-            { id: "52", name: 'arin', surname: 'test2', position: "Developer",  day: null,startTime : null,endTime :null,  negotiate_status: "null" },
-            { id: "5", name: 'arin', surname: 'test2', position: "Developer",  day: null,startTime : null,endTime :null,  negotiate_status: "null" },
-            { id: "3", name: 'arin', surname: 'test2', position: "Developer",  day: null,startTime : null,endTime :null,  negotiate_status: "null" },
-            { id: "427", name: 'arin', surname: 'test1', position: "Developer",  day: "24/06/23",startTime : "8 PM",endTime :"9 PM", negotiate_status: "failed" },
 
+        $scope.candidates = [
+            { id: "1", firstName: 'arin', lastName: 'test1', job_position: "Developer", day: "24/06/23", startTime: "8 PM", endTime: "9 PM", negotiate_status: "wait" },
+            { id: "2", firstName: 'peet', lastName: 'terst2', job_position: "Developer", day: "24/06/23", startTime: "8 PM", endTime: "9 PM", negotiate_status: "wait" },
+            { id: "57", firstName: 'arin', lastName: 'test1', job_position: "Developer", day: "24/06/23", startTime: "8 PM", endTime: "9 PM", negotiate_status: "success" },
+            { id: "42", firstName: 'arin', lastName: 'test2', job_position: "Developer", day: null, startTime: null, endTime: null, negotiate_status: "null" },
+            { id: "52", firstName: 'arin', lastName: 'test2', job_position: "Developer", day: null, startTime: null, endTime: null, negotiate_status: "null" },
+            { id: "5", firstName: 'arin', lastName: 'test2', job_position: "Developer", day: null, startTime: null, endTime: null, negotiate_status: "null" },
+            { id: "3", firstName: 'arin', lastName: 'test2', job_position: "Developer", day: null, startTime: null, endTime: null, negotiate_status: "null" },
+            { id: "427", firstName: 'arin', lastName: 'test1', job_position: "Developer", day: "24/06/23", startTime: "8 PM", endTime: "9 PM", negotiate_status: "failed" },
 
         ];
 
-        $scope.init = function(){
-            useEntryController($scope, $http);
-            $('.select2').select2({ theme: 'bootstrap4' });            
+        $scope.score = [
+            { id: "1" },
+            { id: "2" },
+            { id: "3" },
+            { id: "4" },
+            { id: "5" },
+            { id: "6" },
+            { id: "7" },
+            { id: "8" },
+            { id: "9" },
+            { id: "10" },
+
+        ];
+
+        $scope.negotiate_type = [
+            { id: "1", name: "สัญญาบริการครั้งที่ 1" },
+            { id: "2", name: "สัญญาบริการครั้งที่ 2" },
+            { id: "3", name: "สัญญาบริการครั้งที่ 3" },
+            { id: "4", name: "สัญญาพนักงานกำหนดระยะเวลา 3 เดือน" },
+            { id: "5", name: "สัญญาพนักงานกำหนดระยะเวลา 6 เดือน" },
+            { id: "6", name: "สัญญาพนักงานกำหนดระยะเวลา 12 เดือน" },
+            { id: "7", name: "สัญญาพนักงานประจำ" },
+            
+        ];
+
+        $scope.init = function () {
+            useDateEntryController($scope, $http);
+            useControllerEntry($scope, $http);
+            $('.select2').select2({ theme: 'bootstrap4' });
+
+            $('#startDatePicker').datetimepicker({
+                format: 'YYYY-MM-DD'
+            });
+
+            $('#entryStartDatePicker').datetimepicker({
+                format: 'YYYY-MM-DD',
+            });
+
         };
 
         $scope.sortCandidatesById = function (candidate) {
@@ -39,41 +74,90 @@
 
         $scope.goSetDateNegotiate = function (candidate) {
             $scope.selectedCandidateProfile = candidate;
-            $scope.mode = "addDate";
           
+            $scope.mode = "addDate";
+
         }
 
-        $scope.toListMode = function() {
+        $scope.toListMode = function () {
             $scope.mode = 'list';
+
         };
 
-        $scope.toDetailMode = function(candidate) {
+        $scope.toDetailMode = function (candidate) {
             $scope.selectedCandidateProfile = candidate;
             $scope.mode = 'detail';
         };
 
-        $scope.toNegotiateMode = function(candidate) {
-        $scope.selectedCandidateProfile = candidate;
-          $scope.mode = 'negotiate';
-      };
+        $scope.toNegotiateMode = function (candidate) {
+            $scope.selectedCandidateProfile = candidate;
+            $scope.mode = 'negotiate';
+        };
 
         $scope.setDateNegotiate = function (candidate) {
 
             candidate.datetime = "";
         }
 
-        $scope.resetForm = function() {
+        $scope.resetFormDate = function () {
             setTimeout(() => {
+
                 $scope.dateForm.$submitted = false;
+                $scope.dateForm.$setUntouched();
+                $scope.dateForm.$setPristine();
 
-                $scope.dateForm.day.$setUntouched();
-                $scope.dateForm.day.$setPristine();
-
-                $scope.dateForm.startTime.$setUntouched();
-                $scope.dateForm.startTime.$setPristine();
+                // $scope.dateForm.startTime.$setUntouched();
+                // $scope.dateForm.startTime.$setPristine();
 
                 $scope.$apply();
+
+            }, 0);
+        };
+
+        $scope.resetFormNegotiate = function() {
+            setTimeout(() => {
+                $scope.negotiateForm.$submitted = false;
                 
+                // $scope.negotiateForm.$setUntouched();
+                // $scope.negotiateForm.$setPristine();
+                
+                $scope.negotiateForm.job_position.$setUntouched();
+                $scope.negotiateForm.job_position.$setPristine();
+
+                $scope.negotiateForm.business.$setUntouched();
+                $scope.negotiateForm.business.$setPristine();
+               
+                $scope.negotiateForm.direct_to.$setUntouched();
+                $scope.negotiateForm.direct_to.$setPristine();
+
+                $scope.negotiateForm.consult.$setUntouched();
+                $scope.negotiateForm.consult.$setPristine();
+
+                $scope.negotiateForm.job_description.$setUntouched();
+                $scope.negotiateForm.job_description.$setPristine();
+
+                $scope.negotiateForm.mission.$setUntouched();
+                $scope.negotiateForm.mission.$setPristine();
+
+                $scope.negotiateForm.kpi.$setUntouched();
+                $scope.negotiateForm.kpi.$setPristine();
+
+                $scope.negotiateForm.work_day.$setUntouched();
+                $scope.negotiateForm.work_day.$setPristine();
+
+                $scope.negotiateForm.work_time.$setUntouched();
+                $scope.negotiateForm.work_time.$setPristine();
+
+                $scope.negotiateForm.start_work_date.$setUntouched();
+                $scope.negotiateForm.start_work_date.$setPristine();
+
+                $scope.negotiateForm.negotiate_type.$setUntouched();
+                $scope.negotiateForm.negotiate_type.$setPristine();
+
+                $scope.negotiateForm.benefit.$setUntouched();
+                $scope.negotiateForm.benefit.$setPristine();
+
+                $scope.$apply();
             }, 0);
         };
 

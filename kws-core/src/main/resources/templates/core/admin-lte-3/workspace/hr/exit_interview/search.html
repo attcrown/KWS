@@ -1,44 +1,50 @@
 <div class="card">
 
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md-5">
-                <div class="form-group">
-                    <label>ตำแหน่ง</label>
-                    <select class="form-control" ng-model="criteria.position">
-                        <option value="" disabled selected>กรุณาเลือก</option>
-                        <option>option 1</option>
-                        <option>option 2</option>
-                        <option>option 3</option>
-                        <option>option 4</option>
-                        <option>option 5</option>
-                        
-                        </select>
-                </div>
-            </div>
-            <div class="col-md-1"></div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>สังกัด</label>
-                    <select class="form-control" ng-model="criteria.affiliation">
-                        <option value="" disabled selected>กรุณาเลือก</option>
-                        <option>option 1</option>
-                        <option>option 2</option>
-                        <option>option 3</option>
-                        <option>option 4</option>
-                        <option>option 5</option>
-                        
-                        </select>
-                </div>
-            </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-5">
+        <div class="form-group">
+          <label>ตำแหน่ง</label>
+          <select name="job_position" class="form-control"
+            ng-style="{'width':'100%','background-color':'#F9F9F9','font-size':'14px'}" ng-model="criteria.job_position"
+            required>
+            <option value="" disabled selected hidden>
+              กรุณาเลือก
+            </option>
+            <option ng-repeat="job_position in job_position | orderBy: 'name'" ng-value="job_position.name">
+              {{ job_position.name }}
+            </option>
+          </select>
         </div>
-    </div>
+      </div>
+      <div class="col-md-1"></div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>สังกัด</label>
+          <select name="business" class="form-control"
+            ng-style="{'width':'100%','background-color':'#F9F9F9','font-size':'14px'}" ng-model="criteria.business"
+            required>
+            <option value="" disabled selected hidden>
+              กรุณาเลือก
+            </option>
+            <option ng-repeat="business in business | orderBy: 'name'" ng-value="business.name">
+              {{ business.name }}
+            </option>
+          </select>
+        </div>
+      </div>
 
-    <div class="card-footer">
-        <div class="text-right">
-            <button class="btn btn-lg btn-outline-primary" ng-click="search()">
-                <i class="fa fa-search"></i> ค้นหา
-            </button>
-        </div>
     </div>
+  </div>
+  <div class="row">
+    <pre></pre>
+  </div>    
+  <div class="d-flex flex-row-reverse bd-highlight mr-3 mb-3">
+    <button class="button buttonBlue buttonFooter p700 p20" ng-style="{
+       'border-width': '2px', 'min-height':'47px','min-width':'216px','font-size': '20px','font-weight': '400'}"
+    ng-click="search()">
+      ค้นหา
+    </button>
+  </div>
+
 </div>
