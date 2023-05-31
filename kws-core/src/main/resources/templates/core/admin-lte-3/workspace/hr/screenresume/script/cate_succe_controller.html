@@ -1,0 +1,68 @@
+<script th:inline="javascript">
+    function cate_success_Controller($scope, $http) { 
+        $scope.requestSave = useRequestSave($scope, $http);
+        $scope.request_success = useRequest_success($scope, $http);
+        $scope.verify = useVerify($scope, $http);
+    }
+
+    function useVerify($scope, $http) {
+        return () => {
+            if (true) {
+                return true;
+            }
+        };
+    }
+    function useRequestSave($scope, $http) {
+        return () => {
+        if ($scope.verify()) {
+            const options = {
+            title:
+                $scope.entryMode === "add"
+                ? "ยืนยันการบันทึกข้อมูล ?"
+                : "ยืนยันการแก้ไขข้อมูล",
+            text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
+            icon: "warning",
+            buttons: ["ยกเลิก", "ตกลง"],
+            dangerMode: true,
+            };
+            const handler = (confirm) => {
+                if (confirm) {
+                    $scope.non_success_user();
+                    console.log('save useRequestSave'+$scope.mode);
+                    $scope.$apply();
+                }
+            };
+            swal(options).then(handler);
+        } else {
+            swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+        }
+        };
+    }
+    function useRequest_success($scope, $http) {
+        return () => {
+        if ($scope.verify()) {
+            const options = {
+            title:
+                $scope.entryMode === "add"
+                ? "ยืนยันการบันทึกข้อมูล ?"
+                : "ยืนยันการแก้ไขข้อมูล",
+            text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
+            icon: "warning",
+            buttons: ["ยกเลิก", "ตกลง"],
+            dangerMode: true,
+            };
+            const handler = (confirm) => {
+                if (confirm) {
+    
+                    $scope.success_user();
+                    console.log('save useRequest_success'+$scope.mode);
+                    $scope.$apply();
+                }
+            };
+            swal(options).then(handler);
+        } else {
+            swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+        }
+        };
+    }
+</script>
