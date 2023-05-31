@@ -10,6 +10,11 @@
         $scope.search_table = false;
         $scope.search_head;
         $scope.show_datapage;
+        $scope.isQuestionVisible = false;
+
+        $scope.toggleShowQuestion = function() {
+            $scope.isQuestionVisible = !$scope.isQuestionVisible;
+        };
 
         $scope.job_position = [
             { id: "1", name: "Operation ออนไลน์" },
