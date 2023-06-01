@@ -1,0 +1,40 @@
+<!-- <div th:replace="core/admin-lte-3/workspace/hr/screenresume/script/table_controller"></div>
+<div th:replace="core/admin-lte-3/workspace/hr/screenresume/script/cate_succe_controller"></div> -->
+<script th:inline="javascript">
+    app.controller("CandidateUserController", ["$scope", "$http", ($scope, $http) => {
+            $scope.mode = 'list';
+            $scope.date = 'close';
+            $scope.init = function() {
+                // tableController($scope, $http);
+                // cate_success_Controller($scope, $http);
+                $(".select2").select2({ theme: "bootstrap4" });
+            };
+            $scope.items = [
+                { label: '19', name: 'ชื่อ - นามสกุล', position: 'ตำแหน่ง' },
+                { label: '18', name: 'ชื่อ - นามสกุล', position: 'ตำแหน่ง' },
+                { label: '17', name: 'ชื่อ - นามสกุล', position: 'ตำแหน่ง' },
+                { label: '16', name: 'ชื่อ - นามสกุล', position: 'ตำแหน่ง' },
+                { label: '15', name: 'ชื่อ - นามสกุล', position: 'ตำแหน่ง' },
+                { label: '14', name: 'ชื่อ - นามสกุล', position: 'ตำแหน่ง' },
+                { label: '13', name: 'ชื่อ - นามสกุล', position: 'ตำแหน่ง' },
+                { label: '12', name: 'ชื่อ - นามสกุล', position: 'ตำแหน่ง' },
+                { label: '11', name: 'ชื่อ - นามสกุล', position: 'ตำแหน่ง' },
+                { label: '10', name: 'ชื่อ - นามสกุล', position: 'ตำแหน่ง' },
+                { label: '9', name: 'ชื่อ - นามสกุล', position: 'ตำแหน่ง' },
+
+            ];
+            $scope.changeitem = { label: ' ', name: ' ', position: ' ' };
+            
+            $scope.changemode_date = function(item){
+                $scope.date = 'open';
+                $scope.changeitem = item;
+                console.log($scope.changeitem);
+
+            }
+            $scope.changemode_date_close = function(){
+                $scope.date = 'close';
+            }
+            
+        }
+    ]);
+</script>
