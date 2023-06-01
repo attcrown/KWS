@@ -12,7 +12,7 @@
                         <div class="row-sm-6 ">
                             <form name="dateForm" class="form row p-1" novalidate>
                                 <div class="form-group border rounded p-2">
-                                  
+
                                     <label>
                                         <span class="text-danger">*</span>
                                         <span ng-show="!isShowDateError()">วันที่เจรจา</span>
@@ -20,14 +20,50 @@
                                     </label>
 
                                     <div class="input-group date" id="entryStartDatePicker" data-target-input="nearest">
-                                        <input name="day"  class="form-control datetimepicker-input"
+                                        <input name="day" class="form-control datetimepicker-input"
                                             data-target="#entryStartDatePicker"
                                             ng-class="{'is-invalid': isShowDateError()}"
-                                            ng-model="selectedCandidateProfile.day" value= "08/05/2015" required />
+                                            ng-model="selectedCandidateProfile.day" required />
                                         <div class="input-group-append" data-target="#entryStartDatePicker"
                                             data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
+                                    </div>
+
+                                    <div class="row mt-3">
+                                        <div class="col-sm-6">
+                                            <select name="startTime" class="form-control" 
+                                            ng-class="{'is-invalid': isShowStartNegotiateError()}" 
+                                            ng-model="selectedCandidateProfile.start_negotiate"
+                                            ng-style="{'font-size':'14px'}"
+                                                required>
+                                                <option value="" disabled selected hidden>
+                                                    กรุณาเลือก
+                                                </option>
+                                                <option ng-repeat="time in timeOptions | orderBy: 'time.id'"
+                                                    ng-value="time.id">
+                                                    {{time.name }}
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-sm-6">
+
+                                            <select name="endTime" class="form-control" 
+                                            ng-class="{'is-invalid': isShowEndNegotiateError()}" 
+                                            ng-model="selectedCandidateProfile.end_negotiate"
+                                            ng-style="{'font-size':'14px'}"
+                                                required>
+                                                <option value="" disabled selected hidden>
+                                                    กรุณาเลือก
+                                                </option>
+                                                <option ng-repeat="time in timeOptions | orderBy: 'time.id'"
+                                                    ng-value="time.id">
+                                                    {{time.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+
                                     </div>
                                     <div class="container p-2">
                                         <button class="btn btn-outline-danger text-dark" ng-click="toListMode()">
@@ -85,9 +121,10 @@
                                             {{candidate.endTime}}
                                         </span>
                                     </div>
-                                    <button class="button buttonYes p700" ng-click="toNegotiateMode(candidate)">
-                                        เริ่มเจรจา
-                                    </button>
+                                    <button class="button buttonYes p8 p700" ng-style="{'width':'30%'}"
+                                    ng-click="toEntryNegotiateMode(candidate)">
+                                    เริ่มเจรจา
+                                </button>
                                 </div>
                             </div>
                         </a>
@@ -99,7 +136,7 @@
                         <p class="text-left pInterBold" style="color: #6E7C87;">รอตกลงเซ็นสัญญาจ้าง</p>
                         <a href="">
                             <div ng-repeat="candidate in candidates | orderBy:'sortCandidatesById'"
-                                class="card hoverEffect mb-3 mt-1" ng-if="candidate.negotiate_status == 'failed'">
+                                class="card hoverEffect mb-3 mt-1" ng-if="candidate.negotiate_status == 'waitForResult'">
                                 <div class="card-body" ng-click="toDetailMode(candidate)">
                                     <h5 class="card-title"><span class="badgeInfo">{{candidate.id}}</span></h5><br>
                                     <p class="card-text text-left ">{{candidate.firstName}}
@@ -109,11 +146,14 @@
                                 </div>
                                 <!-- ใส่ฟังก์ชั่น ลบ เพิ่ม-->
 
-                                <div class="p-1">
-                                    <button class="button buttonYes p700" ng-click="">
+                                <div class="p-1 ">
+                                    <button class="button buttonYellow p8 p700" ng-style="{'width':'25%'}" ng-click="toDetailNegotiateMode(candidate)">
+                                        ดูข้อมูล
+                                    </button>
+                                    <button class="button buttonYes p8 p700" ng-style="{'width':'25%'}" ng-click="">
                                         ตกลง
                                     </button>
-                                    <button class="button buttonNo p700" ng-click="">
+                                    <button class="button buttonNo p8 p700" ng-style="{'width':'25%'}" ng-click="">
                                         ไม่ตกลง
                                     </button>
                                 </div>
