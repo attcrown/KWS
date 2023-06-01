@@ -13,25 +13,34 @@
                 { label: '19', name: 'ชื่อ - นามสกุล', position: 'ตำแหน่ง' },
                 { label: '18', name: 'ชื่อ - นามสกุล', position: 'ตำแหน่ง' },
                 { label: '17', name: 'ชื่อ - นามสกุล', position: 'ตำแหน่ง' },
-                { label: '16', name: 'ชื่อ - นามสกุล', position: 'ตำแหน่ง' },
-                { label: '15', name: 'ชื่อ - นามสกุล', position: 'ตำแหน่ง' },
-                { label: '14', name: 'ชื่อ - นามสกุล', position: 'ตำแหน่ง' },
-                { label: '13', name: 'ชื่อ - นามสกุล', position: 'ตำแหน่ง' },
-                { label: '12', name: 'ชื่อ - นามสกุล', position: 'ตำแหน่ง' },
-                { label: '11', name: 'ชื่อ - นามสกุล', position: 'ตำแหน่ง' },
-                { label: '10', name: 'ชื่อ - นามสกุล', position: 'ตำแหน่ง' },
-                { label: '9', name: 'ชื่อ - นามสกุล', position: 'ตำแหน่ง' },
-
+                { label: '16', name: 'ชื่อ - นามสกุล', position: 'ตำแหน่ง' }
             ];
-            $scope.changeitem = { label: ' ', name: ' ', position: ' ' };
-            
-            $scope.changemode_date = function(item){
-                $scope.date = 'open';
-                $scope.changeitem = item;
-                console.log($scope.changeitem);
+            $scope.changeitem = { label: '', name: '', position: '' };
 
+            $scope.changemode_date = function(item) {
+                if ($scope.changeitem.name !== '') {
+                    // ตรวจสอบว่า changeitem ซ้ำกับข้อมูลที่มีอยู่ใน items หรือไม่
+                    var isDuplicate = $scope.items.some(function(existingItem) {
+                        return existingItem.label === $scope.changeitem.label &&
+                            existingItem.name === $scope.changeitem.name &&
+                            existingItem.position === $scope.changeitem.position;
+                    });
+                    if (!isDuplicate) {
+                        $scope.items.push($scope.changeitem);
+                    }
+                }
+                var index = $scope.items.indexOf(item);
+                if (index !== -1) {
+                    $scope.items.splice(index, 1);
+                }                
+                $scope.date = 'open';
+                $scope.changeitem = item;                
+                console.log($scope.changeitem);
+                console.log($scope.items);
             }
+
             $scope.changemode_date_close = function(){
+                $scope.items.push($scope.changeitem);
                 $scope.date = 'close';
             }
             
