@@ -18,9 +18,11 @@
                         </div>
                         <div class="m-4">                        
                             <div>
-                                <input class="form-control" type="date" style="border-radius: 10px;" ng-model="changeitem.date">
-                                <br>
-                                <input class="form-control" type="time" style="border-radius: 10px;" ng-model="changeitem.time">
+                                <input class="form-control" type="date" style="border-radius: 10px;" ng-model="changeitem.date"><br>
+                                <label> เริ่มกี่โมง </label>
+                                <input class="form-control" type="time" style="border-radius: 10px;" ng-model="changeitem.start_time">
+                                <label> เลิกกี่โมง </label>
+                                <input class="form-control" type="time" style="border-radius: 10px;" ng-model="changeitem.stop_time">
                             </div>
                         </div>
                         <div class="m-4">                        
@@ -62,7 +64,9 @@
                             <label style="border-radius: 10px; background-color: #E5E9EB; ">&nbsp;&nbsp;{{ item.label }}&nbsp;&nbsp;</label><br>
                             <label style="border-radius: 10px; ">{{ item.name }}</label><br>
                             <label style="border-radius: 10px; ">({{ item.position }})</label><br>
-                            <label style="border-radius: 10px; background-color: #F9D2D7; color: #E44345;" >&nbsp;&nbsp;23/08/23 : 1 PM-2 PM&nbsp;&nbsp;</label>
+                            <label style="border-radius: 10px; background-color: #F9D2D7; color: #E44345;" >
+                                &nbsp;&nbsp;{{item.date}} : {{item.start_time}}-{{item.stop_time}}&nbsp;&nbsp;
+                            </label>
                             <button class="btn btn-outline-success btn-xs" style="border-radius: 10px;">เริ่มสัมภาษณ์</button>
                         </div>
                     </div>
