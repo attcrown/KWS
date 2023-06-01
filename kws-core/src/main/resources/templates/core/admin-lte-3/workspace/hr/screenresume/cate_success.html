@@ -4,89 +4,18 @@
            <b>เกณฑ์สกรีน Resume</b> 
         </p>
         <div class="m-5" style="font-size: 16px;">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox">
-                <label class="form-check-label"><b>1.เกรดมากกว่า 3 ดูจากระดับปริญญาตรี (+1 )</b></label><span
-                    class="text-danger"> *</span>
-            </div>
-            <div class="form-check mt-4">
-                <input class="form-check-input" type="checkbox" />
-                <label class="form-check-label"><b>2.เป็น Leader ในการทำกิจกรรม หรือเป็นประธานต่างๆ
-                        (+2)</b></label><span class="text-danger"> *</span>
-            </div>
-            <div class="form-check mt-4">
-                <input class="form-check-input" type="checkbox" />
-                <label class="form-check-label"><b>3.ทำ Part-time ตอนเรียน (+1)</b></label>
-            </div>
-            <div class="form-check mt-4">
-                <input class="form-check-input" type="checkbox" />
-                <label class="form-check-label"><b>4.คน type 3 (+1)</b></label>
-            </div>
-            <div class="form-check mt-4">
-                <input class="form-check-input" type="checkbox" />
-                <label class="form-check-label"><b>5.อายุไม่เกิน 35 (+1)</b></label>
-            </div>
-            <div class="form-check mt-4">
-                <input class="form-check-input" type="checkbox" />
-                <label class="form-check-label"><b>6.ไม่มีโรคประจำตัว (+1)</b></label>
-            </div>
-            <div class="form-check mt-4">
-                <input class="form-check-input" type="checkbox" />
-                <label class="form-check-label"><b>7.เงินเดือนที่ขอมาอยู่ในกระบอกเงินเดือนของบริษัท (+1)</b></label>
-            </div>
-            <div class="form-check mt-4">
-                <input class="form-check-input" type="checkbox" />
-                <label class="form-check-label"><b>8.ในเรซูเม่ประวัติการทำงานตรงสายกับที่สมัครมา (+1)</b></label><span
-                    class="text-danger"> *</span>
-            </div>
-            <div class="form-check mt-4">
-                <input class="form-check-input" type="checkbox" />
-                <label class="form-check-label"><b>9.**DISC แต่ละตำแหน่งถ้าตรงตามนี้(+2)** : </b><br>
-                    Sales, HR Recruiter, Influ (D มากสุด) // Admin, Accounting, Data (C มากสุด) // HRD, CRM (S มากสุด)
-                    <br>// Marketing, Content, Graphic (I มากสุด) Project co, <br>Project management Level management (D หรือC หรือทั้งสองอย่าง)<span class="text-danger"> *</span></label>
-            </div>
-            <div class="form-check mt-4">
-                <input class="form-check-input" type="checkbox" />
-                <label class="form-check-label"><b>10.**MBTI แต่ละตำแหน่งถ้าตรงตามนี้(+2)** : </b><br>
-                    Sales (ENFP) // HR, Project coordinator (E) // Admin, Accounting, Data (ISJ) // Marketing, Influ
-                    (EN) // Content, Graphic (IN)</label><span class="text-danger"> *</span>
-            </div>
-            <div class="form-check mt-4">
-                <input class="form-check-input" type="checkbox" />
-                <label class="form-check-label"><b>11.**ตำแหน่งSales** : </b><br>
-                    เป็นTop sales มาก่อน (+1) เคยเป็นเซลล์สายการศึกษามาก่อน (+1) เคยเป็นติวเตอร์มาก่อน (+1)</label>
-            </div>
-            <div class="form-check mt-4">
-                <input class="form-check-input" type="checkbox" />
-                <label class="form-check-label"><b>12.Sales (FS) (ESC) : </b>จบสายวิทย์
-                    หรือมีประสบการณ์เกี่ยวกับการศึกษา</label>
-            </div>
-            <div class="form-check mt-4">
-                <input class="form-check-input" type="checkbox" />
-                <label class="form-check-label"><b>13.Sales, Project coor (KR) : </b>ทำกิจกรรม
-                    หรือเคยทำค่ายมาก่อน</label>
-            </div>
-            <div class="form-check mt-4">
-                <input class="form-check-input" type="checkbox" />
-                <label class="form-check-label"><b>14.ถ้าเกรดเฉลี่ย + มหาวิทยาลัยไม่ Top ตัด 90%
-                        ถ้าไม่ผ่านกิจกรรมมาไมผ่าน</b></label>
-            </div>
-            <div class="form-check mt-4">
-                <input class="form-check-input" type="checkbox" />
-                <label class="form-check-label"><b>15.ตำแหน่ง Officer- Senior officer ต้องตอบข้อคุณเป็นคนไทป์ไหน level 2
-                        ขึ้นไป (growth mindset)</b></label>
-            </div>
-            <div class="form-check mt-4">
-                <input class="form-check-input" type="checkbox" />
-                <label class="form-check-label"><b>16.ตำแหน่ง Management ทุกสังกัด : เกรดมัธยมและมหาลัย มากกว่า 2.75
-                        (มหาลัย Top 5) หรือ เกรดมากกว่า 3.00 (มหาลัยอื่น)</b></label>
-            </div>
-            <div class="form-check mt-4">
-                <input class="form-check-input" type="checkbox" />
-                <label class="form-check-label"><b>17.ตำแหน่ง Management ทุกสังกัด** : ต้องตอบข้อคุณเป็นคนไทป์ไหน 2.5
-                        ขึ้นไป (growth mindset)</b></label>
+            <div ng-repeat="question in questions" style="display: flex; justify-content: space-between;">
+                <div class="form-check mt-4">
+                    <input class="form-check-input" type="checkbox" ng-show="!isedit_success">
+                    <label class="form-check-label">
+                        <b>{{$index + 1}}. {{question.title}}</b>
+                        <span class="text-danger"> *</span>
+                    </label>
+                </div>
+                <button ng-show="isedit_success" class="btn" style="color: rgb(148, 9, 9);" ng-click="deleteQuestion(question.title)"><i class="fa fa-trash" aria-hidden="true"></i>{{$index+1}}.</button>
             </div>
         </div>
+        
         <div class="mx-5">
             <div class="form-group">
                 <label>
@@ -102,17 +31,20 @@
             </div>
         </div>
         <div class="text-right mx-5 pb-4">
-            <button class="btn btn-outline-danger">
+            <button class="btn btn-outline-danger" ng-click="edit_success()">
                 <i class="fa fa-times" aria-hidden="true"></i> แก้ไข/ลบ
             </button>
             <button class="btn btn-outline-warning" ng-click="toggleShowQuestion()">
                 <i class="fa fa-plus-circle" aria-hidden="true"></i> เพิ่มข้อคำถาม
             </button>
+            <button class="btn btn-outline-success" ng-show="isedit_success">
+                <i class="fas fa-save" aria-hidden="true"></i> บันทึก
+            </button>
         </div>
 
         <div class="form-group mx-5 text-center" ng-show="isQuestionVisible">
-            <textarea type="text" class="form-control" placeholder="เพิ่มข้อคำถาม"></textarea>
-            <button class="btn btn-outline-success text-center mt-4">
+            <textarea type="text" class="form-control" placeholder="เพิ่มข้อคำถาม" ng-model="addquest"></textarea>
+            <button class="btn btn-outline-success text-center mt-4" ng-click="addQuestion()">
                 <i class="fas fa-save"></i> บันทึก
             </button>
         </div>
