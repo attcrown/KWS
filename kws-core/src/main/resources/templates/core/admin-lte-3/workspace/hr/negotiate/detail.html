@@ -1,25 +1,22 @@
-
-<div class="row gx-1 text-center" ng-show="selectedCandidateProfile">
+<div class="row gx-1 text-center">
     <div class="col-sm-3 mt-3  ">
 
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title"><span class="badge float-right"
-                        style="background-color: #E5E9EB;">{{selectedCandidateProfile.id}}</span></h5>
+                <h5 class="card-title"><span class="badgeInfo">{{selectedCandidateProfile.id}}</span></h5><br>
                 <p class="card-text text-left">{{selectedCandidateProfile.firstName}}
                     {{selectedCandidateProfile.lastName}}<br>{{selectedCandidateProfile.job_position}}
                 </p>
             </div>
         </div>
-  <!-- /.card wait-->
+        <!-- /.card wait-->
         <div class="card collapsed-card" ng-if="selectedCandidateProfile.negotiate_status=='wait'">
             <div class="card-header  ">
                 <p class="card-text text-left"> เจรจาสัญญาจ้าง
                 </p>
                 <div>
-                    <div style="text-align: center;"    >
-                        <span class="spanTime float-left  bgYellow p10 p700"
-                            ng-style="{'color': '#AC7710'}">
+                    <div style="text-align: center;">
+                        <span class="spanTime float-left  bgYellow p10 p700" ng-style="{'color': '#AC7710'}">
                             {{selectedCandidateProfile.day}} :
                             {{selectedCandidateProfile.startTime}} -
                             {{selectedCandidateProfile.endTime}}
@@ -35,26 +32,64 @@
             </div>
 
             <div class="card-body">
-                <form name="dateForm" class="form row p-1" >
+                <form name="dateForm" class="form row p-1" novalidate>
                     <div class="form-group border rounded p-2">
+
                         <label>
                             <span class="text-danger">*</span>
-                            <span ng-show="!isShowDateError()">เปลี่ยนวันที่เจรจา</span>
+                            <span ng-show="!isShowDateError()">วันที่เจรจา</span>
                             <span class="text-danger" ng-show="isShowDateError()">กรุณาระบุวันที่</span>
                         </label>
 
-                        <input name="day" class="form-control " type="text" placeholder="เลือกวันที่ต้องการเจรจา"
-                            ng-class="{'is-invalid': isShowDateError()}" ng-model="selectedCandidate.day" required>
+                        <div class="input-group date" id="changeNegotiateDatePicker" data-target-input="nearest">
+                            <input name="day" class="form-control datetimepicker-input"
+                                data-target="#changeNegotiateDatePicker" ng-class="{'is-invalid': isShowDateError()}"
+                                ng-model="selectedCandidateProfile.day" required />
+                            <div class="input-group-append" data-target="#changeNegotiateDatePicker"
+                                data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
 
-                        <input name="timeRange" class="form-control mt-1" type="text" placeholder="เลือกช่วงเวลา"
-                            ng-class="{'is-invalid': isShowTimeRangeError()}" ng-model="selectedCandidate.startTime" required>
 
+
+                        <div class="row mt-3">
+                            <div class="col-sm-6">
+                                <select name="startTime" class="form-control"
+                                    ng-class="{'is-invalid': isShowStartNegotiateError()}"
+                                    ng-model="selectedCandidateProfile.start_negotiate" ng-style="{'font-size':'14px'}"
+                                    required>
+                                    <option value="" disabled selected hidden>
+                                        กรุณาเลือก
+                                    </option>
+                                    <option ng-repeat="time in timeOptions | orderBy: 'time.id'" ng-value="time.id">
+                                        {{time.name }}
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-6">
+
+                                <select name="endTime" class="form-control"
+                                    ng-class="{'is-invalid': isShowEndNegotiateError()}"
+                                    ng-model="selectedCandidateProfile.end_negotiate" ng-style="{'font-size':'14px'}"
+                                    required>
+                                    <option value="" disabled selected hidden>
+                                        กรุณาเลือก
+                                    </option>
+                                    <option ng-repeat="time in timeOptions | orderBy: 'time.id'" ng-value="time.id">
+                                        {{time.name}}
+                                    </option>
+                                </select>
+                            </div>
+
+                        </div>
                         <div class="container p-2">
-                            <button class="btn btn-outline-danger" ng-click="toListMode(selectedCandidate)">
-                                <i class="fa "></i> ยกเลิก
+                            <button class="btn btn-outline-danger text-dark" ng-click="toListMode()">
+                                <i class="fa "></i>ยกเลิก
                             </button>
-                            <button class="btn btn-outline-success " ng-click="requestSave()">
-                                <i class="fa"></i> ยืนยัน
+                            <button class="btn btn-outline-success text-dark " ng-click="requestSaveDate()">
+                                <i class="fa"></i>ยืนยัน
                             </button>
                         </div>
                     </div>
@@ -69,9 +104,8 @@
                 <p class="card-text text-left"> เจรจาสัญญาจ้าง
                 </p>
                 <div>
-                    <div style="text-align: center;"    >
-                        <span class="spanTime float-left  bgGreen p10 p700"
-                                        ng-style="{'color': '#12B76A'}">
+                    <div style="text-align: center;">
+                        <span class="spanTime float-left  bgGreen p10 p700" ng-style="{'color': '#12B76A'}">
                             {{selectedCandidateProfile.day}} :
                             {{selectedCandidateProfile.startTime}} -
                             {{selectedCandidateProfile.endTime}}
@@ -81,9 +115,10 @@
 
             </div>
         </div>
- 
+
     </div>
-    <div class="col-sm-3 mt-3  ">
+    <!-- detail mode -->
+    <div class="col-sm-3 mt-3  " ng-show="detailMode === 'detail'">
         <div class="card text-center">
             <div class="card-body ">
                 <p class="card-text ">ข้อมูลทั่วไป</p>
@@ -117,7 +152,7 @@
         </div>
     </div>
 
-    <div class="col-sm-6 mt-3  ">
+    <div class="col-sm-6 mt-3  " ng-show="detailMode === 'detail'">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">ข้อมูลการศึกษา</h5>
@@ -138,18 +173,86 @@
             </div>
         </div>
     </div>
+    <!-- edit mode -->
+    <div class="col-sm-3 mt-3  " ng-show="detailMode === 'edit'">
+        <div class="card text-center">
+            <div class="card-body ">
+                <p class="card-text ">ข้อมูลทั่วไป</p>
+            </div>
+            <div class="card-body ">
+                <h5 class="card-text ">รูป</h5>
+            </div>
+            <div class="card-body ">
+                <p class="card-text text-left">สังกัด : <input></p>
+                <p class="card-text text-left">Direct report : <input></p>
+                <p class="card-text text-left">Consultant : <input></p>
+                <p class="card-text text-left">วันทีเริ่มงานได้ : <input></p>
+                <p class="card-text text-left">เบอร์โทรศัพท์ : <input></p>
+                <p class="card-text text-left">Line ID : <input></p>
+            </div>
+        </div>
 
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">ข้อมูลการศึกษา</h5>
+            </div>
+            <div class="card-body ">
+                <p class="card-text text-left">สายการเรียนชั้นมัธยม : <input></p>
+                <p class="card-text text-left">มหาวิทยาลัย : <input></p>
+                <p class="card-text text-left">คณะ : <input></p>
+                <p class="card-text text-left">สาขา : <input></p>
+                <p class="card-text text-left">เกรดเฉลี่ย ณ มัธยม : <input></p>
+                <p class="card-text text-left">เกรดเฉลี่ย ณ ป.ตรี : <input></p>
+                <p class="card-text text-left">เกรดเฉลี่ย ณ ป.โท : <input></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 mt-3  " ng-show="detailMode === 'edit'">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">ข้อมูลการศึกษา</h5>
+            </div>
+            <div class="card-body ">
+                <p class="card-text text-left">ผลงานที่เคยทำได้ : <input></p>
+                <p class="card-text text-left">งานอดิเรก/สิ่งที่สนใจ : <input></p>
+                <p class="card-text text-left">Passion ในการทำงาน : <input></p>
+                <p class="card-text text-left">คิดว่าตัวเองเป็น type ไหน : <input></p>
+                <p class="card-text text-left">อยากทำงานลักษณะไหน type : <input></p>
+                <p class="card-text text-left">คุณกล้าปล่อยงานของคุณมากแค่ไหน : <input></p>
+                <p class="card-text text-left">คุณรู้สึกอย่างไรเวลาไม่ประสบความสำเร็จในแบบที่ตั้งใจไว้ : <input></p>
+                <p class="card-text text-left">มีอาการโรคซึมเศร้า/panic ไหม : <input></p>
+                <p class="card-text text-left">ทัศนคติเรื่องการตอบแชทนอกเวลางาน : <input></p>
+                <p class="card-text text-left">Background ครอบครัว (พอสังเขป) : <input></p>
+                <p class="card-text text-left">เคยทำ part time ไหม : <input></p>
+                <p class="card-text text-left">รูปแบบการทำงานที่ต้องการ : <input></p>
+            </div>
+        </div>
+    </div>
 </div>
+
+
 <div class="d-flex flex-row-reverse bd-highlight">
-    <button class="button buttonYes  buttonNegotiate p400 p20" ng-style="{  'border-width': '2px'}"
-        ng-click="toListMode()">
-        ยืนยัน
+
+    <button ng-show="detailMode === 'detail'" class="button buttonYes  buttonNegotiate p400 p20"
+        ng-style="{  'border-width': '2px','border-radius': '5px'}" ng-click="toEditMode(selectedCandidateProfile)">
+        แก้ไขข้อมูล
     </button>
 
 
+    <!-- request Edit  API not implement yet-->
+    <button ng-show="detailMode === 'edit'" class="button buttonYes  buttonNegotiate p400 p20"
+        ng-style="{  'border-width': '2px','border-radius': '5px'}" ng-click="toListMode()">
+        บันทึก
+    </button>
 
-<button class="button buttonBlue buttonNegotiate p400 p20" ng-style="{ 'border-width': '2px'}"
-    ng-click="toListMode()">
-    ย้อนกลับ
-</button>
+    <button ng-show="detailMode === 'detail'" class="button buttonBlue buttonNegotiate p400 p20"
+        ng-style="{ 'border-width': '2px','border-radius': '5px'}" ng-click="toListMode()">
+        ย้อนกลับ
+    </button>
+
+    <button ng-show="detailMode === 'edit'" class="button buttonBlue buttonNegotiate p400 p20"
+        ng-style="{ 'border-width': '2px','border-radius': '5px'}" ng-click="toDetailMode(selectedCandidateProfile)">
+        ย้อนกลับ
+    </button>
 </div>

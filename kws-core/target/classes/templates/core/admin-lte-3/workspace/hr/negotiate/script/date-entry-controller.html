@@ -3,7 +3,8 @@
         $scope.requestSaveDate = useRequestSaveDate($scope, $http);
         $scope.verifyDate = useVerifyDate($scope, $http);
         $scope.isShowDateError = useIsShowDateError($scope, $http);
-        // $scope.isShowTimeRangeError = useIsShowTimeRangeError($scope, $http);
+        $scope.isShowStartNegotiateError = useIsShowStartNegotiateError($scope, $http);
+        $scope.isShowEndNegotiateError = useIsShowEndNegotiateError($scope, $http);
     }
 
 
@@ -52,12 +53,16 @@
         };
     }
 
-    // function useIsShowTimeRangeError($scope, $http) {
-    //     return () => {
-    //         return ($scope.dateForm.$submitted
-    //             || $scope.dateForm.timeRange.$dirty)
-    //             && $scope.dateForm.timeRange.$invalid;
-    //     };
-    // }
+    function useIsShowStartNegotiateError($scope, $http) {
+        return () => {
+            return $scope.dateForm.$submitted && $scope.dateForm.startTime.$invalid;
+        };
+    }
+    function useIsShowEndNegotiateError($scope, $http) {
+        return () => {
+            return $scope.dateForm.$submitted && $scope.dateForm.endTime    .$invalid;
+        };
+    }
+
 
 </script>

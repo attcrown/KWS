@@ -1,29 +1,10 @@
 <head>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400&display=swap">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
-    <link rel="stylesheet"
-        href="https://adminlte.io/themes/v3/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/datepicker.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.0.5/dist/css/adminlte.min.css">
-    <link rel="stylesheet" th:href="@{/assets/css/style.css}">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.8.2/angular-sanitize.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.full.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/datepicker.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/i18n/datepicker.th-TH.min.js"></script>
-    <script src="https://adminlte.io/themes/v3/plugins/inputmask/jquery.inputmask.min.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="https://adminlte.io/themes/v3/plugins/moment/moment.min.js"></script>
-    <script src="https://adminlte.io/themes/v3/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-    
-    <link href="https://kendo.cdn.telerik.com/themes/6.3.0/default/default-main.css" rel="stylesheet" />
-    <script src="js/jquery.min.js"></script>
 
-    <script src="js/kendo.all.min.js"></script>
+    <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+
+<script src="https://adminlte.io/themes/v3/plugins/moment/moment.min.js"></script>
+<script src="https://adminlte.io/themes/v3/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 
     <style>
         body {
@@ -49,7 +30,7 @@
         padding: 0px 8px;
         position: absolute;
         width: auto;
-        min-width: 32px;
+        min-width: 23px;
         height: 24px;
         left: 16px;
         top: 16px;
@@ -66,6 +47,10 @@
         height: 24px;
         border-radius: 12px;
     }
+    select {
+   border:0px;
+   outline:0px;
+}
 
     /* button  */
     .button {
@@ -111,6 +96,16 @@
         color: white;
     }
 
+    .buttonYellow {
+        border: 1px solid #FFDD28;
+        border-radius: 5px;
+    }
+
+    .buttonYellow:hover {
+        background-color: #FFDD28;
+        color: white;
+    }
+
     .buttonBlue {
 
         border: 1px solid #283EFF;
@@ -132,6 +127,11 @@
     }
 
     /* Font  */
+
+    .p8 {
+        font-size: 10px;
+    }
+
     .p10 {
         font-size: 10px;
     }

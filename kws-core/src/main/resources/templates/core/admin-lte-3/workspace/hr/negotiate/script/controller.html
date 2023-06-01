@@ -6,11 +6,15 @@
 
         $scope.isLoading = false;
         $scope.criteria = {};
-        $scope.mode = "list"; // ["list", "addDate" , ""]
+        $scope.mode = "list"; // ["list", "addDate" , "detail","negotiate"]
         $scope.read = "close";
         $scope.selectedCandidateProfile;
         //$scope.candidates = [];
         $scope.category = "";
+        $scope.detailMode = ""; // ["detail", "edit"]
+        $scope.negotiateMode = ""; // ["detail", "entry"]
+        $scope.selectedStartTime = null;
+        $scope.selectedEndTime = 19;
 
         $scope.candidates = [
             { id: "1", firstName: 'arin', lastName: 'test1', job_position: "Developer", day: "24/06/23", startTime: "8 PM", endTime: "9 PM", negotiate_status: "wait" },
@@ -21,7 +25,8 @@
             { id: "5", firstName: 'arin', lastName: 'test2', job_position: "Developer", day: null, startTime: null, endTime: null, negotiate_status: "null" },
             { id: "3", firstName: 'arin', lastName: 'test2', job_position: "Developer", day: null, startTime: null, endTime: null, negotiate_status: "null" },
             { id: "427", firstName: 'arin', lastName: 'test1', job_position: "Developer", day: "24/06/23", startTime: "8 PM", endTime: "9 PM", negotiate_status: "failed" },
-
+            { id: "9", firstName: 'peet', lastName: 'terst2', job_position: "Developer", day: "24/06/23", startTime: "8 PM", endTime: "9 PM", negotiate_status: "waitForResult" },
+            { id: "10", firstName: 'peet', lastName: 'terst2', job_position: "hr", day: "24/06/23", startTime: "8 PM", endTime: "9 PM", negotiate_status: "waitForResult" },
         ];
 
         $scope.score = [
@@ -46,7 +51,32 @@
             { id: "5", name: "สัญญาพนักงานกำหนดระยะเวลา 6 เดือน" },
             { id: "6", name: "สัญญาพนักงานกำหนดระยะเวลา 12 เดือน" },
             { id: "7", name: "สัญญาพนักงานประจำ" },
-            
+
+        ];
+
+
+        $scope.timeOptions = [
+            { id: "1", name: "09:00" },
+            { id: "2", name: "09:30" },
+            { id: "3", name: "10:00" },
+            { id: "4", name: "10:30" },
+            { id: "5", name: "11:00" },
+            { id: "6", name: "11:30" },
+            { id: "7", name: "12:00" },
+            { id: "8", name: "12:30" },
+            { id: "9", name: "13:00" },
+            { id: "10", name: "13:30" },
+            { id: "11", name: "14:00" },
+            { id: "12", name: "14:30" },
+            { id: "13", name: "15:00" },
+            { id: "14", name: "15:30" },
+            { id: "15", name: "16:00" },
+            { id: "16", name: "16:30" },
+            { id: "17", name: "17:00" },
+            { id: "18", name: "17:30" },
+            { id: "19", name: "18:00" },
+
+
         ];
 
         $scope.init = function () {
@@ -62,6 +92,24 @@
                 format: 'YYYY-MM-DD',
             });
 
+            $('#changeNegotiateDatePicker').datetimepicker({
+                format: 'YYYY-MM-DD',
+            });
+
+        };
+
+        $scope.selectStartTime = function (time) {
+            if (!$scope.selectedEndTime || time < $scope.selectedEndTime) {
+                $scope.selectedStartTime = time;
+                console.log(time);
+            }
+        };
+
+        $scope.selectEndTime = function (time) {
+            if (!$scope.selectedStartTime || time > $scope.selectedStartTime) {
+                $scope.selectedEndTime = time;
+                console.log(time);
+            }
         };
 
         $scope.sortCandidatesById = function (candidate) {
@@ -74,7 +122,6 @@
 
         $scope.goSetDateNegotiate = function (candidate) {
             $scope.selectedCandidateProfile = candidate;
-          
             $scope.mode = "addDate";
 
         }
@@ -87,11 +134,25 @@
         $scope.toDetailMode = function (candidate) {
             $scope.selectedCandidateProfile = candidate;
             $scope.mode = 'detail';
+            $scope.detailMode = 'detail';
         };
 
-        $scope.toNegotiateMode = function (candidate) {
+        $scope.toEditMode = function (candidate) {
+            $scope.selectedCandidateProfile = candidate;
+            $scope.detailMode = 'edit';
+        };
+
+
+        $scope.toEntryNegotiateMode = function (candidate) {
             $scope.selectedCandidateProfile = candidate;
             $scope.mode = 'negotiate';
+            $scope.negotiateMode = 'entry';
+        };
+
+        $scope.toDetailNegotiateMode = function (candidate) {
+            $scope.selectedCandidateProfile = candidate;
+            $scope.mode = 'negotiate';
+            $scope.negotiateMode = 'detail';
         };
 
         $scope.setDateNegotiate = function (candidate) {
@@ -114,19 +175,19 @@
             }, 0);
         };
 
-        $scope.resetFormNegotiate = function() {
+        $scope.resetFormNegotiate = function () {
             setTimeout(() => {
                 $scope.negotiateForm.$submitted = false;
-                
+
                 // $scope.negotiateForm.$setUntouched();
                 // $scope.negotiateForm.$setPristine();
-                
+
                 $scope.negotiateForm.job_position.$setUntouched();
                 $scope.negotiateForm.job_position.$setPristine();
 
                 $scope.negotiateForm.business.$setUntouched();
                 $scope.negotiateForm.business.$setPristine();
-               
+
                 $scope.negotiateForm.direct_to.$setUntouched();
                 $scope.negotiateForm.direct_to.$setPristine();
 
