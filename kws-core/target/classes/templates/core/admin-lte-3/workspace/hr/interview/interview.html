@@ -17,8 +17,10 @@
                             </div>
                         </div>
                         <div class="m-4">                        
-                            <div style="background-color: #FFFFFF; border-radius: 10px;">
-                                date
+                            <div>
+                                <input class="form-control" type="date" style="border-radius: 10px;" ng-model="changeitem.date">
+                                <br>
+                                <input class="form-control" type="time" style="border-radius: 10px;" ng-model="changeitem.time">
                             </div>
                         </div>
                         <div class="m-4">                        
@@ -26,7 +28,7 @@
                                 <button class="btn btn-outline-danger">
                                     <i class="fa fa-times" aria-hidden="true"></i> ยกเลิก
                                 </button>
-                                <button class="btn btn-outline-success">
+                                <button class="btn btn-outline-success" ng-click="submit_interview()">
                                     <i class="fa fa-check" aria-hidden="true"></i> ยืนยัน
                                 </button>
                             </div>
@@ -55,7 +57,7 @@
 
                 <div class="col ml-1 shadow" style="background-color: #F6F8F9; overflow-wrap: break-word; border-radius: 10px; height: 815px; overflow: hidden; overflow-y: auto;">
                     <label class="m-3" style="color: #6E7C87;">สัมภาษณ์รอบที่ 1</label>  
-                    <div class="m-1 mb-4" style="background-color: #FFFFFF; border-radius: 10px;" ng-repeat="item in items">
+                    <div class="m-1 mb-4" style="background-color: #FFFFFF; border-radius: 10px;" ng-repeat="item in items_interview1">
                         <div class="p-2 born_label">
                             <label style="border-radius: 10px; background-color: #E5E9EB; ">&nbsp;&nbsp;{{ item.label }}&nbsp;&nbsp;</label><br>
                             <label style="border-radius: 10px; ">{{ item.name }}</label><br>

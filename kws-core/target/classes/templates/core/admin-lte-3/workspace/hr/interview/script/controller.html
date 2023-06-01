@@ -15,9 +15,13 @@
                 { label: '17', name: 'ชื่อ - นามสกุล', position: 'ตำแหน่ง' },
                 { label: '16', name: 'ชื่อ - นามสกุล', position: 'ตำแหน่ง' }
             ];
-            $scope.changeitem = { label: '', name: '', position: '' };
+
+            $scope.items_interview1 = [];
+
+            $scope.changeitem = {};
 
             $scope.changemode_date = function(item) {
+                $scope.changeitem = item; 
                 if ($scope.changeitem.name !== '') {
                     // ตรวจสอบว่า changeitem ซ้ำกับข้อมูลที่มีอยู่ใน items หรือไม่
                     var isDuplicate = $scope.items.some(function(existingItem) {
@@ -33,8 +37,7 @@
                 if (index !== -1) {
                     $scope.items.splice(index, 1);
                 }                
-                $scope.date = 'open';
-                $scope.changeitem = item;                
+                $scope.date = 'open';                               
                 console.log($scope.changeitem);
                 console.log($scope.items);
             }
@@ -43,7 +46,25 @@
                 $scope.items.push($scope.changeitem);
                 $scope.date = 'close';
             }
-            
+
+            $scope.submit_interview = function() {
+                var duplicateItem = $scope.items_interview1.find(function(item) {
+                    return item.label === $scope.changeitem.label && item.name === $scope.changeitem.name && item.position === $scope.changeitem.position;
+                });
+                if (!duplicateItem) {
+                    $scope.items_interview1.push($scope.changeitem);
+                }
+
+                var index = $scope.items.indexOf($scope.changeitem);
+                if (index !== -1) {
+                    $scope.items.splice(index, 1);
+                } 
+                $scope.changeitem = {};
+                $scope.date = 'close';
+                console.log($scope.items);
+                console.log($scope.items_interview1);
+            }
+
         }
     ]);
 </script>
