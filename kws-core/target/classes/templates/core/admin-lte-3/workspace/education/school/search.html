@@ -1,0 +1,49 @@
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title text-maroon">ระบุเงื่อนไขการค้นหา</h3>
+
+        <div ng-if="false" class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+        </div>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>ประเภทสถานศึกษา</label>
+                    <select id="schoolTypeSelect" class="form-control select2" data-dropdown-css-class="select2-indigo" multiple="multiple" data-placeholder="--- กรุณาเลือกประเภทสถานศึกษา ---" style="width: 100%;" ng-model="criteria.schoolTypeIds">
+                        <option ng-repeat="schoolType in schoolTypes | orderBy: 'seqNo'" ng-value="schoolType.id">{{ schoolType.name }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>สังกัด</label>
+                    <select id="schoolOwnerTypeSelect" class="form-control select2" data-dropdown-css-class="select2-indigo" multiple="multiple" data-placeholder="--- กรุณาเลือกสังกัดสถานศึกษา ---" style="width: 100%;" ng-model="criteria.schoolOwnerTypeIds">
+                        <option ng-repeat="schoolOwnerType in schoolOwnerTypes | orderBy: 'seqNo'" ng-value="schoolOwnerType.id">{{ schoolOwnerType.name }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>ชื่อสถานศึกษา</label>
+                    <input type="text" class="form-control" ng-model="criteria.name">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-footer">
+        <div class="text-right">
+            <button class="btn btn-outline-success" ng-click="requestAddSchool()">
+                <i class="fa fa-plus"></i> เพิ่มข้อมูล
+            </button>
+            <button class="btn btn-outline-primary" ng-click="search()">
+                <i class="fa fa-search"></i> ค้นหา
+            </button>
+        </div>
+    </div>
+</div>

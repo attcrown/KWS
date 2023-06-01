@@ -1,0 +1,87 @@
+<div th:replace="core/admin-lte-3/workspace/education/education-major/script/api"></div>
+<div th:replace="core/admin-lte-3/workspace/education/education-major/script/list-controller"></div>
+<div th:replace="core/admin-lte-3/workspace/education/education-major/script/entry-controller"></div>
+
+<script th:inline="javascript">
+    app.controller("EducationMajorController", ["$scope", "$http", ($scope, $http) => {
+        $scope.educationFaculties = /*[[${educationFaculties}]]*/ [];
+
+        $scope.isLoading = false;
+        $scope.criteria = {};
+        $scope.paging = {};
+        $scope.educationMajors = [];
+        $scope.selectedEducationMajor;
+        $scope.mode = "list"; // ["list", "entry"]
+        $scope.entryMode = ""; // ["add", "edit"]
+
+        $scope.init = function() {
+            console.log("### EducationMajorController.init ###");
+            console.log("educationFaculties => ", $scope.educationFaculties);
+
+            useApi($scope, $http);
+            useListController($scope, $http);
+            useEntryController($scope, $http);
+
+            $scope.criteria = {
+                educationFacultyIds: [],
+                name: ''
+            };
+
+            $scope.paging = {
+                pageNo: 1,
+                pageSize: 25,
+                totalPage: 0,
+                totalSize: 0
+            };
+
+            $('.select2').select2({ theme: 'bootstrap4' });
+        };
+
+        $scope.getEducationFacultyName = function(educationMajor) {
+            const educationFaculty = $scope.educationFaculties.find(e => e.id === educationMajor.educationFacultyId);
+            if(educationFaculty) {
+                return educationFaculty.name;
+            }
+        };
+
+        $scope.swapMode = function() {
+            if($scope.mode === 'list') {
+                $scope.toEntryMode();
+            } else if($scope.mode === 'entry') {
+                $scope.toListMode();
+            }
+        };
+
+        $scope.toListMode = function() {
+            $scope.mode = 'list';
+        };
+
+        $scope.toEntryMode = function() {
+            $scope.mode = 'entry';
+        };
+
+        $scope.requestAddEducationMajor = function() {
+            console.log("### EducationMajorController.requestAddEducationMajor ###");
+            $scope.toEntryMode();
+            $scope.entryMode = "add";
+            $scope.selectedEducationMajor = {
+                educationFacultyId: ""
+            };
+            $scope.resetForm();
+        };
+
+        $scope.resetForm = function() {
+            setTimeout(() => {
+                $scope.educationMajorForm.$submitted = false;
+
+                $scope.educationMajorForm.educationFaculty.$setUntouched();
+                $scope.educationMajorForm.educationFaculty.$setPristine();
+
+                $scope.educationMajorForm.name.$setUntouched();
+                $scope.educationMajorForm.name.$setPristine();
+
+                $scope.$apply();
+            }, 0);
+        };
+    }]);
+</script>

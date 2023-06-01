@@ -1,0 +1,126 @@
+<script th:inline="javascript">
+    function useControllerEntry($scope, $http) 
+    {
+        $scope.requestSaveNegotiate = useRequestSaveNegotiate($scope, $http);
+        $scope.verifyNegotiate = useVerifyNegotiate($scope, $http);
+        $scope.isShowJobPositionError = useIsShowJobPositionError($scope, $http);
+        $scope.isShowBusinessError = useIsShowBusinessError($scope, $http);
+        $scope.isShowDirectToError = useIsShowDirectToError($scope, $http);
+        $scope.isShowConsultError = useIsShowConsultError($scope, $http);
+        $scope.isShowJobDescriptionError = useIsShowJobDescriptionError($scope, $http);
+        $scope.isShowMissionError = useIsShowMissionError($scope, $http);
+        $scope.isShowKpiError = useIsShowKpiError($scope, $http);
+        $scope.isShowWorkDayError = useIsShowWorkDayError($scope, $http);
+        $scope.isShowWorkTimeError = useIsShowWorkTimeError($scope, $http);
+        $scope.isShowStartWorkDateError = useIsShowStartWorkDateError($scope, $http);
+        $scope.isShowNegotiateTypeError = useIsShowNegotiateTypeError($scope, $http);
+        $scope.isShowBenefitError = useIsShowBenefitError($scope, $http); 
+    }
+    function useRequestSaveNegotiate($scope, $http) {
+        return () => {
+            console.log("### negotiateController.requestSave ###");
+
+            $scope.negotiateForm.$submitted = true;
+
+            if ($scope.verifyNegotiate()) {
+                const options = {
+                    title: "ยืนยันการบันทึกข้อมูล ?" ,
+                    text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                    icon: "warning",
+                    buttons: ["ยกเลิก", "ตกลง"],
+                    dangerMode: true
+                };
+
+                const handler = (confirm) => {
+                    if (confirm) {
+
+                    }
+                };
+
+                swal(options).then(handler);
+            } else {
+                swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+            }
+        };
+    }
+
+    function useVerifyNegotiate($scope, $http) {
+        return () => {
+            return $scope.negotiateForm.$valid;
+        };
+    }
+
+    // ****************************** validate ****************************** //
+    function useIsShowJobPositionError($scope, $http) {
+        return () => {
+            return ($scope.negotiateForm.$submitted || $scope.negotiateForm.job_position.$dirty) && $scope.negotiateForm.job_position.$invalid;
+        };
+    }
+
+    function useIsShowBusinessError($scope, $http) {
+        return () => {
+            return ($scope.negotiateForm.$submitted || $scope.negotiateForm.business.$dirty) && $scope.negotiateForm.business.$invalid;
+        };
+    }
+
+    function useIsShowDirectToError($scope, $http) {
+        return () => {
+            return ($scope.negotiateForm.$submitted || $scope.negotiateForm.direct_to.$dirty) && $scope.negotiateForm.direct_to.$invalid;
+        };
+    }
+
+    function useIsShowConsultError($scope, $http) {
+        return () => {
+            return ($scope.negotiateForm.$submitted || $scope.negotiateForm.consult.$dirty) && $scope.negotiateForm.consult.$invalid;
+        };
+    }
+
+    function useIsShowJobDescriptionError($scope, $http) {
+        return () => {
+            return ($scope.negotiateForm.$submitted || $scope.negotiateForm.job_description.$dirty) && $scope.negotiateForm.job_description.$invalid;
+        };
+    }
+
+    function useIsShowMissionError($scope, $http) {
+        return () => {
+            return ($scope.negotiateForm.$submitted || $scope.negotiateForm.mission.$dirty) && $scope.negotiateForm.mission.$invalid;
+        };
+    }
+
+    function useIsShowKpiError($scope, $http) {
+        return () => {
+            return ($scope.negotiateForm.$submitted || $scope.negotiateForm.kpi.$dirty) && $scope.negotiateForm.kpi.$invalid;
+        };
+    }
+
+    function useIsShowWorkDayError($scope, $http) {
+        return () => {
+            return ($scope.negotiateForm.$submitted || $scope.negotiateForm.work_day.$dirty) && $scope.negotiateForm.work_day.$invalid;
+        };
+    }
+
+    function useIsShowWorkTimeError($scope, $http) {
+        return () => {
+            return ($scope.negotiateForm.$submitted || $scope.negotiateForm.work_time.$dirty) && $scope.negotiateForm.work_time.$invalid;
+        };
+    }
+
+    function useIsShowStartWorkDateError($scope, $http) {
+        return () => {
+            return ($scope.negotiateForm.$submitted || $scope.negotiateForm.start_work_date.$dirty) && $scope.negotiateForm.start_work_date.$invalid;
+        };
+    }
+
+    function useIsShowNegotiateTypeError($scope, $http) {
+        return () => {
+            return $scope.negotiateForm.$submitted && $scope.negotiateForm.negotiate_type.$invalid;
+        };
+    }
+
+    function useIsShowBenefitError($scope, $http) {
+        return () => {
+            return ($scope.negotiateForm.$submitted || $scope.negotiateForm.benefit.$dirty) && $scope.negotiateForm.benefit.$invalid;
+        };
+    }
+    // ****************************** validate ****************************** //
+</script>

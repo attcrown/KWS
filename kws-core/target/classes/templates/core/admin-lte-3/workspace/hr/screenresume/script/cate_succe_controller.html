@@ -1,0 +1,108 @@
+<script th:inline="javascript">
+    function cate_success_Controller($scope, $http) { 
+        $scope.requestSave = useRequestSave($scope, $http);
+        $scope.request_success = useRequest_success($scope, $http);
+        $scope.verify = useVerify($scope, $http);
+        $scope.questions = [
+            {title: 'เกรดมากกว่า 3 ดูจากระดับปริญญาตรี (+1 )' },
+            {title: 'เป็น Leader ในการทำกิจกรรม หรือเป็นประธานต่างๆ (+2)' },
+            {title: 'ทำ Part-time ตอนเรียน (+1)' },
+            {title: 'คน type 3 (+1)' },
+            {title: 'อายุไม่เกิน 35 (+1)' },
+            {title: 'ไม่มีโรคประจำตัว (+1)' },
+            {title: 'เงินเดือนที่ขอมาอยู่ในกระบอกเงินเดือนของบริษัท (+1)' },
+            {title: 'ในเรซูเม่ประวัติการทำงานตรงสายกับที่สมัครมา (+1)' },
+            {title: '**DISC แต่ละตำแหน่งถ้าตรงตามนี้(+2)** : Sales, HR Recruiter, Influ (D มากสุด) // Admin, Accounting, Data (C มากสุด) // HRD, CRM (S มากสุด) // Marketing, Content, Graphic (I มากสุด) Project co, Project management Level management (D หรือC หรือทั้งสองอย่าง)'},
+            {title: '**MBTI แต่ละตำแหน่งถ้าตรงตามนี้(+2)** : Sales (ENFP) // HR, Project coordinator (E) // Admin, Accounting, Data (ISJ) // Marketing, Influ (EN) // Content, Graphic (IN)' },
+            {title: '**ตำแหน่งSales** : เป็นTop sales มาก่อน (+1) เคยเป็นเซลล์สายการศึกษามาก่อน (+1) เคยเป็นติวเตอร์มาก่อน (+1)' },
+            {title: 'Sales (FS) (ESC) : จบสายวิทย์ หรือมีประสบการณ์เกี่ยวกับการศึกษา' },
+            {title: 'Sales, Project coor (KR) : ทำกิจกรรม หรือเคยทำค่ายมาก่อน' },
+            {title: 'ถ้าเกรดเฉลี่ย + มหาวิทยาลัยไม่ Top ตัด 90% ถ้าไม่ผ่านกิจกรรมมาไมผ่าน' },
+            {title: 'ตำแหน่ง Officer- Senior officer ต้องตอบข้อคุณเป็นคนไทป์ไหน level 2 ขึ้นไป (growth mindset)' },
+            {title: 'ตำแหน่ง Management ทุกสังกัด : เกรดมัธยมและมหาลัย มากกว่า 2.75 (มหาลัย Top 5) หรือ เกรดมากกว่า 3.00 (มหาลัยอื่น)' },
+            {title: 'ตำแหน่ง Management ทุกสังกัด** : ต้องตอบข้อคุณเป็นคนไทป์ไหน 2.5 ขึ้นไป (growth mindset)' },
+        ];
+        $scope.deleteQuestion = function(title) {
+            var index = $scope.questions.findIndex(function(question) {
+                return question.title === title;
+            });
+
+            if (index !== -1) {
+                $scope.questions.splice(index, 1);
+            }
+        };
+
+        $scope.addQuestion = function() {
+            var newQuestion = {
+                title: $scope.addquest
+            };
+
+            $scope.questions.push(newQuestion);
+        };
+
+        $scope.edit_success = function() {
+            $scope.isedit_success = !$scope.isedit_success;
+        };
+    }
+
+    function useVerify($scope, $http) {
+        return () => {
+            if (true) {
+                return true;
+            }
+        };
+    }
+    function useRequestSave($scope, $http) {
+        return () => {
+        if ($scope.verify()) {
+            const options = {
+            title:
+                $scope.entryMode === "add"
+                ? "ยืนยันการบันทึกข้อมูล ?"
+                : "ยืนยันการแก้ไขข้อมูล",
+            text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
+            icon: "warning",
+            buttons: ["ยกเลิก", "ตกลง"],
+            dangerMode: true,
+            };
+            const handler = (confirm) => {
+                if (confirm) {
+                    $scope.non_success_user();
+                    console.log('save useRequestSave'+$scope.mode);
+                    $scope.$apply();
+                }
+            };
+            swal(options).then(handler);
+        } else {
+            swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+        }
+        };
+    }
+    function useRequest_success($scope, $http) {
+        return () => {
+        if ($scope.verify()) {
+            const options = {
+            title:
+                $scope.entryMode === "add"
+                ? "ยืนยันการบันทึกข้อมูล ?"
+                : "ยืนยันการแก้ไขข้อมูล",
+            text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
+            icon: "warning",
+            buttons: ["ยกเลิก", "ตกลง"],
+            dangerMode: true,
+            };
+            const handler = (confirm) => {
+                if (confirm) {
+    
+                    $scope.success_user();
+                    console.log('save useRequest_success'+$scope.mode);
+                    $scope.$apply();
+                }
+            };
+            swal(options).then(handler);
+        } else {
+            swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+        }
+        };
+    }
+</script>

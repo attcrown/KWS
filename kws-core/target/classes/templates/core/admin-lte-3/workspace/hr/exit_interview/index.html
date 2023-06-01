@@ -1,0 +1,52 @@
+<div th:replace="core/admin-lte-3/workspace/hr/exit_interview/script/controller"></div>
+
+
+<style>
+    .button {
+
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 8px;
+        margin: 4px 2px;
+        cursor: pointer;
+        width: auto;
+        height: 24px;
+        color: black;
+        background: #FFFFFF;
+    }
+
+    .buttonFooter{
+        width: 130px;
+        height: 47px;
+        border-radius: 10px;
+    }
+
+    .buttonBlue {
+
+        border: 1px solid #283EFF;
+        border-radius: 5px;
+    }
+
+    .buttonBlue:hover {
+        background-color: #283EFF;
+        color: white;
+    }
+</style>
+<section ng-controller="EmployeeProfileController" ng-init="init()">
+    <div ng-if="isLoading" class="kws-loader">
+        <div class='kws-loader-spin'></div>
+    </div>
+
+    <div ng-show="mode === 'list'">
+        <div th:replace="core/admin-lte-3/workspace/hr/exit_interview/search"></div>
+        <div th:replace="core/admin-lte-3/workspace/hr/exit_interview/list"></div>
+    </div>
+
+    <div ng-show="mode === 'detail'">
+        <div th:replace="core/admin-lte-3/workspace/hr/exit_interview/detail"></div>
+
+    </div>
+
+
+</section>

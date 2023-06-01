@@ -1,0 +1,56 @@
+<script th:inline="javascript">
+    function useEntryController($scope, $http)
+    {
+        $scope.requestSave = useRequestSave($scope, $http);
+        $scope.verify = useVerify($scope, $http);
+        $scope.isShowNameError = useIsShowNameError($scope, $http);
+    }
+
+    function useRequestSave($scope, $http)
+    {
+        return () => {
+            console.log("### EducationFacultyController.requestSave ###");
+
+            $scope.educationFacultyForm.$submitted = true;
+
+            if($scope.verify()) {
+                const options = {
+                    title: $scope.entryMode === "add" ? "ยืนยันการบันทึกข้อมูลคณะวิชา ?" : "ยืนยันการแก้ไขข้อมูลคณะวิชา",
+                    text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                    icon: "warning",
+                    buttons: ["ยกเลิก", "ตกลง"],
+                    dangerMode: true
+                };
+
+                swal(options)
+                .then(confirm => {
+                    if (confirm) {
+                        if($scope.entryMode === 'add') {
+                            $scope.createEducationFaculty($scope.selectedEducationFaculty);
+                        } else if($scope.entryMode === 'edit') {
+                            $scope.updateEducationFaculty($scope.selectedEducationFaculty);
+                        }
+                    }
+                });
+            } else {
+                swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+            }
+        };
+    }
+
+    function useVerify($scope, $http)
+    {
+        return () => {
+            return $scope.educationFacultyForm.$valid;
+        };
+    }
+
+    // ****************************** validate ****************************** //
+    function useIsShowNameError($scope, $http) 
+    {
+        return () => {
+            return ($scope.educationFacultyForm.$submitted || $scope.educationFacultyForm.name.$dirty) && $scope.educationFacultyForm.name.$invalid;
+        };
+    }
+    // ****************************** validate ****************************** //
+</script>

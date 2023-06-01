@@ -1,0 +1,281 @@
+<script th:inline="javascript">
+    function useApi($scope, $http)
+    {
+        $scope.search = useSearch($scope, $http);
+        $scope.createSchool = useCreateSchool($scope, $http);
+        $scope.updateSchool = useUpdateSchool($scope, $http);
+        $scope.removeSchool = useRemoveSchool($scope, $http);
+    }
+
+    function useSearch($scope, $http)
+    {
+        return () => {
+            console.log("### SchoolController.search ###");
+            console.log("criteria => " + JSON.stringify($scope.criteria));
+
+            $scope.schools = [];
+
+            const requestMessage = {
+                criteria: $scope.criteria,
+
+                paging: {
+                    pageNo: $scope.paging.pageNo,
+                    pageSize: $scope.paging.pageSize
+                },
+
+                sortBy: [
+                    {
+                        field: "name",
+                        order: "asc"
+                    }
+                ]
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/core/education/school/search`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+            
+            $scope.isLoading = true;
+            $http(options).
+            then(response => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    $scope.schools = response.data.body.datas;
+                    $scope.paging.totalPage = response.data.body.totalPage;
+                    $scope.paging.totalSize = response.data.body.totalSize;
+
+                    if($scope.schools.length === 0 && $scope.paging.pageNo > 1) {
+                        $scope.gotoPageNo(1);
+                    }
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถค้นหาข้อมูลสถานศึกษาได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            })
+            .catch(error => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถค้นหาข้อมูลสถานศึกษาได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            })
+            .finally(() => {
+                $scope.isLoading = false;
+            });
+        };
+    }
+
+    function useCreateSchool($scope, $http)
+    {
+        return (school) => {
+            console.log("### SchoolController.createSchool ###");
+            console.log("school => ", school);
+
+            const requestMessage = {
+                school: school
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/core/education/school/create`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+            
+            $scope.isLoading = true;
+            $http(options).
+            then(response => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    $scope.schools.push(response.data.body.createdSchool);
+                    $scope.toListMode();
+                    swal("บันทึกข้อมูลสำเร็จ", "บันทึกข้อมูลสถานศึกษาสำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกข้อมูลสถานศึกษาได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            })
+            .catch(error => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถบันทึกข้อมูลสถานศึกษาได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            })
+            .finally(() => {
+                $scope.isLoading = false;
+            });
+        };
+    }
+
+    function useUpdateSchool($scope, $http)
+    {
+        return (school) => {
+            console.log("### SchoolController.updateSchool ###");
+            console.log("school => ", school);
+
+            const requestMessage = {
+                schoolId: school.id,
+                school: school
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/core/education/school/update`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+            
+            $scope.isLoading = true;
+            $http(options).
+            then(response => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    $scope.schools = $scope.schools.filter(e => e.id !== school.id);
+                    $scope.schools.push(response.data.body.updatedSchool);
+                    $scope.toListMode();
+                    swal("บันทึกข้อมูลสำเร็จ", "บันทึกข้อมูลสถานศึกษาสำเร็จ", "success");
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกข้อมูลสถานศึกษาได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            })
+            .catch(error => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถบันทึกข้อมูลสถานศึกษาได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            })
+            .finally(() => {
+                $scope.isLoading = false;
+            });
+        };
+    }
+
+    function useRemoveSchool($scope, $http)
+    {
+        return (school) => {
+            console.log("### SchoolController.useRemoveSchool ###");
+            console.log("school => ", school);
+
+            const requestMessage = {
+                schoolId: school.id
+            };
+
+            const options = {
+                method: 'POST',
+                url: `${kws_contextPath}/api/core/education/school/remove`,
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                data: requestMessage
+            };
+            
+            $scope.isLoading = true;
+            $http(options).
+            then(response => {
+                console.log("response => ", response);
+
+                if(response.data.head.status === "Success") {
+                    $scope.schools = $scope.schools.filter(e => e.id !== school.id);
+                    swal("ลบข้อมูลสำเร็จ", "ลบข้อมูลสถานศึกษาสำเร็จ", "success");
+                    $scope.schools = $scope.schools.filter(e => e.id !== school.id);
+                } else {
+                    swal("เกิดข้อผิดพลาด", "ไม่สามารถลบข้อมูลสถานศึกษาได้ เนื่องจาก" + response.data.head.statusMessage, "error");
+                }
+            })
+            .catch(error => {
+                console.error("error => ", error);
+
+                if(error.status == 401) {
+                    if(error.data && error.data.head) {
+                        const statusCode = error.data.head.statusCode;
+                        if(statusCode == "401001" || statusCode == "401002") {
+                            swal("Session Expired", "Session การใช้งานระบบของคุณหมดอายุ กรุณา Login ใหม่", "error").
+                            then(value => location.reload());
+                        } else if(statusCode == "401003") {
+                            swal("Session Blocked", "Session การใช้งานระบบของคุณถูกระงับ กรุณา Login ใหม่ หรือติดต่อผู้ดูแลระบบ", "error");
+                        } else if(statusCode == "402001") {
+                            swal("Access Denied", "คุณไม่มีสิทธิ์ใช้งาน API นี้ กรุณาติดต่อผู้ดูแลระบบ", "error");
+                        } else {
+                            swal("Access Denied", error.data.head.statusMessage, "error");
+                        }
+                    }
+                } else {
+                    let errorMessage = "ไม่สามารถทำรายการได้ กรุณาติดต่อผู้ดูแลระบบ";
+                    if(error.data && error.data.head) {
+                        errorMessage = "ไม่สามารถลบข้อมูลสถานศึกษาได้ เนื่องจาก" + error.data.head.statusMessage;
+                    }
+                    swal("เกิดข้อผิดพลาด", errorMessage, "error");
+                }
+            })
+            .finally(() => {
+                $scope.isLoading = false;
+            });
+        };
+    }
+</script>

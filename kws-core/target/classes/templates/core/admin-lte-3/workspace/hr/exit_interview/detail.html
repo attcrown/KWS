@@ -1,0 +1,117 @@
+<div class="container-fluid" ng-show="selectedEmployee"></div>
+
+<div class="card rounded">
+
+    <div class="card-body">
+        <form name="salesmanForm" class="form row" novalidate>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>ชื่อ - นามสกุล</span>
+                    </label>
+                    <input name="name" type="text" class="form-control"
+                        placeholder="{{selectedEmployee.firstName}} - {{selectedEmployee.lastName}}" disabled required>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>ชื่อเล่น</span>
+                    </label>
+                    <input name="name" type="text" class="form-control" placeholder="{{selectedEmployee.nickname}} "
+                        disabled required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label><span>สังกัด</span></label>
+                    <select name="score_wanted_for" class="form-control" disabled="">
+                        <option value="" disabled selected hidden>
+                            {{selectedEmployee.business}}
+                        </option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>ชื่อใน Telegram/Trello</span>
+                    </label>
+                    <input name="name" type="text" class="form-control" placeholder="{{selectedEmployee.telegram_username}} "
+                        disabled required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>ชื่อ Line ที่ใช้เป็นแอดมินใน Line OA</span>
+                    </label>
+                    <input name="name" type="text" class="form-control" placeholder="{{selectedEmployee.line_username}} "
+                        disabled required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>ชื่อ Facebook ที่ใช้เป็น Admin</span>
+                    </label>
+                    <input name="name" type="text" class="form-control" placeholder="{{selectedEmployee.facebook_username}} "
+                        disabled required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>หัวหน้างาน</span>
+                    </label>
+                    <input name="name" type="text" class="form-control" placeholder="{{selectedEmployee.leader}} "
+                        disabled required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>อายุงาน</span>
+                    </label>
+                    <input name="name" type="text" class="form-control" placeholder="{{selectedEmployee.longevity}} "
+                        disabled required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>วันที่ลาออก</span>
+                    </label>
+                    <input name="name" type="text" class="form-control" placeholder="{{selectedEmployee.longevity}} "
+                        disabled required>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>
+                        <span>เหตุผลในการลาออก</span>
+                    </label>
+                    <input name="name" type="text" class="form-control" placeholder="{{selectedEmployee.longevity}} "
+                        disabled required>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+  
+</div>
+<div class="d-flex flex-row-reverse bd-highlight">
+    <button class="button buttonBlue buttonFooter" ng-style="{ 'border-width': '2px', 'font-size': '20px','font-weight': '400'}"
+    ng-click="toListMode()">
+    ย้อนกลับ
+    </button>
+</div>

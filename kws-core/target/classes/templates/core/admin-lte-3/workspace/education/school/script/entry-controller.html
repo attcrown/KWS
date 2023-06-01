@@ -1,0 +1,72 @@
+<script th:inline="javascript">
+    function useEntryController($scope, $http)
+    {
+        $scope.requestSave = useRequestSave($scope, $http);
+        $scope.verify = useVerify($scope, $http);
+        $scope.isShowSchoolTypeError = useIsShowSchoolTypeError($scope, $http);
+        $scope.isShowSchoolOwnerTypeError = useIsShowSchoolOwnerTypeError($scope, $http);
+        $scope.isShowNameError = useIsShowNameError($scope, $http);
+    }
+
+    function useRequestSave($scope, $http)
+    {
+        return () => {
+            console.log("### SchoolController.requestSave ###");
+
+            $scope.schoolForm.$submitted = true;
+
+            if($scope.verify()) {
+                const options = {
+                    title: $scope.entryMode === "add" ? "ยืนยันการบันทึกข้อมูลสถานศึกษา ?" : "ยืนยันการแก้ไขข้อมูลสถานศึกษา",
+                    text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                    icon: "warning",
+                    buttons: ["ยกเลิก", "ตกลง"],
+                    dangerMode: true
+                };
+
+                swal(options)
+                .then(confirm => {
+                    if (confirm) {
+                        if($scope.entryMode === 'add') {
+                            $scope.createSchool($scope.selectedSchool);
+                        } else if($scope.entryMode === 'edit') {
+                            $scope.updateSchool($scope.selectedSchool);
+                        }
+                    }
+                });
+            } else {
+                swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+            }
+        };
+    }
+
+    function useVerify($scope, $http)
+    {
+        return () => {
+            return $scope.schoolForm.$valid;
+        };
+    }
+
+    // ****************************** validate ****************************** //
+    function useIsShowSchoolTypeError($scope, $http) 
+    {
+        return () => {
+            return $scope.schoolForm.$submitted && $scope.schoolForm.schoolType.$invalid;
+        };
+    }
+
+    function useIsShowSchoolOwnerTypeError($scope, $http) 
+    {
+        return () => {
+            return $scope.schoolForm.$submitted && $scope.schoolForm.schoolOwnerType.$invalid;
+        };
+    };
+
+    function useIsShowNameError($scope, $http) 
+    {
+        return () => {
+            return ($scope.schoolForm.$submitted || $scope.schoolForm.name.$dirty) && $scope.schoolForm.name.$invalid;
+        };
+    }
+    // ****************************** validate ****************************** //
+</script>

@@ -1,0 +1,137 @@
+<script th:inline="javascript">
+    function useControllerEntry($scope, $http)
+    {
+        $scope.requestSave = useRequestSave($scope, $http);
+        $scope.verify = useVerify($scope, $http);
+        $scope.isShowGenderIdError = useIsShowGenderIdError($scope, $http);
+        $scope.isShowNameTitleIdError = useIsShowNameTitleIdError($scope, $http);
+        $scope.isShowFirstNameError = useIsShowFirstNameError($scope, $http);
+        $scope.isShowLastNameError = useIsShowLastNameError($scope, $http);
+        $scope.isShowNickNameError = useIsShowNickNameError($scope, $http);
+        $scope.isShowIdcardNoError = useIsShowIdcardNoError($scope, $http);
+        $scope.isShowMobileNoError = useIsShowMobileNoError($scope, $http);
+        $scope.isShowBankAccountNameError = useIsShowBankAccountNameError($scope, $http);
+        $scope.isShowBankAccountNoError = useIsShowBankAccountNoError($scope, $http);
+        $scope.isShowStartWorkDateError = useIsShowStartWorkDateError($scope, $http);
+        $scope.isShowEmployeeStatusError = useIsShowEmployeeStatusError($scope, $http);
+    }
+
+    function useRequestSave($scope, $http)
+    {
+        return () => {
+            console.log("### SalesmanProfileController.requestSave ###");
+
+            $scope.salesmanForm.$submitted = true;
+
+            if($scope.verify()) {
+                const options = {
+                    title: $scope.entryMode === "add" ? "ยืนยันการบันทึกข้อมูลเซลล์ ?" : "ยืนยันการแก้ไขข้อมูลเซลล์",
+                    text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                    icon: "warning",
+                    buttons: ["ยกเลิก", "ตกลง"],
+                    dangerMode: true
+                };
+
+                const handler = (confirm) => {
+                    if (confirm) {
+                        if($scope.entryMode === 'add') {
+                            $scope.createSalesman($scope.selectedSalesman);
+                        } else if($scope.entryMode === 'edit') {
+                            $scope.updateSalesman($scope.selectedSalesman);
+                        }
+                    }
+                };
+
+                swal(options).then(handler);
+            } else {
+                swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+            }
+        };
+    }
+
+    function useVerify($scope, $http)
+    {
+        return () => {
+            return $scope.salesmanForm.$valid;
+        };
+    }
+
+    // ****************************** validate ****************************** //
+    function useIsShowGenderIdError($scope, $http) 
+    {
+        return () => {
+            return $scope.salesmanForm.$submitted && $scope.salesmanForm.genderId.$invalid;
+        };
+    }
+
+    function useIsShowNameTitleIdError($scope, $http) 
+    {
+        return () => {
+            return $scope.salesmanForm.$submitted && $scope.salesmanForm.nameTitleId.$invalid;
+        };
+    }
+
+    function useIsShowFirstNameError($scope, $http) 
+    {
+        return () => {
+            return ($scope.salesmanForm.$submitted || $scope.salesmanForm.firstName.$dirty) && $scope.salesmanForm.firstName.$invalid;
+        };
+    }
+
+    function useIsShowLastNameError($scope, $http) 
+    {
+        return () => {
+            return ($scope.salesmanForm.$submitted || $scope.salesmanForm.lastName.$dirty) && $scope.salesmanForm.lastName.$invalid;
+        };
+    }
+
+    function useIsShowNickNameError($scope, $http) 
+    {
+        return () => {
+            return ($scope.salesmanForm.$submitted || $scope.salesmanForm.nickName.$dirty) && $scope.salesmanForm.nickName.$invalid;
+        };
+    }
+
+    function useIsShowIdcardNoError($scope, $http) 
+    {
+        return () => {
+            return ($scope.salesmanForm.$submitted || $scope.salesmanForm.idcardNo.$dirty) && $scope.salesmanForm.idcardNo.$invalid;
+        };
+    }
+
+    function useIsShowMobileNoError($scope, $http) 
+    {
+        return () => {
+            return ($scope.salesmanForm.$submitted || $scope.salesmanForm.mobileNo.$dirty) && $scope.salesmanForm.mobileNo.$invalid;
+        };
+    }
+
+    function useIsShowBankAccountNameError($scope, $http) 
+    {
+        return () => {
+            return ($scope.salesmanForm.$submitted || $scope.salesmanForm.bankAccountName.$dirty) && $scope.salesmanForm.bankAccountName.$invalid;
+        };
+    }
+
+    function useIsShowBankAccountNoError($scope, $http) 
+    {
+        return () => {
+            return ($scope.salesmanForm.$submitted || $scope.salesmanForm.bankAccountNo.$dirty) && $scope.salesmanForm.bankAccountNo.$invalid;
+        };
+    }
+
+    function useIsShowStartWorkDateError($scope, $http) 
+    {
+        return () => {
+            return ($scope.salesmanForm.$submitted || $scope.salesmanForm.startWorkDate.$dirty) && $scope.salesmanForm.startWorkDate.$invalid;
+        };
+    }
+
+    function useIsShowEmployeeStatusError($scope, $http) 
+    {
+        return () => {
+            return $scope.salesmanForm.$submitted && $scope.salesmanForm.employeeStatus.$invalid;
+        };
+    }
+    // ****************************** validate ****************************** //
+</script>

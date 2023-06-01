@@ -1,0 +1,81 @@
+<div th:replace ="core/admin-lte-3/workspace/hr/exit_interview/script/controller-list"></div>
+
+<script th:inline="javascript">
+    app.controller("EmployeeProfileController", ["$scope", "$http", ($scope, $http) => {
+       
+        $scope.isLoading = false;
+        $scope.criteria = {};
+        $scope.paging = {};
+        $scope.employees  = [
+        { id: "1", firstName: 'arin', lastName: 'test1',date_exit :"24/05/23", position: "Developer",affiliation :"TECH", kpi:"kpi" },
+        ];
+        //$scope.employees = /*[[${salesmans}]]*/ [];
+        $scope.selectedEmployee;
+        $scope.mode = "list"; // ["list", "entry"]
+        $scope.job_position = [
+        { id: "1", name: "Operation ออนไลน์" },
+        { id: "2", name: "Admin ประจำสาขา วันเสาร์ อาทิตย์" },
+        { id: "3", name: "Accounting officer" },
+        { id: "4", name: "Accounting manager " },
+        { id: "5", name: "Academic Supervisor/ Management" },
+        { id: "6", name: "Assistant project manager " },
+        { id: "7", name: "Business Data Analysis" },
+        { id: "8", name: "Content creator (Education)" },
+        { id: "9", name: "Digital Marketing" },
+        { id: "10", name: "Influencer/Partnership/Event Marketing officer" },
+        { id: "11", name: "Marketing manager" },
+        { id: "12", name: "Video creator (Education)" },
+        { id: "13", name: "Graphic Design" },
+        { id: "14", name: "Programmer / Developer" },
+        { id: "15", name: "Project Coordinator" },
+        { id: "16", name: "Project manager" },
+        { id: "17", name: "Sales & AE ประจำ CCN" },
+        { id: "18", name: "Sales Course Consultant" },
+        { id: "19", name: "Sales manager FS" },
+        { id: "20", name: "HR recruiter" },
+        { id: "21", name: "HRD" },
+        { id: "22", name: "HRM" },
+        { id: "23", name: "Trainee recruiter" },
+        { id: "24", name: "Tour operation" },
+      ];
+//สังกัด
+      $scope.business = [
+        { id: "1", name: "KnowAre Learning (ส่วนกลาง)" },
+        { id: "2", name: "FISHSIX สถาบันสอนคณิตศาสตร์-วิทยาศาสตร์" },
+        { id: "3", name: "ESC โรงเรียนคู่ขนาน (สถาบันสอน Soft Skills)" },
+        { id: "4", name: "KNOW-ARE (ค่ายค้นหาตัวตน)" },
+        { id: "5", name: "เชี่ยว - ชาญ - แนว (Content marketing agency)" },
+        { id: "6", name: "NxGn (Recruitment agency)" },
+        { id: "7", name: "Pro Go Go (Traveling agency)" },
+        { id: "8", name: "YX - Why Expensive by Billion Share (Delivery Services)" },
+      ];
+
+        $scope.init = function() {
+            console.log("### EmployeeProfileController.init ###");
+
+            // useApi($scope, $http);
+             useControllerList($scope, $http);
+            // useControllerEntry($scope, $http);
+
+            $scope.criteria = {
+                firstName: '',
+                lastName: ''
+            };
+
+            $scope.paging = {
+                pageNo: 1,
+                pageSize: 25,
+                totalPage: 0,
+                totalSize: 0
+            };
+        };
+
+        $scope.toDetailMode = function(employee){
+            $scope.selectedEmployee = employee;
+            $scope.mode = "detail";
+        }
+
+    }]);
+
+
+</script>

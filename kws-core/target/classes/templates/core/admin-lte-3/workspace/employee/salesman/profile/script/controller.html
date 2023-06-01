@@ -1,0 +1,112 @@
+<div th:replace="core/admin-lte-3/workspace/employee/salesman/profile/script/api"></div>
+<div th:replace="core/admin-lte-3/workspace/employee/salesman/profile/script/controller-list"></div>
+<div th:replace="core/admin-lte-3/workspace/employee/salesman/profile/script/controller-entry"></div>
+
+<script th:inline="javascript">
+    app.controller("SalesmanProfileController", ["$scope", "$http", ($scope, $http) => {
+        $scope.genders = /*[[${genders}]]*/ [];
+        $scope.nameTitles = /*[[${nameTitles}]]*/ [];
+        $scope.employeeStatuses = /*[[${employeeStatuses}]]*/ [];
+
+        console.log("genders => ", $scope.genders);
+        console.log("nameTitles => ", $scope.nameTitles);
+        console.log("employeeStatuses => ", $scope.employeeStatuses);
+
+        $scope.isLoading = false;
+        $scope.criteria = {};
+        $scope.paging = {};
+        $scope.salesmans = /*[[${salesmans}]]*/ [];
+        $scope.selectedSalesman;
+        $scope.mode = "list"; // ["list", "entry"]
+        $scope.entryMode = ""; // ["add", "edit"]
+
+        $scope.init = function() {
+            console.log("### SalesmanProfileController.init ###");
+
+            useApi($scope, $http);
+            useControllerList($scope, $http);
+            useControllerEntry($scope, $http);
+
+            $scope.criteria = {
+                firstName: '',
+                lastName: ''
+            };
+
+            $scope.paging = {
+                pageNo: 1,
+                pageSize: 25,
+                totalPage: 0,
+                totalSize: 0
+            };
+        };
+
+        $scope.swapMode = function() {
+            if($scope.mode === 'list') {
+                $scope.toEntryMode();
+            } else if($scope.mode === 'entry') {
+                $scope.toListMode();
+            }
+        };
+
+        $scope.toListMode = function() {
+            $scope.mode = 'list';
+        };
+
+        $scope.toEntryMode = function() {
+            $scope.mode = 'entry';
+        };
+
+        $scope.requestAddSalesman = function() {
+            console.log("### SalesmanProfileController.requestAddSalesman ###");
+            $scope.toEntryMode();
+            $scope.entryMode = "add";
+            $scope.selectedSalesman = {};
+            $scope.resetForm();
+        };
+
+        $scope.getEmployeeStatusName = function(salesman) {
+            const employeeStatus = $scope.employeeStatuses.find(e => e.id === salesman.employeeStatus);
+            if(employeeStatus) {
+                return employeeStatus.name;
+            }
+        };
+
+        $scope.resetForm = function() {
+            setTimeout(() => {
+                $scope.salesmanForm.$submitted = false;
+
+                $scope.salesmanForm.genderId.$setUntouched();
+                $scope.salesmanForm.genderId.$setPristine();
+
+                $scope.salesmanForm.nameTitleId.$setUntouched();
+                $scope.salesmanForm.nameTitleId.$setPristine();
+
+                $scope.salesmanForm.firstName.$setUntouched();
+                $scope.salesmanForm.firstName.$setPristine();
+
+                $scope.salesmanForm.lastName.$setUntouched();
+                $scope.salesmanForm.lastName.$setPristine();
+
+                $scope.salesmanForm.nickName.$setUntouched();
+                $scope.salesmanForm.nickName.$setPristine();
+
+                $scope.salesmanForm.mobileNo.$setUntouched();
+                $scope.salesmanForm.mobileNo.$setPristine();
+
+                $scope.salesmanForm.bankAccountName.$setUntouched();
+                $scope.salesmanForm.bankAccountName.$setPristine();
+
+                $scope.salesmanForm.bankAccountNo.$setUntouched();
+                $scope.salesmanForm.bankAccountNo.$setPristine();
+
+                $scope.salesmanForm.idcardNo.$setUntouched();
+                $scope.salesmanForm.idcardNo.$setPristine();
+
+                $scope.salesmanForm.employeeStatus.$setUntouched();
+                $scope.salesmanForm.employeeStatus.$setPristine();
+
+                $scope.$apply();
+            }, 0);
+        };
+    }]);
+</script>

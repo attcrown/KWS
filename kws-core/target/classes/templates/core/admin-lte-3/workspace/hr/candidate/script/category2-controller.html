@@ -1,0 +1,222 @@
+<script th:inline="javascript">
+  function usecategory2Controller($scope, $http) {
+    //Error
+    $scope.isShowFirstNameError = useIsShowError($scope, $http, "firstName");
+    $scope.isShowNickNameError = useIsShowError($scope, $http, "nickName");
+    $scope.isShowPhoneError = useIsShowError($scope, $http, "phone");
+    $scope.isShowOldError = useIsShowError($scope, $http, "old");
+    $scope.isShowLocationError = useIsShowError($scope, $http, "location");
+    $scope.isShowLineError = useIsShowError($scope, $http, "line");
+    $scope.isShowFacebookError = useIsShowError($scope, $http, "facebook");
+    $scope.isShowNationalityError = useIsShowError($scope, $http, "nationality");
+    $scope.isShowEthnicityError = useIsShowError($scope, $http, "ethnicity");
+    $scope.isShowLineIdError = useIsShowError($scope, $http, "lineID");
+    $scope.isShowWishesError = useIsShowError($scope, $http, "wishes");
+    //Error selected
+    $scope.isShowTypeNameError = useIsShowSelectError($scope, $http, "typeName");
+    $scope.isShowIndtypeError = useIsShowSelectError($scope, $http, "indtype");
+    $scope.isShowSickError = useIsShowSelectError($scope, $http, "sick");
+
+    //employee3
+    $scope.isShowCurrentEducationError = useIsShowError3($scope, $http, "current_education");
+    $scope.isShowCurrentBachelorEducationError = useIsShowError3($scope, $http, "current_bachelor_education");
+    $scope.isShowGradeHighschoolError = useIsShowError3($scope, $http, "grade_highschool");
+    $scope.isShowAcademyBachelorDegreeError = useIsShowError3($scope, $http, "academy_bachelor_degree");
+    $scope.isShowMajorBachelorDegreeError = useIsShowError3($scope, $http, "major_bachelor_degree");
+    $scope.isShowGradeBachelorDegreeError = useIsShowError3($scope, $http, "grade_bachelor_degree");
+    $scope.isShowCollegeActivitiesError = useIsShowError3($scope, $http, "college_activities");
+
+    //employee4
+    $scope.isShowJobPosition1Error = useIsShowSelectError4($scope, $http, "job_position1");
+    $scope.isShowBusiness1Error = useIsShowSelectError4($scope, $http, "business1");
+    $scope.isShowJobPosition2Error = useIsShowSelectError4($scope, $http, "job_position2");
+    $scope.isShowBusiness2Error = useIsShowSelectError4($scope, $http, "business2");
+    $scope.isShowJobPosition3Error = useIsShowSelectError4($scope, $http, "job_position3");
+    $scope.isShowBusiness3Error = useIsShowSelectError4($scope, $http, "business3");
+    $scope.isShowWorkingStyleError = useIsShowSelectError4($scope, $http, "working_style");
+    $scope.isShowEmployeeTypeError = useIsShowSelectError4($scope, $http, "employee_type");
+    $scope.isShowExpectedSalaryError = useIsShowError4($scope, $http, "expected_salary");
+    $scope.isShowMinimumSalaryError = useIsShowError4($scope, $http, "minimum_salary");
+    $scope.isShowCurrentSalaryError = useIsShowError4($scope, $http, "current_salary");
+    $scope.isShowCandidateStartdateError = useIsShowError4($scope, $http, "candidate_startdate");
+    $scope.isShowPerformanceError = useIsShowError4($scope, $http, "performance");
+    $scope.isShowLongevityError = useIsShowError4($scope, $http, "longevity");
+    $scope.isShowJobPostingError = useIsShowSelectError4($scope, $http, "job_posting");
+
+    //employee5
+    $scope.isShowCandidateMBTIError = useIsShowSelectError5($scope, $http, "candidate_MBTI");
+    $scope.isShowCandidateDISCError = useIsShowSelectError5($scope, $http, "candidate_DISC");
+    $scope.isShowFormerSupervisorError = useIsShowError5($scope, $http, "former_supervisor");
+    $scope.isShowLookingJobError = useIsShowError5($scope, $http, "looking_job");
+    $scope.isShowPassionError = useIsShowError5($scope, $http, "passion");
+    $scope.isShowAptitudeError = useIsShowSelectError5($scope, $http, "aptitude");
+    $scope.isShowNeedWorkingError = useIsShowError5($scope, $http, "need_working");
+    $scope.isShowNotWorkingError = useIsShowError5($scope, $http, "not_working");
+    $scope.isShowTypeError = useIsShowSelectError5($scope, $http, "type");
+    $scope.isShowFillingError = useIsShowSelectError5($scope, $http, "filling");
+    $scope.isShowlike_workingError = useIsShowSelectError5($scope, $http, "like_working");
+    $scope.isShowwont_workingError = useIsShowSelectError5($scope, $http, "wont_working");
+    $scope.isShowlet_pass_workError = useIsShowSelectError5($scope, $http, "let_pass_work");
+    $scope.isShowbackground_familyError = useIsShowError5($scope, $http, "background_family");
+    $scope.isShowemployee_welfareError = useIsShowError5($scope, $http, "employee_welfare");
+    $scope.isShowemployee_welfareError = useIsShowError5($scope, $http, "employee_welfare1");
+    $scope.isShowemployee_welfareError = useIsShowError5($scope, $http, "employee_welfare2");
+    $scope.isShowcomment_day_offError = useIsShowError5($scope, $http, "comment_day_off");
+    $scope.isShowrecommend_name1Error = useIsShowError5($scope, $http, "recommend_name1");
+    $scope.isShowrecommend_name2Error = useIsShowError5($scope, $http, "recommend_name2");
+    $scope.isShowrecommend_name3Error = useIsShowError5($scope, $http, "recommend_name3");
+    $scope.isShowrecommend_phone1Error = useIsShowError5($scope, $http, "recommend_phone1");
+    $scope.isShowrecommend_phone2Error = useIsShowError5($scope, $http, "recommend_phone2");
+    $scope.isShowrecommend_phone3Error = useIsShowError5($scope, $http, "recommend_phone3");
+    $scope.isShowrecommend_position1Error = useIsShowError5($scope, $http, "recommend_position1");
+    $scope.isShowrecommend_position2Error = useIsShowError5($scope, $http, "recommend_position2");
+    $scope.isShowrecommend_position3Error = useIsShowError5($scope, $http, "recommend_position3");
+
+    //Save
+    $scope.requestSave = useRequestSave($scope, $http);
+    $scope.verify = useVerify($scope, $http);
+  }
+
+  function useIsShowError($scope, $http, fieldName){
+    return () => {
+      if ($scope.employeeForm[fieldName]) {
+        return (
+          ($scope.employeeForm.$submitted ||
+            $scope.employeeForm[fieldName].$dirty) &&
+          $scope.employeeForm[fieldName].$invalid
+        );
+      }
+      return false;
+    };
+  }
+  function useIsShowSelectError($scope, $http, fieldName){
+    return () => {
+      if ($scope.employeeForm[fieldName]) {
+        return (
+          $scope.employeeForm.$submitted &&
+          $scope.employeeForm[fieldName].$invalid
+        );
+      }
+    };
+  }
+
+  function useIsShowError3($scope, $http, fieldName) {
+    return () => {
+      if ($scope.employeeForm3[fieldName]) {
+        return (
+          ($scope.employeeForm3.$submitted ||
+            $scope.employeeForm3[fieldName].$dirty) &&
+          $scope.employeeForm3[fieldName].$invalid
+        );
+      }
+      return false;
+    };
+  }
+
+  function useIsShowError4($scope, $http, fieldName) {
+    return () => {
+      if ($scope.employeeForm4[fieldName]) {
+        return (
+          ($scope.employeeForm4.$submitted ||
+            $scope.employeeForm4[fieldName].$dirty) &&
+          $scope.employeeForm4[fieldName].$invalid
+        );
+      }
+      return false;
+    };
+  }
+  function useIsShowSelectError4($scope, $http, fieldName) {
+    return () => {
+      if ($scope.employeeForm4[fieldName]) {
+        return (
+          $scope.employeeForm4.$submitted &&
+          $scope.employeeForm4[fieldName].$invalid
+        );
+      }
+    };
+  }
+
+  function useIsShowError5($scope, $http, fieldName) {
+    return () => {
+      if ($scope.employeeForm5[fieldName]) {
+        return (
+          ($scope.employeeForm5.$submitted ||
+            $scope.employeeForm5[fieldName].$dirty) &&
+          $scope.employeeForm5[fieldName].$invalid
+        );
+      }
+      return false;
+    };
+  }
+  function useIsShowSelectError5($scope, $http, fieldName) {
+    return () => {
+      if ($scope.employeeForm5[fieldName]) {
+        return (
+          $scope.employeeForm5.$submitted &&
+          $scope.employeeForm5[fieldName].$invalid
+        );
+      }
+    };
+  }
+
+  function useVerify($scope, $http) {
+    return () => {
+      if ( $scope.isShowDriveError == false 
+          && $scope.isShowPolicyDecisionError == false
+          && $scope.isShowCvFileError == false
+          && $scope.isShowPortFileError == false 
+          && $scope.isShowOtherPresentFileError == false
+          && $scope.isShowImgProfileFileError == false
+          && $scope.isShowImgMBTIFileError == false
+          && $scope.isShowImgDISCFileError == false
+          && $scope.isShowtribe_choiceError == false
+          && $scope.isShowChoiceError == false
+          && $scope.isShowPolicyDecisionError == false
+          && $scope.isShowelec_choiceError == false
+          && $scope.employeeForm3.$valid 
+          && $scope.employeeForm.$valid 
+          && $scope.employeeForm4.$valid
+          && $scope.employeeForm5.$valid
+          && $scope.employeeForm6.$valid) {
+        return true;
+      }
+    };
+  }
+
+  function useRequestSave($scope, $http) {
+    return () => {
+      console.log("Save");
+      console.log($scope.criteria);
+      console.log($scope.attachment);
+      console.log($scope.selectedEmployeeProfile);
+      $scope.employeeForm.$submitted = true;
+      $scope.employeeForm3.$submitted = true;
+      $scope.employeeForm4.$submitted = true;
+      $scope.employeeForm5.$submitted = true;
+      $scope.employeeForm6.$submitted = true;
+      if ($scope.verify()) {
+        const options = {
+          title:
+            $scope.entryMode === "add"
+              ? "ยืนยันการบันทึกข้อมูลครู ?"
+              : "ยืนยันการแก้ไขข้อมูลครู",
+          text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
+          icon: "warning",
+          buttons: ["ยกเลิก", "ตกลง"],
+          dangerMode: true,
+        };
+
+        const handler = (confirm) => {
+          if (confirm) {
+            // $scope.setupTeacherSubjectMapper($scope.selectedTeacherProfile);
+            console.log($scope.selectedEmployeeProfile);
+          }
+        };
+
+        swal(options).then(handler);
+      } else {
+        swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+      }
+    };
+  }
+</script>

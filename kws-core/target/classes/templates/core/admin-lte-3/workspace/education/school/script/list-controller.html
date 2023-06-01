@@ -1,0 +1,65 @@
+<script th:inline="javascript">
+    function useListController($scope, $http)
+    {
+        $scope.getPageNos = useGetPageNos($scope, $http);
+        $scope.gotoPageNo = useGotoPageNo($scope, $http);
+        $scope.requestEditSchool = useRequestEditSchool($scope, $http);
+        $scope.requestDeleteSchool = useRequestDeleteSchool($scope, $http);
+    }
+
+    function useGetPageNos($scope, $http)
+    {
+        return () => {
+            let pageNos = [];
+            if($scope.paging.totalPage > 0) {
+                for(let i=1; i<=$scope.paging.totalPage; i++) {
+                    pageNos.push(i);
+                }
+            }
+            return pageNos;
+        };
+    }
+
+    function useGotoPageNo($scope, $http)
+    {
+        return (pageNo) => {
+            $scope.paging.pageNo = pageNo;
+            $scope.search();
+        };
+    }
+
+    function useRequestEditSchool($scope, $http)
+    {
+        return (school) => {
+            console.log("### SchoolController.requestEditSchool ###");
+            $scope.toEntryMode();
+            $scope.entryMode = "edit";
+            $scope.selectedSchool = angular.copy(school);
+        };
+    }
+
+    function useRequestDeleteSchool($scope, $http)
+    {
+        return (school) => {
+            console.log("### SchoolController.requestDeleteSchool ###");
+
+            const options = {
+                title: "ยืนยันการลบข้อมูลสถานศึกษา",
+                text: 'พิมพ์คำว่า "Confirm" และ กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                content: "input",
+                icon: "warning",
+                buttons: ["ยกเลิก", "ตกลง"],
+                dangerMode: true
+            };
+
+            swal(options)
+            .then(value => {
+                if (value === "Confirm") {
+                    $scope.removeSchool(school);
+                } else {
+                    swal("คุณพิมพ์ไม่ถูกต้อง", "ยกเลิกการลบข้อมูล", "error");
+                }
+            });
+        };
+    }
+</script>

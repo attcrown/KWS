@@ -1,0 +1,101 @@
+<div th:replace="core/admin-lte-3/workspace/education/school/script/api"></div>
+<div th:replace="core/admin-lte-3/workspace/education/school/script/list-controller"></div>
+<div th:replace="core/admin-lte-3/workspace/education/school/script/entry-controller"></div>
+
+<script th:inline="javascript">
+    app.controller("SchoolController", ["$scope", "$http", ($scope, $http) => {
+        $scope.schoolTypes = /*[[${schoolTypes}]]*/ [];
+        $scope.schoolOwnerTypes = /*[[${schoolOwnerTypes}]]*/ [];
+
+        $scope.isLoading = false;
+        $scope.criteria = {};
+        $scope.paging = {};
+        $scope.schools = [];
+        $scope.selectedSchool;
+        $scope.mode = "list"; // ["list", "entry"]
+        $scope.entryMode = ""; // ["add", "edit"]
+
+        $scope.init = function() {
+            console.log("### SchoolController.init ###");
+            console.log("schoolTypes => ", $scope.schoolTypes);
+            console.log("schoolOwnerTypes => ", $scope.schoolOwnerTypes);
+
+            useApi($scope, $http);
+            useListController($scope, $http);
+            useEntryController($scope, $http);
+
+            $scope.criteria = {
+                schoolTypeIds: [],
+                schoolOwnerTypeIds: [],
+                name: ''
+            };
+
+            $scope.paging = {
+                pageNo: 1,
+                pageSize: 25,
+                totalPage: 0,
+                totalSize: 0
+            };
+
+            $('.select2').select2({ theme: 'bootstrap4' });
+        };
+
+        $scope.getSchoolTypeName = function(school) {
+            const schoolType = $scope.schoolTypes.find(e => e.id === school.schoolTypeId);
+            if(schoolType) {
+                return schoolType.name;
+            }
+        };
+
+        $scope.getSchoolOwnerTypeName = function(school) {
+            const schoolOwnerType = $scope.schoolOwnerTypes.find(e => e.id === school.schoolOwnerTypeId);
+            if(schoolOwnerType) {
+                return schoolOwnerType.name;
+            }
+        };
+
+        $scope.swapMode = function() {
+            if($scope.mode === 'list') {
+                $scope.toEntryMode();
+            } else if($scope.mode === 'entry') {
+                $scope.toListMode();
+            }
+        };
+
+        $scope.toListMode = function() {
+            $scope.mode = 'list';
+        };
+
+        $scope.toEntryMode = function() {
+            $scope.mode = 'entry';
+        };
+
+        $scope.requestAddSchool = function() {
+            console.log("### SchoolController.requestAddSchool ###");
+            $scope.toEntryMode();
+            $scope.entryMode = "add";
+            $scope.selectedSchool = {
+                schoolTypeId: "",
+                schoolOwnerTypeId: ""
+            };
+            $scope.resetForm();
+        };
+
+        $scope.resetForm = function() {
+            setTimeout(() => {
+                $scope.schoolForm.$submitted = false;
+
+                $scope.schoolForm.schoolType.$setUntouched();
+                $scope.schoolForm.schoolType.$setPristine();
+
+                $scope.schoolForm.schoolOwnerType.$setUntouched();
+                $scope.schoolForm.schoolOwnerType.$setPristine();
+
+                $scope.schoolForm.name.$setUntouched();
+                $scope.schoolForm.name.$setPristine();
+
+                $scope.$apply();
+            }, 0);
+        };
+    }]);
+</script>
