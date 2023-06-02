@@ -1,8 +1,8 @@
-<div th:replace="core/admin-lte-3/workspace/hr/negotiate/script/date-entry-controller"></div>
-<div th:replace="core/admin-lte-3/workspace/hr/negotiate/script/controller-entry"></div>
+<!-- <div th:replace="core/admin-lte-3/workspace/hr/negotiate/script/date-entry-controller"></div> -->
+<div th:replace="core/admin-lte-3/workspace/hr/interview/script/date-entry-controller"></div>
 
 <script th:inline="javascript">
-    app.controller("NegotiateController", ["$scope", "$http", ($scope, $http) => {
+    app.controller("interviewController", ["$scope", "$http", ($scope, $http) => {
 
         $scope.isLoading = false;
         $scope.criteria = {};
@@ -12,22 +12,22 @@
         //$scope.candidates = [];
         $scope.category = "";
         $scope.detailMode = ""; // ["detail", "edit"]
-        $scope.negotiateMode = ""; // ["detail", "entry"]
+        $scope.interviewMode = ""; // ["detail", "entry"]
         $scope.selectedStartTime = null;
         $scope.selectedEndTime = 19;
         $scope.date = "close";
 
         $scope.candidates = [
-            { id: "1", firstName: 'arin', lastName: 'test1', job_position: "Developer", day: "24/06/23", startTime: "8 PM", endTime: "9 PM", negotiate_status: "wait" },
-            { id: "2", firstName: 'peet', lastName: 'terst2', job_position: "Developer", day: "24/06/23", startTime: "8 PM", endTime: "9 PM", negotiate_status: "wait" },
-            { id: "57", firstName: 'arin', lastName: 'test1', job_position: "Developer", day: "24/06/23", startTime: "8 PM", endTime: "9 PM", negotiate_status: "success" },
-            { id: "42", firstName: 'arin', lastName: 'test2', job_position: "Developer", day: null, startTime: null, endTime: null, negotiate_status: "null" },
-            { id: "52", firstName: 'arin', lastName: 'test2', job_position: "Developer", day: null, startTime: null, endTime: null, negotiate_status: "null" },
-            { id: "5", firstName: 'arin', lastName: 'test2', job_position: "Developer", day: null, startTime: null, endTime: null, negotiate_status: "null" },
-            { id: "3", firstName: 'arin', lastName: 'test2', job_position: "Developer", day: null, startTime: null, endTime: null, negotiate_status: "null" },
-            { id: "427", firstName: 'arin', lastName: 'test1', job_position: "Developer", day: "24/06/23", startTime: "8 PM", endTime: "9 PM", negotiate_status: "failed" },
-            { id: "9", firstName: 'peet', lastName: 'terst2', job_position: "Developer", day: "24/06/23", startTime: "8 PM", endTime: "9 PM", negotiate_status: "waitForResult" },
-            { id: "10", firstName: 'peet', lastName: 'terst2', job_position: "hr", day: "24/06/23", startTime: "8 PM", endTime: "9 PM", negotiate_status: "waitForResult" },
+            { id: "1", firstName: 'arin', lastName: 'test1', job_position: "Developer", day: "24/06/23", startTime: "8 PM", endTime: "9 PM", interview_status: "round2" },
+            { id: "2", firstName: 'peet', lastName: 'terst2', job_position: "Developer", day: "24/06/23", startTime: "8 PM", endTime: "9 PM", interview_status: "round1" },
+            { id: "57", firstName: 'arin', lastName: 'test1', job_position: "Developer", day: "24/06/23", startTime: "8 PM", endTime: "9 PM", interview_status: "round2" },
+            { id: "42", firstName: 'arin', lastName: 'test2', job_position: "Developer", day: null, startTime: null, endTime: null, interview_status: "null" },
+            { id: "52", firstName: 'arin', lastName: 'test2', job_position: "Developer", day: null, startTime: null, endTime: null, interview_status: "null" },
+            { id: "5", firstName: 'arin', lastName: 'test2', job_position: "Developer", day: null, startTime: null, endTime: null, interview_status: "null" },
+            { id: "3", firstName: 'arin', lastName: 'test2', job_position: "Developer", day: "24/06/23", startTime: "8 PM", endTime: "9 PM", interview_status: "round1" },
+            { id: "427", firstName: 'arin', lastName: 'test1', job_position: "Developer", day: "24/06/23", startTime: "8 PM", endTime: "9 PM", interview_status: "success" },
+            { id: "9", firstName: 'peet', lastName: 'terst2', job_position: "Developer", day: "24/06/23", startTime: "8 PM", endTime: "9 PM", interview_status: "round3" },
+            { id: "10", firstName: 'peet', lastName: 'terst2', job_position: "hr", day: "24/06/23", startTime: "8 PM", endTime: "9 PM", interview_status: "round2" },
         ];
 
         $scope.score = [
@@ -41,17 +41,6 @@
             { id: "8" },
             { id: "9" },
             { id: "10" },
-
-        ];
-
-        $scope.negotiate_type = [
-            { id: "1", name: "สัญญาบริการครั้งที่ 1" },
-            { id: "2", name: "สัญญาบริการครั้งที่ 2" },
-            { id: "3", name: "สัญญาบริการครั้งที่ 3" },
-            { id: "4", name: "สัญญาพนักงานกำหนดระยะเวลา 3 เดือน" },
-            { id: "5", name: "สัญญาพนักงานกำหนดระยะเวลา 6 เดือน" },
-            { id: "6", name: "สัญญาพนักงานกำหนดระยะเวลา 12 เดือน" },
-            { id: "7", name: "สัญญาพนักงานประจำ" },
 
         ];
 
@@ -82,18 +71,14 @@
 
         $scope.init = function () {
             useDateEntryController($scope, $http);
-            useControllerEntry($scope, $http);
+
             $('.select2').select2({ theme: 'bootstrap4' });
 
             $('#startDatePicker').datetimepicker({
                 format: 'YYYY-MM-DD'
             });
 
-            $('#entryStartDatePicker').datetimepicker({
-                format: 'YYYY-MM-DD',
-            });
-
-            $('#changeNegotiateDatePicker').datetimepicker({
+            $('#entryInterviewDatePicker').datetimepicker({
                 format: 'YYYY-MM-DD',
             });
 
@@ -145,22 +130,39 @@
         };
 
 
-        $scope.toEntryNegotiateMode = function (candidate) {
+        $scope.toEntryInterviewMode = function (candidate) {
             $scope.selectedCandidateProfile = candidate;
-            $scope.mode = 'negotiate';
-            $scope.negotiateMode = 'entry';
+            $scope.mode = 'interview';
+            $scope.interviewMode = 'entry';
         };
 
-        $scope.toDetailNegotiateMode = function (candidate) {
+        $scope.toDetailInterviewMode = function (candidate) {
             $scope.selectedCandidateProfile = candidate;
-            $scope.mode = 'negotiate';
-            $scope.negotiateMode = 'detail';
+            $scope.mode = 'interview';
+            $scope.interviewMode = 'detail';
         };
 
         $scope.setDateNegotiate = function (candidate) {
 
             candidate.datetime = "";
-        }
+        };
+
+        $scope.isShowInterviewRoundOne = function (candidate) {
+            return () => {
+                return ($scope.candidate.interview_status == "round1")
+            };
+        };
+
+        $scope.isShowInterviewRoundTwo = function (candidate) {
+            return () => {
+                return ($scope.candidate.interview_status == "round2")
+            };
+        };
+        $scope.isShowInterviewRoundThree = function (candidate) {
+            return () => {
+                return ($scope.candidate.interview_status == "round3")
+            };
+        };
 
         $scope.resetFormDate = function () {
             setTimeout(() => {

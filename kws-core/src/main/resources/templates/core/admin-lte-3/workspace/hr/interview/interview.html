@@ -1,139 +1,170 @@
 <div class="mx-5 pt-1 pb-4" style="background-color: rgb(255, 255, 255); border-radius: 10px ;">
     <div class="mx-5 mt-3 bg-transparent" style="border-radius: 10px;">
-            <div class="row">
-                <div class="col" style="overflow-wrap: break-word; border-radius: 10px;">
-                    <div ng-show="date === 'close'" class="shadow pt-1 pb-1" style="background-color: #F6F8F9; border-radius: 10px;">
-                        <div ng-show="date === 'close'" class="m-4" style="width: 280px; height: 100px;">
-                        </div>
+        <div class="row">
+            <div class="col" style="overflow-wrap: break-word; border-radius: 10px;">
+                <div ng-show="date === 'close'" class="shadow pt-1 pb-1"
+                    style="background-color: #F6F8F9; border-radius: 10px;">
+                    <div ng-show="date === 'close'" class="m-4" style="width: 280px; height: 100px;">
                     </div>
-                    <div ng-show="date === 'open'" class="shadow pt-1" style="width: 328px; height: 600px; background-color: #F6F8F9; border-radius: 10px;">
-                        <div class="m-4">                        
-                            <div style="background-color: #FFFFFF; border-radius: 10px;">
-                                <button class="btn text-left pt-3 shadow-effect" style="width: 100%;" ng-click="changemode_date_close()">
-                                    <label style="border-radius: 10px; background-color: #E5E9EB; ">&nbsp;&nbsp;{{ changeitem.label }}&nbsp;&nbsp;</label><br>
-                                    <label style="border-radius: 10px; ">{{ changeitem.name }}</label><br>
-                                    <label style="border-radius: 10px; ">({{changeitem.position}})</label>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="m-4">                        
-                            <div>
-                                <input class="form-control" type="date" style="border-radius: 10px;" ng-model="changeitem.date"><br>
-                                <label> เริ่มกี่โมง </label>
-                                <input class="form-control" type="time" style="border-radius: 10px;" ng-model="changeitem.start_time">
-                                <label> เลิกกี่โมง </label>
-                                <input class="form-control" type="time" style="border-radius: 10px;" ng-model="changeitem.stop_time">
-                            </div>
-                        </div>
-                        <div class="m-4">                        
-                            <div class="text-center"> 
-                                <button class="btn btn-outline-danger">
-                                    <i class="fa fa-times" aria-hidden="true"></i> ยกเลิก
-                                </button>
-                                <button class="btn btn-outline-success" ng-click="submit_interview()">
-                                    <i class="fa fa-check" aria-hidden="true"></i> ยืนยัน
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <br> 
-                    <div ng-show="date === 'open'" class="shadow" style="height: 195px; background-color: #F6F8F9; border-radius: 10px; overflow-y: auto;">  
-                        <div class="m-4" style="background-color: #FFFFFF; border-radius: 10px;" ng-repeat="item in items">
-                            <button class="btn pt-3 text-left shadow-effect" style="width: 100%;" ng-click="changemode_date(item)">
-                                <label style="border-radius: 10px; background-color: #E5E9EB; ">&nbsp;&nbsp;{{ item.label }}&nbsp;&nbsp;</label><br>
-                                <label style="border-radius: 10px; ">{{ item.name }}</label><br>
-                                <label style="border-radius: 10px; ">({{ item.position }})</label>
+                </div>
+                <div ng-show="date === 'open'" class="shadow pt-1"
+                    style="width: 328px; height: 600px; background-color: #F6F8F9; border-radius: 10px;">
+                    <div class="m-4">
+                        <div style="background-color: #FFFFFF; border-radius: 10px;">
+                            <button class="btn text-left pt-3 shadow-effect" style="width: 100%;"
+                                ng-click="changemode_date_close()">
+                                <label style="border-radius: 10px; background-color: #E5E9EB; ">&nbsp;&nbsp;{{
+                                    changeitem.label }}&nbsp;&nbsp;</label><br>
+                                <label style="border-radius: 10px; ">{{ changeitem.name }}</label><br>
+                                <label style="border-radius: 10px; ">({{changeitem.position}})</label>
                             </button>
                         </div>
-                    </div>  
-                    <div ng-show="date === 'close'" class="shadow" style="height: 638px; background-color: #F6F8F9; border-radius: 10px; overflow-y: auto;">  
-                        <div class="m-4" style="background-color: #FFFFFF; border-radius: 10px;" ng-repeat="item in items">
-                            <button class="btn pt-3 text-left shadow-effect" style="width: 100%;" ng-click="changemode_date(item)">
-                                <label style="border-radius: 10px; background-color: #E5E9EB; ">&nbsp;&nbsp;{{ item.label }}&nbsp;&nbsp;</label><br>
-                                <label style="border-radius: 10px; ">{{ item.name }}</label><br>
-                                <label style="border-radius: 10px; ">({{ item.position }})</label>
+                    </div>
+                    <div class="m-4">
+                        <div>
+                            <input class="form-control" type="date" style="border-radius: 10px;"
+                                ng-model="changeitem.date"><br>
+                            <label> เริ่มกี่โมง </label>
+                            <input class="form-control" type="time" style="border-radius: 10px;"
+                                ng-model="changeitem.start_time">
+                            <label> เลิกกี่โมง </label>
+                            <input class="form-control" type="time" style="border-radius: 10px;"
+                                ng-model="changeitem.stop_time">
+                        </div>
+                    </div>
+                    <div class="m-4">
+                        <div class="text-center">
+                            <button class="btn btn-outline-danger">
+                                <i class="fa fa-times" aria-hidden="true"></i> ยกเลิก
+                            </button>
+                            <button class="btn btn-outline-success" ng-click="submit_interview()">
+                                <i class="fa fa-check" aria-hidden="true"></i> ยืนยัน
                             </button>
                         </div>
-                    </div>  
-                </div>
-
-                <div class="col ml-1 shadow" style="background-color: #F6F8F9; overflow-wrap: break-word; border-radius: 10px; height: 815px; overflow: hidden; overflow-y: auto;">
-                    <label class="m-3" style="color: #6E7C87;">สัมภาษณ์รอบที่ 1</label>  
-                    <div class="m-1 mb-4" style="background-color: #FFFFFF; border-radius: 10px;" ng-repeat="item in items_interview1">
-                        <div class="p-2 born_label">
-                            <label style="border-radius: 10px; background-color: #E5E9EB; ">&nbsp;&nbsp;{{ item.label }}&nbsp;&nbsp;</label><br>
-                            <label style="border-radius: 10px; ">{{ item.name }}</label><br>
-                            <label style="border-radius: 10px; ">({{ item.position }})</label><br>
-                            <label style="border-radius: 10px; background-color: #F9D2D7; color: #E44345;" >
-                                &nbsp;&nbsp;{{item.date}} : {{item.start_time}}-{{item.stop_time}}&nbsp;&nbsp;
-                            </label>
-                            <button class="btn btn-outline-success btn-xs" style="border-radius: 10px;">เริ่มสัมภาษณ์</button>
-                        </div>
-                    </div>
-                      
-                </div>
-                  
-                 <div class="col ml-1 shadow" style="background-color: #F6F8F9; overflow-wrap: break-word; border-radius: 10px; height: 815px; overflow: hidden; overflow-y: auto;">
-                    <label class="m-3" style="color: #6E7C87;">สัมภาษณ์รอบที่ 2</label>  
-                    <div class="m-1 mb-4" style="background-color: #FFFFFF; border-radius: 10px;" ng-repeat="item in items">
-                        <div class="p-2 born_label" >
-                            <label style="border-radius: 10px; background-color: #E5E9EB; ">&nbsp;&nbsp;{{ item.label }}&nbsp;&nbsp;</label><br>
-                            <label style="border-radius: 10px; ">{{ item.name }}</label><br>
-                            <label style="border-radius: 10px; ">({{ item.position }})</label>
-                            <label style="border-radius: 10px; background-color: #F9D2D7; color: #E44345;" >&nbsp;&nbsp;23/08/23 : 1 PM-2 PM&nbsp;&nbsp;</label>
-                            <button class="btn btn-outline-success btn-xs" style="border-radius: 10px;">เริ่มสัมภาษณ์</button>
-                        </div>
-                    </div>                      
-                </div>
-                 <div class="col ml-1 shadow" style="background-color: #F6F8F9; overflow-wrap: break-word; border-radius: 10px; height: 815px; overflow: hidden; overflow-y: auto;">
-                    <label class="m-3" style="color: #6E7C87;">สัมภาษณ์รอบที่ 3</label>  
-                    <div class="m-1 mb-4" style="background-color: #FFFFFF; border-radius: 10px;" ng-repeat="item in items">
-                        <div class="p-2 born_label">
-                            <label style="border-radius: 10px; background-color: #E5E9EB; ">&nbsp;&nbsp;{{ item.label }}&nbsp;&nbsp;</label><br>
-                            <label style="border-radius: 10px; ">{{ item.name }}</label><br>
-                            <label style="border-radius: 10px; ">({{ item.position }})</label>
-                            <label style="border-radius: 10px; background-color: #FDFBEC; color: #AC7710;" >&nbsp;&nbsp;23/08/23 : 1 PM-2 PM&nbsp;&nbsp;</label>
-                            <button class="btn btn-outline-success btn-xs" style="border-radius: 10px;">เริ่มสัมภาษณ์</button>
-                        </div>
                     </div>
                 </div>
-                 <div class="col ml-1 shadow" style="background-color: #F6F8F9; overflow-wrap: break-word; border-radius: 10px; height: 815px; overflow: hidden; overflow-y: auto;">
-                    <label class="m-3" style="color: #6E7C87;">ผ่านการสัมภาษณ์</label>  
-                    <div class="m-1 mb-4" style="background-color: #FFFFFF; border-radius: 10px;" ng-repeat="item in items">
-                        <div class="p-2 born_label">
-                            <label style="border-radius: 10px; background-color: #E5E9EB; ">&nbsp;&nbsp;{{ item.label }}&nbsp;&nbsp;</label><br>
+                <br>
+                <div ng-show="date === 'open'" class="shadow"
+                    style="height: 195px; background-color: #F6F8F9; border-radius: 10px; overflow-y: auto;">
+                    <div class="m-4" style="background-color: #FFFFFF; border-radius: 10px;" ng-repeat="item in items">
+                        <button class="btn pt-3 text-left shadow-effect" style="width: 100%;"
+                            ng-click="changemode_date(item)">
+                            <label style="border-radius: 10px; background-color: #E5E9EB; ">&nbsp;&nbsp;{{ item.label
+                                }}&nbsp;&nbsp;</label><br>
                             <label style="border-radius: 10px; ">{{ item.name }}</label><br>
                             <label style="border-radius: 10px; ">({{ item.position }})</label>
-                            <label style="border-radius: 10px; background-color: #ECFDF3; color: #12B76A;" >&nbsp;&nbsp;23/08/23 : 1 PM-2 PM&nbsp;&nbsp;</label>
-                        </div>
+                        </button>
                     </div>
-                    
+                </div>
+                <div ng-show="date === 'close'" class="shadow"
+                    style="height: 638px; background-color: #F6F8F9; border-radius: 10px; overflow-y: auto;">
+                    <div class="m-4" style="background-color: #FFFFFF; border-radius: 10px;" ng-repeat="item in items">
+                        <button class="btn pt-3 text-left shadow-effect" style="width: 100%;"
+                            ng-click="changemode_date(item)">
+                            <label style="border-radius: 10px; background-color: #E5E9EB; ">&nbsp;&nbsp;{{ item.label
+                                }}&nbsp;&nbsp;</label><br>
+                            <label style="border-radius: 10px; ">{{ item.name }}</label><br>
+                            <label style="border-radius: 10px; ">({{ item.position }})</label>
+                        </button>
+                    </div>
                 </div>
             </div>
+
+            <div class="col ml-1 shadow"
+                style="background-color: #F6F8F9; overflow-wrap: break-word; border-radius: 10px; height: 815px; overflow: hidden; overflow-y: auto;">
+                <label class="m-3" style="color: #6E7C87;">สัมภาษณ์รอบที่ 1</label>
+                <div class="m-1 mb-4" style="background-color: #FFFFFF; border-radius: 10px;"
+                    ng-repeat="item in items_interview1">
+                    <div class="p-2 born_label">
+                        <label style="border-radius: 10px; background-color: #E5E9EB; ">&nbsp;&nbsp;{{ item.label
+                            }}&nbsp;&nbsp;</label><br>
+                        <label style="border-radius: 10px; ">{{ item.name }}</label><br>
+                        <label style="border-radius: 10px; ">({{ item.position }})</label><br>
+                        <label style="border-radius: 10px; background-color: #F9D2D7; color: #E44345;">
+                            &nbsp;&nbsp;{{item.date}} : {{item.start_time}}-{{item.stop_time}}&nbsp;&nbsp;
+                        </label>
+                        <button class="btn btn-outline-success btn-xs"
+                            style="border-radius: 10px;">เริ่มสัมภาษณ์</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col ml-1 shadow"
+                style="background-color: #F6F8F9; overflow-wrap: break-word; border-radius: 10px; height: 815px; overflow: hidden; overflow-y: auto;">
+                <label class="m-3" style="color: #6E7C87;">สัมภาษณ์รอบที่ 2</label>
+                <div class="m-1 mb-4" style="background-color: #FFFFFF; border-radius: 10px;" ng-repeat="item in items">
+                    <div class="p-2 born_label">
+                        <label style="border-radius: 10px; background-color: #E5E9EB; ">&nbsp;&nbsp;{{ item.label
+                            }}&nbsp;&nbsp;</label><br>
+                        <label style="border-radius: 10px; ">{{ item.name }}</label><br>
+                        <label style="border-radius: 10px; ">({{ item.position }})</label>
+                        <label
+                            style="border-radius: 10px; background-color: #F9D2D7; color: #E44345;">&nbsp;&nbsp;23/08/23
+                            : 1 PM-2 PM&nbsp;&nbsp;</label>
+                        <button class="btn btn-outline-success btn-xs"
+                            style="border-radius: 10px;">เริ่มสัมภาษณ์</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col ml-1 shadow"
+                style="background-color: #F6F8F9; overflow-wrap: break-word; border-radius: 10px; height: 815px; overflow: hidden; overflow-y: auto;">
+                <label class="m-3" style="color: #6E7C87;">สัมภาษณ์รอบที่ 3</label>
+                <div class="m-1 mb-4" style="background-color: #FFFFFF; border-radius: 10px;" ng-repeat="item in items">
+                    <div class="p-2 born_label">
+                        <label style="border-radius: 10px; background-color: #E5E9EB; ">&nbsp;&nbsp;{{ item.label
+                            }}&nbsp;&nbsp;</label><br>
+                        <label style="border-radius: 10px; ">{{ item.name }}</label><br>
+                        <label style="border-radius: 10px; ">({{ item.position }})</label>
+                        <label
+                            style="border-radius: 10px; background-color: #FDFBEC; color: #AC7710;">&nbsp;&nbsp;23/08/23
+                            : 1 PM-2 PM&nbsp;&nbsp;</label>
+                        <button class="btn btn-outline-success btn-xs"
+                            style="border-radius: 10px;">เริ่มสัมภาษณ์</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col ml-1 shadow"
+                style="background-color: #F6F8F9; overflow-wrap: break-word; border-radius: 10px; height: 815px; overflow: hidden; overflow-y: auto;">
+                <label class="m-3" style="color: #6E7C87;">ผ่านการสัมภาษณ์</label>
+                <div class="m-1 mb-4" style="background-color: #FFFFFF; border-radius: 10px;" ng-repeat="item in items">
+                    <div class="p-2 born_label">
+                        <label style="border-radius: 10px; background-color: #E5E9EB; ">&nbsp;&nbsp;{{ item.label
+                            }}&nbsp;&nbsp;</label><br>
+                        <label style="border-radius: 10px; ">{{ item.name }}</label><br>
+                        <label style="border-radius: 10px; ">({{ item.position }})</label>
+                        <label
+                            style="border-radius: 10px; background-color: #ECFDF3; color: #12B76A;">&nbsp;&nbsp;23/08/23
+                            : 1 PM-2 PM&nbsp;&nbsp;</label>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 </div>
 <br>
 
 <style>
-    button.btn:hover {
-    
-}
-button.btn.shadow-effect {
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    border: 1px solid #e9e6e6;
-    border-radius: 10px;
-}
+    button.btn:hover {}
 
-button.btn.shadow-effect:hover {
-    box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.1);
-}
+    button.btn.shadow-effect {
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e9e6e6;
+        border-radius: 10px;
+    }
 
-.born_label{
-    border-radius: 10px;
-    border: 1px solid #e9e6e6;
-}
-.small-text {
-  transform: scale(0.8); /* ลดขนาดปุ่มและตัวอักษรเป็น 80% ของขนาดปกติ */
-}
+    button.btn.shadow-effect:hover {
+        box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.1);
+    }
 
+    .born_label {
+        border-radius: 10px;
+        border: 1px solid #e9e6e6;
+    }
+
+    .small-text {
+        transform: scale(0.8);
+        /* ลดขนาดปุ่มและตัวอักษรเป็น 80% ของขนาดปกติ */
+    }
 </style>

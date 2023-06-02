@@ -15,6 +15,7 @@
         $scope.negotiateMode = ""; // ["detail", "entry"]
         $scope.selectedStartTime = null;
         $scope.selectedEndTime = 19;
+        $scope.date = "close";
 
         $scope.candidates = [
             { id: "1", firstName: 'arin', lastName: 'test1', job_position: "Developer", day: "24/06/23", startTime: "8 PM", endTime: "9 PM", negotiate_status: "wait" },
@@ -122,11 +123,12 @@
 
         $scope.goSetDateNegotiate = function (candidate) {
             $scope.selectedCandidateProfile = candidate;
-            $scope.mode = "addDate";
+            $scope.date = "open";
 
         }
 
         $scope.toListMode = function () {
+            $scope.date = "close";
             $scope.mode = 'list';
 
         };
