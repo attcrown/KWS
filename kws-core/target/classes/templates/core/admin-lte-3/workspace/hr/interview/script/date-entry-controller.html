@@ -1,0 +1,68 @@
+<script th:inline="javascript">
+    function useDateEntryController($scope, $http) {
+        $scope.requestSaveDate = useRequestSaveDate($scope, $http);
+        $scope.verifyDate = useVerifyDate($scope, $http);
+        $scope.isShowDateError = useIsShowDateError($scope, $http);
+        $scope.isShowStartInterviewError = useIsShowStartInterviewError($scope, $http);
+        $scope.isShowEndInterviewError = useIsShowEndInterviewError($scope, $http);
+    }
+
+
+    function useRequestSaveDate($scope, $http) {
+        return () => {
+            console.log("### dateInterviewController.requestSave ###");
+                $scope.dateForm.$submitted = true;
+
+            if ($scope.verifyDate()) {
+                const options = {
+                    title: "ยืนยันการบันทึกข้อมูลเจรจา",
+                    text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                    icon: "warning",
+                    buttons: ["ยกเลิก", "ตกลง"],
+                    dangerMode: true
+                };
+                const handler = (confirm) => {
+                    if (confirm) {
+                       // $scope.updateNegotiate($scope.candidates);
+                        
+                    }
+                };
+
+                swal(options).then(handler);
+
+            }
+            else {
+                swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+            }
+        };
+    }
+
+    function useVerifyDate($scope, $http) {
+        return () => {
+            console.log("### dateInterviewController.VERIFY ###");
+            console.log($scope.dateForm.$valid);
+            return $scope.dateForm.$valid;
+        };
+    }
+
+    function useIsShowDateError($scope, $http) {
+        return () => {
+            return ($scope.dateForm.$submitted
+                || $scope.dateForm.day.$dirty)
+                && $scope.dateForm.day.$invalid;
+        };
+    }
+
+    function useIsShowStartInterviewError($scope, $http) {
+        return () => {
+            return $scope.dateForm.$submitted && $scope.dateForm.startTime.$invalid;
+        };
+    }
+    function useIsShowEndInterviewError($scope, $http) {
+        return () => {
+            return $scope.dateForm.$submitted && $scope.dateForm.endTime.$invalid;
+        };
+    }
+
+
+</script>
