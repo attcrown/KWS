@@ -1,0 +1,12 @@
+<div th:replace="core/admin-lte-3/workspace/hr/question/script/search_controller"></div>
+<!-- <div th:replace="core/admin-lte-3/workspace/hr/not_interview/script/cate_succe_controller"></div> -->
+<script th:inline="javascript">
+    app.controller("CandidateUserController", ["$scope", "$http", ($scope, $http) => {
+        $scope.init = function() {
+            searchController($scope, $http);
+            // cate_success_Controller($scope, $http);
+            $(".select2").select2({ theme: "bootstrap4" });
+        }
+        $scope.mode = "list";
+    }]);
+</script>

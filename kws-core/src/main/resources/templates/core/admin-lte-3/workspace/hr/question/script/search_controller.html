@@ -1,0 +1,47 @@
+<script th:inline="javascript">
+    function searchController($scope, $http) { 
+        $scope.question_job = [
+            { id: "1", name: "สมัคงาน - พนักงาน" },
+            { id: "2", name: "สมัคงาน - ครู Fishsix" },
+            { id: "3", name: "สมัคงาน - ครู ESC" },
+            { id: "4", name: "สมัคงาน - Scout" },
+            { id: "5", name: "สัมภาษณ์ครั้งที่ 1" },
+            { id: "6", name: "สัมภาษณ์ครั้งที่ 2" },
+            { id: "7", name: "สัมภาษณ์ครั้งที่ 3" },
+            { id: "8", name: "เจรจาสัญจ้าง" },
+            { id: "9", name: "Exit interview" }
+        ];
+
+        $scope.question_no = [
+            { id: "1", name: "1" },
+            { id: "2", name: "2" },
+            { id: "3", name: "3" },
+            { id: "4", name: "4" },
+            { id: "5", name: "5" },
+            { id: "6", name: "6" },
+            { id: "7", name: "7" },
+            { id: "8", name: "8" },
+            { id: "9", name: "9" },
+            { id: "10", name: "10" }
+        ];
+
+        $scope.users = [
+            { id: 1, name: 'วงศ์วริศ ชววิวรรธน์', age: 25 ,post: 'Programmersssss' ,status: 'ไม่ผ่าน' ,date: '10/07/2023' ,pass:'111'},
+            { id: 2, name: 'Jane', age: 30 ,post: 'Programmersssss',status: 'ไม่ผ่าน',date: '10/07/2023' ,pass:'111'},
+            { id: 3, name: 'Bob', age: 35 ,post: 'Programmersssss',date: '10/07/2023' ,pass:'111',status: 'ไม่ผ่าน'},
+            { id: 1, name: 'John', age: 25 ,post: 'Programmersssss',status: 'ไม่ผ่าน',date: '10/07/2023' ,pass:'111'},
+            { id: 1, name: 'John', age: 25 ,post: 'Programmersssss',date: '10/07/2023' ,pass:'111',status: 'ไม่ผ่าน'},
+        ];
+
+        $scope.usesearch_table = function(){
+            if($scope.search_head.position == null && $scope.search_head.business == null){
+                $scope.search_table = true;
+                
+            }else if($scope.search_head.position != null || $scope.search_head.business != null){
+                $scope.search_table = false;
+            }
+            console.log($scope.search_head);
+        }
+    }
+    
+</script>

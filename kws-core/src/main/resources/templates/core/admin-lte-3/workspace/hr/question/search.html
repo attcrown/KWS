@@ -1,0 +1,54 @@
+<div class="mx-5 pt-1 pb-4" style="background-color: rgb(255, 255, 255); border-radius: 10px">
+    <div class="row mx-5 mt-4">
+        <div class="col-md-12 px-0 card shadow" style="border-radius: 10px;">
+            <div class="card-header" style="background-color: #2AB514;">
+                <label style="font-size: 20px;">เพิ่มข้อคำถาม</label>
+            </div>
+            <div class="card-body" >
+                <div class="row mx-3">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>
+                                <span>ฟอร์มคำถาม</span>
+                            </label>
+                            <select name="question_job" class="form-control" style="width: 100%">
+                                <option value="" disabled selected hidden>กรุณาเลือก</option>
+                                <option ng-repeat="question in question_job | orderBy: 'id'" ng-value="question.name">
+                                    {{ question.name }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>
+                                <span>
+                                    ครั้งที่
+                                </span>
+                            </label>
+                            <select name="question_no" class="form-control" style="width: 100%">
+                                <option value="" disabled selected hidden>กรุณาเลือก</option>
+                                <option ng-repeat="question in question_no | orderBy: 'id'" ng-value="question.name">
+                                    {{ question.name }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-right pb-4">
+                        <button class="btn btn-outline-success" ng-click="request_success();">
+                            <i class="fa fa-plus" aria-hidden="true"></i> เพิ่มคำถาม
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 mt-5 px-0 card shadow" style="border-radius: 10px;">
+            <div class="card-header" style="background-color: #2AB514;">
+                <label style="font-size: 20px;">แก้ไข/ลบ</label>
+            </div>
+            <div class="card-body" >
+                ssss
+            </div>
+        </div>
+    </div>
+</div>
