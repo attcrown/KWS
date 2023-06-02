@@ -21,62 +21,6 @@
             $scope.isQuestionVisible = !$scope.isQuestionVisible;
         };
 
-        $scope.job_position = [
-            { id: "1", name: "Operation ออนไลน์" },
-            { id: "2", name: "Admin ประจำสาขา วันเสาร์ อาทิตย์" },
-            { id: "3", name: "Accounting officer" },
-            { id: "4", name: "Accounting manager " },
-            { id: "5", name: "Academic Supervisor/ Management" },
-            { id: "6", name: "Assistant project manager " },
-            { id: "7", name: "Business Data Analysis" },
-            { id: "8", name: "Content creator (Education)" },
-            { id: "9", name: "Digital Marketing" },
-            { id: "10", name: "Influencer/Partnership/Event Marketing officer" },
-            { id: "11", name: "Marketing manager" },
-            { id: "12", name: "Video creator (Education)" },
-            { id: "13", name: "Graphic Design" },
-            { id: "14", name: "Programmer / Developer" },
-            { id: "15", name: "Project Coordinator" },
-            { id: "16", name: "Project manager" },
-            { id: "17", name: "Sales & AE ประจำ CCN" },
-            { id: "18", name: "Sales Course Consultant" },
-            { id: "19", name: "Sales manager FS" },
-            { id: "20", name: "HR recruiter" },
-            { id: "21", name: "HRD" },
-            { id: "22", name: "HRM" },
-            { id: "23", name: "Trainee recruiter" },
-            { id: "24", name: "Tour operation" },
-        ];
-
-        $scope.business = [
-            { id: "1", name: "KnowAre Learning (ส่วนกลาง)" },
-            { id: "2", name: "FISHSIX สถาบันสอนคณิตศาสตร์-วิทยาศาสตร์" },
-            { id: "3", name: "ESC โรงเรียนคู่ขนาน (สถาบันสอน Soft Skills)" },
-            { id: "4", name: "KNOW-ARE (ค่ายค้นหาตัวตน)" },
-            { id: "5", name: "เชี่ยว - ชาญ - แนว (Content marketing agency)" },
-            { id: "6", name: "NxGn (Recruitment agency)" },
-            { id: "7", name: "Pro Go Go (Traveling agency)" },
-            { id: "8", name: "YX - Why Expensive by Billion Share (Delivery Services)" },
-        ];
-
-        $scope.users = [
-            { id: 1, name: 'วงศ์วริศ ชววิวรรธน์', age: 25 ,post: 'Programmersssss' ,status: 'ผ่าน' ,date: '10/07/2023' ,pass:'111'},
-            { id: 2, name: 'Jane', age: 30 ,post: 'Programmersssss',status: 'ไม่ผ่าน',date: '10/07/2023' ,pass:'111'},
-            { id: 3, name: 'Bob', age: 35 ,post: 'Programmersssss',date: '10/07/2023' ,pass:'111',status: 'รอดำเนินการ'},
-            { id: 1, name: 'John', age: 25 ,post: 'Programmersssss',status: 'ผ่านแต่ stock',date: '10/07/2023' ,pass:'111'},
-            { id: 1, name: 'John', age: 25 ,post: 'Programmersssss',date: '10/07/2023' ,pass:'111'},
-        ];
-        
-        $scope.usesearch_table = function(){
-            if($scope.search_head.position == null && $scope.search_head.business == null){
-                $scope.search_table = true;
-                
-            }else if($scope.search_head.position != null || $scope.search_head.business != null){
-                $scope.search_table = false;
-            }
-            console.log($scope.search_head);
-        }
-
         $scope.editUser = function(user){
             $scope.mode = 'next1';
             $scope.show_datapage = user;

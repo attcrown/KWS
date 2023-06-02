@@ -1,0 +1,90 @@
+<div class="mx-5 pt-1 pb-4" style="background-color: rgb(255, 255, 255); border-radius: 10px">
+    <div class="mx-5 mt-5 shadow" style="border-radius: 10px;">
+        <div class="row p-4">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>ตำแหน่ง</span>
+                    </label>
+                    <select name="job_position" class="form-control" style="width: 100%"  ng-model="search_head.position">
+                        <option value="" disabled selected hidden>กรุณาเลือก</option>
+                        <option ng-repeat="job_position in job_position | orderBy: 'name'" ng-value="job_position.name">
+                        {{ job_position.name }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label>
+                        <span>สังกัด</span>
+                    </label>
+                    <select name="business" class="form-control" style="width: 100%" ng-model="search_head.business">
+                        <option value="" disabled selected hidden>กรุณาเลือก</option>
+                        <option ng-repeat="business in business | orderBy: 'name'" ng-value="business.name">
+                        {{ business.name }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-12 text-right mt-5" >
+                <button class="btn btn-outline-primary" style="width: 216px;" ng-click="usesearch_table()">
+                    <i class="fas fa-search"></i> ค้นหา
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="mx-5 mt-3 shadow text-center" style="border-radius: 10px;">
+        <table class="table">
+            <thead style="background-color: #EAECF0; border-radius: 10px;">
+              <tr>
+                <td scope="col">ลำดับ</td>
+                <td scope="col">วันที่สมัครเข้ามา</td>
+                <td scope="col">รหัส candidate</td>
+                <td scope="col">ชื่อ - นามสกุล</td>
+                <td scope="col">ตำแหน่ง</td>
+                <td scope="col">รอถาม HR</td>
+                <td scope="col">รอถาม HR</td>
+                <td scope="col">สถานะ</td>
+                <td scope="col">สรีน Resume</td>
+              </tr>
+            </thead>
+            <tbody>
+                <tr ng-if="!search_table">
+                    <td colspan="9" class="text-center">ไม่มีข้อมูล</td>
+                </tr> 
+              <tr ng-if="search_table" ng-repeat="user in users">
+                <th scope="row">{{ $index + 1 }}</th>
+                <td class="p-2">{{ user.date }}</td>
+                <td class="p-2">{{ user.pass }}</td>
+                <td class="p-2">{{ user.name }}</td>
+                <td class="p-2" ng-bind="user.post.length > 10 ? (user.post | limitTo: 10) + '...' : user.post">{{ user.post }}</td>
+                <td class="p-2">{{ user.hr1 }}</td>
+                <td class="p-2">{{ user.hr2 }}</td>
+                <td class="p-2">
+                    <button class="btn btn-xs" style="border-radius: 16px;"
+                        ng-class="{'btn-outline-success': user.status === 'ผ่าน',
+                                   'btn-outline-danger': user.status === 'ไม่ผ่าน',
+                                   'btn-outline-warning': user.status === 'ผ่านแต่ stock',
+                                   'btn-outline-info': user.status === undefined || user.status === 'รอดำเนินการ'}"
+                        ><i class="fa fa-circle fa-xs" aria-hidden="true"></i>
+                        {{ user.status || 'รอดำเนินการ' }}
+                    </button>
+                </td>                  
+                <td class="p-2">
+                    <button class="btn btn-outline-white" ng-click="editUser(user)">
+                        <i class="fa fa-eye" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn btn-outline-white" ng-click="deleteUser(user)">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                  </td>
+              </tr>
+            </tbody>
+          </table>
+          
+    </div>
+</div>
+
