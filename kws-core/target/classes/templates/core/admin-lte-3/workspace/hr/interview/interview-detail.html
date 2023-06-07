@@ -1,622 +1,750 @@
 <div class="container-fluid bg-white rounded">
     <div class="row gx-5 text-center">
-    <div class="col-sm-4 p-3  ">
-        <div class="p-3 bg-light rounded ">
-            <p>ข้อมูลทั่วไป</p>
-            <h5>รูป</h5>
-            <p class="card-text text-left">สังกัด : {{selectedCandidateProfile.business}}</p>
-            <p class="card-text text-left">Direct report : {{selectedCandidateProfile.direct_to}}</p>
-            <p class="card-text text-left">Consultant : {{selectedCandidateProfile.consult}}</p>
-            <p class="card-text text-left">วันทีเริ่มงานได้ : {{selectedCandidateProfile.start_work_date}}</p>
-            <p class="card-text text-left">เบอร์โทรศัพท์ : {{selectedCandidateProfile.telNo}}</p>
-            <p class="card-text text-left">Line ID : {{selectedCandidateProfile.line_username}}</p>
+        <div class="col-sm-4 p-3  ">
+            <div class="p-3 bg-light rounded ">
+                <p>ข้อมูลทั่วไป</p>
+                <h5>รูป</h5>
+                <p class="card-text text-left">สังกัด : {{selectedCandidateProfile.business}}</p>
+                <p class="card-text text-left">Direct report : {{selectedCandidateProfile.direct_to}}</p>
+                <p class="card-text text-left">Consultant : {{selectedCandidateProfile.consult}}</p>
+                <p class="card-text text-left">วันทีเริ่มงานได้ : {{selectedCandidateProfile.start_work_date}}</p>
+                <p class="card-text text-left">เบอร์โทรศัพท์ : {{selectedCandidateProfile.telNo}}</p>
+                <p class="card-text text-left">Line ID : {{selectedCandidateProfile.line_username}}</p>
+            </div>
+
+            <div class="p-3 mt-3 mb-3 bg-light rounded">
+
+                <p class="card-text text-left">สายการเรียนชั้นมัธยม : {{selectedCandidateProfile.hign_school_program}}
+                </p>
+                <p class="card-text text-left">มหาวิทยาลัย : {{selectedCandidateProfile.university}}</p>
+                <p class="card-text text-left">คณะ : {{selectedCandidateProfile.faculty}}</p>
+                <p class="card-text text-left">สาขา : {{selectedCandidateProfile.major}}</p>
+                <p class="card-text text-left">เกรดเฉลี่ย ณ มัธยม : {{selectedCandidateProfile.grade_highschool}}</p>
+                <p class="card-text text-left">เกรดเฉลี่ย ณ ป.ตรี : {{selectedCandidateProfile.grade_bachelor_degree}}
+                </p>
+                <p class="card-text text-left">เกรดเฉลี่ย ณ ป.โท : {{selectedCandidateProfile.grade_master_degree}}</p>
+
+            </div>
+            <!-- variable Problem!! -->
+            <div class="p-3 mt-3 mb-3 bg-light rounded">
+
+                <p class="card-text text-left">ผลงานที่เคยทำได้ : {{selectedCandidateProfile.performance}}</p>
+                <p class="card-text text-left">งานอดิเรก/สิ่งที่สนใจ : {{selectedCandidateProfile.hobby}}</p>
+                <p class="card-text text-left">Passion ในการทำงาน : {{selectedCandidateProfile.hign_school_program}}</p>
+                <p class="card-text text-left">คิดว่าตัวเองเป็น type ไหน :
+                    {{selectedCandidateProfile.hign_school_program}}</p>
+                <p class="card-text text-left">อยากทำงานลักษณะไหน type :
+                    {{selectedCandidateProfile.hign_school_program}}</p>
+                <p class="card-text text-left">คุณกล้าปล่อยงานของคุณมากแค่ไหน :
+                    {{selectedCandidateProfile.hign_school_program}}</p>
+                <p class="card-text text-left">คุณรู้สึกอย่างไรเวลาไม่ประสบความสำเร็จในแบบที่ตั้งใจไว้ :
+                    {{selectedCandidateProfile.hign_school_program}}</p>
+                <p class="card-text text-left">มีอาการโรคซึมเศร้า/panic ไหม :
+                    {{selectedCandidateProfile.hign_school_program}}</p>
+                <p class="card-text text-left">ทัศนคติเรื่องการตอบแชทนอกเวลางาน :
+                    {{selectedCandidateProfile.hign_school_program}}</p>
+                <p class="card-text text-left">Background ครอบครัว (พอสังเขป) :
+                    {{selectedCandidateProfile.hign_school_program}}</p>
+                <p class="card-text text-left">เคยทำ part time ไหม : {{selectedCandidateProfile.hign_school_program}}
+                </p>
+                <p class="card-text text-left">รูปแบบการทำงานที่ต้องการ :
+                    {{selectedCandidateProfile.hign_school_program}}</p>
+
+            </div>
         </div>
+        <div class="col-sm-8 p-3  ">
 
-        <div class="p-3 mt-3 mb-3 bg-light rounded">
+            <!-- Detail สัม -->
+            <div class="card " ng-show="interviewMode === 'detail'">
+                <div class="card-header rounded " ng-style="{'background-color': '#FFDD28'}">
+                    <div style="text-align: center; ">
 
-            <p class="card-text text-left">สายการเรียนชั้นมัธยม : {{selectedCandidateProfile.hign_school_program}}
-            </p>
-            <p class="card-text text-left">มหาวิทยาลัย : {{selectedCandidateProfile.university}}</p>
-            <p class="card-text text-left">คณะ : {{selectedCandidateProfile.faculty}}</p>
-            <p class="card-text text-left">สาขา : {{selectedCandidateProfile.major}}</p>
-            <p class="card-text text-left">เกรดเฉลี่ย ณ มัธยม : {{selectedCandidateProfile.grade_highschool}}</p>
-            <p class="card-text text-left">เกรดเฉลี่ย ณ ป.ตรี : {{selectedCandidateProfile.grade_bachelor_degree}}
-            </p>
-            <p class="card-text text-left">เกรดเฉลี่ย ณ ป.โท : {{selectedCandidateProfile.grade_master_degree}}</p>
+                        <p class="card-text text-left text-dark p20">สัมภาษณ์รอบที่ 1
+                            <button type="button" class="btn btn-tool float-right " data-card-widget="collapse"
+                                style="color: rgb(0, 0, 0);">
+                                <i class="fas fa-plus fa-2x mt-1"></i></button>
+                        </p>
 
-        </div>
-        <!-- variable Problem!! -->
-        <div class="p-3 mt-3 mb-3 bg-light rounded">
+                    </div>
 
-            <p class="card-text text-left">ผลงานที่เคยทำได้ : {{selectedCandidateProfile.performance}}</p>
-            <p class="card-text text-left">งานอดิเรก/สิ่งที่สนใจ : {{selectedCandidateProfile.hobby}}</p>
-            <p class="card-text text-left">Passion ในการทำงาน : {{selectedCandidateProfile.hign_school_program}}</p>
-            <p class="card-text text-left">คิดว่าตัวเองเป็น type ไหน :
-                {{selectedCandidateProfile.hign_school_program}}</p>
-            <p class="card-text text-left">อยากทำงานลักษณะไหน type :
-                {{selectedCandidateProfile.hign_school_program}}</p>
-            <p class="card-text text-left">คุณกล้าปล่อยงานของคุณมากแค่ไหน :
-                {{selectedCandidateProfile.hign_school_program}}</p>
-            <p class="card-text text-left">คุณรู้สึกอย่างไรเวลาไม่ประสบความสำเร็จในแบบที่ตั้งใจไว้ :
-                {{selectedCandidateProfile.hign_school_program}}</p>
-            <p class="card-text text-left">มีอาการโรคซึมเศร้า/panic ไหม :
-                {{selectedCandidateProfile.hign_school_program}}</p>
-            <p class="card-text text-left">ทัศนคติเรื่องการตอบแชทนอกเวลางาน :
-                {{selectedCandidateProfile.hign_school_program}}</p>
-            <p class="card-text text-left">Background ครอบครัว (พอสังเขป) :
-                {{selectedCandidateProfile.hign_school_program}}</p>
-            <p class="card-text text-left">เคยทำ part time ไหม : {{selectedCandidateProfile.hign_school_program}}
-            </p>
-            <p class="card-text text-left">รูปแบบการทำงานที่ต้องการ :
-                {{selectedCandidateProfile.hign_school_program}}</p>
+                </div>
 
+                <div class="card-body">
+                    <form name="negotiateForm" class="form row" novalidate>
+                        <div class="col-sm-12">
+                            <div class="form row ">
+                                <label>
+                                    <span>ตำแหน่ง</span>
+                                </label>
+                                <input name="job_position" class="form-control"
+                                    placeholder="{{selectedCandidateProfile.job_position}}" disabled required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span>สังกัด</span>
+                                </label>
+                                <input name="business" class="form-control"
+                                    placeholder="{{selectedCandidateProfile.business}}" disabled required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span>Direct to</span>
+                                </label>
+                                <input name="direct_to" class="form-control"
+                                    placeholder="{{selectedCandidateProfile.direct_to}}" disabled required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span>Consult</span>
+                                </label>
+                                <input name="consult" class="form-control"
+                                    placeholder="{{selectedCandidateProfile.consult}}" disabled required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span>Job description</span>
+                                </label>
+                                <textarea name="job_description" class="form-control"
+                                    placeholder="{{selectedCandidateProfile.job_description}}" disabled required>
+                            </textarea>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span>Mission</span>
+
+                                </label>
+                                <input name="mission" class="form-control"
+                                    placeholder="{{selectedCandidateProfile.mission}}" disabled required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span>KPI</span>
+                                </label>
+                                <input name="kpi" class="form-control" placeholder="{{selectedCandidateProfile.kpi}}"
+                                    disabled required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span>วันทำงาน</span>
+                                </label>
+                                <input name="work_day" class="form-control"
+                                    placeholder="{{selectedCandidateProfile.work_day}}" disabled required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span>เวลาทำงาน</span>
+                                </label>
+                                <input name="work_time" class="form-control"
+                                    placeholder="{{selectedCandidateProfile.work_time}}" disabled required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form row mt-1 mr-2">
+
+                                <label>
+                                    <span>วันเริ่มงาน</span>
+
+                                </label>
+
+                                <div class="input-group date" id="startDatePicker" data-target-input="nearest">
+                                    <input name="start_work_date" class="form-control datetimepicker-input"
+                                        data-target="#startDatePicker"
+                                        placeholder="{{selectedCandidateProfile.start_work_date}}" disabled required>
+                                    <div class="input-group-append" data-target="#startDatePicker"
+                                        data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span>รูปแบบสัญญาจ้าง</span>
+                                </label>
+                                <select name="negotiate_type" class="form-control"
+                                    ng-class="{'is-invalid': isShowNegotiateTypeError()}"
+                                    ng-model="selectedCandidateProfile.negotiate_type" disabled required>
+                                    <option value="" selected hidden>
+                                        {{selectedCandidateProfile.negotiate_type}}
+                                    </option>
+
+                                    </option>
+                                </select>
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span>Benefit</span>
+                                </label>
+                                <input name="benefit" class="form-control"
+                                    placeholder="{{selectedCandidateProfile.benefit}}" disabled required>
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
+
+
+            </div>
+
+            <!-- Entry สัมภาษณ์ 3 -->
+            <div class="card "
+                ng-show="interviewMode === 'entry' && selectedCandidateProfile.interview_status == 'round3'">
+                <div class="card-header rounded " ng-style="{'background-color': '#FFDD28'}">
+                    <div style="text-align: center; ">
+
+                        <p class="card-text text-left text-dark p20">สัมภาษณ์รอบที่ 3
+                            <button type="button" class="btn btn-tool float-right " data-card-widget="collapse"
+                                style="color: rgb(0, 0, 0);">
+                                <i class="fas fa-plus fa-2x mt-1"></i></button>
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="card-body">
+                    <form name="negotiateForm" class="form row" novalidate>
+                        <div class="col-sm-12">
+                            <div class="form row ">
+                                <label>
+                                    <span ng-show="!isShowJobPositionError()">ตำแหน่ง</span>
+                                    <span class="text-danger" ng-show="isShowJobPositionError()">ตำแหน่ง *</span>
+                                </label>
+                                <input name="job_position" class="form-control"
+                                    ng-model="selectedCandidateProfile.job_position"
+                                    ng-class="{'is-invalid': isShowJobPositionError()}" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowBusinessError()">สังกัด</span>
+                                    <span class="text-danger" ng-show="isShowBusinessError()">สังกัด *</span>
+                                </label>
+                                <input name="business" class="form-control" ng-model="selectedCandidateProfile.business"
+                                    ng-class="{'is-invalid': isShowBusinessError()}" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowDirectToError()">Direct to</span>
+                                    <span class="text-danger" ng-show="isShowDirectToError()">Direct to *</span>
+                                </label>
+                                <input name="direct_to" class="form-control"
+                                    ng-model="selectedCandidateProfile.direct_to"
+                                    ng-class="{'is-invalid': isShowDirectToError()}" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowConsultError()">Consult</span>
+                                    <span class="text-danger" ng-show="isShowConsultError()">Consult *</span>
+                                </label>
+                                <input name="consult" class="form-control" ng-model="selectedCandidateProfile.consult"
+                                    ng-class="{'is-invalid': isShowConsultError()}" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowJobDescriptionError()">Job description</span>
+                                    <span class="text-danger" ng-show="isShowJobDescriptionError()">Job description
+                                        *</span>
+                                </label>
+                                <textarea name="job_description" class="form-control"
+                                    ng-model="selectedCandidateProfile.job_description"
+                                    ng-class="{'is-invalid': isShowJobDescriptionError()}" required>
+                            </textarea>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowMissionError()">Mission</span>
+                                    <span class="text-danger" ng-show="isShowMissionError()">Mission *</span>
+                                </label>
+                                <input name="mission" class="form-control" ng-model="selectedCandidateProfile.mission"
+                                    ng-class="{'is-invalid': isShowMissionError()}" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowKpiError()">KPI</span>
+                                    <span class="text-danger" ng-show="isShowKpiError()">KPI *</span>
+                                </label>
+                                <input name="kpi" class="form-control" ng-model="selectedCandidateProfile.kpi"
+                                    ng-class="{'is-invalid': isShowKpiError()}" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowWorkDayError()">วันทำงาน</span>
+                                    <span class="text-danger" ng-show="isShowWorkDayError()">วันทำงาน *</span>
+                                </label>
+                                <input name="work_day" class="form-control" ng-model="selectedCandidateProfile.work_day"
+                                    ng-class="{'is-invalid': isShowWorkDayError()}" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowWorkTimeError()">เวลาทำงาน</span>
+                                    <span class="text-danger" ng-show="isShowWorkTimeError()">เวลาทำงาน *</span>
+                                </label>
+                                <input name="work_time" class="form-control"
+                                    ng-model="selectedCandidateProfile.work_time"
+                                    ng-class="{'is-invalid': isShowWorkTimeError()}" required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form row mt-1 mr-2">
+
+                                <label>
+                                    <span ng-show="!isShowStartWorkDateError()">วันเริ่มงาน</span>
+                                    <span class="text-danger" ng-show="isShowStartWorkDateError()">วันเริ่มงาน *</span>
+                                </label>
+
+                                <div class="input-group date" id="startDatePicker" data-target-input="nearest">
+                                    <input name="start_work_date" class="form-control datetimepicker-input"
+                                        data-target="#startDatePicker"
+                                        ng-model="selectedCandidateProfile.start_work_date"
+                                        ng-class="{'is-invalid': isShowStartWorkDateError()}" required />
+                                    <div class="input-group-append" data-target="#startDatePicker"
+                                        data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowNegotiateTypeError()">รูปแบบสัญญาจ้าง</span>
+                                    <span class="text-danger" ng-show="isShowNegotiateTypeError()">รูปแบบสัญญาจ้าง
+                                        *</span>
+                                </label>
+                                <select name="negotiate_type" class="form-control"
+                                    ng-class="{'is-invalid': isShowNegotiateTypeError()}"
+                                    ng-model="selectedCandidateProfile.negotiate_type" required>
+                                    <option value="" disabled selected hidden>
+                                        กรุณาเลือก
+                                    </option>
+                                    <option ng-repeat="negotiate_type in negotiate_type | orderBy: 'name'"
+                                        ng-value="negotiate_type.name">
+                                        {{ negotiate_type.name }}
+                                    </option>
+                                    </option>
+                                </select>
+
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowBenefitError()">Benefit</span>
+                                    <span class="text-danger" ng-show="isShowBenefitError()">Benefit *</span>
+                                </label>
+                                <input name="benefit" class="form-control" ng-model="selectedCandidateProfile.benefit"
+                                    ng-class="{'is-invalid': isShowBenefitError()}" required>
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
+                <!-- /.card-body -->
+
+            </div>
+            <!-- Entry สัมภาษณ์ 2 -->
+            <div class="card "
+                ng-show="interviewMode === 'entry'&& selectedCandidateProfile.interview_status == 'round2'|| selectedCandidateProfile.interview_status == 'round3'">
+                <div class="card-header rounded " ng-style="{'background-color': '#FFDD28'}">
+                    <div style="text-align: center; ">
+
+                        <p class="card-text text-left text-dark p20">สัมภาษณ์รอบที่ 2
+                            <button type="button" class="btn btn-tool float-right " data-card-widget="collapse"
+                                style="color: rgb(0, 0, 0);">
+                                <i class="fas fa-plus fa-2x mt-1"></i></button>
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="card-body">
+                    <form name="negotiateForm" class="form row" novalidate>
+                        <div class="col-sm-12">
+                            <div class="form row ">
+                                <label>
+                                    <span ng-show="!isShowJobPositionError()">ตำแหน่ง</span>
+                                    <span class="text-danger" ng-show="isShowJobPositionError()">ตำแหน่ง *</span>
+                                </label>
+                                <input name="job_position" class="form-control"
+                                    ng-model="selectedCandidateProfile.job_position"
+                                    ng-class="{'is-invalid': isShowJobPositionError()}" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowBusinessError()">สังกัด</span>
+                                    <span class="text-danger" ng-show="isShowBusinessError()">สังกัด *</span>
+                                </label>
+                                <input name="business" class="form-control" ng-model="selectedCandidateProfile.business"
+                                    ng-class="{'is-invalid': isShowBusinessError()}" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowDirectToError()">Direct to</span>
+                                    <span class="text-danger" ng-show="isShowDirectToError()">Direct to *</span>
+                                </label>
+                                <input name="direct_to" class="form-control"
+                                    ng-model="selectedCandidateProfile.direct_to"
+                                    ng-class="{'is-invalid': isShowDirectToError()}" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowConsultError()">Consult</span>
+                                    <span class="text-danger" ng-show="isShowConsultError()">Consult *</span>
+                                </label>
+                                <input name="consult" class="form-control" ng-model="selectedCandidateProfile.consult"
+                                    ng-class="{'is-invalid': isShowConsultError()}" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowJobDescriptionError()">Job description</span>
+                                    <span class="text-danger" ng-show="isShowJobDescriptionError()">Job description
+                                        *</span>
+                                </label>
+                                <textarea name="job_description" class="form-control"
+                                    ng-model="selectedCandidateProfile.job_description"
+                                    ng-class="{'is-invalid': isShowJobDescriptionError()}" required>
+                            </textarea>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowMissionError()">Mission</span>
+                                    <span class="text-danger" ng-show="isShowMissionError()">Mission *</span>
+                                </label>
+                                <input name="mission" class="form-control" ng-model="selectedCandidateProfile.mission"
+                                    ng-class="{'is-invalid': isShowMissionError()}" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowKpiError()">KPI</span>
+                                    <span class="text-danger" ng-show="isShowKpiError()">KPI *</span>
+                                </label>
+                                <input name="kpi" class="form-control" ng-model="selectedCandidateProfile.kpi"
+                                    ng-class="{'is-invalid': isShowKpiError()}" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowWorkDayError()">วันทำงาน</span>
+                                    <span class="text-danger" ng-show="isShowWorkDayError()">วันทำงาน *</span>
+                                </label>
+                                <input name="work_day" class="form-control" ng-model="selectedCandidateProfile.work_day"
+                                    ng-class="{'is-invalid': isShowWorkDayError()}" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowWorkTimeError()">เวลาทำงาน</span>
+                                    <span class="text-danger" ng-show="isShowWorkTimeError()">เวลาทำงาน *</span>
+                                </label>
+                                <input name="work_time" class="form-control"
+                                    ng-model="selectedCandidateProfile.work_time"
+                                    ng-class="{'is-invalid': isShowWorkTimeError()}" required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form row mt-1 mr-2">
+
+                                <label>
+                                    <span ng-show="!isShowStartWorkDateError()">วันเริ่มงาน</span>
+                                    <span class="text-danger" ng-show="isShowStartWorkDateError()">วันเริ่มงาน *</span>
+                                </label>
+
+                                <div class="input-group date" id="startDatePicker" data-target-input="nearest">
+                                    <input name="start_work_date" class="form-control datetimepicker-input"
+                                        data-target="#startDatePicker"
+                                        ng-model="selectedCandidateProfile.start_work_date"
+                                        ng-class="{'is-invalid': isShowStartWorkDateError()}" required />
+                                    <div class="input-group-append" data-target="#startDatePicker"
+                                        data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowNegotiateTypeError()">รูปแบบสัญญาจ้าง</span>
+                                    <span class="text-danger" ng-show="isShowNegotiateTypeError()">รูปแบบสัญญาจ้าง
+                                        *</span>
+                                </label>
+                                <select name="negotiate_type" class="form-control"
+                                    ng-class="{'is-invalid': isShowNegotiateTypeError()}"
+                                    ng-model="selectedCandidateProfile.negotiate_type" required>
+                                    <option value="" disabled selected hidden>
+                                        กรุณาเลือก
+                                    </option>
+                                    <option ng-repeat="negotiate_type in negotiate_type | orderBy: 'name'"
+                                        ng-value="negotiate_type.name">
+                                        {{ negotiate_type.name }}
+                                    </option>
+                                    </option>
+                                </select>
+
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowBenefitError()">Benefit</span>
+                                    <span class="text-danger" ng-show="isShowBenefitError()">Benefit *</span>
+                                </label>
+                                <input name="benefit" class="form-control" ng-model="selectedCandidateProfile.benefit"
+                                    ng-class="{'is-invalid': isShowBenefitError()}" required>
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
+                <!-- /.card-body -->
+
+            </div>
+
+            <!-- Entry สัมภาษณ์ 1 -->
+            <div class="card "
+                ng-show="interviewMode === 'entry'&& selectedCandidateProfile.interview_status == 'round1' 
+                || selectedCandidateProfile.interview_status == 'round2' || selectedCandidateProfile.interview_status == 'round3'">
+                <div class="card-header rounded " ng-style="{'background-color': '#FFDD28'}">
+                    <div style="text-align: center; ">
+
+                        <p class="card-text text-left text-dark p20">สัมภาษณ์รอบที่ 1
+                            <button type="button" class="btn btn-tool float-right " data-card-widget="collapse"
+                                style="color: rgb(0, 0, 0);">
+                                <i class="fas fa-plus fa-2x mt-1"></i></button>
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="card-body">
+                    <form name="negotiateForm" class="form row" novalidate>
+                        <div class="col-sm-12">
+                            <div class="form row ">
+                                <label>
+                                    <span ng-show="!isShowJobPositionError()">ตำแหน่ง</span>
+                                    <span class="text-danger" ng-show="isShowJobPositionError()">ตำแหน่ง *</span>
+                                </label>
+                                <input name="job_position" class="form-control"
+                                    ng-model="selectedCandidateProfile.job_position"
+                                    ng-class="{'is-invalid': isShowJobPositionError()}" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowBusinessError()">สังกัด</span>
+                                    <span class="text-danger" ng-show="isShowBusinessError()">สังกัด *</span>
+                                </label>
+                                <input name="business" class="form-control" ng-model="selectedCandidateProfile.business"
+                                    ng-class="{'is-invalid': isShowBusinessError()}" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowDirectToError()">Direct to</span>
+                                    <span class="text-danger" ng-show="isShowDirectToError()">Direct to *</span>
+                                </label>
+                                <input name="direct_to" class="form-control"
+                                    ng-model="selectedCandidateProfile.direct_to"
+                                    ng-class="{'is-invalid': isShowDirectToError()}" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowConsultError()">Consult</span>
+                                    <span class="text-danger" ng-show="isShowConsultError()">Consult *</span>
+                                </label>
+                                <input name="consult" class="form-control" ng-model="selectedCandidateProfile.consult"
+                                    ng-class="{'is-invalid': isShowConsultError()}" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowJobDescriptionError()">Job description</span>
+                                    <span class="text-danger" ng-show="isShowJobDescriptionError()">Job description
+                                        *</span>
+                                </label>
+                                <textarea name="job_description" class="form-control"
+                                    ng-model="selectedCandidateProfile.job_description"
+                                    ng-class="{'is-invalid': isShowJobDescriptionError()}" required>
+                            </textarea>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowMissionError()">Mission</span>
+                                    <span class="text-danger" ng-show="isShowMissionError()">Mission *</span>
+                                </label>
+                                <input name="mission" class="form-control" ng-model="selectedCandidateProfile.mission"
+                                    ng-class="{'is-invalid': isShowMissionError()}" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowKpiError()">KPI</span>
+                                    <span class="text-danger" ng-show="isShowKpiError()">KPI *</span>
+                                </label>
+                                <input name="kpi" class="form-control" ng-model="selectedCandidateProfile.kpi"
+                                    ng-class="{'is-invalid': isShowKpiError()}" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowWorkDayError()">วันทำงาน</span>
+                                    <span class="text-danger" ng-show="isShowWorkDayError()">วันทำงาน *</span>
+                                </label>
+                                <input name="work_day" class="form-control" ng-model="selectedCandidateProfile.work_day"
+                                    ng-class="{'is-invalid': isShowWorkDayError()}" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowWorkTimeError()">เวลาทำงาน</span>
+                                    <span class="text-danger" ng-show="isShowWorkTimeError()">เวลาทำงาน *</span>
+                                </label>
+                                <input name="work_time" class="form-control"
+                                    ng-model="selectedCandidateProfile.work_time"
+                                    ng-class="{'is-invalid': isShowWorkTimeError()}" required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form row mt-1 mr-2">
+
+                                <label>
+                                    <span ng-show="!isShowStartWorkDateError()">วันเริ่มงาน</span>
+                                    <span class="text-danger" ng-show="isShowStartWorkDateError()">วันเริ่มงาน *</span>
+                                </label>
+
+                                <div class="input-group date" id="startDatePicker" data-target-input="nearest">
+                                    <input name="start_work_date" class="form-control datetimepicker-input"
+                                        data-target="#startDatePicker"
+                                        ng-model="selectedCandidateProfile.start_work_date"
+                                        ng-class="{'is-invalid': isShowStartWorkDateError()}" required />
+                                    <div class="input-group-append" data-target="#startDatePicker"
+                                        data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowNegotiateTypeError()">รูปแบบสัญญาจ้าง</span>
+                                    <span class="text-danger" ng-show="isShowNegotiateTypeError()">รูปแบบสัญญาจ้าง
+                                        *</span>
+                                </label>
+                                <select name="negotiate_type" class="form-control"
+                                    ng-class="{'is-invalid': isShowNegotiateTypeError()}"
+                                    ng-model="selectedCandidateProfile.negotiate_type" required>
+                                    <option value="" disabled selected hidden>
+                                        กรุณาเลือก
+                                    </option>
+                                    <option ng-repeat="negotiate_type in negotiate_type | orderBy: 'name'"
+                                        ng-value="negotiate_type.name">
+                                        {{ negotiate_type.name }}
+                                    </option>
+                                    </option>
+                                </select>
+
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="form row mt-1">
+                                <label>
+                                    <span ng-show="!isShowBenefitError()">Benefit</span>
+                                    <span class="text-danger" ng-show="isShowBenefitError()">Benefit *</span>
+                                </label>
+                                <input name="benefit" class="form-control" ng-model="selectedCandidateProfile.benefit"
+                                    ng-class="{'is-invalid': isShowBenefitError()}" required>
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
+                <!-- /.card-body -->
+
+            </div>
         </div>
     </div>
-    <div class="col-sm-8 p-3  ">
-        <!--         ผลสัมภาษณ์     -->
-        <div class="card collapsed-card ">
-            <div class="card-header rounded " ng-style="{'background-color': '#2AB514'}">
-                <div style="text-align: center; ">
-
-                    <p class="card-text text-left text-dark p20">ผลผ่านสกรีน Resume
-                        <button type="button" class="btn btn-tool float-right " data-card-widget="collapse"
-                            style="color: rgb(0, 0, 0);">
-                            <i class="fas fa-plus fa-2x mt-1"></i></button>
-                    </p>
-
-                </div>
-            </div>
-
-            <div class="card-body">
-
-
-            </div>
-            <!-- /.card-body -->
-
-        </div>
-        <!--         สัมภาษณ์ครั้งที่1     -->
-        <div class="card collapsed-card ">
-            <div class="card-header rounded " ng-style="{'background-color': '#2AB514'}">
-                <div style="text-align: center; ">
-
-                    <p class="card-text text-left text-dark p20">ผลสัมภาษณ์ครั้งที่ 1
-                        <button type="button" class="btn btn-tool float-right " data-card-widget="collapse"
-                            style="color: rgb(0, 0, 0);">
-                            <i class="fas fa-plus fa-2x mt-1"></i></button>
-                    </p>
-
-                </div>
-
-            </div>
-
-            <div class="card-body">
-                <!-- /.card-body -->
-                <div class="row">
-                    <div class="col-sm-4">
-                        <form name="interviewForm" class="form row p-1" novalidate>
-                            <label> ผ่าน/ไม่ผ่าน</label>
-                            <input name="status" class="form-control" type="text" disabled
-                                placeholder="{{selectedCandidateProfile.status}}">
-                        </form>
-                    </div>
-                    <div class="col-sm-4">
-                        <form name="interviewForm" class="form row p-1" novalidate>
-                            <label> ..../10 (Level)</label>
-                            <select name="score" class="form-control" disabled>
-                                <option value="" disabled selected hidden>
-                                    {{selectedCandidateProfile.score}}
-                                </option>
-                            </select>
-                        </form>
-                    </div>
-                    <div class="col-sm-4">
-                        <form name="interviewForm" class="form row p-1" novalidate>
-                            <label> คะแนนความอยากได้ </label>
-                            <select name="wanted_score" class="form-control" disabled>
-                                <option value="" disabled selected hidden>
-                                    {{selectedCandidateProfile.score}}
-                                </option>
-                            </select>
-                        </form>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-8">
-                        <form name="interviewForm" class="form row p-1" novalidate>
-                            <label class="text-left">อยากได้เพราะเรื่องอะไร</label>
-                            <textarea name="wanted_for" class="form-control" rows="3"
-                                placeholder="{{selectedCandidateProfile.wanted_for}}" disabled></textarea>
-                        </form>
-                    </div>
-
-                    <div class="col-sm-4">
-                        <form name="interviewForm" class="form row p-1" novalidate>
-                            <label>คะแนน</label>
-                            <select name="score_wanted_for" class="form-control" disabled>
-                                <option value="" disabled selected hidden>
-                                    {{selectedCandidateProfile.score}}
-                                </option>
-                            </select>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--         สัมภาษณ์ครั้งที่ 2     -->
-        <div class="card collapsed-card ">
-            <div class="card-header rounded " ng-style="{'background-color': '#2AB514'}">
-                <div style="text-align: center; ">
-
-                    <p class="card-text text-left text-dark p20">ผลสัมภาษณ์ครั้งที่ 2
-                        <button type="button" class="btn btn-tool float-right " data-card-widget="collapse"
-                            style="color: rgb(0, 0, 0);">
-                            <i class="fas fa-plus fa-2x mt-1"></i></button>
-                    </p>
-
-                </div>
-
-            </div>
-
-            <div class="card-body">
-                <!-- /.card-body -->
-                <div class="row">
-                    <div class="col-sm-4">
-                        <form name="interviewForm" class="form row p-1" novalidate>
-                            <label> ผ่าน/ไม่ผ่าน</label>
-                            <input name="status" class="form-control" type="text" disabled
-                                placeholder="{{selectedCandidateProfile.status}}">
-                        </form>
-                    </div>
-                    <div class="col-sm-4">
-                        <form name="interviewForm" class="form row p-1" novalidate>
-                            <label> ..../10 (Level)</label>
-                            <select name="score" class="form-control" disabled>
-                                <option value="" disabled selected hidden>
-                                    {{selectedCandidateProfile.score}}
-                                </option>
-                            </select>
-                        </form>
-                    </div>
-                    <div class="col-sm-4">
-                        <form name="interviewForm" class="form row p-1" novalidate>
-                            <label> คะแนนความอยากได้ </label>
-                            <select name="wanted_score" class="form-control" disabled>
-                                <option value="" disabled selected hidden>
-                                    {{selectedCandidateProfile.score}}
-                                </option>
-                            </select>
-                        </form>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-8">
-                        <form name="interviewForm" class="form row p-1" novalidate>
-                            <label class="text-left">อยากได้เพราะเรื่องอะไร</label>
-                            <textarea name="wanted_for" class="form-control" rows="3"
-                                placeholder="{{selectedCandidateProfile.wanted_for}}" disabled></textarea>
-                        </form>
-                    </div>
-
-                    <div class="col-sm-4">
-                        <form name="interviewForm" class="form row p-1" novalidate>
-                            <label>คะแนน</label>
-                            <select name="score_wanted_for" class="form-control" disabled>
-                                <option value="" disabled selected hidden>
-                                    {{selectedCandidateProfile.score}}
-                                </option>
-                            </select>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <!-- /.card-body -->
-
-        </div>
-        <!--         สัมภาษณ์ครั้งที่ 3     -->
-        <div class="card collapsed-card ">
-            <div class="card-header rounded " ng-style="{'background-color': '#2AB514'}">
-                <div style="text-align: center; ">
-
-                    <p class="card-text text-left text-dark p20">ผลสัมภาษณ์ครั้งที่ 3
-                        <button type="button" class="btn btn-tool float-right " data-card-widget="collapse"
-                            style="color: rgb(0, 0, 0);">
-                            <i class="fas fa-plus fa-2x mt-1"></i></button>
-                    </p>
-
-                </div>
-
-            </div>
-
-            <div class="card-body">
-                <!-- /.card-body -->
-                <div class="row">
-                    <div class="col-sm-4">
-                        <form name="interviewForm" class="form row p-1" novalidate>
-                            <label> ผ่าน/ไม่ผ่าน</label>
-                            <input name="status" class="form-control" type="text" disabled
-                                placeholder="{{selectedCandidateProfile.status}}">
-                        </form>
-                    </div>
-                    <div class="col-sm-4">
-                        <form name="interviewForm" class="form row p-1" novalidate>
-                            <label> ..../10 (Level)</label>
-                            <select name="score" class="form-control" disabled>
-                                <option value="" disabled selected hidden>
-                                    {{selectedCandidateProfile.score}}
-                                </option>
-                            </select>
-                        </form>
-                    </div>
-                    <div class="col-sm-4">
-                        <form name="interviewForm" class="form row p-1" novalidate>
-                            <label> คะแนนความอยากได้ </label>
-                            <select name="wanted_score" class="form-control" disabled>
-                                <option value="" disabled selected hidden>
-                                    {{selectedCandidateProfile.score}}
-                                </option>
-                            </select>
-                        </form>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-8">
-                        <form name="interviewForm" class="form row p-1" novalidate>
-                            <label class="text-left">อยากได้เพราะเรื่องอะไร</label>
-                            <textarea name="wanted_for" class="form-control" rows="3"
-                                placeholder="{{selectedCandidateProfile.wanted_for}}" disabled></textarea>
-                        </form>
-                    </div>
-
-                    <div class="col-sm-4">
-                        <form name="interviewForm" class="form row p-1" novalidate>
-                            <label>คะแนน</label>
-                            <select name="score_wanted_for" class="form-control" disabled>
-                                <option value="" disabled selected hidden>
-                                    {{selectedCandidateProfile.score}}
-                                </option>
-                            </select>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <!-- /.card-body -->
-
-        </div>
-
-        <!-- Detail เจรจาสัญญาจ้าง -->
-        <div class="card " ng-show="negotiateMode === 'detail'">
-            <div class="card-header rounded " ng-style="{'background-color': '#FFDD28'}">
-                <div style="text-align: center; ">
-
-                    <p class="card-text text-left text-dark p20">เจรจาสัญญาจ้าง
-                        <button type="button" class="btn btn-tool float-right " data-card-widget="collapse"
-                            style="color: rgb(0, 0, 0);">
-                            <i class="fas fa-plus fa-2x mt-1"></i></button>
-                    </p>
-
-                </div>
-
-            </div>
-
-            <div class="card-body">
-                <form name="negotiateForm" class="form row" novalidate>
-                    <div class="col-sm-12">
-                        <div class="form row ">
-                            <label>
-                                <span>ตำแหน่ง</span>
-                            </label>
-                            <input name="job_position" class="form-control"
-                                placeholder="{{selectedCandidateProfile.job_position}}" disabled required>
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="form row mt-1">
-                            <label>
-                                <span>สังกัด</span>
-                            </label>
-                            <input name="business" class="form-control"
-                                placeholder="{{selectedCandidateProfile.business}}" disabled required>
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="form row mt-1">
-                            <label>
-                                <span>Direct to</span>
-                            </label>
-                            <input name="direct_to" class="form-control"
-                                placeholder="{{selectedCandidateProfile.direct_to}}" disabled required>
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="form row mt-1">
-                            <label>
-                                <span>Consult</span>
-                            </label>
-                            <input name="consult" class="form-control"
-                                placeholder="{{selectedCandidateProfile.consult}}" disabled required>
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="form row mt-1">
-                            <label>
-                                <span>Job description</span>
-                            </label>
-                            <textarea name="job_description" class="form-control"
-                                placeholder="{{selectedCandidateProfile.job_description}}" disabled required>
-                            </textarea>
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="form row mt-1">
-                            <label>
-                                <span>Mission</span>
-
-                            </label>
-                            <input name="mission" class="form-control"
-                                placeholder="{{selectedCandidateProfile.mission}}" disabled required>
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="form row mt-1">
-                            <label>
-                                <span>KPI</span>
-                            </label>
-                            <input name="kpi" class="form-control" placeholder="{{selectedCandidateProfile.kpi}}"
-                                disabled required>
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="form row mt-1">
-                            <label>
-                                <span>วันทำงาน</span>
-                            </label>
-                            <input name="work_day" class="form-control"
-                                placeholder="{{selectedCandidateProfile.work_day}}" disabled required>
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="form row mt-1">
-                            <label>
-                                <span>เวลาทำงาน</span>
-                            </label>
-                            <input name="work_time" class="form-control"
-                                placeholder="{{selectedCandidateProfile.work_time}}" disabled required>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form row mt-1 mr-2">
-
-                            <label>
-                                <span>วันเริ่มงาน</span>
-
-                            </label>
-
-                            <div class="input-group date" id="startDatePicker" data-target-input="nearest">
-                                <input name="start_work_date" class="form-control datetimepicker-input"
-                                    data-target="#startDatePicker"
-                                    placeholder="{{selectedCandidateProfile.start_work_date}}" disabled required>
-                                <div class="input-group-append" data-target="#startDatePicker"
-                                    data-toggle="datetimepicker">
-                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form row mt-1">
-                            <label>
-                                <span>รูปแบบสัญญาจ้าง</span>
-                            </label>
-                            <select name="negotiate_type" class="form-control"
-                                ng-class="{'is-invalid': isShowNegotiateTypeError()}"
-                                ng-model="selectedCandidateProfile.negotiate_type" disabled required>
-                                <option value="" selected hidden>
-                                    {{selectedCandidateProfile.negotiate_type}}
-                                </option>
-
-                                </option>
-                            </select>
-
-                        </div>
-                    </div>
-
-                    <div class="col-sm-12">
-                        <div class="form row mt-1">
-                            <label>
-                                <span>Benefit</span>
-                            </label>
-                            <input name="benefit" class="form-control"
-                                placeholder="{{selectedCandidateProfile.benefit}}" disabled required>
-                        </div>
-                    </div>
-                </form>
-
-
-            </div>
-         
-
-        </div>
-
-        <!-- Entry เจรจาสัญญาจ้าง -->
-        <div class="card " ng-show="negotiateMode === 'entry'">
-            <div class="card-header rounded " ng-style="{'background-color': '#FFDD28'}">
-                <div style="text-align: center; ">
-
-                    <p class="card-text text-left text-dark p20">เจรจาสัญญาจ้าง
-                        <button type="button" class="btn btn-tool float-right " data-card-widget="collapse"
-                            style="color: rgb(0, 0, 0);">
-                            <i class="fas fa-plus fa-2x mt-1"></i></button>
-                    </p>
-
-                </div>
-
-            </div>
-
-            <div class="card-body">
-                <form name="negotiateForm" class="form row" novalidate>
-                    <div class="col-sm-12">
-                        <div class="form row ">
-                            <label>
-                                <span ng-show="!isShowJobPositionError()">ตำแหน่ง</span>
-                                <span class="text-danger" ng-show="isShowJobPositionError()">ตำแหน่ง *</span>
-                            </label>
-                            <input name="job_position" class="form-control"
-                                ng-model="selectedCandidateProfile.job_position"
-                                ng-class="{'is-invalid': isShowJobPositionError()}" required>
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="form row mt-1">
-                            <label>
-                                <span ng-show="!isShowBusinessError()">สังกัด</span>
-                                <span class="text-danger" ng-show="isShowBusinessError()">สังกัด *</span>
-                            </label>
-                            <input name="business" class="form-control" ng-model="selectedCandidateProfile.business"
-                                ng-class="{'is-invalid': isShowBusinessError()}" required>
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="form row mt-1">
-                            <label>
-                                <span ng-show="!isShowDirectToError()">Direct to</span>
-                                <span class="text-danger" ng-show="isShowDirectToError()">Direct to *</span>
-                            </label>
-                            <input name="direct_to" class="form-control"
-                                ng-model="selectedCandidateProfile.direct_to"
-                                ng-class="{'is-invalid': isShowDirectToError()}" required>
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="form row mt-1">
-                            <label>
-                                <span ng-show="!isShowConsultError()">Consult</span>
-                                <span class="text-danger" ng-show="isShowConsultError()">Consult *</span>
-                            </label>
-                            <input name="consult" class="form-control" ng-model="selectedCandidateProfile.consult"
-                                ng-class="{'is-invalid': isShowConsultError()}" required>
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="form row mt-1">
-                            <label>
-                                <span ng-show="!isShowJobDescriptionError()">Job description</span>
-                                <span class="text-danger" ng-show="isShowJobDescriptionError()">Job description
-                                    *</span>
-                            </label>
-                            <textarea name="job_description" class="form-control"
-                                ng-model="selectedCandidateProfile.job_description"
-                                ng-class="{'is-invalid': isShowJobDescriptionError()}" required>
-                            </textarea>
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="form row mt-1">
-                            <label>
-                                <span ng-show="!isShowMissionError()">Mission</span>
-                                <span class="text-danger" ng-show="isShowMissionError()">Mission *</span>
-                            </label>
-                            <input name="mission" class="form-control" ng-model="selectedCandidateProfile.mission"
-                                ng-class="{'is-invalid': isShowMissionError()}" required>
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="form row mt-1">
-                            <label>
-                                <span ng-show="!isShowKpiError()">KPI</span>
-                                <span class="text-danger" ng-show="isShowKpiError()">KPI *</span>
-                            </label>
-                            <input name="kpi" class="form-control" ng-model="selectedCandidateProfile.kpi"
-                                ng-class="{'is-invalid': isShowKpiError()}" required>
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="form row mt-1">
-                            <label>
-                                <span ng-show="!isShowWorkDayError()">วันทำงาน</span>
-                                <span class="text-danger" ng-show="isShowWorkDayError()">วันทำงาน *</span>
-                            </label>
-                            <input name="work_day" class="form-control" ng-model="selectedCandidateProfile.work_day"
-                                ng-class="{'is-invalid': isShowWorkDayError()}" required>
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="form row mt-1">
-                            <label>
-                                <span ng-show="!isShowWorkTimeError()">เวลาทำงาน</span>
-                                <span class="text-danger" ng-show="isShowWorkTimeError()">เวลาทำงาน *</span>
-                            </label>
-                            <input name="work_time" class="form-control"
-                                ng-model="selectedCandidateProfile.work_time"
-                                ng-class="{'is-invalid': isShowWorkTimeError()}" required>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form row mt-1 mr-2">
-
-                            <label>
-                                <span ng-show="!isShowStartWorkDateError()">วันเริ่มงาน</span>
-                                <span class="text-danger" ng-show="isShowStartWorkDateError()">วันเริ่มงาน *</span>
-                            </label>
-
-                            <div class="input-group date" id="startDatePicker" data-target-input="nearest">
-                                <input name="start_work_date" class="form-control datetimepicker-input"
-                                    data-target="#startDatePicker"
-                                    ng-model="selectedCandidateProfile.start_work_date"
-                                    ng-class="{'is-invalid': isShowStartWorkDateError()}" required />
-                                <div class="input-group-append" data-target="#startDatePicker"
-                                    data-toggle="datetimepicker">
-                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form row mt-1">
-                            <label>
-                                <span ng-show="!isShowNegotiateTypeError()">รูปแบบสัญญาจ้าง</span>
-                                <span class="text-danger" ng-show="isShowNegotiateTypeError()">รูปแบบสัญญาจ้าง
-                                    *</span>
-                            </label>
-                            <select name="negotiate_type" class="form-control"
-                                ng-class="{'is-invalid': isShowNegotiateTypeError()}"
-                                ng-model="selectedCandidateProfile.negotiate_type" required>
-                                <option value="" disabled selected hidden>
-                                    กรุณาเลือก
-                                </option>
-                                <option ng-repeat="negotiate_type in negotiate_type | orderBy: 'name'"
-                                    ng-value="negotiate_type.name">
-                                    {{ negotiate_type.name }}
-                                </option>
-                                </option>
-                            </select>
-
-
-                        </div>
-                    </div>
-
-                    <div class="col-sm-12">
-                        <div class="form row mt-1">
-                            <label>
-                                <span ng-show="!isShowBenefitError()">Benefit</span>
-                                <span class="text-danger" ng-show="isShowBenefitError()">Benefit *</span>
-                            </label>
-                            <input name="benefit" class="form-control" ng-model="selectedCandidateProfile.benefit"
-                                ng-class="{'is-invalid': isShowBenefitError()}" required>
-                        </div>
-                    </div>
-                </form>
-
-
-            </div>
-            <!-- /.card-body -->
-
-        </div>
-    </div>
-</div>
 </div>
 
 <div class="d-flex flex-row-reverse bd-highlight">
