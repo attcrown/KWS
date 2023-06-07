@@ -1,0 +1,222 @@
+<script th:inline="javascript">
+    function useDetailControllerEntry($scope, $http) {
+        $scope.requestSaveDetail = useRequestSaveDetail($scope, $http);
+        $scope.verifyEditDetail = useVerifyEditDetail($scope, $http);
+        $scope.isShowBusinessError = useIsShowBusinessError($scope, $http);
+        $scope.isShowDirectToError = useIsShowDirectToError($scope, $http);
+        $scope.isShowConsultError = useIsShowConsultError($scope, $http);
+        $scope.isShowStartWorkDateError = useIsShowStartWorkDateError($scope, $http);
+        $scope.isShowTelNoError = useIsShowTelNoError($scope, $http);
+        $scope.isShowLineIDError = useIsShowLineIDError($scope, $http);
+        // column การศึกษา
+        $scope.isShowEducationTypeError = useIsShowEducationTypeError($scope, $http);
+        $scope.isShowUniversityTypeError = useIsShowUniversityTypeError($scope, $http);
+        $scope.isShowFacultyError = useIsShowFacultyError($scope, $http);
+        $scope.isShowMajorError = useIsShowMajorError($scope, $http);
+        $scope.isShowGradeHighschoolError = useIsShowGradeHighschoolError($scope, $http);
+        $scope.isShowGradeBachelorDegreeError = useIsShowGradeBachelorDegreeError($scope, $http);
+        $scope.isShowgradeMasterDegreeError = useIsShowgradeMasterDegreeError($scope, $http);
+
+        // column คำตอบอื่น ๆ
+        $scope.isShowPerformanceError = useIsShowPerformanceError($scope, $http);
+        $scope.isShowInterestError = useIsShowInterestError($scope, $http);
+        $scope.isShowPassionError = useIsShowPassionError($scope, $http);
+        $scope.isShowTypeError = useIsShowTypeError($scope, $http);
+        $scope.isShowLikeWorkingError = useIsShowLikeWorkingError($scope, $http);
+        $scope.isShowLetPassWorkError = useIsShowLetPassWorkError($scope, $http); $scope.isShowgradeMasterDegreeError = useIsShowgradeMasterDegreeError($scope, $http);
+        $scope.isShowFeelingError = useIsShowFeelingError($scope, $http);
+        $scope.isShowIsDepressedError = useIsShowIsDepressedError($scope, $http);
+        $scope.isShowCommentDayOffError = useIsShowCommentDayOffError($scope, $http);
+        $scope.isShowBackgroundFamilyError = useIsShowBackgroundFamilyError($scope, $http);
+        $scope.isShowHasWorkPartTimeError = useIsShowHasWorkPartTimeError($scope, $http);
+        $scope.isShowWillWorkingTypeError = useIsShowWillWorkingTypeError($scope, $http);
+    }
+    function useRequestSaveDetail($scope, $http) {
+        return () => {
+            console.log("### editForm.requestSave ###");
+
+            $scope.editDetailForm.$submitted = true;
+            $scope.editEducationForm.$submitted = true;
+            $scope.editExplainForm.$submitted = true;
+
+            if ($scope.verifyEditDetail()) {
+                const options = {
+                    title: "ยืนยันการแก้ไขข้อมูล ?",
+                    text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                    icon: "warning",
+                    buttons: ["ยกเลิก", "ตกลง"],
+                    dangerMode: true
+                };
+
+                const handler = (confirm) => {
+                    if (confirm) {
+
+                    }
+                };
+
+                swal(options).then(handler);
+            } else {
+                swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+            }
+        };
+    }
+
+    function useVerifyEditDetail($scope, $http) {
+        return () => {
+            return $scope.editDetailForm.$valid && $scope.editEducationForm.$valid && $scope.editExplainForm.$valid;
+        };
+    }
+
+    // ****************************** validate ****************************** //
+    function useIsShowBusinessError($scope, $http) {
+        return () => {
+            return ($scope.editDetailForm.$submitted || $scope.editDetailForm.business.$dirty) && $scope.editDetailForm.business.$invalid;
+        };
+    }
+
+    function useIsShowDirectToError($scope, $http) {
+        return () => {
+            return ($scope.editDetailForm.$submitted || $scope.editDetailForm.direct_to.$dirty) && $scope.editDetailForm.direct_to.$invalid;
+        };
+    }
+
+    function useIsShowConsultError($scope, $http) {
+        return () => {
+            return ($scope.editDetailForm.$submitted || $scope.editDetailForm.consult.$dirty) && $scope.editDetailForm.consult.$invalid;
+        };
+    }
+
+    function useIsShowStartWorkDateError($scope, $http) {
+        return () => {
+            return ($scope.editDetailForm.$submitted || $scope.editDetailForm.start_work_date.$dirty) && $scope.editDetailForm.start_work_date.$invalid;
+        };
+    }
+
+    function useIsShowTelNoError($scope, $http) {
+        return () => {
+            return ($scope.editDetailForm.$submitted || $scope.editDetailForm.tel_no.$dirty) && $scope.editDetailForm.tel_no.$invalid;
+        };
+    }
+
+    function useIsShowLineIDError($scope, $http) {
+        return () => {
+            return ($scope.editDetailForm.$submitted || $scope.editDetailForm.line_ID.$dirty) && $scope.editDetailForm.line_ID.$invalid;
+        };
+    }
+    // column การศึกษา
+    function useIsShowEducationTypeError($scope, $http) {
+        return () => {
+            return ($scope.editEducationForm.$submitted || $scope.editEducationForm.education_type.$dirty) && $scope.editEducationForm.education_type.$invalid;
+        };
+    }
+
+    function useIsShowUniversityTypeError($scope, $http) {
+        return () => {
+            return ($scope.editEducationForm.$submitted || $scope.editEducationForm.university.$dirty) && $scope.editEducationForm.university.$invalid;
+        };
+    }
+
+    function useIsShowFacultyError($scope, $http) {
+        return () => {
+            return ($scope.editEducationForm.$submitted || $scope.editEducationForm.faculty.$dirty) && $scope.editEducationForm.faculty.$invalid;
+        };
+    }
+
+    function useIsShowMajorError($scope, $http) {
+        return () => {
+            return ($scope.editEducationForm.$submitted || $scope.editEducationForm.major.$dirty) && $scope.editEducationForm.major.$invalid;
+        };
+    }
+
+    function useIsShowGradeHighschoolError($scope, $http) {
+        return () => {
+            return ($scope.editEducationForm.$submitted || $scope.editEducationForm.grade_highschool.$dirty) && $scope.editEducationForm.grade_highschool.$invalid;
+        };
+    }
+
+    function useIsShowGradeBachelorDegreeError($scope, $http) {
+        return () => {
+            return ($scope.editEducationForm.$submitted || $scope.editEducationForm.grade_bachelor_degree.$dirty) && $scope.editEducationForm.grade_bachelor_degree.$invalid;
+        };
+    }
+
+    function useIsShowgradeMasterDegreeError($scope, $http) {
+        return () => {
+            return ($scope.editEducationForm.$submitted || $scope.editEducationForm.grade_master_degree.$dirty) && $scope.editEducationForm.grade_master_degree.$invalid;
+        };
+    }
+
+    // column คำตอบอธิบาย
+    function useIsShowPerformanceError($scope, $http) {
+        return () => {
+            return ($scope.editExplainForm.$submitted || $scope.editExplainForm.performance.$dirty) && $scope.editExplainForm.performance.$invalid;
+        };
+    }
+
+    function useIsShowInterestError($scope, $http) {
+        return () => {
+            return ($scope.editExplainForm.$submitted || $scope.editExplainForm.interest.$dirty) && $scope.editExplainForm.interest.$invalid;
+        };
+    }
+
+    function useIsShowPassionError($scope, $http) {
+        return () => {
+            return ($scope.editExplainForm.$submitted || $scope.editExplainForm.passion.$dirty) && $scope.editExplainForm.passion.$invalid;
+        };
+    }
+
+    function useIsShowTypeError($scope, $http) {
+        return () => {
+            return ($scope.editExplainForm.$submitted || $scope.editExplainForm.type.$dirty) && $scope.editExplainForm.type.$invalid;
+        };
+    }
+
+    function useIsShowLikeWorkingError($scope, $http) {
+        return () => {
+            return ($scope.editExplainForm.$submitted || $scope.editExplainForm.like_working.$dirty) && $scope.editExplainForm.like_working.$invalid;
+        };
+    }
+
+    function useIsShowLetPassWorkError($scope, $http) {
+        return () => {
+            return ($scope.editExplainForm.$submitted || $scope.editExplainForm.let_pass_work.$dirty) && $scope.editExplainForm.let_pass_work.$invalid;
+        };
+    }
+
+    function useIsShowFeelingError($scope, $http) {
+        return () => {
+            return ($scope.editExplainForm.$submitted || $scope.editExplainForm.feeling.$dirty) && $scope.editExplainForm.feeling.$invalid;
+        };
+    }
+
+    function useIsShowIsDepressedError($scope, $http) {
+        return () => {
+            return ($scope.editExplainForm.$submitted || $scope.editExplainForm.is_depressed.$dirty) && $scope.editExplainForm.is_depressed.$invalid;
+        };
+    }
+
+    function useIsShowCommentDayOffError($scope, $http) {
+        return () => {
+            return ($scope.editExplainForm.$submitted || $scope.editExplainForm.comment_day_off.$dirty) && $scope.editExplainForm.comment_day_off.$invalid;
+        };
+    }
+
+    function useIsShowBackgroundFamilyError($scope, $http) {
+        return () => {
+            return ($scope.editExplainForm.$submitted || $scope.editExplainForm.background_family.$dirty) && $scope.editExplainForm.background_family.$invalid;
+        };
+    }
+
+    function useIsShowHasWorkPartTimeError($scope, $http) {
+        return () => {
+            return ($scope.editExplainForm.$submitted || $scope.editExplainForm.has_work_part_time.$dirty) && $scope.editExplainForm.has_work_part_time.$invalid;
+        };
+    }
+    function useIsShowWillWorkingTypeError($scope, $http) {
+        return () => {
+            return ($scope.editExplainForm.$submitted || $scope.editExplainForm.will_working_type.$dirty) && $scope.editExplainForm.will_working_type.$invalid;
+        };
+    }
+
+    // ****************************** validate ****************************** //
+</script>

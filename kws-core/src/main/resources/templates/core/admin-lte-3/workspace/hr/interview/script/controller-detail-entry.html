@@ -30,6 +30,7 @@
         $scope.isShowBackgroundFamilyError = useIsShowBackgroundFamilyError($scope, $http);
         $scope.isShowHasWorkPartTimeError = useIsShowHasWorkPartTimeError($scope, $http);
         $scope.isShowWillWorkingTypeError = useIsShowWillWorkingTypeError($scope, $http);
+
     }
     function useRequestSaveDetail($scope, $http) {
         return () => {
@@ -63,7 +64,7 @@
 
     function useVerifyEditDetail($scope, $http) {
         return () => {
-            return $scope.editDetailForm.$valid && $scope.editEducationForm.$valid && $scope.editExplainForm.$valid;
+            return $scope.editDetailForm.$valid && $scope.editEducationForm.$valid&& $scope.editExplainForm.$valid;
         };
     }
 
@@ -145,6 +146,7 @@
             return ($scope.editEducationForm.$submitted || $scope.editEducationForm.grade_master_degree.$dirty) && $scope.editEducationForm.grade_master_degree.$invalid;
         };
     }
+
 
     // column คำตอบอธิบาย
     function useIsShowPerformanceError($scope, $http) {

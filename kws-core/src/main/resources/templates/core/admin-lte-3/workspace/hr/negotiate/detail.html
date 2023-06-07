@@ -1,4 +1,4 @@
-<div class="row gx-1 text-center">
+<div class="row text-center">
     <div class="col-sm-3 mt-3  ">
 
         <div class="card">
@@ -117,118 +117,370 @@
         </div>
 
     </div>
-    <!-- detail mode -->
-    <div class="col-sm-3 mt-3  " ng-show="detailMode === 'detail'">
-        <div class="card text-center">
-            <div class="card-body ">
-                <p class="card-text ">ข้อมูลทั่วไป</p>
-            </div>
-            <div class="card-body ">
-                <h5 class="card-text ">รูป</h5>
-            </div>
-            <div class="card-body ">
-                <p class="card-text text-left">สังกัด : temp</p>
-                <p class="card-text text-left">Direct report : temp</p>
-                <p class="card-text text-left">Consultant : temp</p>
-                <p class="card-text text-left">วันทีเริ่มงานได้ : temp</p>
-                <p class="card-text text-left">เบอร์โทรศัพท์ : temp</p>
-                <p class="card-text text-left">Line ID : temp</p>
-            </div>
-        </div>
 
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">ข้อมูลการศึกษา</h5>
-            </div>
-            <div class="card-body ">
-                <p class="card-text text-left">สายการเรียนชั้นมัธยม : temp</p>
-                <p class="card-text text-left">มหาวิทยาลัย : temp</p>
-                <p class="card-text text-left">คณะ : temp</p>
-                <p class="card-text text-left">สาขา : temp</p>
-                <p class="card-text text-left">เกรดเฉลี่ย ณ มัธยม : temp</p>
-                <p class="card-text text-left">เกรดเฉลี่ย ณ ป.ตรี : temp</p>
-                <p class="card-text text-left">เกรดเฉลี่ย ณ ป.โท : temp</p>
-            </div>
+  <!-- detail mode -->
+  <div class="col-sm-3 mt-3  " ng-show="detailMode === 'detail'">
+    <div class="card text-center">
+        <div class="card-body ">
+            <p class="card-text ">ข้อมูลทั่วไป</p>
+        </div>
+        <div class="card-body ">
+            <h5 class="card-text ">รูป</h5>
+        </div>
+        <div class="card-body ">
+            <p class="card-text text-left">สังกัด : temp</p>
+            <p class="card-text text-left">Direct report : temp</p>
+            <p class="card-text text-left">Consultant : temp</p>
+            <p class="card-text text-left">วันทีเริ่มงานได้ : temp</p>
+            <p class="card-text text-left">เบอร์โทรศัพท์ : temp</p>
+            <p class="card-text text-left">Line ID : temp</p>
         </div>
     </div>
 
-    <div class="col-sm-6 mt-3  " ng-show="detailMode === 'detail'">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">ข้อมูลการศึกษา</h5>
-            </div>
-            <div class="card-body ">
-                <p class="card-text text-left">ผลงานที่เคยทำได้ : temp</p>
-                <p class="card-text text-left">งานอดิเรก/สิ่งที่สนใจ : temp</p>
-                <p class="card-text text-left">Passion ในการทำงาน : temp</p>
-                <p class="card-text text-left">คิดว่าตัวเองเป็น type ไหน : temp</p>
-                <p class="card-text text-left">อยากทำงานลักษณะไหน type : temp</p>
-                <p class="card-text text-left">คุณกล้าปล่อยงานของคุณมากแค่ไหน : temp</p>
-                <p class="card-text text-left">คุณรู้สึกอย่างไรเวลาไม่ประสบความสำเร็จในแบบที่ตั้งใจไว้ : temp</p>
-                <p class="card-text text-left">มีอาการโรคซึมเศร้า/panic ไหม : temp</p>
-                <p class="card-text text-left">ทัศนคติเรื่องการตอบแชทนอกเวลางาน : temp</p>
-                <p class="card-text text-left">Background ครอบครัว (พอสังเขป) : temp</p>
-                <p class="card-text text-left">เคยทำ part time ไหม : temp</p>
-                <p class="card-text text-left">รูปแบบการทำงานที่ต้องการ : temp</p>
-            </div>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">ข้อมูลการศึกษา</h5>
+        </div>
+        <div class="card-body ">
+            <p class="card-text text-left">สายการเรียนชั้นมัธยม : temp</p>
+            <p class="card-text text-left">มหาวิทยาลัย : temp</p>
+            <p class="card-text text-left">คณะ : temp</p>
+            <p class="card-text text-left">สาขา : temp</p>
+            <p class="card-text text-left">เกรดเฉลี่ย ณ มัธยม : temp</p>
+            <p class="card-text text-left">เกรดเฉลี่ย ณ ป.ตรี : temp</p>
+            <p class="card-text text-left">เกรดเฉลี่ย ณ ป.โท : temp</p>
         </div>
     </div>
-    <!-- edit mode -->
-    <div class="col-sm-3 mt-3  " ng-show="detailMode === 'edit'">
-        <div class="card text-center">
+</div>
+
+<div class="col-sm-6 mt-3  " ng-show="detailMode === 'detail'">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">ข้อมูลการศึกษา</h5>
+        </div>
+        <div class="card-body ">
+            <p class="card-text text-left">ผลงานที่เคยทำได้ : temp</p>
+            <p class="card-text text-left">งานอดิเรก/สิ่งที่สนใจ : temp</p>
+            <p class="card-text text-left">Passion ในการทำงาน : temp</p>
+            <p class="card-text text-left">คิดว่าตัวเองเป็น type ไหน : temp</p>
+            <p class="card-text text-left">อยากทำงานลักษณะไหน type : temp</p>
+            <p class="card-text text-left">คุณกล้าปล่อยงานของคุณมากแค่ไหน : temp</p>
+            <p class="card-text text-left">คุณรู้สึกอย่างไรเวลาไม่ประสบความสำเร็จในแบบที่ตั้งใจไว้ : temp</p>
+            <p class="card-text text-left">มีอาการโรคซึมเศร้า/panic ไหม : temp</p>
+            <p class="card-text text-left">ทัศนคติเรื่องการตอบแชทนอกเวลางาน : temp</p>
+            <p class="card-text text-left">Background ครอบครัว (พอสังเขป) : temp</p>
+            <p class="card-text text-left">เคยทำ part time ไหม : temp</p>
+            <p class="card-text text-left">รูปแบบการทำงานที่ต้องการ : temp</p>
+        </div>
+    </div>
+</div>
+
+<!-- edit mode -->
+<div class="col-sm-3 mt-3  " ng-show="detailMode === 'edit'">
+
+    <div class="card text-center">
+        <div class="card-body ">
+            <p class="card-text ">ข้อมูลทั่วไป</p>
+            <h5 class="card-text ">รูป</h5>
             <div class="card-body ">
-                <p class="card-text ">ข้อมูลทั่วไป</p>
-            </div>
-            <div class="card-body ">
-                <h5 class="card-text ">รูป</h5>
-            </div>
-            <div class="card-body ">
-                <p class="card-text text-left">สังกัด : <input></p>
-                <p class="card-text text-left">Direct report : <input></p>
-                <p class="card-text text-left">Consultant : <input></p>
-                <p class="card-text text-left">วันทีเริ่มงานได้ : <input></p>
-                <p class="card-text text-left">เบอร์โทรศัพท์ : <input></p>
-                <p class="card-text text-left">Line ID : <input></p>
+                <form name="editDetailForm" class="form-group row " novalidate>
+                    <div class="form-group row mt-1">
+                        <label>
+                            <span ng-show="!isShowBusinessError()">สังกัด : </span>
+                            <span class="text-danger" ng-show="isShowBusinessError()">สังกัด *</span>
+                        </label>
+                        <input name="business" class="form-inline ml-1 editDetailInput"
+                            ng-model="selectedCandidateProfile.name"
+                            ng-class="{'is-invalid': isShowBusinessError()}" required>
+                    </div>
+                    <div class="form-group row mt-1">
+                        <label>
+                            <span ng-show="!isShowDirectToError()">Direct report : </span>
+                            <span class="text-danger" ng-show="isShowDirectToError()">Direct report *</span>
+                        </label>
+                        <input name="direct_to" class="form-inline ml-1 editDetailInput"
+                            ng-model="selectedCandidateProfile.direct_to"
+                            ng-class="{'is-invalid': isShowDirectToError()}" required>
+                    </div>
+                    <div class="form-group row mt-1">
+                        <label>
+                            <span ng-show="!isShowConsultError()">Consultant : </span>
+                            <span class="text-danger" ng-show="isShowConsultError()">Consultant *</span>
+                        </label>
+                        <input name="consult" class="form-inline ml-1 editDetailInput"
+                            ng-model="selectedCandidateProfile.consult"
+                            ng-class="{'is-invalid': isShowConsultError()}" required>
+                    </div>
+                    <div class="form-group row mt-1">
+                        <label>
+                            <span ng-show="!isShowStartWorkDateError()">วันที่เริ่มงานได้ : </span>
+                            <span class="text-danger" ng-show="isShowStartWorkDateError()">วันที่เริ่มงานได้
+                                *</span>
+                        </label>
+                        <input name="start_work_date" class="form-inline ml-1 editDetailInput"
+                            ng-model="selectedCandidateProfile.start_work_date"
+                            ng-class="{'is-invalid': isShowStartWorkDateError()}" required>
+                    </div>
+                    <div class="form-group row mt-1">
+                        <label>
+                            <span ng-show="!isShowTelNoError()">เบอร์โทรศัพท์ : </span>
+                            <span class="text-danger" ng-show="isShowTelNoError()">เบอร์โทรศัพท์ *</span>
+                        </label>
+                        <input name="tel_no" class="form-inline ml-1 editDetailInput"
+                            ng-model="selectedCandidateProfile.tel_no" ng-class="{'is-invalid': isShowTelNoError()}"
+                            required>
+                    </div>
+                    <div class="form-group row mt-1">
+                        <label>
+                            <span ng-show="!isShowLineIDError()">Line ID : </span>
+                            <span class="text-danger" ng-show="isShowLineIDError()">Line ID *</span>
+                        </label>
+                        <input name="line_ID" class="form-inline ml-1 editDetailInput"
+                            ng-model="selectedCandidateProfile.line_ID"
+                            ng-class="{'is-invalid': isShowLineIDError()}" required>
+                    </div>
+                </form>
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">ข้อมูลการศึกษา</h5>
-            </div>
-            <div class="card-body ">
-                <p class="card-text text-left">สายการเรียนชั้นมัธยม : <input></p>
-                <p class="card-text text-left">มหาวิทยาลัย : <input></p>
-                <p class="card-text text-left">คณะ : <input></p>
-                <p class="card-text text-left">สาขา : <input></p>
-                <p class="card-text text-left">เกรดเฉลี่ย ณ มัธยม : <input></p>
-                <p class="card-text text-left">เกรดเฉลี่ย ณ ป.ตรี : <input></p>
-                <p class="card-text text-left">เกรดเฉลี่ย ณ ป.โท : <input></p>
-            </div>
-        </div>
+
     </div>
 
-    <div class="col-sm-6 mt-3  " ng-show="detailMode === 'edit'">
-        <div class="card">
-            <div class="card-body">
+    <div class="card">
+        <div class="card-body">
+            <div>
                 <h5 class="card-title">ข้อมูลการศึกษา</h5>
             </div>
             <div class="card-body ">
-                <p class="card-text text-left">ผลงานที่เคยทำได้ : <input></p>
-                <p class="card-text text-left">งานอดิเรก/สิ่งที่สนใจ : <input></p>
-                <p class="card-text text-left">Passion ในการทำงาน : <input></p>
-                <p class="card-text text-left">คิดว่าตัวเองเป็น type ไหน : <input></p>
-                <p class="card-text text-left">อยากทำงานลักษณะไหน type : <input></p>
-                <p class="card-text text-left">คุณกล้าปล่อยงานของคุณมากแค่ไหน : <input></p>
-                <p class="card-text text-left">คุณรู้สึกอย่างไรเวลาไม่ประสบความสำเร็จในแบบที่ตั้งใจไว้ : <input></p>
-                <p class="card-text text-left">มีอาการโรคซึมเศร้า/panic ไหม : <input></p>
-                <p class="card-text text-left">ทัศนคติเรื่องการตอบแชทนอกเวลางาน : <input></p>
-                <p class="card-text text-left">Background ครอบครัว (พอสังเขป) : <input></p>
-                <p class="card-text text-left">เคยทำ part time ไหม : <input></p>
-                <p class="card-text text-left">รูปแบบการทำงานที่ต้องการ : <input></p>
+                <form name="editEducationForm" class="form-group row  float-left" novalidate>
+                    <div class="form-group row mt-1">
+                        <label>
+                            <span ng-show="!isShowEducationTypeError()">สายการเรียนชั้นมัธยม : </span>
+                            <span class="text-danger" ng-show="isShowEducationTypeError()">สายการเรียนชั้นมัธยม
+                                *</span>
+                        </label>
+                        <input name="education_type" class="form-inline ml-1 editDetailInput"
+                            ng-model="selectedCandidateProfile.education_type"
+                            ng-class="{'is-invalid': isShowEducationTypeError()}" required>
+                    </div>
+                    <div class="form-group row mt-1">
+                        <label>
+                            <span ng-show="!isShowUniversityTypeError()">มหาวิทยาลัย : </span>
+                            <span class="text-danger" ng-show="isShowUniversityTypeError()">มหาวิทยาลัย *</span>
+                        </label>
+                        <input name="university" class="form-inline ml-1 editDetailInput"
+                            ng-model="selectedCandidateProfile.university"
+                            ng-class="{'is-invalid': isShowUniversityTypeError()}" required>
+                    </div>
+                    <div class="form-group row mt-1">
+                        <label>
+                            <span ng-show="!isShowFacultyError()">คณะ : </span>
+                            <span class="text-danger" ng-show="isShowFacultyError()">คณะ *</span>
+                        </label>
+                        <input name="faculty" class="form-inline ml-1 editDetailInput"
+                            ng-model="selectedCandidateProfile.faculty"
+                            ng-class="{'is-invalid': isShowFacultyError()}" required>
+                    </div>
+                    <div class="form-group row mt-1">
+                        <label>
+                            <span ng-show="!isShowMajorError()">สาขา : </span>
+                            <span class="text-danger" ng-show="isShowMajorError()">สาขา *</span>
+                        </label>
+                        <input name="major" class="form-inline ml-1 editDetailInput"
+                            ng-model="selectedCandidateProfile.major" ng-class="{'is-invalid': isShowMajorError()}"
+                            required>
+                    </div>
+                    <div class="form-group row mt-1">
+                        <label>
+                            <span ng-show="!isShowGradeHighschoolError()">เกรดเฉลี่ย ณ มัธยม : </span>
+                            <span class="text-danger" ng-show="isShowGradeHighschoolError()">เกรดเฉลี่ย ณ มัธยม
+                                *</span>
+                        </label>
+                        <input name="grade_highschool" class="form-inline ml-1 editDetailInput w-25"
+                            ng-model="selectedCandidateProfile.grade_highschool"
+                            ng-class="{'is-invalid': isShowGradeHighschoolError()}" required>
+                    </div>
+                    <div class="form-group row mt-1">
+                        <label>
+                            <span ng-show="!isShowGradeBachelorDegreeError()">เกรดเฉลี่ย ณ ป.ตรี : </span>
+                            <span class="text-danger" ng-show="isShowGradeBachelorDegreeError()">เกรดเฉลี่ย ณ ป.ตรี
+                                *</span>
+                        </label>
+                        <input name="grade_bachelor_degree" class="form-inline ml-1 editDetailInput w-25"
+                            ng-model="selectedCandidateProfile.grade_bachelor_degree"
+                            ng-class="{'is-invalid': isShowGradeBachelorDegreeError()}" required>
+                    </div>
+                    <div class="form-group row mt-1">
+                        <label>
+                            <span ng-show="!isShowgradeMasterDegreeError()">เกรดเฉลี่ย ณ ป.โท : </span>
+                            <span class="text-danger" ng-show="isShowgradeMasterDegreeError()">เกรดเฉลี่ย ณ
+                                ป.โท *</span>
+                        </label>
+                        <input name="grade_master_degree" class="form-inline ml-1 editDetailInput w-25"
+                            ng-model="selectedCandidateProfile.grade_master_degree"
+                            ng-class="{'is-invalid': isShowgradeMasterDegreeError()}" required>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
+
+<div class="col-sm-6 mt-3  " ng-show="detailMode === 'edit'">
+    <div class="card">
+        <div class="card-body ">
+            <div class="card-body ">
+                <form name="editExplainForm" novalidate>
+                    <div class="col-sm-12">
+                        <div class="form-row mt-2">
+                            <label>
+                                <span ng-show="!isShowPerformanceError()">ผลงานที่เคยทำได้ : </span>
+                                <span class="text-danger" ng-show="isShowPerformanceError()">ผลงานที่เคยทำได้ *
+                                    :</span>
+                            </label>
+                            <textarea name="performance" class="form-control  editDetailInput"
+                                ng-model="selectedCandidateProfile.performance"
+                                ng-class="{'is-invalid': isShowPerformanceError()}" required></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 mt-2">
+                        <div class="form-row ">
+                            <label>
+                                <span ng-show="!isShowInterestError()">งานอดิเรก/สิ่งที่สนใจ : </span>
+                                <span class="text-danger" ng-show="isShowInterestError()">งานอดิเรก/สิ่งที่สนใจ *
+                                    :</span>
+                            </label>
+                            <textarea name="interest" class="form-control  editDetailInput"
+                                ng-model="selectedCandidateProfile.interest"
+                                ng-class="{'is-invalid': isShowInterestError()}" required></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 mt-2">
+                        <div class="form-row ">
+                            <label>
+                                <span ng-show="!isShowPassionError()">Passion ในการทำงาน :</span>
+                                <span class="text-danger" ng-show="isShowPassionError()">Passion ในการทำงาน *
+                                    :</span>
+                            </label>
+                            <textarea name="passion" class="form-control  editDetailInput"
+                                ng-model="selectedCandidateProfile.passion"
+                                ng-class="{'is-invalid': isShowPassionError()}" required></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 mt-2">
+                        <div class="form-row ">
+                            <label>
+                                <span ng-show="!isShowTypeError()">คิดว่าตัวเองเป็น type ไหน :</span>
+                                <span class="text-danger" ng-show="isShowTypeError()">คิดว่าตัวเองเป็น type ไหน *
+                                    :</span>
+                            </label>
+                            <textarea name="type" class="form-control  editDetailInput"
+                                ng-model="selectedCandidateProfile.type"
+                                ng-class="{'is-invalid': isShowTypeError()}" required></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 mt-2">
+                        <div class="form-row ">
+                            <label>
+                                <span ng-show="!isShowLikeWorkingError()">อยากทำงานลักษณะไหน :</span>
+                                <span class="text-danger" ng-show="isShowLikeWorkingError()">อยากทำงานลักษณะไหน *
+                                    :</span>
+                            </label>
+                            <textarea name="like_working" class="form-control  editDetailInput"
+                                ng-model="selectedCandidateProfile.like_working"
+                                ng-class="{'is-invalid': isShowLikeWorkingError()}" required></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 mt-2">
+                        <div class="form-row ">
+                            <label>
+                                <span ng-show="!isShowLetPassWorkError()">คุณกล้าปล่อยงานของคุณมากแค่ไหน :</span>
+                                <span class="text-danger"
+                                    ng-show="isShowLetPassWorkError()">คุณกล้าปล่อยงานของคุณมากแค่ไหน * :</span>
+                            </label>
+                            <textarea name="let_pass_work" class="form-control  editDetailInput"
+                                ng-model="selectedCandidateProfile.let_pass_work"
+                                ng-class="{'is-invalid': isShowLetPassWorkError()}" required></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 mt-2">
+                        <div class="form-row ">
+                            <label>
+                                <span ng-show="!isShowFeelingError()">คุณรู้สึกอย่างไรเวลาไม่ประสบความสำเร็จในแบบที่ตั้งใจไว้ :</span>
+                                <span class="text-danger"
+                                    ng-show="isShowFeelingError()">คุณรู้สึกอย่างไรเวลาไม่ประสบความสำเร็จในแบบที่ตั้งใจไว้ * :</span>
+                            </label>
+                            <textarea name="feeling" class="form-control  editDetailInput"
+                                ng-model="selectedCandidateProfile.feeling"
+                                ng-class="{'is-invalid': isShowFeelingError()}" required></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 mt-2">
+                        <div class="form-row ">
+                            <label>
+                                <span ng-show="!isShowIsDepressedError()">มีอาการโรคซึมเศร้า/panic ไหม :</span>
+                                <span class="text-danger"
+                                    ng-show="isShowIsDepressedError()">มีอาการโรคซึมเศร้า/panic ไหม * :</span>
+                            </label>
+                            <textarea name="is_depressed" class="form-control  editDetailInput"
+                                ng-model="selectedCandidateProfile.is_depressed"
+                                ng-class="{'is-invalid': isShowIsDepressedError()}" required></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 mt-2">
+                        <div class="form-row ">
+                            <label>
+                                <span ng-show="!isShowCommentDayOffError()">ทัศนคติเรื่องการตอบแชทนอกเวลางาน :</span>
+                                <span class="text-danger"
+                                    ng-show="isShowCommentDayOffError()">ทัศนคติเรื่องการตอบแชทนอกเวลางาน * :</span>
+                            </label>
+                            <textarea name="comment_day_off" class="form-control  editDetailInput"
+                                ng-model="selectedCandidateProfile.comment_day_off"
+                                ng-class="{'is-invalid': isShowCommentDayOffError()}" required></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 mt-2">
+                        <div class="form-row ">
+                            <label>
+                                <span ng-show="!isShowBackgroundFamilyError()">Background ครอบครัว (พอสังเขป) :</span>
+                                <span class="text-danger"
+                                    ng-show="isShowBackgroundFamilyError()">Background ครอบครัว (พอสังเขป) * :</span>
+                            </label>
+                            <textarea name="background_family" class="form-control  editDetailInput"
+                                ng-model="selectedCandidateProfile.background_family"
+                                ng-class="{'is-invalid': isShowBackgroundFamilyError()}" required></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 mt-2">
+                        <div class="form-row ">
+                            <label>
+                                <span ng-show="!isShowHasWorkPartTimeError()">เคยทำ part time ไหม :</span>
+                                <span class="text-danger"
+                                    ng-show="isShowHasWorkPartTimeError()">เคยทำ part time ไหม * :</span>
+                            </label>
+                            <textarea name="has_work_part_time" class="form-control  editDetailInput"
+                                ng-model="selectedCandidateProfile.has_work_part_time"
+                                ng-class="{'is-invalid': isShowHasWorkPartTimeError()}" required></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 mt-2">
+                        <div class="form-row ">
+                            <label>
+                                <span ng-show="!isShowWillWorkingTypeError()">รูปแบบการทำงานที่ต้องการ :</span>
+                                <span class="text-danger"
+                                    ng-show="isShowWillWorkingTypeError()">รูปแบบการทำงานที่ต้องการ * :</span>
+                            </label>
+                            <textarea name="will_working_type" class="form-control  editDetailInput"
+                                ng-model="selectedCandidateProfile.will_working_type"
+                                ng-class="{'is-invalid': isShowWillWorkingTypeError()}" required></textarea>
+                        </div>
+                    </div>
+                   
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 
 
@@ -242,7 +494,7 @@
 
     <!-- request Edit  API not implement yet-->
     <button ng-show="detailMode === 'edit'" class="button buttonYes  buttonNegotiate p400 p20"
-        ng-style="{  'border-width': '2px','border-radius': '5px'}" ng-click="toListMode()">
+        ng-style="{  'border-width': '2px','border-radius': '5px'}" ng-click="requestSaveDetail()">
         บันทึก
     </button>
 
