@@ -39,7 +39,7 @@
                                         <div class="col-sm-6">
                                             <select name="startTime" class="form-control"
                                                 ng-class="{'is-invalid': isShowStartInterviewError()}"
-                                                ng-model="selectedCandidateProfile.start_negotiate"
+                                                ng-model="selectedCandidateProfile.start_interview"
                                                 ng-style="{'font-size':'14px'}" required>
                                                 <option value="" disabled selected hidden>
                                                     กรุณาเลือก
@@ -55,8 +55,7 @@
 
                                             <select name="endTime" class="form-control"
                                                 ng-class="{'is-invalid': isShowEndInterviewError()}"
-                                                ng-model="selectedCandidateProfile.end_negotiate"
-                                                ng-style="{'font-size':'14px'}" required>
+                                                ng-model="selectedCandidateProfile.end_interview">
                                                 <option value="" disabled selected hidden>
                                                     กรุณาเลือก
                                                 </option>
@@ -88,7 +87,7 @@
                     <div ng-repeat="candidate in candidates | orderBy:'sortCandidatesById'"
                         class="card hoverEffect mb-3"
                         ng-if="candidate.interview_status == 'null' && candidate.id != selectedCandidateProfile.id">
-                        <div class="card-body " ng-click="goSetDateNegotiate(candidate)">
+                        <div class="card-body " ng-click="goSetDateInterview(candidate)">
                             <h5 class="card-title"><span class="badgeInfo ">{{candidate.id}}</span></h5><br>
                             <p class="card-text text-left ">{{candidate.firstName}}
                                 {{candidate.lastName}}<br>({{candidate.job_position}})</p>
