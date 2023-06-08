@@ -2,38 +2,38 @@
   <div class="col-sm-6 col-md-2">
     <button
       type="button"
-      class="btn btn-block btn-lg font-bg"
+      class="btn btn-block btn-lg font-bg border-btn bheight"
       ng-style="{'background-color': clickcategory ? '#FFFFFF' : '#FF7628', 'border-color': clickcategory ? '#FF7628' : '#FFFFFF'}"
       ng-click="changeMessage(1); clickcategory = !clickcategory"
     >
-      พนักงาน
+      <h5>พนักงาน</h5>
     </button>
     <br />
     <button
       type="button"
-      class="btn btn-block btn-lg font-bg"
+      class="btn btn-block btn-lg font-bg border-btn bheight" 
       ng-style="{'background-color': clickcategory1 ? '#FFFFFF' : '#eb4645', 'border-color': clickcategory1 ? '#eb4645' : '#FFFFFF'}"
       ng-click="changeMessage(2); clickcategory1 = !clickcategory1"
     >
-      ครู Fishsix
+    <h5>ครู Fishsix</h5>
     </button>
     <br />
     <button
       type="button"
-      class="btn btn-block btn-lg font-bg"
+      class="btn btn-block btn-lg font-bg border-btn bheight"
       ng-style="{'background-color': clickcategory2 ? '#FFFFFF' : '#283eff', 'border-color': clickcategory2 ? '#283eff' : '#FFFFFF'}"
       ng-click="changeMessage(3); clickcategory2 = !clickcategory2"
     >
-      ครู ESC
+    <h5>ครู ESC</h5>
     </button>
     <br />
     <button
       type="button"
-      class="btn btn-block btn-lg font-bg"
+      class="btn btn-block btn-lg font-bg border-btn bheight"
       ng-style="{'background-color': clickcategory3 ? '#FFFFFF' : '#ffdd28', 'border-color': clickcategory3 ? '#ffdd28' : '#FFFFFF'}"
       ng-click="changeMessage(4); clickcategory3 = !clickcategory3"
     >
-      Scout
+    <h5>Scout</h5>
     </button>
   </div>
 
@@ -433,3 +433,12 @@
     </center>
   </div>
 </div>
+
+<style>
+  .bheight{
+    height: 63px;
+  }
+  .border-btn{
+    border-radius: 10px;
+  }
+</style>

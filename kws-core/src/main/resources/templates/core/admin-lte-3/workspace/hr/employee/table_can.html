@@ -53,15 +53,14 @@
         <table class="table">
             <thead style="background-color: #EAECF0; border-radius: 10px;">
               <tr>
-                <td scope="col">ลำดับ</td>
-                <td scope="col">วันที่สมัครเข้ามา</td>
-                <td scope="col">รหัส candidate</td>
+                <td scope="col">รหัสพนักงาน</td>
+                <td scope="col">วันที่เริ่มงาน</td>
                 <td scope="col">ชื่อ - นามสกุล</td>
                 <td scope="col">ตำแหน่ง</td>
-                <td scope="col">รอถาม HR</td>
-                <td scope="col">รอถาม HR</td>
-                <td scope="col">สถานะ</td>
-                <td scope="col">สรีน Resume</td>
+                <td scope="col">สังกัด</td>
+                <td scope="col">KPI</td>
+                <td scope="col">สิ้นสุดสัญญาจ้าง</td>
+                <td scope="col">แก้ไขข้อมูล</td>
               </tr>
             </thead>
             <tbody>
@@ -71,19 +70,14 @@
               <tr ng-if="search_table" ng-repeat="user in users">
                 <th scope="row">{{ $index + 1 }}</th>
                 <td class="p-2">{{ user.date }}</td>
-                <td class="p-2">{{ user.pass }}</td>
                 <td class="p-2">{{ user.name }}</td>
                 <td class="p-2" ng-bind="user.post.length > 10 ? (user.post | limitTo: 10) + '...' : user.post">{{ user.post }}</td>
                 <td class="p-2">{{ user.hr1 }}</td>
                 <td class="p-2">{{ user.hr2 }}</td>
                 <td class="p-2">
-                    <button class="btn btn-xs" style="border-radius: 16px;"
-                        ng-class="{'btn-outline-success': user.status === 'ผ่าน',
-                                   'btn-outline-danger': user.status === 'ไม่ผ่าน',
-                                   'btn-outline-warning': user.status === 'ผ่านแต่ stock',
-                                   'btn-outline-info': user.status === undefined || user.status === 'รอดำเนินการ'}"
+                    <button class="btn btn-xs btn-outline-success" style="border-radius: 16px;"
                         ><i class="fa fa-circle fa-xs" aria-hidden="true"></i>
-                        {{ user.status || 'รอดำเนินการ' }}
+                        {{user.ser}}
                     </button>
                 </td>                  
                 <td class="p-2">
