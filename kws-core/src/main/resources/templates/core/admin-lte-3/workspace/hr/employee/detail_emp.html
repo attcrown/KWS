@@ -157,9 +157,7 @@
                         <i class="fa fa-minus" aria-hidden="true"></i>
                     </button>
                 </div>
-                <div class="card-body" ng-show="!showCardBody">
-                    <br><br>
-                </div>
+                <div class="card-body" ng-show="!showCardBody"></div>
                 <div class="card-body" ng-show="showCardBody">
                     <div class="row mx-2">
                         <div class="col-md-12">
@@ -197,9 +195,7 @@
                         <i class="fa fa-minus" aria-hidden="true"></i>
                     </button>
                 </div>
-                <div class="card-body" ng-show="!showCardBody1">
-                    <br><br>
-                </div>
+                <div class="card-body" ng-show="!showCardBody1"></div>
                 <div class="card-body" ng-show="showCardBody1">
                     <div class="row mx-2">
                         <div class="col-md-4">
@@ -379,9 +375,7 @@
                         <i class="fa fa-minus" aria-hidden="true"></i>
                     </button>
                 </div>
-                <div class="card-body" ng-show="!showCardBody2">
-                    <br><br>
-                </div>
+                <div class="card-body" ng-show="!showCardBody2"></div>
                 <div class="card-body" ng-show="showCardBody2">
                     <div class="row mx-2">
                         <div class="col-md-4">
@@ -561,9 +555,7 @@
                         <i class="fa fa-minus" aria-hidden="true"></i>
                     </button>
                 </div>
-                <div class="card-body" ng-show="!showCardBody3">
-                    <br><br>
-                </div>
+                <div class="card-body" ng-show="!showCardBody3"></div>
                 <div class="card-body" ng-show="showCardBody3">
                     <div class="row mx-2">
                         <div class="col-md-4">
@@ -736,7 +728,104 @@
                     <label style="font-size: 20px;">เจรจาสัญจ้าง</label>
                 </div>
                 <div class="card-body">
-
+                    <div class="row mx-2">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>
+                                    <span>ตำแหน่ง</span>
+                                </label>
+                                <input name="firstName" type="text" class="form-control" disabled/>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>
+                                    <span>สังกัด</span>
+                                </label>
+                                <input name="firstName" type="text" class="form-control" disabled/>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>
+                                    <span>Direct to</span>
+                                </label>
+                                <input name="firstName" type="text" class="form-control" disabled/>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>
+                                    <span>Consult</span>
+                                </label>
+                                <input name="firstName" type="text" class="form-control" disabled/>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>
+                                    <span>Job description</span>
+                                </label>
+                                <input name="firstName" type="text" class="form-control" disabled/>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>
+                                    <span>Mission</span>
+                                </label>
+                                <input name="firstName" type="text" class="form-control" disabled/>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>
+                                    <span>KPI</span>
+                                </label>
+                                <input name="firstName" type="text" class="form-control" disabled/>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>
+                                    <span>วันทำงาน</span>
+                                </label>
+                                <input name="firstName" type="text" class="form-control" disabled/>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>
+                                    <span>เวลาทำงาน</span>
+                                </label>
+                                <input name="firstName" type="text" class="form-control" disabled/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>
+                                    <span>วันเริ่มงาน</span>
+                                </label>
+                                <input name="firstName" type="date" class="form-control" disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>
+                                    <span>วันเริ่มงาน</span>
+                                </label>
+                                <input name="firstName" type="date" class="form-control" disabled/>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>
+                                    <span>Benefit</span>
+                                </label>
+                                <input name="firstName" type="text" class="form-control" disabled/>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -753,8 +842,14 @@
                 <button class="btn btn-outline-primary" ng-click="non_success_user()">
                   <i class="fa fa-caret-left"></i> ย้อนกลับ
                 </button>
+                <button class="btn btn-outline-danger" >
+                    <i class="fas fa-inbox" aria-hidden="true"></i> ลาออก
+                  </button>
+                  <button class="btn btn-outline-warning">
+                    <i class="fas fa-edit" aria-hidden="true"></i> แก้ไขสัญญาจ้าง
+                  </button>
                 <button class="btn btn-outline-success" ng-click="request_success(); checkfile();">
-                  <i class="fa fa-check" aria-hidden="true"></i> นัดสัมภาษณ์อีกครั้ง
+                  <i class="fas fa-save" aria-hidden="true"></i> บันทึก
                 </button>
             </div>
 

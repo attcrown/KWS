@@ -1,11 +1,11 @@
 <div th:replace="core/admin-lte-3/workspace/hr/employee/script/table_controller"></div>
-<div th:replace="core/admin-lte-3/workspace/hr/employee/script/not_interview_Controller"></div>
+<div th:replace="core/admin-lte-3/workspace/hr/employee/script/detail_emp_Controller"></div>
 <script th:inline="javascript">
     app.controller("CandidateUserController", ["$scope", "$http", ($scope, $http) => {
         
         $scope.init = function() {
             tableController($scope, $http);
-            not_interview_Controller($scope, $http);
+            detail_emp_Controller($scope, $http);
             // cate_success_Controller($scope, $http);
             $(".select2").select2({ theme: "bootstrap4" });
 
