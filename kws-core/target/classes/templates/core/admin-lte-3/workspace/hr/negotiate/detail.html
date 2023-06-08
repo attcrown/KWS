@@ -128,12 +128,12 @@
             <h5 class="card-text ">รูป</h5>
         </div>
         <div class="card-body ">
-            <p class="card-text text-left">สังกัด : temp</p>
-            <p class="card-text text-left">Direct report : temp</p>
-            <p class="card-text text-left">Consultant : temp</p>
-            <p class="card-text text-left">วันทีเริ่มงานได้ : temp</p>
-            <p class="card-text text-left">เบอร์โทรศัพท์ : temp</p>
-            <p class="card-text text-left">Line ID : temp</p>
+            <p class="card-text text-left">สังกัด : {{selectedCandidateProfile.business}}</p>
+            <p class="card-text text-left">Direct report : {{selectedCandidateProfile.direct_to}}</p>
+            <p class="card-text text-left">Consultant : {{selectedCandidateProfile.consult}}</p>
+            <p class="card-text text-left">วันทีเริ่มงานได้ : {{selectedCandidateProfile.start_work_date}}</p>
+            <p class="card-text text-left">เบอร์โทรศัพท์ : {{selectedCandidateProfile.telNo}}</p>
+            <p class="card-text text-left">Line ID : {{selectedCandidateProfile.line_username}}</p>
         </div>
     </div>
 
@@ -142,13 +142,15 @@
             <h5 class="card-title">ข้อมูลการศึกษา</h5>
         </div>
         <div class="card-body ">
-            <p class="card-text text-left">สายการเรียนชั้นมัธยม : temp</p>
-            <p class="card-text text-left">มหาวิทยาลัย : temp</p>
-            <p class="card-text text-left">คณะ : temp</p>
-            <p class="card-text text-left">สาขา : temp</p>
-            <p class="card-text text-left">เกรดเฉลี่ย ณ มัธยม : temp</p>
-            <p class="card-text text-left">เกรดเฉลี่ย ณ ป.ตรี : temp</p>
-            <p class="card-text text-left">เกรดเฉลี่ย ณ ป.โท : temp</p>
+            <p class="card-text text-left">สายการเรียนชั้นมัธยม : {{selectedCandidateProfile.hign_school_program}}
+            </p>
+            <p class="card-text text-left">มหาวิทยาลัย : {{selectedCandidateProfile.university}}</p>
+            <p class="card-text text-left">คณะ : {{selectedCandidateProfile.faculty}}</p>
+            <p class="card-text text-left">สาขา : {{selectedCandidateProfile.major}}</p>
+            <p class="card-text text-left">เกรดเฉลี่ย ณ มัธยม : {{selectedCandidateProfile.grade_highschool}}</p>
+            <p class="card-text text-left">เกรดเฉลี่ย ณ ป.ตรี : {{selectedCandidateProfile.grade_bachelor_degree}}
+            </p>
+            <p class="card-text text-left">เกรดเฉลี่ย ณ ป.โท : {{selectedCandidateProfile.grade_master_degree}}</p>
         </div>
     </div>
 </div>
@@ -159,18 +161,27 @@
             <h5 class="card-title">ข้อมูลการศึกษา</h5>
         </div>
         <div class="card-body ">
-            <p class="card-text text-left">ผลงานที่เคยทำได้ : temp</p>
-            <p class="card-text text-left">งานอดิเรก/สิ่งที่สนใจ : temp</p>
-            <p class="card-text text-left">Passion ในการทำงาน : temp</p>
-            <p class="card-text text-left">คิดว่าตัวเองเป็น type ไหน : temp</p>
-            <p class="card-text text-left">อยากทำงานลักษณะไหน type : temp</p>
-            <p class="card-text text-left">คุณกล้าปล่อยงานของคุณมากแค่ไหน : temp</p>
-            <p class="card-text text-left">คุณรู้สึกอย่างไรเวลาไม่ประสบความสำเร็จในแบบที่ตั้งใจไว้ : temp</p>
-            <p class="card-text text-left">มีอาการโรคซึมเศร้า/panic ไหม : temp</p>
-            <p class="card-text text-left">ทัศนคติเรื่องการตอบแชทนอกเวลางาน : temp</p>
-            <p class="card-text text-left">Background ครอบครัว (พอสังเขป) : temp</p>
-            <p class="card-text text-left">เคยทำ part time ไหม : temp</p>
-            <p class="card-text text-left">รูปแบบการทำงานที่ต้องการ : temp</p>
+            <p class="card-text text-left">ผลงานที่เคยทำได้ : {{selectedCandidateProfile.performance}}</p>
+            <p class="card-text text-left">งานอดิเรก/สิ่งที่สนใจ : {{selectedCandidateProfile.interest}}</p>
+            <p class="card-text text-left">Passion ในการทำงาน : {{selectedCandidateProfile.passion}}</p>
+            <p class="card-text text-left">คิดว่าตัวเองเป็น type ไหน :
+                {{selectedCandidateProfile.type}}</p>
+            <p class="card-text text-left">อยากทำงานลักษณะไหน type :
+                {{selectedCandidateProfile.like_working}}</p>
+            <p class="card-text text-left">คุณกล้าปล่อยงานของคุณมากแค่ไหน :
+                {{selectedCandidateProfile.let_pass_work}}</p>
+            <p class="card-text text-left">คุณรู้สึกอย่างไรเวลาไม่ประสบความสำเร็จในแบบที่ตั้งใจไว้ :
+                {{selectedCandidateProfile.feeling}}</p>
+            <p class="card-text text-left">มีอาการโรคซึมเศร้า/panic ไหม :
+                {{selectedCandidateProfile.is_depressed}}</p>
+            <p class="card-text text-left">ทัศนคติเรื่องการตอบแชทนอกเวลางาน :
+                {{selectedCandidateProfile.comment_day_off}}</p>
+            <p class="card-text text-left">Background ครอบครัว (พอสังเขป) :
+                {{selectedCandidateProfile.background_family}}</p>
+            <p class="card-text text-left">เคยทำ part time ไหม : {{selectedCandidateProfile.has_work_part_time}}
+            </p>
+            <p class="card-text text-left">รูปแบบการทำงานที่ต้องการ :
+                {{selectedCandidateProfile.will_working_type}}</p>
         </div>
     </div>
 </div>

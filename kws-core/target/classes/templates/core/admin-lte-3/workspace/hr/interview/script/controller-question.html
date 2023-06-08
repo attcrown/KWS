@@ -1,0 +1,77 @@
+<script th:inline="javascript">
+    function useInterviewControllerEntry($scope, $http) {
+
+        $scope.requestSaveAnswer = useRequestSaveAnswer($scope, $http);
+        $scope.verifyInterview = useVerifyInterview($scope, $http);
+        $scope.isShowInterviewError = useIsShowInterviewError($scope, $http);
+        $scope.isShowResultError = useIsShowResultError($scope, $http);
+        $scope.isShowReasonError = useIsShowReasonErrorError($scope, $http);
+        $scope.isShowInterviewerError = useIsShowInterviewerError($scope, $http);
+        
+    }
+
+
+    function useRequestSaveAnswer($scope, $http) {
+        return () => {
+            console.log("### InterviewController.requestSave ###");
+            $scope.interviewForm.$submitted = true;
+
+            if ($scope.verifyInterview()) {
+                const options = {
+                    title: "ยืนยันการบันทึกข้อมูลสัมภาษณ์",
+                    text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                    icon: "warning",
+                    buttons: ["ยกเลิก", "ตกลง"],
+                    dangerMode: true
+                };
+                const handler = (confirm) => {
+                    if (confirm) {
+                        console.log('Data submitted: ', $scope.questions);
+                        // $scope.updateInterview($scope.candidates);
+
+                    }
+                };
+
+                swal(options).then(handler);
+
+            }
+            else {
+                swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+            }
+        };
+    }
+
+    function useVerifyInterview($scope, $http) {
+        return () => {
+            console.log("### interviewController.VERIFY ###");
+            console.log($scope.interviewForm.$valid);
+            return $scope.interviewForm.$valid;
+        };
+    }
+
+    function useIsShowInterviewError($scope, $http) {
+        return (id) => {
+            return ($scope.interviewForm.$submitted || $scope.interviewForm[id].$dirty) && $scope.interviewForm[id].$invalid;
+        };
+    }
+
+    
+    function useIsShowResultError($scope, $http) {
+        return () => {
+            return ($scope.interviewForm.$submitted || $scope.interviewForm.result.$dirty) && $scope.interviewForm.result.$invalid;
+        };
+    }
+
+    function useIsShowReasonErrorError($scope, $http) {
+        return () => {
+            return ($scope.interviewForm.$submitted || $scope.interviewForm.reason.$dirty) && $scope.interviewForm.reason.$invalid;
+        };
+    }
+    
+    function useIsShowInterviewerError($scope, $http) {
+        return () => {
+            return $scope.interviewForm.$submitted && $scope.interviewForm.interviewer.$invalid;
+        }; 
+    }
+
+</script>

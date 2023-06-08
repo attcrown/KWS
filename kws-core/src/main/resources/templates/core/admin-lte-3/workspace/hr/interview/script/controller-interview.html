@@ -1,13 +1,13 @@
-<!-- <div th:replace="core/admin-lte-3/workspace/hr/negotiate/script/date-entry-controller"></div> -->
 <div th:replace="core/admin-lte-3/workspace/hr/interview/script/date-entry-controller"></div>
 <div th:replace="core/admin-lte-3/workspace/hr/interview/script/controller-detail-entry"></div>
+<div th:replace="core/admin-lte-3/workspace/hr/interview/script/controller-question"></div>
 
 <script th:inline="javascript">
     app.controller("interviewController", ["$scope", "$http", ($scope, $http) => {
 
         $scope.isLoading = false;
         $scope.criteria = {};
-        $scope.mode = "list"; // ["list", "addDate" , "detail","negotiate"]
+        $scope.mode = "list"; // ["list", "addDate" , "detail"]
         $scope.read = "close";
         $scope.selectedCandidateProfile;
         //$scope.candidates = [];
@@ -17,6 +17,7 @@
         $scope.selectedStartTime = null;
         $scope.selectedEndTime = 19;
         $scope.date = "close";
+        $scope.id = "";
 
         $scope.candidates = [
             { id: "1", firstName: 'arin', lastName: 'test1', job_position: "Developer", day: "24/06/23", startTime: "8 PM", endTime: "9 PM", interview_status: "round2" },
@@ -70,10 +71,48 @@
 
         ];
 
+        $scope.questions = [
+            { id: 1, text: 'แนะนำตัว', answer: '' },
+            { id: 2, text: 'เนื่องจากบริษัทเราเป็น start up ของคนรุ่นใหม่ ถ้าต้องไปช่วยทีมอื่นทำในงานที่เร่งด่วนกว่า หรือต้องมีการปรับเปลี่ยนตำแหน่งจะรู้สึกยังไง', answer: '' },
+            { id: 3, text: 'งานที่เคยทำมา', answer: '' },
+            { id: 4, text: 'เหตุผลที่ลาออก', answer: '' },
+            { id: 5, text: 'เข้ามาแล้ว จะสร้าง % การ Growth ได้กี่เท่าตัว (Management)', answer: '' },
+            { id: 6, text: 'เป้าหมายทีม + เข้าเป็นส่วนไหนของทีม', answer: '' },
+            { id: 7, text: 'ทำได้กี่ชิ้นต่อนาที / ต่ออาทิตย์ / ต่อเดือน (Officer)', answer: '' },
+            { id: 8, text: 'คนอื่นมักจะบอกว่าคุณเป็นคนยังไง ?', answer: '' },
+            { id: 9, text: 'คุณเคยสร้างหรือปั้นน้องคนไหนบ้างไหม และปั้นด้วยวิธีไหน? (Management)', answer: '' },
+            { id: 10, text: 'ปัญหาที่เคยพบในการทำงาน และวิธีแก้ไข', answer: '' },
+            { id: 11, text: 'เคยเจอเหตุการน้องในทีม/เพื่อนที่ทำงานไม่สามารถก้าวข้ามอุปสรรคการทำงานของตัวเองบ้างไหม เล่าให้ฟังหน่อยว่าทำอย่างไรบ้าง? (Management)', answer: '' },
+            { id: 12, text: 'Success case', answer: '' },
+            { id: 13, text: 'ทำไมถึงเลือกสมัครงานกับเรา', answer: '' },
+            { id: 14, text: 'ความกดดันหนักสุดที่เคยเจอมา', answer: '' },
+            { id: 15, text: 'ชอบหรือไม่ชอบวัฒนธรรมองค์กรเราข้อไหน ยังไง', answer: '' },
+            { id: 16, text: 'บอกข้อดี ข้อเสียของตัวเอง : (ในการ์ดไม่มี)', answer: '' },
+            { id: 17, text: 'อื่นๆ : (ในการ์ดไม่มี)', answer: '' }
+        ];
+
+        $scope.rows = [
+            { name: 'Growth mindset', percent: 80, credit: 3 },
+            { name: 'Proactive', percent: 90, credit: 4 },
+            { name: 'Leadership', percent: 80, credit: 3 },
+            { name: 'วุฒิภาวะทางอารมณ์', percent: 90, credit: 4 },
+            { name: 'การรับมือกับปัญหา', percent: 80, credit: 3 },
+            { name: 'Structural thinking', percent: 90, credit: 4 },
+            { name: 'Critical thinking', percent: 80, credit: 3 },
+            { name: 'Logic', percent: 90, credit: 4 },
+            { name: 'การเจรจาต่อรอง', percent: 80, credit: 3 },
+            { name: 'การโน้มน้าว', percent: 90, credit: 4 },
+            { name: 'Data analysis', percent: 90, credit: 4 },
+
+            // ... and so on for all the rows
+        ];
+
+
+
         $scope.init = function () {
             useDateEntryController($scope, $http);
             useDetailControllerEntry($scope, $http);
-
+            useInterviewControllerEntry($scope, $http);
             $('.select2').select2({ theme: 'bootstrap4' });
 
             $('#startDatePicker').datetimepicker({
@@ -108,13 +147,14 @@
             candidate.datetime = new Date();
         };
 
-        $scope.goSetDateNegotiate = function (candidate) {
+        $scope.goSetDateInterview = function (candidate) {
             $scope.selectedCandidateProfile = candidate;
             $scope.date = "open";
 
         }
 
         $scope.toListMode = function () {
+            $scope.selectedCandidateProfile = null;
             $scope.date = "close";
             $scope.mode = 'list';
 
@@ -144,11 +184,6 @@
             $scope.interviewMode = 'detail';
         };
 
-        $scope.setDateNegotiate = function (candidate) {
-
-            candidate.datetime = "";
-        };
-
         $scope.isShowInterviewRoundOne = function (candidate) {
             return () => {
                 return ($scope.candidate.interview_status == "round1")
@@ -166,6 +201,8 @@
             };
         };
 
+
+
         $scope.resetFormDate = function () {
             setTimeout(() => {
 
@@ -181,53 +218,42 @@
             }, 0);
         };
 
-        $scope.resetFormNegotiate = function () {
-            setTimeout(() => {
-                $scope.negotiateForm.$submitted = false;
+        $scope.calculateWeightedAverage = function () {
+            var totalWeight = 0;
+            var weightedSum = 0;
 
-                // $scope.negotiateForm.$setUntouched();
-                // $scope.negotiateForm.$setPristine();
+            for (var i = 0; i < $scope.rows.length; i++) {
+                var row = $scope.rows[i];
+                var weight = row.percent * row.credit;
 
-                $scope.negotiateForm.job_position.$setUntouched();
-                $scope.negotiateForm.job_position.$setPristine();
+                totalWeight += row.credit;
+                weightedSum += weight;
+            }
 
-                $scope.negotiateForm.business.$setUntouched();
-                $scope.negotiateForm.business.$setPristine();
+            if (totalWeight > 0) {
+                console.log(totalWeight);
+                console.log(weightedSum);
+                $scope.weightedAverage = weightedSum / totalWeight;
 
-                $scope.negotiateForm.direct_to.$setUntouched();
-                $scope.negotiateForm.direct_to.$setPristine();
+            } else {
+                $scope.weightedAverage = 0;
+            }
 
-                $scope.negotiateForm.consult.$setUntouched();
-                $scope.negotiateForm.consult.$setPristine();
-
-                $scope.negotiateForm.job_description.$setUntouched();
-                $scope.negotiateForm.job_description.$setPristine();
-
-                $scope.negotiateForm.mission.$setUntouched();
-                $scope.negotiateForm.mission.$setPristine();
-
-                $scope.negotiateForm.kpi.$setUntouched();
-                $scope.negotiateForm.kpi.$setPristine();
-
-                $scope.negotiateForm.work_day.$setUntouched();
-                $scope.negotiateForm.work_day.$setPristine();
-
-                $scope.negotiateForm.work_time.$setUntouched();
-                $scope.negotiateForm.work_time.$setPristine();
-
-                $scope.negotiateForm.start_work_date.$setUntouched();
-                $scope.negotiateForm.start_work_date.$setPristine();
-
-                $scope.negotiateForm.negotiate_type.$setUntouched();
-                $scope.negotiateForm.negotiate_type.$setPristine();
-
-                $scope.negotiateForm.benefit.$setUntouched();
-                $scope.negotiateForm.benefit.$setPristine();
-
-                $scope.$apply();
-            }, 0);
         };
 
+        $scope.$watch('rows', function (newRows, oldRows) {
+            console.log("weight update");
+            if (newRows !== oldRows) {
+                $scope.calculateWeightedAverage();
+            }
+        }, true);
+
+        $scope.preventNegativeNumbers = function (event) {
+            // prevent negative number | key 45 = "-"
+            if (event.keyCode === 45) {
+                event.preventDefault();
+            }
+        };
 
     }]);
 </script>
