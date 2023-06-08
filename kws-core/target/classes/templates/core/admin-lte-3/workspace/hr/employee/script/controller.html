@@ -1,12 +1,43 @@
 <div th:replace="core/admin-lte-3/workspace/hr/employee/script/table_controller"></div>
-<!-- <div th:replace="core/admin-lte-3/workspace/hr/not_interview/script/cate_succe_controller"></div> -->
+<div th:replace="core/admin-lte-3/workspace/hr/employee/script/not_interview_Controller"></div>
 <script th:inline="javascript">
     app.controller("CandidateUserController", ["$scope", "$http", ($scope, $http) => {
+        
         $scope.init = function() {
             tableController($scope, $http);
+            not_interview_Controller($scope, $http);
             // cate_success_Controller($scope, $http);
             $(".select2").select2({ theme: "bootstrap4" });
+
+            function handleFileChange(event, property, elementId) {
+                var file = event.target.files[0];
+                if (file) {
+                    $scope.attachment[property] = file;
+                    console.log(property + " fileName => " + file.name);
+                }
+                const element = document.getElementById(elementId);
+                var reader = new FileReader();
+                reader.onload = function(event) {
+                    element.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+                $scope.$apply();
+            }
+
+            $(".img_Bank-file").on("change", function($event) {
+                handleFileChange($event, "img_Bank", "img_Bank");
+            });
+            $(".img_local-file").on("change", function($event) {
+                handleFileChange($event, "img_local", "img_local");
+            });
+            $(".img_profile-file").on("change", function($event) {
+                handleFileChange($event, "img_profile", "img_profile");
+            });
         }
+
+        $scope.removeFile = function (a) {
+            $scope.attachment[a] = null;
+        };
 
         $scope.mode = "list";
         $scope.search_table = false;
@@ -16,9 +47,17 @@
         $scope.isedit_success = false;
         $scope.addquest;
         $scope.entryMode = "add";
+        $scope.attachment = {};
+
         $scope.showCardBody = false;
         $scope.showCardBody1 = false;
         $scope.showCardBody2 = false;
+        $scope.showCardBody3 = false;
+
+        $scope.isShowImgBankFileError = false;
+        $scope.isShowlocalFileError = false;
+        $scope.isShowprofileFileError = false;
+        // $scope.showCardBody4 = false;
 
         $scope.toggleCardBody = function() {
             $scope.showCardBody = !$scope.showCardBody;
@@ -29,7 +68,12 @@
         $scope.toggleCardBody2 = function() {
             $scope.showCardBody2 = !$scope.showCardBody2;
         };
-
+        $scope.toggleCardBody3 = function() {
+            $scope.showCardBody3 = !$scope.showCardBody3;
+        };
+        // $scope.toggleCardBody4 = function() {
+        //     $scope.showCardBody4 = !$scope.showCardBody4;
+        // };
 
         $scope.toggleShowQuestion = function() {
             $scope.isQuestionVisible = !$scope.isQuestionVisible;
@@ -52,6 +96,21 @@
 
         $scope.non_success_user = function(){
             $scope.mode = 'list';
+        }
+
+        $scope.checkfile = function(){
+            if($scope.attachment.img_Bank == null){
+                $scope.isShowImgBankFileError = true;
+            }else{$scope.isShowImgBankFileError = false;} 
+
+            if($scope.attachment.img_local == null){
+                $scope.isShowlocalFileError = true;
+            }else{$scope.isShowlocalFileError = false;} 
+
+            if($scope.attachment.img_profile == null){
+                $scope.isShowprofileFileError = true;
+            }else{$scope.isShowprofileFileError = false;} 
+
         }
 
 
@@ -96,6 +155,7 @@
                     if (confirm) {
                         // $scope.setupTeacherSubjectMapper($scope.selectedTeacherProfile);
                         console.log('hello',$scope.show_datapage);
+                        console.log($scope.attachment);
                         $scope.mode = 'list';
                         $scope.$apply();
                     }
@@ -114,8 +174,6 @@
                 }
             };
         }
-
-
     }
     ]);
 </script>
