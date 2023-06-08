@@ -454,7 +454,8 @@
   </div>
   <div class="card-body mx-4">
     <br />
-    <form name="employeeForm4" class="form row" novalidate>
+    <form name="employeeForm4" class="form row" novalidate>     
+      
       <div class="col-md-6">
         <div class="form-group">
           <label>
@@ -463,7 +464,7 @@
             <span class="text-danger" ng-show="isShowJobPosition1Error()">กรุณาเลือกตำแหน่งงานที่ท่านสนใจสมัครตำแหน่งที่
               1</span>
           </label>
-          <select name="job_position1" class="form-control" style="width: 100%"
+          <select name="job_position1" class="form-control select2" style="width: 100%" data-dropdown-css-class="select2-indigo" 
             ng-class="{'is-invalid': isShowJobPosition1Error()}" ng-model="selectedEmployeeProfile.job_position1"
             required>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
@@ -481,7 +482,7 @@
             <span ng-show="!isShowBusiness1Error()">สังกัดธุรกิจ</span>
             <span class="text-danger" ng-show="isShowBusiness1Error()">สังกัดธุรกิจ</span>
           </label>
-          <select name="business1" class="form-control" style="width: 100%"
+          <select name="business1" class="form-control select2" style="width: 100%" data-dropdown-css-class="select2-indigo" 
             ng-class="{'is-invalid': isShowBusiness1Error()}" ng-model="selectedEmployeeProfile.business1" required>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
             <option ng-repeat="business in business | orderBy: 'name'" ng-value="business.name">
@@ -499,7 +500,7 @@
             <span class="text-danger" ng-show="isShowJobPosition2Error()">กรุณาเลือกตำแหน่งงานที่ท่านสนใจสมัครตำแหน่งที่
               2</span>
           </label>
-          <select name="job_position2" class="form-control" style="width: 100%"
+          <select name="job_position2" class="form-control select2" style="width: 100%" data-dropdown-css-class="select2-indigo"
             ng-class="{'is-invalid': isShowJobPosition2Error()}" ng-model="selectedEmployeeProfile.job_position2"
             required>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
@@ -517,7 +518,7 @@
             <span ng-show="!isShowBusiness2Error()">สังกัดธุรกิจ</span>
             <span class="text-danger" ng-show="isShowBusiness2Error()">สังกัดธุรกิจ</span>
           </label>
-          <select name="business2" class="form-control" style="width: 100%"
+          <select name="business2" class="form-control select2" style="width: 100%" data-dropdown-css-class="select2-indigo"
             ng-class="{'is-invalid': isShowBusiness2Error()}" ng-model="selectedEmployeeProfile.business2" required>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
             <option ng-repeat="business in business | orderBy: 'name'" ng-value="business.name">
@@ -535,7 +536,7 @@
             <span class="text-danger" ng-show="isShowJobPosition3Error()">กรุณาเลือกตำแหน่งงานที่ท่านสนใจสมัครตำแหน่งที่
               3</span>
           </label>
-          <select name="job_position3" class="form-control" style="width: 100%"
+          <select name="job_position3" class="form-control select2" style="width: 100%" data-dropdown-css-class="select2-indigo"
             ng-class="{'is-invalid': isShowJobPosition3Error()}" ng-model="selectedEmployeeProfile.job_position3"
             required>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
@@ -553,7 +554,7 @@
             <span ng-show="!isShowBusiness3Error()">สังกัดธุรกิจ</span>
             <span class="text-danger" ng-show="isShowBusiness3Error()">สังกัดธุรกิจ</span>
           </label>
-          <select name="business3" class="form-control" style="width: 100%"
+          <select name="business3" class="form-control select2" style="width: 100%" data-dropdown-css-class="select2-indigo"
             ng-class="{'is-invalid': isShowBusiness3Error()}" ng-model="selectedEmployeeProfile.business3" required>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
             <option ng-repeat="business in business | orderBy: 'name'" ng-value="business.name">
@@ -570,7 +571,7 @@
             <span ng-show="!isShowWorkingStyleError()">รูปแบบการทำงานที่ต้องการ</span>
             <span class="text-danger" ng-show="isShowWorkingStyleError()">กรุณาเลือกรูปแบบการทำงานที่ต้องการ</span>
           </label>
-          <select name="working_style" class="form-control" style="width: 100%"
+          <select name="working_style" class="form-control" style="width: 100%" 
             ng-class="{'is-invalid': isShowWorkingStyleError()}" ng-model="selectedEmployeeProfile.working_style"
             required>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
@@ -685,7 +686,7 @@
             <span ng-show="!isShowJobPostingError()">ช่องทางที่เห็นประกาศรับสมัครงาน</span>
             <span class="text-danger" ng-show="isShowJobPostingError()">กรุณาเลือกช่องทางที่เห็นประกาศรับสมัครงาน</span>
           </label>
-          <select name="job_posting" class="form-control" style="width: 100%"
+          <select name="job_posting" class="form-control select2" style="width: 100%" data-dropdown-css-class="select2-indigo"
             ng-class="{'is-invalid': isShowJobPostingError()}" ng-model="selectedEmployeeProfile.job_posting" required>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
             <option ng-repeat="job_posting in job_posting | orderBy: 'name'" ng-value="job_posting.name">
