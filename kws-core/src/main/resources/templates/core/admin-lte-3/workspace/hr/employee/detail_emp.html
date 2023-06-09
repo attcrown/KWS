@@ -9,10 +9,10 @@
                     <h1>Img</h1>
                 </div>
                 <div class="p-4 mb-4">
-                    <p><b>สังกัด : </b></p>
+                    <p><b>สังกัด : {{show_datapage.name || "ไม่พบข้อมูล"}}</b></p>
                     <p>Direct report : </p>
                     <p>Consultant : </p>
-                    <p>วันที่เริ่มงานได้ : </p>
+                    <p>วันที่เริ่มงานได้ : {{show_datapage.date || "ไม่พบข้อมูล"}}</p>
                     <p>เบอร์โทรศัพท์ : </p>
                     <p>Line ID : </p>
                     <p>ที่อยู่ : </p>
@@ -65,9 +65,10 @@
 
                         <div class="col-md-12">
                             <label>
-                              <span class="text-danger">*</span>
-                              <span ng-show="!isShowImgBankFileError || attachment.img_Bank != null">แนบรูปบัญชีธนาคาร (BookBank)</span>
-                              <span class="text-danger" ng-show="isShowImgBankFileError && attachment.img_Bank == null">กรุณาอัพโหลดไฟล์ บัญชีธนาคาร</span>
+                              <!-- <span class="text-danger">*</span> -->
+                              <span>แนบรูปบัญชีธนาคาร (BookBank)</span>
+                              <!-- <span ng-show="!isShowImgBankFileError || attachment.img_Bank != null">แนบรูปบัญชีธนาคาร (BookBank)</span> -->
+                              <!-- <span class="text-danger" ng-show="isShowImgBankFileError && attachment.img_Bank == null">กรุณาอัพโหลดไฟล์ บัญชีธนาคาร</span> -->
                             </label>
                             <div class="input-group">
                               <div class="custom-file">
@@ -100,9 +101,10 @@
                         </div>
                         <div class="col-md-12">
                             <label>
-                              <span class="text-danger">*</span>
-                              <span ng-show="!isShowlocalFileError || attachment.img_local != null">สำเนาทะเบียนบ้าน</span>
-                              <span class="text-danger" ng-show="isShowlocalFileError && attachment.img_local == null">กรุณาอัพโหลดไฟล์ สำเนาทะเบียนบ้าน</span>
+                              <!-- <span class="text-danger">*</span> -->
+                              <span>สำเนาทะเบียนบ้าน</span>
+                              <!-- <span ng-show="!isShowlocalFileError || attachment.img_local != null">สำเนาทะเบียนบ้าน</span> -->
+                              <!-- <span class="text-danger" ng-show="isShowlocalFileError && attachment.img_local == null">กรุณาอัพโหลดไฟล์ สำเนาทะเบียนบ้าน</span> -->
                             </label>
                             <div class="input-group">
                               <div class="custom-file">
@@ -119,9 +121,10 @@
                         </div>
                         <div class="col-md-12 mt-3">
                             <label>
-                              <span class="text-danger">*</span>
-                              <span ng-show="!isShowprofileFileError || attachment.img_profile != null">แนบรูปบัตรประชาชน</span>
-                              <span class="text-danger" ng-show="isShowprofileFileError && attachment.img_profile == null">กรุณาอัพโหลดไฟล์ บัตรประชาชน</span>
+                              <!-- <span class="text-danger">*</span> -->
+                              <span>แนบรูปบัตรประชาชน</span>
+                              <!-- <span ng-show="!isShowprofileFileError || attachment.img_profile != null">แนบรูปบัตรประชาชน</span> -->
+                              <!-- <span class="text-danger" ng-show="isShowprofileFileError && attachment.img_profile == null">กรุณาอัพโหลดไฟล์ บัตรประชาชน</span> -->
                             </label>
                             <div class="input-group">
                               <div class="custom-file">
@@ -834,7 +837,49 @@
                     <label style="font-size: 20px;">ไฟล์สัญญาจ้าง</label>
                 </div>
                 <div class="card-body">
-
+                    <div class="row mx-2">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>
+                                    <span>วันที่เริ่มสัญญาจ้าง</span>
+                                </label>
+                                <input type="date" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>
+                                    <span>วันที่สิ้นสุดสัญญาจ้าง</span>
+                                </label>
+                                <input type="date" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt-3">
+                            <label>
+                              <!-- <span class="text-danger">*</span> -->
+                              <span>ไฟล์สัญญาจ้าง</span>
+                              <!-- <span ng-show="!isShowf_contractFileError || attachment.f_contract != null">แนบรูปบัตรประชาชน</span> -->
+                              <!-- <span class="text-danger" ng-show="isShowf_contractFileError && attachment.f_contract == null">กรุณาอัพโหลดไฟล์ บัตรประชาชน</span> -->
+                            </label>
+                            <div class="input-group">
+                              <div class="custom-file">
+                                <input type="file" class="custom-file-input f_contract-file" name="f_contract" accept=".jpg ,.png ,.pdf" onchange="checkFileSize(this)"/>
+                                <label ng-show="!attachment.f_contract" class="custom-file-label">อัพโหลดไฟล์</label>
+                                <label ng-show="attachment.f_contract" class="custom-file-label">{{ attachment.f_contract.name }}</label>
+                              </div>
+                              <div class="input-group-append">
+                                <button ng-show="attachment.f_contract" class="btn btn-danger" ng-click="removeFile('f_contract')">
+                                  <i class="fas fa-trash"></i> ลบ
+                                </button>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt-3">
+                            <a href="#">{{attachment.f_contract.name}}</a><br>
+                            <a href="#">{{attachment.f_contract.name}}</a><br>
+                            <a href="#">{{attachment.f_contract.name}}</a>
+                        </div>
+                    </div>
                 </div>
             </div>
 

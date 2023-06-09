@@ -33,6 +33,9 @@
             $(".img_profile-file").on("change", function($event) {
                 handleFileChange($event, "img_profile", "img_profile");
             });
+            $(".f_contract-file").on("change", function($event) {
+                handleFileChange($event, "f_contract", "f_contract");
+            });
         }
 
         $scope.removeFile = function (a) {
@@ -57,6 +60,7 @@
         $scope.isShowImgBankFileError = false;
         $scope.isShowlocalFileError = false;
         $scope.isShowprofileFileError = false;
+        $scope.isShowf_contractFileError = false;
         // $scope.showCardBody4 = false;
 
         $scope.toggleCardBody = function() {
@@ -110,7 +114,6 @@
             if($scope.attachment.img_profile == null){
                 $scope.isShowprofileFileError = true;
             }else{$scope.isShowprofileFileError = false;} 
-
         }
 
 
