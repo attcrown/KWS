@@ -4,6 +4,7 @@
     app.controller("CandidateUserController", ["$scope", "$http", ($scope, $http) => {
             $scope.mode = 'list';
             $scope.date = 'close';
+            
             $scope.init = function() {
                 // tableController($scope, $http);
                 // cate_success_Controller($scope, $http);
@@ -15,7 +16,6 @@
                 { label: '17', name: 'ชื่อ - นามสกุล', position: 'ตำแหน่ง' },
                 { label: '16', name: 'ชื่อ - นามสกุล', position: 'ตำแหน่ง' }
             ];
-
 
             $scope.items_interview1 = [];
 
