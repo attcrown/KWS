@@ -16,6 +16,11 @@
         $scope.selectedStartTime = null;
         $scope.selectedEndTime = 19;
         $scope.date = "close";
+        $scope.table_date = false;
+        $scope.month_date = false;
+        var currentDate = new Date();
+        $scope.year_date = currentDate.getFullYear();
+        var currentMonth = currentDate.getMonth();
 
         $scope.candidates = [
             { id: "1", firstName: 'arin', lastName: 'test1', job_position: "Developer", day: "24/06/23", startTime: "8 PM", endTime: "9 PM", negotiate_status: "wait" },
@@ -76,9 +81,104 @@
             { id: "17", name: "17:00" },
             { id: "18", name: "17:30" },
             { id: "19", name: "18:00" },
-
-
         ];
+
+        $scope.datedays = [];
+        $scope.generateDays = function(month) {
+            var currentDate = new Date();
+            var year = $scope.year_date;
+
+            var firstDay = new Date(year, month, 1);
+            var startDay = firstDay.getDay()+1; // 0 = Sunday, 1 = Monday, ...
+
+            var daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            var week = {};
+            var dayIndex = startDay === 0 ? 7 : startDay; // 1 = Monday, ..., 7 = Sunday
+            for (var i = 1; i <= daysInMonth; i++) {
+                var weekIndex = Math.floor((dayIndex - 1) / 7);
+                var dayKey = 'day' + ((dayIndex - 1) % 7 + 1);
+                
+                if (!$scope.datedays[weekIndex]) {
+                    $scope.datedays[weekIndex] = {};
+                }
+                $scope.datedays[weekIndex][dayKey] = i;
+                
+                dayIndex++;
+            }
+        };
+        $scope.datemonths = [
+            { key: 0, value: 'January' },
+            { key: 1, value: 'February' },
+            { key: 2, value: 'March' },
+            { key: 3, value: 'April' },
+            { key: 4, value: 'May' },
+            { key: 5, value: 'June' },
+            { key: 6, value: 'July' },
+            { key: 7, value: 'August' },
+            { key: 8, value: 'September' },
+            { key: 9, value: 'October' },
+            { key: 10, value: 'November' },
+            { key: 11, value: 'December' }
+        ];
+        $scope.fullMonth = $scope.datemonths[currentMonth].value;
+
+        $scope.tables_date = function(){
+            $scope.generateDays(currentMonth);
+            $scope.table_date = true;
+            $scope.month_date = false;
+        }
+
+        $scope.months_date = function(){
+            $scope.month_date = !$scope.month_date;
+            $scope.table_date = !$scope.table_date;
+        }
+
+        $scope.nextmonth = function(){
+            if(currentMonth < 11){
+                currentMonth++;
+                $scope.datedays = [];
+                console.log(currentMonth);
+                $scope.fullMonth = $scope.datemonths[currentMonth].value;
+                $scope.generateDays(currentMonth);
+            }else if(currentMonth >= 11){
+                $scope.year_date++;
+                currentMonth = 0;
+                $scope.datedays = [];
+                console.log(currentMonth);
+                console.log($scope.year_date);
+                $scope.fullMonth = $scope.datemonths[currentMonth].value;
+                $scope.generateDays(currentMonth);
+            }
+        }
+        $scope.backmonth = function(){
+            if(currentMonth > 0){
+                currentMonth--;
+                $scope.datedays = [];
+                console.log(currentMonth);
+                $scope.fullMonth = $scope.datemonths[currentMonth].value;
+                $scope.generateDays(currentMonth);
+            }else if(currentMonth <= 0){
+                $scope.year_date--;
+                currentMonth = 11;
+                $scope.datedays = [];
+                console.log(currentMonth);
+                console.log($scope.year_date);
+                $scope.fullMonth = $scope.datemonths[currentMonth].value;
+                $scope.generateDays(currentMonth);
+            }
+        }
+        $scope.btnsum = function(day){
+            $scope.selectedCandidateProfile.day = $scope.year_date+"-"+(currentMonth+1)+"-"+day;
+            console.log($scope.selectedCandidateProfile.day);
+        }
+        $scope.change_month = function(month){
+            currentMonth = month;
+            $scope.fullMonth = $scope.datemonths[currentMonth].value;
+            $scope.datedays = [];
+            $scope.generateDays(currentMonth);
+            $scope.months_date();
+        } 
 
         $scope.init = function () {
 
