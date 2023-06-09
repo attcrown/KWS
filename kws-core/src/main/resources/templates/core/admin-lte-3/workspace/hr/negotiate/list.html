@@ -155,10 +155,10 @@
                                         ng-click="toDetailNegotiateMode(candidate)">
                                         ดูข้อมูล
                                     </button>
-                                    <button class="button buttonYes p8 p700" ng-style="{'width':'25%'}" ng-click="">
+                                    <button class="button buttonYes p8 p700" ng-style="{'width':'25%'}" ng-click="candidate.negotiate_status = 'success'">
                                         ตกลง
                                     </button>
-                                    <button class="button buttonNo p8 p700" ng-style="{'width':'25%'}" ng-click="">
+                                    <button class="button buttonNo p8 p700" ng-style="{'width':'25%'}" ng-click="candidate.negotiate_status = 'failed'">
                                         ไม่ตกลง
                                     </button>
                                 </div>
