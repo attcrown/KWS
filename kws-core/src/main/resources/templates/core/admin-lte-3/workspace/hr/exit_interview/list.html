@@ -13,8 +13,11 @@
                 </tr>
             </thead>
 
-            <tbody ng-if="employees.length > 0">
-                <tr ng-repeat="employee in employees  | orderBy: 'firstName'">
+            <tbody>
+                <tr ng-if="!search_table">
+                    <td colspan="9" class="text-center">ไม่มีข้อมูล</td>
+                </tr>
+                <tr ng-if="search_table" ng-repeat="employee in employees  | orderBy: 'firstName'">
                     <td class="align-middle" ng-style ="{'color':'#667085'}">{{ employee.id }} </td>
                     <td class="align-middle" ng-style ="{'color':'#667085'}">{{ employee.date_exit }} </td>
                     <td class="align-middle" ng-style ="{'color':'#000000'}">{{ employee.firstName }} {{ employee.lastName }}</td>

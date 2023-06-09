@@ -37,16 +37,18 @@
     <div ng-if="isLoading" class="kws-loader">
         <div class='kws-loader-spin'></div>
     </div>
+    <div class="mx-5 pt-1 pb-4" style="background-color: rgb(255, 255, 255); border-radius: 10px">
+        <div class="mx-5 mt-5 shadow" style="border-radius: 10px">
+            <div ng-show="mode === 'list'">
+                <div th:replace="core/admin-lte-3/workspace/hr/exit_interview/search"></div>
+                <div th:replace="core/admin-lte-3/workspace/hr/exit_interview/list"></div>
+            </div>
 
-    <div ng-show="mode === 'list'">
-        <div th:replace="core/admin-lte-3/workspace/hr/exit_interview/search"></div>
-        <div th:replace="core/admin-lte-3/workspace/hr/exit_interview/list"></div>
+            <div ng-show="mode === 'detail'">
+                <div th:replace="core/admin-lte-3/workspace/hr/exit_interview/detail"></div>
+
+            </div>
+        </div>
     </div>
-
-    <div ng-show="mode === 'detail'">
-        <div th:replace="core/admin-lte-3/workspace/hr/exit_interview/detail"></div>
-
-    </div>
-
 
 </section>

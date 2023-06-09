@@ -6,6 +6,7 @@
         $scope.isLoading = false;
         $scope.criteria = {};
         $scope.paging = {};
+        $scope.search_table = false;
         $scope.employees  = [
         { id: "1", firstName: 'arin', lastName: 'test1',date_exit :"24/05/23", position: "Developer",affiliation :"TECH", kpi:"kpi" },
         ];
@@ -55,6 +56,7 @@
 
             // useApi($scope, $http);
              useControllerList($scope, $http);
+             $(".select2").select2({ theme: "bootstrap4" });
             // useControllerEntry($scope, $http);
 
             $scope.criteria = {
@@ -73,6 +75,14 @@
         $scope.toDetailMode = function(employee){
             $scope.selectedEmployee = employee;
             $scope.mode = "detail";
+        }
+
+        $scope.search = function(){
+            $scope.search_table = true;
+        }
+
+        $scope.toListMode = function(){
+            $scope.mode = "list";
         }
 
     }]);
