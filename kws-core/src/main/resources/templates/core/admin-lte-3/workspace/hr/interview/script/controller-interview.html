@@ -73,7 +73,7 @@
             { id: "19", name: "18:00" },
         ];
 
-        $scope.questions = [
+        $scope.questions1 = [
             { id: 1, text: 'แนะนำตัว', answer: '' },
             { id: 2, text: 'เนื่องจากบริษัทเราเป็น start up ของคนรุ่นใหม่ ถ้าต้องไปช่วยทีมอื่นทำในงานที่เร่งด่วนกว่า หรือต้องมีการปรับเปลี่ยนตำแหน่งจะรู้สึกยังไง', answer: '' },
             { id: 3, text: 'งานที่เคยทำมา', answer: '' },
@@ -92,6 +92,28 @@
             { id: 16, text: 'บอกข้อดี ข้อเสียของตัวเอง : (ในการ์ดไม่มี)', answer: '' },
             { id: 17, text: 'อื่นๆ : (ในการ์ดไม่มี)', answer: '' }
         ];
+
+
+        $scope.questions2 = [
+            { id: 1, text: 'แนะนำตัว', answer: '' },
+            { id: 2, text: 'เนื่องจากบริษัทเราเป็น start up ของคนรุ่นใหม่ ถ้าต้องไปช่วยทีมอื่นทำในงานที่เร่งด่วนกว่า หรือต้องมีการปรับเปลี่ยนตำแหน่งจะรู้สึกยังไง', answer: '' },
+            { id: 3, text: 'งานที่เคยทำมา', answer: '' },
+            { id: 4, text: 'เหตุผลที่ลาออก', answer: '' },
+            { id: 5, text: 'เข้ามาแล้ว จะสร้าง % การ Growth ได้กี่เท่าตัว (Management)', answer: '' },
+            { id: 6, text: 'เป้าหมายทีม + เข้าเป็นส่วนไหนของทีม', answer: '' },
+            { id: 7, text: 'ทำได้กี่ชิ้นต่อนาที / ต่ออาทิตย์ / ต่อเดือน (Officer)', answer: '' },
+            { id: 8, text: 'คนอื่นมักจะบอกว่าคุณเป็นคนยังไง ?', answer: '' },
+            { id: 9, text: 'คุณเคยสร้างหรือปั้นน้องคนไหนบ้างไหม และปั้นด้วยวิธีไหน? (Management)', answer: '' },
+            { id: 10, text: 'ปัญหาที่เคยพบในการทำงาน และวิธีแก้ไข', answer: '' },
+            { id: 11, text: 'เคยเจอเหตุการน้องในทีม/เพื่อนที่ทำงานไม่สามารถก้าวข้ามอุปสรรคการทำงานของตัวเองบ้างไหม เล่าให้ฟังหน่อยว่าทำอย่างไรบ้าง? (Management)', answer: '' },
+            { id: 12, text: 'Success case', answer: '' },
+            { id: 13, text: 'ทำไมถึงเลือกสมัครงานกับเรา', answer: '' },
+            { id: 14, text: 'ความกดดันหนักสุดที่เคยเจอมา', answer: '' },
+            { id: 15, text: 'ชอบหรือไม่ชอบวัฒนธรรมองค์กรเราข้อไหน ยังไง', answer: '' },
+            { id: 16, text: 'บอกข้อดี ข้อเสียของตัวเอง : (ในการ์ดไม่มี)', answer: '' },
+            { id: 17, text: 'อื่นๆ : (ในการ์ดไม่มี)', answer: '' }
+        ];
+
 
         $scope.rows = [
             { name: 'Growth mindset', percent: 80, credit: 3 },
@@ -242,7 +264,19 @@
                 return ($scope.candidate.interview_status == "round3")
             };
         };
-
+        
+        $scope.getBadgeClass = function (lifeCycle) {
+            switch (lifeCycle) {
+                case 'round1':
+                    return 'yellow';
+                case 'round2':
+                    return 'bg-primary';
+                case 'round2':
+                    return 'bg-primary';
+                default:
+                    return '';
+            };
+        };
 
 
         $scope.resetFormDate = function () {
