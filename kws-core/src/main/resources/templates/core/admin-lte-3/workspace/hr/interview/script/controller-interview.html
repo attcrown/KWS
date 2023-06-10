@@ -23,7 +23,10 @@
         var currentDate = new Date();
         $scope.year_date = currentDate.getFullYear();
         var currentMonth = currentDate.getMonth();
-        
+        $scope.selectedTab = ['interview', 'interview', 'interview'];
+
+        $scope.expandOption = ['partialOpened', 'partialOpened', 'partialOpened'];
+
         $scope.candidates = [
             { id: "1", firstName: 'arin', lastName: 'test1', job_position: "Developer", day: "24/06/2023", startTime: "8 PM", endTime: "9 PM", interview_status: "round2" },
             { id: "2", firstName: 'peet', lastName: 'terst2', job_position: "Developer", day: "24/06/2023", startTime: "8 PM", endTime: "9 PM", interview_status: "round1" },
@@ -48,6 +51,24 @@
             { id: "8" },
             { id: "9" },
             { id: "10" },
+
+        ];
+
+        $scope.levels = [
+            { name: "Officer Level 1" },
+            { name: "Officer Level 2" },
+            { name: "Officer Level 3" },
+            { name: "Supervisor Level 1" },
+            { name: "Supervisor Level 2" },
+            { name: "Supervisor Level 3" },
+            { name: "Manager Level 1" },
+            { name: "Manager Level 2" },
+            { name: "Manager Level 3" },
+            { name: "Executive Level 1" },
+            { name: "Executive Level 2" },
+            { name: "Executive Level 3" },
+          
+          
 
         ];
 
@@ -128,17 +149,16 @@
             { name: 'การโน้มน้าว', percent: 90, credit: 4 },
             { name: 'Data analysis', percent: 90, credit: 4 },
 
-            // ... and so on for all the rows
         ];
 
         $scope.datedays = [];
 
-        $scope.generateDays = function(month) {
+        $scope.generateDays = function (month) {
             var currentDate = new Date();
             var year = $scope.year_date;
 
             var firstDay = new Date(year, month, 1);
-            var startDay = firstDay.getDay()+1; // 0 = Sunday, 1 = Monday, ...
+            var startDay = firstDay.getDay() + 1; // 0 = Sunday, 1 = Monday, ...
 
             var daysInMonth = new Date(year, month + 1, 0).getDate();
 
@@ -147,16 +167,16 @@
             for (var i = 1; i <= daysInMonth; i++) {
                 var weekIndex = Math.floor((dayIndex - 1) / 7);
                 var dayKey = 'day' + ((dayIndex - 1) % 7 + 1);
-                
+
                 if (!$scope.datedays[weekIndex]) {
                     $scope.datedays[weekIndex] = {};
                 }
                 $scope.datedays[weekIndex][dayKey] = i;
-                
+
                 dayIndex++;
             }
         };
-        
+
         $scope.datemonths = [
             { key: 0, value: 'January' },
             { key: 1, value: 'February' },
@@ -264,18 +284,74 @@
                 return ($scope.candidate.interview_status == "round3")
             };
         };
-        
-        $scope.getBadgeClass = function (lifeCycle) {
-            switch (lifeCycle) {
-                case 'round1':
-                    return 'yellow';
-                case 'round2':
-                    return 'bg-primary';
-                case 'round2':
-                    return 'bg-primary';
+
+        $scope.toggleTab = function (interview,tab) {
+            if ($scope.selectedTab[interview] === tab) {
+                $scope.selectedTab[interview] = tab; // Collapse the currently selected tab
+            } else {
+                $scope.selectedTab[interview] = tab; // Expand the selected tab
+            }
+        };
+
+        $scope.isTabSelected = function (interview,tab) {
+            return $scope.selectedTab[interview] === tab;
+        };
+
+        $scope.expandOptionIcon = function (card) {
+            switch ($scope.expandOption[card]) {
+                case 'partialOpened':
+                    return "fa-plus";
+                case 'fullyOpened':
+                    return "fa-minus";
+                case 'closed':
+                    return "fa-minus";
+                default:
+                    return "fa-plus";
+            }
+        };
+
+        $scope.getCardWidgetOnCard = function (card) {
+            switch ($scope.expandOption[card]) {
+                case 'partialOpened':
+                    return 'collapse';
+                case 'fullyOpened':
+                    return '';
+                case 'closed':
+                    return 'collapse';
+                case 'fullyOpenedInCorrectInterview':
+                    return 'collapse';
                 default:
                     return '';
-            };
+            }
+        };
+
+        $scope.clickExpandRotate = function (card, roundInterview, roundDisplay) {
+
+            if (roundInterview != roundDisplay) {
+                if ($scope.expandOption[card] === "partialOpened") {
+                    $scope.expandOption[card] = "fullyOpened"; console.log($scope.expandOption[card]);
+                }
+                else if ($scope.expandOption[card] == "fullyOpened") {
+                    $scope.expandOption[card] = "closed"; console.log($scope.expandOption[card]);
+                }
+                else {
+                    $scope.expandOption[card] = "partialOpened"; console.log($scope.expandOption[card]);
+                }
+            }
+
+            else {
+                if ($scope.expandOption[card] === "closed") {
+                    $scope.expandOption[card] = "fullyOpenedInCorrectInterview"; console.log($scope.expandOption[card]);
+                }
+
+                else if ($scope.expandOption[card] === "fullyOpenedInCorrectInterview") {
+                    $scope.expandOption[card] = "closed"; console.log($scope.expandOption[card]);
+                }
+                else {
+                    $scope.expandOption[card] = "fullyOpenedInCorrectInterview"; console.log($scope.expandOption[card]);
+                }
+            }
+
         };
 
 
@@ -331,25 +407,25 @@
             }
         };
 
-        $scope.tables_date = function(){
+        $scope.tables_date = function () {
             $scope.generateDays(currentMonth);
             $scope.table_date = true;
             $scope.month_date = false;
         }
 
-        $scope.months_date = function(){
+        $scope.months_date = function () {
             $scope.month_date = !$scope.month_date;
             $scope.table_date = !$scope.table_date;
         }
 
-        $scope.nextmonth = function(){
-            if(currentMonth < 11){
+        $scope.nextmonth = function () {
+            if (currentMonth < 11) {
                 currentMonth++;
                 $scope.datedays = [];
                 console.log(currentMonth);
                 $scope.fullMonth = $scope.datemonths[currentMonth].value;
                 $scope.generateDays(currentMonth);
-            }else if(currentMonth >= 11){
+            } else if (currentMonth >= 11) {
                 $scope.year_date++;
                 currentMonth = 0;
                 $scope.datedays = [];
@@ -359,14 +435,14 @@
                 $scope.generateDays(currentMonth);
             }
         }
-        $scope.backmonth = function(){
-            if(currentMonth > 0){
+        $scope.backmonth = function () {
+            if (currentMonth > 0) {
                 currentMonth--;
                 $scope.datedays = [];
                 console.log(currentMonth);
                 $scope.fullMonth = $scope.datemonths[currentMonth].value;
                 $scope.generateDays(currentMonth);
-            }else if(currentMonth <= 0){
+            } else if (currentMonth <= 0) {
                 $scope.year_date--;
                 currentMonth = 11;
                 $scope.datedays = [];
@@ -382,13 +458,13 @@
             console.log($scope.selectedCandidateProfile.day);
         }
 
-        $scope.change_month = function(month){
+        $scope.change_month = function (month) {
             currentMonth = month;
             $scope.fullMonth = $scope.datemonths[currentMonth].value;
             $scope.datedays = [];
             $scope.generateDays(currentMonth);
             $scope.months_date();
-        }   
+        }
 
     }]);
 </script>
