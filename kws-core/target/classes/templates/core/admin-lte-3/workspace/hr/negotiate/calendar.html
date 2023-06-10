@@ -1,0 +1,90 @@
+<div>
+    <div class="mx-3" style="display: flex; align-items: center; justify-content: space-between;">
+        <button class="btn btn-outline" ng-click="backmonth()"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
+        <button class="btn btn-outline" ng-click="months_date()">{{fullMonth}} {{year_date}}</button>
+        <button class="btn btn-outline" ng-click="nextmonth()"><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+    </div>
+    <div ng-show="month_date"> 
+        <table>
+            <tbody>
+                <tr>
+                    <td><button class="btn btn-outline-info" ng-click="change_month(datemonths[0].key)">{{datemonths[0].value}}</button></td>
+                    <td><button class="btn btn-outline-info"ng-click="change_month(datemonths[1].key)">{{datemonths[1].value}}</button></td>
+                    <td><button class="btn btn-outline-info" ng-click="change_month(datemonths[2].key)">{{datemonths[2].value}}</button></td>
+                </tr>
+                <tr>
+                    <td><button class="btn btn-outline-info" ng-click="change_month(datemonths[3].key)">{{datemonths[3].value}}</button></td>
+                    <td><button class="btn btn-outline-info" ng-click="change_month(datemonths[4].key)">{{datemonths[4].value}}</button></td>
+                    <td><button class="btn btn-outline-info" ng-click="change_month(datemonths[5].key)">{{datemonths[5].value}}</button></td>
+                </tr>
+                <tr>
+                    <td><button class="btn btn-outline-info" ng-click="change_month(datemonths[6].key)">{{datemonths[6].value}}</button></td>
+                    <td><button class="btn btn-outline-info" ng-click="change_month(datemonths[7].key)">{{datemonths[7].value}}</button></td>
+                    <td><button class="btn btn-outline-info" ng-click="change_month(datemonths[8].key)">{{datemonths[8].value}}</button></td>
+                </tr>
+                <tr>
+                    <td><button class="btn btn-outline-info" ng-click="change_month(datemonths[9].key)">{{datemonths[9].value}}</button></td>
+                    <td><button class="btn btn-outline-info" ng-click="change_month(datemonths[10].key)">{{datemonths[10].value}}</button></td>
+                    <td><button class="btn btn-outline-info" ng-click="change_month(datemonths[11].key)">{{datemonths[11].value}}</button></td>
+                </tr>
+            </tbody>
+        </table>                                                                                        
+    </div>
+    <div ng-show="table_date">
+        <table class="flexible-table">
+            <thead>
+                <tr>
+                    <th>Su</th>
+                    <th>Mo</th>
+                    <th>Tu</th>
+                    <th>We</th>
+                    <th>Th</th>
+                    <th>Fr</th>
+                    <th>Sa</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="day in datedays"> 
+                  <td><button ng-if="day.day1 !== undefined" class="btn-xs mb-2" ng-click="btnsum(day.day1)"><p>{{day.day1}}</p></button></td>
+                  <td><button ng-if="day.day2 !== undefined" class="btn-xs mb-2" ng-click="btnsum(day.day2)"><p>{{day.day2}}</p></button></td>
+                  <td><button ng-if="day.day3 !== undefined" class="btn-xs mb-2" ng-click="btnsum(day.day3)"><p>{{day.day3}}</p></button></td>
+                  <td><button ng-if="day.day4 !== undefined" class="btn-xs mb-2" ng-click="btnsum(day.day4)"><p>{{day.day4}}</p></button></td>
+                  <td><button ng-if="day.day5 !== undefined" class="btn-xs mb-2" ng-click="btnsum(day.day5)"><p>{{day.day5}}</p></button></td>
+                  <td><button ng-if="day.day6 !== undefined" class="btn-xs mb-2" ng-click="btnsum(day.day6)"><p>{{day.day6}}</p></button></td>
+                  <td><button ng-if="day.day7 !== undefined" class="btn-xs mb-2" ng-click="btnsum(day.day7)"><p>{{day.day7}}</p></button></td>
+                </tr>
+            </tbody> 
+            <style>
+                .btn-xs{
+                    height: 25px;
+                    width: 100%;                
+                    font-size: 14px;
+                    border-color: aliceblue;
+                    color: rgb(8, 8, 8);
+                    border-radius: 50px;
+                    background-color: #FFFFFF;
+                }
+                .btn-xs:active {
+                    border-color: green;
+                    background-color: lightgreen;
+                }
+                .flexible-table {
+                    width: 100%; /* กำหนดให้ตารางเต็มความกว้างของพื้นที่ที่ถูกจองไว้ */
+                    max-width: 500px; /* กำหนดความกว้างสูงสุดของตาราง */
+                    height: auto; /* ให้ความสูงของตารางปรับตามเนื้อหา */
+                }
+                
+                .flexible-table td,
+                .flexible-table th {
+                    width: 14.28%; /* แบ่งเท่าๆ กันเพื่อให้ความกว้างของคอลัมน์เท่าๆ กัน */
+                }
+            </style>  
+            <script>
+                function toggleButton(buttonId) {
+                  var button = document.getElementById(buttonId);
+                  button.classList.toggle('active');
+                }
+            </script>                                                                                                 
+        </table>
+    </div>
+</div>

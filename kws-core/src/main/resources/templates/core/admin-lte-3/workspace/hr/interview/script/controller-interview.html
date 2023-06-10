@@ -25,16 +25,16 @@
         var currentMonth = currentDate.getMonth();
         
         $scope.candidates = [
-            { id: "1", firstName: 'arin', lastName: 'test1', job_position: "Developer", day: "24/06/23", startTime: "8 PM", endTime: "9 PM", interview_status: "round2" },
-            { id: "2", firstName: 'peet', lastName: 'terst2', job_position: "Developer", day: "24/06/23", startTime: "8 PM", endTime: "9 PM", interview_status: "round1" },
-            { id: "57", firstName: 'arin', lastName: 'test1', job_position: "Developer", day: "24/06/23", startTime: "8 PM", endTime: "9 PM", interview_status: "round2" },
+            { id: "1", firstName: 'arin', lastName: 'test1', job_position: "Developer", day: "24/06/2023", startTime: "8 PM", endTime: "9 PM", interview_status: "round2" },
+            { id: "2", firstName: 'peet', lastName: 'terst2', job_position: "Developer", day: "24/06/2023", startTime: "8 PM", endTime: "9 PM", interview_status: "round1" },
+            { id: "57", firstName: 'arin', lastName: 'test1', job_position: "Developer", day: "24/06/2023", startTime: "8 PM", endTime: "9 PM", interview_status: "round2" },
             { id: "42", firstName: 'arin', lastName: 'test2', job_position: "Developer", day: null, startTime: null, endTime: null, interview_status: "null" },
             { id: "52", firstName: 'arin', lastName: 'test2', job_position: "Developer", day: null, startTime: null, endTime: null, interview_status: "null" },
             { id: "5", firstName: 'arin', lastName: 'test2', job_position: "Developer", day: null, startTime: null, endTime: null, interview_status: "null" },
-            { id: "3", firstName: 'arin', lastName: 'test2', job_position: "Developer", day: "24/06/23", startTime: "8 PM", endTime: "9 PM", interview_status: "round1" },
-            { id: "427", firstName: 'arin', lastName: 'test1', job_position: "Developer", day: "24/06/23", startTime: "8 PM", endTime: "9 PM", interview_status: "success" },
-            { id: "9", firstName: 'peet', lastName: 'terst2', job_position: "Developer", day: "24/06/23", startTime: "8 PM", endTime: "9 PM", interview_status: "round3" },
-            { id: "10", firstName: 'peet', lastName: 'terst2', job_position: "hr", day: "24/06/23", startTime: "8 PM", endTime: "9 PM", interview_status: "round2" },
+            { id: "3", firstName: 'arin', lastName: 'test2', job_position: "Developer", day: "24/06/2023", startTime: "8 PM", endTime: "9 PM", interview_status: "round1" },
+            { id: "427", firstName: 'arin', lastName: 'test1', job_position: "Developer", day: "24/06/2023", startTime: "8 PM", endTime: "9 PM", interview_status: "success" },
+            { id: "9", firstName: 'peet', lastName: 'terst2', job_position: "Developer", day: "24/06/2023", startTime: "8 PM", endTime: "9 PM", interview_status: "round3" },
+            { id: "10", firstName: 'peet', lastName: 'terst2', job_position: "hr", day: "24/06/2023", startTime: "8 PM", endTime: "9 PM", interview_status: "round2" },
         ];
 
         $scope.score = [
@@ -378,7 +378,7 @@
         }
 
         $scope.btnsum = function(day){
-            $scope.selectedCandidateProfile.day = $scope.year_date+"-"+(currentMonth+1)+"-"+day;
+            $scope.selectedCandidateProfile.day = day+"/"+(currentMonth+1)+"/"+$scope.year_date;
             console.log($scope.selectedCandidateProfile.day);
         }
 
