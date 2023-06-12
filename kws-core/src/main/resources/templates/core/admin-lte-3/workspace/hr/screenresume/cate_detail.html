@@ -14,7 +14,7 @@
               <span class="text-danger">*</span>
               <span>คำนำหน้า</span>
             </label>
-            <select name="typeName" class="form-control" style="width: 100%" ng-model="selectedEmployeeProfile.typeName"
+            <select name="typeName" class="form-control" style="width: 100%" ng-model="show_datapage.typeName"
               disabled>
               <option value="" disabled selected hidden>
                 --- กรุณาเลือก ---
@@ -23,14 +23,27 @@
           </div>
         </div>
 
+        <div class="col-md-6"></div>
+
         <div class="col-md-6">
           <div class="form-group">
             <label>
               <span class="text-danger">*</span>
-              <span>ชื่อ-นามสกุล (ภาษาไทยเท่านั้น)</span>
+              <span>ชื่อ (ภาษาไทยเท่านั้น)</span>
             </label>
-            <input name="firstName" type="text" class="form-control" placeholder="ระบุชื่อ-นามสกุล"
+            <input name="firstName" type="text" class="form-control" placeholder="ระบุชื่อ"
               ng-model="show_datapage.name" disabled />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span>นามสกุล (ภาษาไทยเท่านั้น)</span>
+            </label>
+            <input name="firstName" type="text" class="form-control" placeholder="ระบุนามสกุล"
+              ng-model="show_datapage.lastname" disabled />
           </div>
         </div>
 
@@ -41,7 +54,7 @@
               <span>ชื่อเล่น (ภาษาไทยเท่านั้น)</span>
             </label>
             <input name="nickName" type="text" class="form-control" placeholder="ระบุชื่อเล่น"
-              ng-model="selectedEmployeeProfile.nickName" disabled />
+              ng-model="show_datapage.nickName" disabled />
           </div>
         </div>
 
@@ -49,10 +62,10 @@
           <div class="form-group">
             <label>
               <span class="text-danger">*</span>
-              <span>เบอร์โทรศัพท์</span>
+              <span>เพศ</span>
             </label>
-            <input name="phone" type="text" class="form-control" placeholder="ระบุเบอร์โทรศัพท์"
-              ng-model="selectedEmployeeProfile.phone" disabled />
+            <input name="phone" type="text" class="form-control" placeholder="ระบุเพศ"
+              ng-model="show_datapage.phone" disabled />
           </div>
         </div>
 
@@ -60,10 +73,10 @@
           <div class="form-group">
             <label>
               <span class="text-danger">*</span>
-              <span>อายุ</span>
+              <span>ปี/เดือน/วันเกิด</span>
             </label>
-            <input name="old" type="number" class="form-control" placeholder="ระบุอายุ"
-              ng-model="selectedEmployeeProfile.old" disabled />
+            <input name="phone" type="text" class="form-control" placeholder="ระบุปี/เดือน/วันเกิด"
+              ng-model="show_datapage.sum_birth_day" disabled />
           </div>
         </div>
 
@@ -71,32 +84,10 @@
           <div class="form-group">
             <label>
               <span class="text-danger">*</span>
-              <span>ที่อยู่ปัจจุบัน</span>
+              <span>สถานภาพ</span>
             </label>
-            <input name="location" type="text" class="form-control" placeholder="ระบุที่อยู่ปัจจุบัน"
-              ng-model="selectedEmployeeProfile.location" disabled />
-          </div>
-        </div>
-
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>
-              <span class="text-danger">*</span>
-              <span>ชื่อ Line (Line ที่ใช้แอดกับทางบริษัท)</span>
-            </label>
-            <input name="line" type="text" class="form-control" placeholder="ระบุชื่อ Line"
-              ng-model="selectedEmployeeProfile.line" disabled />
-          </div>
-        </div>
-
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>
-              <span class="text-danger">*</span>
-              <span>ชื่อ Facebook</span>
-            </label>
-            <input name="facebook" type="text" class="form-control" placeholder="ระบุ Facebook"
-              ng-model="selectedEmployeeProfile.facebook" disabled />
+            <input name="phone" type="text" class="form-control" placeholder="ระบุสถานภาพ"
+              ng-model="show_datapage.status_user" disabled />
           </div>
         </div>
 
@@ -107,7 +98,7 @@
               <span>สัญชาติ</span>
             </label>
             <input name="nationality" type="text" class="form-control" placeholder="ระบุสัญชาติ"
-              ng-model="selectedEmployeeProfile.nationality" disabled />
+              ng-model="show_datapage.nationality" disabled />
           </div>
         </div>
 
@@ -118,9 +109,64 @@
               <span>เชื้อชาติ</span>
             </label>
             <input name="ethnicity" type="text" class="form-control" placeholder="ระบุเชื้อชาติ"
-              ng-model="selectedEmployeeProfile.ethnicity" disabled />
+              ng-model="show_datapage.ethnicity" disabled />
           </div>
         </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span>เบอร์โทรศัพท์</span>
+            </label>
+            <input name="phone" type="text" class="form-control" placeholder="ระบุเบอร์โทรศัพท์"
+              ng-model="show_datapage.phone" disabled />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span>อายุ</span>
+            </label>
+            <input name="old" type="number" class="form-control" placeholder="ระบุอายุ"
+              ng-model="show_datapage.old" disabled />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span>ที่อยู่ปัจจุบัน</span>
+            </label>
+            <input name="location" type="text" class="form-control" placeholder="ระบุที่อยู่ปัจจุบัน"
+              ng-model="show_datapage.location" disabled />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span>ชื่อ Line (Line ที่ใช้แอดกับทางบริษัท)</span>
+            </label>
+            <input name="line" type="text" class="form-control" placeholder="ระบุชื่อ Line"
+              ng-model="show_datapage.line" disabled />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              <span class="text-danger">*</span>
+              <span>ชื่อ Facebook</span>
+            </label>
+            <input name="facebook" type="text" class="form-control" placeholder="ระบุ Facebook"
+              ng-model="show_datapage.facebook" disabled />
+          </div>
+        </div>        
 
         <div class="col-md-6">
           <div class="form-group">
@@ -129,7 +175,7 @@
               <span>Line ID สำหรับติดต่อประสานงาน และส่งข้อมูลเพิ่มเติม</span>
             </label>
             <input name="lineID" type="text" class="form-control" placeholder="ระบุชื่อ LineID"
-              ng-model="selectedEmployeeProfile.lineID" disabled />
+              ng-model="show_datapage.lineID" disabled />
           </div>
         </div>
 
@@ -140,7 +186,7 @@
               <span>งานอดิเรก/สิ่งที่สนใจเป็นพิเศษ</span>
             </label>
             <input name="wishes" type="text" class="form-control" placeholder="ระบุงานอดิเรก/สิ่งที่สนใจเป็นพิเศษ"
-              ng-model="selectedEmployeeProfile.wishes" disabled />
+              ng-model="show_datapage.wishes" disabled />
           </div>
         </div>
 
@@ -150,7 +196,7 @@
               <span class="text-danger">*</span>
               <span>ประเภทบุคคล</span>
             </label>
-            <select name="indtype" class="form-control" style="width: 100%" ng-model="selectedEmployeeProfile.indtype"
+            <select name="indtype" class="form-control" style="width: 100%" ng-model="show_datapage.indtype"
               disabled>
               <option value="" disabled selected hidden>
                 --- กรุณาเลือก ---
@@ -165,7 +211,7 @@
               <span class="text-danger">*</span>
               <span>คุณมีอาการดังนี้ หรือไม่</span>
             </label>
-            <select name="sick" class="form-control" style="width: 100%" ng-model="selectedEmployeeProfile.sick"
+            <select name="sick" class="form-control" style="width: 100%" ng-model="show_datapage.sick"
               disabled>
               <option value="" disabled selected hidden>
                 --- กรุณาเลือก ---
@@ -226,7 +272,7 @@
             <span>สถาบันการศึกษามัธยมปลาย</span>
           </label>
           <input name="current_education" type="text" class="form-control" placeholder="ระบุสถาบันการศึกษามัธยมปลาย"
-            ng-model="selectedEmployeeProfile.current_education" disabled />
+            ng-model="show_datapage.current_education" disabled />
         </div>
       </div>
 
@@ -237,7 +283,7 @@
             <span>สาขาวิชา</span>
           </label>
           <input name="current_bachelor_education" type="text" class="form-control" placeholder="ระบุสาขาวิชา"
-            ng-model="selectedEmployeeProfile.current_bachelor_education" disabled />
+            ng-model="show_datapage.current_bachelor_education" disabled />
         </div>
       </div>
 
@@ -248,7 +294,7 @@
             <span>เกรดเฉลี่ย</span>
           </label>
           <input name="grade_highschool" type="number" class="form-control" placeholder="ระบุเกรดเฉลี่ย"
-            ng-model="selectedEmployeeProfile.grade_highschool" disabled />
+            ng-model="show_datapage.grade_highschool" disabled />
         </div>
       </div>
 
@@ -260,7 +306,7 @@
             <span>สถาบันการศึกษาปวช/ปวส</span>
           </label>
           <input name="academy_vocational_education" type="text" class="form-control"
-            placeholder="ระบุสถาบันการศึกษาปวช/ปวส" ng-model="selectedEmployeeProfile.academy_vocational_education"
+            placeholder="ระบุสถาบันการศึกษาปวช/ปวส" ng-model="show_datapage.academy_vocational_education"
             disabled />
         </div>
       </div>
@@ -271,7 +317,7 @@
             <span>สาขาวิชา</span>
           </label>
           <input name="major_vocational_education" type="text" class="form-control" placeholder="ระบุสาขาวิชา"
-            ng-model="selectedEmployeeProfile.major_vocational_education" disabled />
+            ng-model="show_datapage.major_vocational_education" disabled />
         </div>
       </div>
 
@@ -281,7 +327,7 @@
             <span>เกรดเฉลี่ย</span>
           </label>
           <input name="grade_vocational_education" type="number" class="form-control" placeholder="ระบุเกรดเฉลี่ย"
-            ng-model="selectedEmployeeProfile.grade_vocational_education" disabled />
+            ng-model="show_datapage.grade_vocational_education" disabled />
         </div>
       </div>
 
@@ -294,7 +340,7 @@
             <span>สถาบันการศึกษาปริญญาตรี</span>
           </label>
           <input name="academy_bachelor_degree" type="text" class="form-control"
-            placeholder="ระบุสถาบันการศึกษาปริญญาตรี" ng-model="selectedEmployeeProfile.academy_bachelor_degree"
+            placeholder="ระบุสถาบันการศึกษาปริญญาตรี" ng-model="show_datapage.academy_bachelor_degree"
             disabled />
         </div>
       </div>
@@ -306,7 +352,7 @@
             <span>สาขาวิชา</span>
           </label>
           <input name="major_bachelor_degree" type="text" class="form-control" placeholder="ระบุสาขาวิชา"
-            ng-model="selectedEmployeeProfile.major_bachelor_degree" disabled />
+            ng-model="show_datapage.major_bachelor_degree" disabled />
         </div>
       </div>
 
@@ -317,7 +363,7 @@
             <span>เกรดเฉลี่ย</span>
           </label>
           <input name="grade_bachelor_degree" type="number" class="form-control" placeholder="ระบุเกรดเฉลี่ย"
-            ng-model="selectedEmployeeProfile.grade_bachelor_degree" disabled />
+            ng-model="show_datapage.grade_bachelor_degree" disabled />
         </div>
       </div>
 
@@ -329,7 +375,7 @@
             <span>สถาบันการศึกษาปริญญาโท</span>
           </label>
           <input name="academy_master_degree" type="text" class="form-control" placeholder="ระบุสถาบันการศึกษาปริญญาโท"
-            ng-model="selectedEmployeeProfile.academy_master_degree" disabled />
+            ng-model="show_datapage.academy_master_degree" disabled />
         </div>
       </div>
 
@@ -339,7 +385,7 @@
             <span>สาขาวิชา</span>
           </label>
           <input name="major_master_degree" type="text" class="form-control" placeholder="ระบุสาขาวิชา"
-            ng-model="selectedEmployeeProfile.major_master_degree" disabled />
+            ng-model="show_datapage.major_master_degree" disabled />
         </div>
       </div>
 
@@ -349,7 +395,7 @@
             <span>เกรดเฉลี่ย</span>
           </label>
           <input name="grade_master_degree" type="number" class="form-control" placeholder="ระบุเกรดเฉลี่ย"
-            ng-model="selectedEmployeeProfile.grade_master_degree" disabled />
+            ng-model="show_datapage.grade_master_degree" disabled />
         </div>
       </div>
 
@@ -361,7 +407,7 @@
             <span>สถาบันการศึกษาปริญญาเอก</span>
           </label>
           <input name="academy_PhD" type="text" class="form-control" placeholder="ระบุสถาบันการศึกษาปริญญาเอก"
-            ng-model="selectedEmployeeProfile.academy_PhD" disabled />
+            ng-model="show_datapage.academy_PhD" disabled />
         </div>
       </div>
 
@@ -371,7 +417,7 @@
             <span>สาขาวิชา</span>
           </label>
           <input name="major_PhD" type="text" class="form-control" placeholder="ระบุสาขาวิชา"
-            ng-model="selectedEmployeeProfile.major_PhD" disabled />
+            ng-model="show_datapage.major_PhD" disabled />
         </div>
       </div>
 
@@ -381,7 +427,7 @@
             <span>เกรดเฉลี่ย</span>
           </label>
           <input name="grade_PhD" type="number" class="form-control" placeholder="ระบุเกรดเฉลี่ย"
-            ng-model="selectedEmployeeProfile.grade_PhD" disabled />
+            ng-model="show_datapage.grade_PhD" disabled />
         </div>
       </div>
 
@@ -394,7 +440,7 @@
             <span>ประสบการณ์ทำกิจกรรมในมหาวิทยาลัย</span>
           </label>
           <input name="college_activities" type="text" class="form-control"
-            placeholder="ระบุประสบการณ์ทำกิจกรรมในมหาวิทยาลัย" ng-model="selectedEmployeeProfile.college_activities"
+            placeholder="ระบุประสบการณ์ทำกิจกรรมในมหาวิทยาลัย" ng-model="show_datapage.college_activities"
             disabled />
         </div>
       </div>
@@ -417,7 +463,7 @@
             <span>ตำแหน่งงานที่ท่านสนใจสมัครตำแหน่งที่ 1</span>
           </label>
           <select name="job_position1" class="form-control" style="width: 100%"
-            ng-model="selectedEmployeeProfile.job_position1" disabled>
+            ng-model="show_datapage.job_position1" disabled>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
           </select>
         </div>
@@ -429,7 +475,7 @@
             <span class="text-danger">*</span>
             <span>สังกัดธุรกิจ</span>
           </label>
-          <select name="business1" class="form-control" style="width: 100%" ng-model="selectedEmployeeProfile.business1"
+          <select name="business1" class="form-control" style="width: 100%" ng-model="show_datapage.business1"
             disabled>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
           </select>
@@ -443,7 +489,7 @@
             <span>ตำแหน่งงานที่ท่านสนใจสมัครตำแหน่งที่ 2</span>
           </label>
           <select name="job_position2" class="form-control" style="width: 100%"
-            ng-model="selectedEmployeeProfile.job_position2" disabled>
+            ng-model="show_datapage.job_position2" disabled>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
           </select>
         </div>
@@ -455,7 +501,7 @@
             <span class="text-danger">*</span>
             <span>สังกัดธุรกิจ</span>
           </label>
-          <select name="business2" class="form-control" style="width: 100%" ng-model="selectedEmployeeProfile.business2"
+          <select name="business2" class="form-control" style="width: 100%" ng-model="show_datapage.business2"
             disabled>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
           </select>
@@ -469,7 +515,7 @@
             <span>ตำแหน่งงานที่ท่านสนใจสมัครตำแหน่งที่ 3</span>
           </label>
           <select name="job_position3" class="form-control" style="width: 100%"
-            ng-model="selectedEmployeeProfile.job_position3" disabled>
+            ng-model="show_datapage.job_position3" disabled>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
           </select>
         </div>
@@ -481,7 +527,7 @@
             <span class="text-danger">*</span>
             <span>สังกัดธุรกิจ</span>
           </label>
-          <select name="business3" class="form-control" style="width: 100%" ng-model="selectedEmployeeProfile.business3"
+          <select name="business3" class="form-control" style="width: 100%" ng-model="show_datapage.business3"
             disabled>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
           </select>
@@ -495,7 +541,7 @@
             <span>รูปแบบการทำงานที่ต้องการ</span>
           </label>
           <select name="working_style" class="form-control" style="width: 100%"
-            ng-model="selectedEmployeeProfile.working_style" disabled>
+            ng-model="show_datapage.working_style" disabled>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
           </select>
         </div>
@@ -508,7 +554,7 @@
             <span>ประเภทพนักงาน</span>
           </label>
           <select name="employee_type" class="form-control" style="width: 100%"
-            ng-model="selectedEmployeeProfile.employee_type" disabled>
+            ng-model="show_datapage.employee_type" disabled>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
           </select>
         </div>
@@ -521,7 +567,7 @@
             <span>เงินเดือนที่คาดหวัง</span>
           </label>
           <input name="expected_salary" type="number" class="form-control" placeholder="ระบุเงินเดือนที่คาดหวัง"
-            ng-model="selectedEmployeeProfile.expected_salary" disabled />
+            ng-model="show_datapage.expected_salary" disabled />
         </div>
       </div>
 
@@ -532,7 +578,7 @@
             <span>เงินเดือนขั้นต่ำที่ท่านรับได้ที่สุด</span>
           </label>
           <input name="minimum_salary" type="number" class="form-control"
-            placeholder="ระบุเงินเดือนขั้นต่ำที่ท่านรับได้ที่สุด" ng-model="selectedEmployeeProfile.minimum_salary"
+            placeholder="ระบุเงินเดือนขั้นต่ำที่ท่านรับได้ที่สุด" ng-model="show_datapage.minimum_salary"
             disabled />
         </div>
       </div>
@@ -544,7 +590,7 @@
             <span>เงินเดือน ณ ปัจจุปันที่ได้รับ</span>
           </label>
           <input name="current_salary" type="number" class="form-control"
-            placeholder="ระบุเงินเดือน ณ ปัจจุปันที่ได้รับ" ng-model="selectedEmployeeProfile.current_salary"
+            placeholder="ระบุเงินเดือน ณ ปัจจุปันที่ได้รับ" ng-model="show_datapage.current_salary"
             disabled />
         </div>
       </div>
@@ -556,7 +602,7 @@
             <span>วันที่สะดวกเริ่มงาน</span>
           </label>
           <input name="candidate_startdate" type="date" class="form-control" placeholder="ระบุวันที่สะดวกเริ่มงาน"
-            ng-model="selectedEmployeeProfile.candidate_startdate" disabled />
+            ng-model="show_datapage.candidate_startdate" disabled />
         </div>
       </div>
 
@@ -567,7 +613,7 @@
             <span>อายุงานของตำแหน่งที่สมัคร</span>
           </label>
           <input name="longevity" type="text" class="form-control" placeholder="ระบุอายุงานของตำแหน่งที่สมัคร"
-            ng-model="selectedEmployeeProfile.longevity" disabled />
+            ng-model="show_datapage.longevity" disabled />
         </div>
       </div>
 
@@ -579,7 +625,7 @@
           </label>
           <input name="performance" type="text" class="form-control"
             placeholder="ระบุผลงานที่เคยทำได้ (สอดคล้องกับตำแหน่งที่สมัคร)"
-            ng-model="selectedEmployeeProfile.performance" disabled />
+            ng-model="show_datapage.performance" disabled />
         </div>
       </div>
 
@@ -590,7 +636,7 @@
             <span>ช่องทางที่เห็นประกาศรับสมัครงาน</span>
           </label>
           <select name="job_posting" class="form-control" style="width: 100%"
-            ng-model="selectedEmployeeProfile.job_posting" disabled>
+            ng-model="show_datapage.job_posting" disabled>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
           </select>
         </div>
@@ -697,7 +743,7 @@
             <span>ผลการทำแบบทดสอบ 16 Personality (MBTI)</span>
           </label>
           <select name="candidate_MBTI" class="form-control" style="width: 100%"
-            ng-class="{'is-invalid': isShowCandidateMBTIError()}" ng-model="selectedEmployeeProfile.candidate_MBTI"
+            ng-class="{'is-invalid': isShowCandidateMBTIError()}" ng-model="show_datapage.candidate_MBTI"
             disabled>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
           </select>
@@ -731,7 +777,7 @@
             <span>ผลการทำแบบทดสอบ DISC</span>
           </label>
           <select name="candidate_DISC" class="form-control" style="width: 100%"
-            ng-model="selectedEmployeeProfile.candidate_DISC" disabled>
+            ng-model="show_datapage.candidate_DISC" disabled>
             <option value="" disabled selected hidden>
               {{ candidate_DISC.name }}
             </option>
@@ -788,7 +834,7 @@
           </label>
           <input name="former_supervisor" type="text" class="form-control"
             placeholder="ระบุ References หัวหน้างานผู้ใหญ่ที่เชื่อถือได้ที่สามารถติดต่อได้"
-            ng-model="selectedEmployeeProfile.former_supervisor" disabled />
+            ng-model="show_datapage.former_supervisor" disabled />
         </div>
       </div>
 
@@ -799,7 +845,7 @@
             <span>คุณมองหาอะไรจากการเปลี่ยนงานครั้งนี้</span>
           </label>
           <input name="looking_job" type="text" class="form-control"
-            placeholder="ระบุคุณมองหาอะไรจากการเปลี่ยนงานครั้งนี้" ng-model="selectedEmployeeProfile.looking_job"
+            placeholder="ระบุคุณมองหาอะไรจากการเปลี่ยนงานครั้งนี้" ng-model="show_datapage.looking_job"
             disabled />
         </div>
       </div>
@@ -812,7 +858,7 @@
           </label>
           <input name="passion" type="text" class="form-control"
             placeholder="ระบุเล่าถึง passion ของตัวเองที่เกี่ยวกับงานให้ฟังหน่อย"
-            ng-model="selectedEmployeeProfile.passion" disabled />
+            ng-model="show_datapage.passion" disabled />
         </div>
       </div>
 
@@ -822,7 +868,7 @@
             <span class="text-danger">*</span>
             <span>คุณนิยามความถนัดของคุณไว้อยู่ใน Step ไหน</span>
           </label>
-          <select name="aptitude" class="form-control" style="width: 100%" ng-model="selectedEmployeeProfile.aptitude"
+          <select name="aptitude" class="form-control" style="width: 100%" ng-model="show_datapage.aptitude"
             disabled>
             <option value="" disabled selected hidden>
               {{ aptitude.name }}
@@ -838,7 +884,7 @@
             <span>งานแบบไหนที่วิ่งเข้าหา ทำแน่ๆไม่มีปฏิเสธ</span>
           </label>
           <input name="need_working" type="text" class="form-control"
-            placeholder="ระบุงานแบบไหนที่วิ่งเข้าหา ทำแน่ๆไม่มีปฏิเสธ" ng-model="selectedEmployeeProfile.need_working"
+            placeholder="ระบุงานแบบไหนที่วิ่งเข้าหา ทำแน่ๆไม่มีปฏิเสธ" ng-model="show_datapage.need_working"
             disabled />
         </div>
       </div>
@@ -850,7 +896,7 @@
             <span>งานแบบไหนที่วิ่งหนี ไม่ชอบที่จะทำ</span>
           </label>
           <input name="not_working" type="text" class="form-control" placeholder="ระบุงานแบบไหนที่วิ่งหนี ไม่ชอบที่จะทำ"
-            ng-model="selectedEmployeeProfile.not_working" disabled />
+            ng-model="show_datapage.not_working" disabled />
         </div>
       </div>
 
@@ -860,7 +906,7 @@
             <span class="text-danger">*</span>
             <span>คิดว่าตัวเองเป็นคน Type ไหน</span>
           </label>
-          <select name="type" class="form-control" style="width: 100%" ng-model="selectedEmployeeProfile.type" disabled>
+          <select name="type" class="form-control" style="width: 100%" ng-model="show_datapage.type" disabled>
             <option value="" disabled selected hidden>{{ type.name }}</option>
           </select>
         </div>
@@ -872,7 +918,7 @@
             <span class="text-danger">*</span>
             <span>คุณรู้สึกอย่างไรเวลาไม่ประสบความสำเร็จในแบบที่ตั้งใจไว้</span>
           </label>
-          <select name="filling" class="form-control" style="width: 100%" ng-model="selectedEmployeeProfile.filling"
+          <select name="filling" class="form-control" style="width: 100%" ng-model="show_datapage.filling"
             disabled>
             <option value="" disabled selected hidden>
               {{ filling.name }}
@@ -888,7 +934,7 @@
             <span>คุณชอบทำงานรูปแบบไหน</span>
           </label>
           <select name="like_working" class="form-control" style="width: 100%"
-            ng-model="selectedEmployeeProfile.like_working" disabled>
+            ng-model="show_datapage.like_working" disabled>
             <option value="" disabled selected hidden>
               {{ like_working.name }}
             </option>
@@ -903,7 +949,7 @@
             <span>คุณอยากทำงานลักษณะไหน</span>
           </label>
           <select name="wont_working" class="form-control" style="width: 100%"
-            ng-model="selectedEmployeeProfile.wont_working" disabled>
+            ng-model="show_datapage.wont_working" disabled>
             <option value="" disabled selected hidden>
               {{ wont_working.name }}
             </option>
@@ -918,7 +964,7 @@
             <span>คุณกล้าปล่อยผ่านงานของคุณมากแค่ไหน</span>
           </label>
           <select name="let_pass_work" class="form-control" style="width: 100%"
-            ng-model="selectedEmployeeProfile.let_pass_work" disabled>
+            ng-model="show_datapage.let_pass_work" disabled>
             <option value="" disabled selected hidden>
               {{ let_pass_work.name }}
             </option>
@@ -933,7 +979,7 @@
             <span>Background ครอบครัว (พอสังเขป)</span>
           </label>
           <input name="background_family" type="text" class="form-control"
-            placeholder="ระบุ Background ครอบครัว (พอสังเขป)" ng-model="selectedEmployeeProfile.background_family"
+            placeholder="ระบุ Background ครอบครัว (พอสังเขป)" ng-model="show_datapage.background_family"
             disabled />
         </div>
       </div>
@@ -945,11 +991,11 @@
             <span>สวัสดิการ 3 อันดับแรกที่คุณให้ความสำคัญที่สุด ได้แก่</span>
           </label>
           <input name="employee_welfare" type="text" class="form-control" placeholder="ระบุสวัสดิการที่ 1"
-            ng-model="selectedEmployeeProfile.employee_welfare1" disabled />
+            ng-model="show_datapage.employee_welfare1" disabled />
           <input name="employee_welfare1" type="text" class="form-control mt-2" placeholder="ระบุสวัสดิการที่ 2"
-            ng-model="selectedEmployeeProfile.employee_welfare2" disabled />
+            ng-model="show_datapage.employee_welfare2" disabled />
           <input name="employee_welfare2" type="text" class="form-control mt-2" placeholder="ระบุสวัสดิการที่ 3"
-            ng-model="selectedEmployeeProfile.employee_welfare3" disabled />
+            ng-model="show_datapage.employee_welfare3" disabled />
         </div>
       </div>
 
@@ -1042,7 +1088,7 @@
           </label>
           <input name="comment_day_off" type="text" class="form-control"
             placeholder="ระบุ ความคิดเห็นอย่างไรกับการตอบไลน์นอกเวลางาน หรือวันหยุดวันลา"
-            ng-model="selectedEmployeeProfile.comment_day_off" disabled />
+            ng-model="show_datapage.comment_day_off" disabled />
         </div>
       </div>
 
@@ -1066,7 +1112,7 @@
             <span>ชื่อ - นามสกุล</span>
           </label>
           <input name="recommend_name1" type="text" class="form-control"
-            ng-model="selectedEmployeeProfile.recommend_name1" disabled />
+            ng-model="show_datapage.recommend_name1" disabled />
         </div>
       </div>
 
@@ -1078,7 +1124,7 @@
             <span>ชื่อ - นามสกุล</span>
           </label>
           <input name="recommend_name2" type="text" class="form-control"
-            ng-model="selectedEmployeeProfile.recommend_name2" disabled />
+            ng-model="show_datapage.recommend_name2" disabled />
         </div>
       </div>
 
@@ -1088,7 +1134,7 @@
             <span>ตำแหน่ง</span>
           </label>
           <input name="recommend_position1" type="text" class="form-control"
-            ng-model="selectedEmployeeProfile.recommend_position1" disabled />
+            ng-model="show_datapage.recommend_position1" disabled />
         </div>
       </div>
 
@@ -1098,7 +1144,7 @@
             <span>ตำแหน่ง</span>
           </label>
           <input name="recommend_position2" type="text" class="form-control"
-            ng-model="selectedEmployeeProfile.recommend_position2" disabled />
+            ng-model="show_datapage.recommend_position2" disabled />
         </div>
       </div>
 
@@ -1108,7 +1154,7 @@
             <span>เบอร์โทรศัพท์</span>
           </label>
           <input name="recommend_phone1" type="text" class="form-control"
-            ng-model="selectedEmployeeProfile.recommend_phone1" disabled />
+            ng-model="show_datapage.recommend_phone1" disabled />
         </div>
       </div>
 
@@ -1118,7 +1164,7 @@
             <span>เบอร์โทรศัพท์</span>
           </label>
           <input name="recommend_phone2" type="text" class="form-control"
-            ng-model="selectedEmployeeProfile.recommend_phone2" disabled />
+            ng-model="show_datapage.recommend_phone2" disabled />
         </div>
       </div>
 
@@ -1130,7 +1176,7 @@
             <span>ชื่อ - นามสกุล</span>
           </label>
           <input name="recommend_name3" type="text" class="form-control"
-            ng-model="selectedEmployeeProfile.recommend_name3" disabled />
+            ng-model="show_datapage.recommend_name3" disabled />
         </div>
       </div>
 
@@ -1142,7 +1188,7 @@
             <span>ตำแหน่ง</span>
           </label>
           <input name="recommend_position3" type="text" class="form-control"
-            ng-model="selectedEmployeeProfile.recommend_position3" disabled />
+            ng-model="show_datapage.recommend_position3" disabled />
         </div>
       </div>
 
@@ -1154,7 +1200,7 @@
             <span>เบอร์โทรศัพท์</span>
           </label>
           <input name="recommend_phone3" type="text" class="form-control"
-            ng-model="selectedEmployeeProfile.recommend_phone3" disabled />
+            ng-model="show_datapage.recommend_phone3" disabled />
         </div>
       </div>
 

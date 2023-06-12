@@ -55,11 +55,11 @@
                 <tr ng-if="!search_table">
                     <td colspan="9" class="text-center">ไม่มีข้อมูล</td>
                 </tr> 
-              <tr ng-if="search_table" ng-repeat="user in users">
+              <tr ng-if="search_table" ng-repeat="user in selectedEmployeeProfile">
                 <th scope="row">{{ $index + 1 }}</th>
                 <td class="p-2">{{ user.date }}</td>
                 <td class="p-2">{{ user.pass }}</td>
-                <td class="p-2">{{ user.name }}</td>
+                <td class="p-2">{{ user.name }} {{ user.lastname }}</td>
                 <td class="p-2" ng-bind="user.post.length > 10 ? (user.post | limitTo: 10) + '...' : user.post">{{ user.post }}</td>
                 <td class="p-2">{{ user.hr1 }}</td>
                 <td class="p-2">{{ user.hr2 }}</td>
