@@ -26,6 +26,7 @@
         $scope.selectedTab = ['interview', 'interview', 'interview'];
 
         $scope.expandOption = ['partialOpened', 'partialOpened', 'partialOpened'];
+        $scope.weightedAverage = [];
 
         $scope.candidates = [
             { id: "1", firstName: 'arin', lastName: 'test1', job_position: "Developer", day: "24/06/2023", startTime: "8 PM", endTime: "9 PM", interview_status: "round2" },
@@ -67,8 +68,8 @@
             { name: "Executive Level 1" },
             { name: "Executive Level 2" },
             { name: "Executive Level 3" },
-          
-          
+
+
 
         ];
 
@@ -136,7 +137,7 @@
         ];
 
 
-        $scope.rows = [
+        $scope.evaluate1 = [
             { name: 'Growth mindset', percent: 80, credit: 3 },
             { name: 'Proactive', percent: 90, credit: 4 },
             { name: 'Leadership', percent: 80, credit: 3 },
@@ -148,6 +149,35 @@
             { name: 'การเจรจาต่อรอง', percent: 80, credit: 3 },
             { name: 'การโน้มน้าว', percent: 90, credit: 4 },
             { name: 'Data analysis', percent: 90, credit: 4 },
+
+        ];
+
+        $scope.evaluate2 = [
+            { name: 'Growth mindset', percent: 70, credit: 3 },
+            { name: 'Proactive', percent: 10, credit: 4 },
+            { name: 'Leadership', percent: 10, credit: 3 },
+            { name: 'วุฒิภาวะทางอารมณ์', percent: 20, credit: 4 },
+            { name: 'การรับมือกับปัญหา', percent: 83, credit: 3 },
+            { name: 'Structural thinking', percent: 60, credit: 4 },
+            { name: 'Critical thinking', percent: 30, credit: 3 },
+            { name: 'Logic', percent: 0, credit: 4 },
+            { name: 'การเจรจาต่อรอง', percent:20, credit: 3 },
+            { name: 'การโน้มน้าว', percent: 40, credit: 4 },
+            { name: 'Data analysis', percent: 90, credit: 4 },
+
+        ];
+        $scope.evaluate3 = [
+            { name: 'Growth mindset', percent: 0, credit: 3 },
+            { name: 'Proactive', percent: 0, credit: 4 },
+            { name: 'Leadership', percent: 50, credit: 3 },
+            { name: 'วุฒิภาวะทางอารมณ์', percent: 20, credit: 4 },
+            { name: 'การรับมือกับปัญหา', percent: 30, credit: 3 },
+            { name: 'Structural thinking', percent: 20, credit: 4 },
+            { name: 'Critical thinking', percent: 10, credit: 3 },
+            { name: 'Logic', percent: 95, credit: 4 },
+            { name: 'การเจรจาต่อรอง', percent: 100, credit: 3 },
+            { name: 'การโน้มน้าว', percent: 90, credit: 4 },
+            { name: 'Data analysis', percent: 85, credit: 4 },
 
         ];
 
@@ -198,6 +228,10 @@
             useDateEntryController($scope, $http);
             useDetailControllerEntry($scope, $http);
             useInterviewControllerEntry($scope, $http);
+
+            $scope.calculateWeightedAverage(0, $scope.evaluate1);
+            $scope.calculateWeightedAverage(1, $scope.evaluate2);
+            $scope.calculateWeightedAverage(2, $scope.evaluate3);
             $('.select2').select2({ theme: 'bootstrap4' });
 
             $('#startDatePicker').datetimepicker({
@@ -260,6 +294,13 @@
             $scope.selectedCandidateProfile = candidate;
             $scope.mode = 'interview';
             $scope.interviewMode = 'entry';
+            switch ($scope.selectedCandidateProfile.interview_status) {
+                case 'round1': $scope.calculateWeightedAverage(0, $scope.evaluate1);break;
+                case 'round2': $scope.calculateWeightedAverage(1, $scope.evaluate2);break;
+                case 'round3': $scope.calculateWeightedAverage(2, $scope.evaluate3);break;
+                default:  return 0;
+            }
+    
         };
 
         $scope.toDetailInterviewMode = function (candidate) {
@@ -285,7 +326,7 @@
             };
         };
 
-        $scope.toggleTab = function (interview,tab) {
+        $scope.toggleTab = function (interview, tab) {
             if ($scope.selectedTab[interview] === tab) {
                 $scope.selectedTab[interview] = tab; // Collapse the currently selected tab
             } else {
@@ -293,7 +334,7 @@
             }
         };
 
-        $scope.isTabSelected = function (interview,tab) {
+        $scope.isTabSelected = function (interview, tab) {
             return $scope.selectedTab[interview] === tab;
         };
 
@@ -370,12 +411,12 @@
             }, 0);
         };
 
-        $scope.calculateWeightedAverage = function () {
+        $scope.calculateWeightedAverage = function (round, array) {
             var totalWeight = 0;
             var weightedSum = 0;
 
-            for (var i = 0; i < $scope.rows.length; i++) {
-                var row = $scope.rows[i];
+            for (var i = 0; i < array.length; i++) {
+                var row = array[i];
                 var weight = row.percent * row.credit;
 
                 totalWeight += row.credit;
@@ -385,18 +426,32 @@
             if (totalWeight > 0) {
                 console.log(totalWeight);
                 console.log(weightedSum);
-                $scope.weightedAverage = weightedSum / totalWeight;
+                $scope.weightedAverage[round] = weightedSum / totalWeight;
 
             } else {
-                $scope.weightedAverage = 0;
+                $scope.weightedAverage[round] = 0;
             }
 
         };
 
-        $scope.$watch('rows', function (newRows, oldRows) {
+        $scope.$watch('evaluate1', function (newRows, oldRows) {
             console.log("weight update");
             if (newRows !== oldRows) {
-                $scope.calculateWeightedAverage();
+                $scope.calculateWeightedAverage(0, $scope.evaluate1);
+            }
+        }, true);
+
+        $scope.$watch('evaluate2', function (newRows, oldRows) {
+            console.log("weight update");
+            if (newRows !== oldRows) {
+                $scope.calculateWeightedAverage(1, $scope.evaluate2);
+            }
+        }, true);
+
+        $scope.$watch('evaluate3', function (newRows, oldRows) {
+            console.log("weight update");
+            if (newRows !== oldRows) {
+                $scope.calculateWeightedAverage(2, $scope.evaluate3);
             }
         }, true);
 
@@ -453,8 +508,8 @@
             }
         }
 
-        $scope.btnsum = function(day){
-            $scope.selectedCandidateProfile.day = day+"/"+(currentMonth+1)+"/"+$scope.year_date;
+        $scope.btnsum = function (day) {
+            $scope.selectedCandidateProfile.day = day + "/" + (currentMonth + 1) + "/" + $scope.year_date;
             console.log($scope.selectedCandidateProfile.day);
         }
 

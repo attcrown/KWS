@@ -2,21 +2,60 @@
     function useInterviewControllerEntry($scope, $http) {
 
         $scope.requestSaveAnswer = useRequestSaveAnswer($scope, $http);
-        $scope.verifyInterview = useVerifyInterview($scope, $http);
-        $scope.isShowInterviewError = useIsShowInterviewError($scope, $http);
-        $scope.isShowResultError = useIsShowResultError($scope, $http);
-        $scope.isShowReasonError = useIsShowReasonErrorError($scope, $http);
-        $scope.isShowInterviewerError = useIsShowInterviewerError($scope, $http);
-        
+        // Interview Round 1
+        $scope.requestSaveAnswer1 = useRequestSaveAnswer1($scope, $http);
+        $scope.verifyInterview1 = useVerifyInterview1($scope, $http);
+        $scope.isShowInterviewError1 = useIsShowInterviewError1($scope, $http);
+        $scope.isShowInterviewResultError1 = useIsShowInterviewResultError1($scope, $http);
+        $scope.isShowReasonError1 = useIsShowReasonError1($scope, $http);
+        $scope.isShowInterviewerError1 = useIsShowInterviewerError1($scope, $http);
+
+        // Interview Round 2
+        $scope.requestSaveAnswer2 = useRequestSaveAnswer2($scope, $http);
+        $scope.verifyInterview2 = useVerifyInterview2($scope, $http);
+        $scope.isShowInterviewError2 = useIsShowInterviewError2($scope, $http);
+        $scope.isShowInterviewResultError2 = useIsShowInterviewResultError2($scope, $http);
+        $scope.isShowReasonError2 = useIsShowReasonError2($scope, $http);
+        $scope.isShowInterviewerError2 = useIsShowInterviewerError2($scope, $http);
+
+        $scope.isShowLevelError2 = useIsShowLevelError2($scope, $http);
+
+        // Interview Round 3
+        $scope.requestSaveAnswer3 = useRequestSaveAnswer3($scope, $http);
+        $scope.verifyInterview3 = useVerifyInterview3($scope, $http);
+        $scope.isShowInterviewError3 = useIsShowInterviewError3($scope, $http);
+        $scope.isShowInterviewResultError3 = useIsShowInterviewResultError3($scope, $http);
+        $scope.isShowReasonError3 = useIsShowReasonError3($scope, $http);
+        $scope.isShowInterviewerError3 = useIsShowInterviewerError3($scope, $http);
+
+    }
+    function useRequestSaveAnswer($scope, $http) {
+        return (round) => {
+            console.log("### InterviewController.all ###");
+            console.log(round);
+            switch (round) {
+                case "round1":
+                $scope.requestSaveAnswer1();
+                    break;
+                case "round2":
+                $scope.requestSaveAnswer2();
+                    break;
+                case "round3":
+                $scope.requestSaveAnswer3();
+                    break;
+                default:
+                    return 0;
+            }
+        };
     }
 
-
-    function useRequestSaveAnswer($scope, $http) {
+    // Interview Round 1
+    function useRequestSaveAnswer1($scope, $http) {
         return () => {
             console.log("### InterviewController.requestSave ###");
-            $scope.interviewForm.$submitted = true;
+            $scope.interviewForm1.$submitted = true;
 
-            if ($scope.verifyInterview()) {
+            if ($scope.verifyInterview1()) {
                 const options = {
                     title: "ยืนยันการบันทึกข้อมูลสัมภาษณ์",
                     text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
@@ -41,37 +80,166 @@
         };
     }
 
-    function useVerifyInterview($scope, $http) {
+    function useVerifyInterview1($scope, $http) {
         return () => {
             console.log("### interviewController.VERIFY ###");
-            console.log($scope.interviewForm.$valid);
-            return $scope.interviewForm.$valid;
+            return $scope.interviewForm1.$valid;
         };
     }
 
-    function useIsShowInterviewError($scope, $http) {
+    function useIsShowInterviewResultError1($scope, $http) {
+        return () => {
+            return ($scope.interviewForm1.$submitted || $scope.interviewForm1.interview_result.$dirty) && $scope.interviewForm1.interview_result.$invalid;
+        };
+    }
+
+    function useIsShowReasonError1($scope, $http) {
+        return () => {
+            return ($scope.interviewForm1.$submitted || $scope.interviewForm1.reason.$dirty) && $scope.interviewForm1.reason.$invalid;
+        };
+    }
+
+    function useIsShowInterviewerError1($scope, $http) {
+        return () => {
+            return $scope.interviewForm1.$submitted && $scope.interviewForm1.interviewer.$invalid;
+        };
+    }
+    // list of question Handle
+    function useIsShowInterviewError1($scope, $http) {
         return (id) => {
-            return ($scope.interviewForm.$submitted || $scope.interviewForm[id].$dirty) && $scope.interviewForm[id].$invalid;
+            return ($scope.interviewForm1.$submitted || $scope.interviewForm1[id].$dirty) && $scope.interviewForm1[id].$invalid;
         };
     }
 
-    
-    function useIsShowResultError($scope, $http) {
+
+    // Interview Round 2
+    function useRequestSaveAnswer2($scope, $http) {
         return () => {
-            return ($scope.interviewForm.$submitted || $scope.interviewForm.result.$dirty) && $scope.interviewForm.result.$invalid;
+            console.log("### InterviewController.requestSave2 ###");
+            $scope.interviewForm2.$submitted = true;
+            if ($scope.verifyInterview2()) {
+                const options = {
+                    title: "ยืนยันการบันทึกข้อมูลสัมภาษณ์",
+                    text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                    icon: "warning",
+                    buttons: ["ยกเลิก", "ตกลง"],
+                    dangerMode: true
+                };
+                const handler = (confirm) => {
+                    if (confirm) {
+                        console.log('Data submitted: ', $scope.questions);
+                        // $scope.updateInterview($scope.candidates);
+
+                    }
+                };
+
+                swal(options).then(handler);
+
+            }
+            else {
+                swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+            }
         };
     }
 
-    function useIsShowReasonErrorError($scope, $http) {
+    function useVerifyInterview2($scope, $http) {
         return () => {
-            return ($scope.interviewForm.$submitted || $scope.interviewForm.reason.$dirty) && $scope.interviewForm.reason.$invalid;
+            console.log("### interviewController.VERIFY2###");
+            return $scope.interviewForm2.$valid;
         };
     }
-    
-    function useIsShowInterviewerError($scope, $http) {
+
+    function useIsShowInterviewResultError2($scope, $http) {
         return () => {
-            return $scope.interviewForm.$submitted && $scope.interviewForm.interviewer.$invalid;
-        }; 
+            return ($scope.interviewForm2.$submitted || $scope.interviewForm2.interview_result.$dirty) && $scope.interviewForm2.interview_result.$invalid;
+        };
+    }
+
+    function useIsShowReasonError2($scope, $http) {
+        return () => {
+            return ($scope.interviewForm2.$submitted || $scope.interviewForm2.reason.$dirty) && $scope.interviewForm2.reason.$invalid;
+        };
+    }
+
+    function useIsShowInterviewerError2($scope, $http) {
+        return () => {
+            return $scope.interviewForm2.$submitted && $scope.interviewForm2.interviewer.$invalid;
+        };
+    }
+    // list of question Handle
+    function useIsShowInterviewError2($scope, $http) {
+        return (id) => {
+            return ($scope.interviewForm2.$submitted || $scope.interviewForm2[id].$dirty) && $scope.interviewForm2[id].$invalid;
+        };
+    }
+
+    // result handle
+    function useIsShowLevelError2($scope, $http) {
+        return () => {
+            return $scope.interviewForm2.$submitted && $scope.interviewForm2.level_candidate.$invalid;
+        };
+    }
+
+    //interview Round 3
+    function useRequestSaveAnswer3($scope, $http) {
+        return () => {
+            console.log("### InterviewController.requestSave ###");
+            $scope.interviewForm3.$submitted = true;
+
+            if ($scope.verifyInterview3()) {
+                const options = {
+                    title: "ยืนยันการบันทึกข้อมูลสัมภาษณ์",
+                    text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                    icon: "warning",
+                    buttons: ["ยกเลิก", "ตกลง"],
+                    dangerMode: true
+                };
+                const handler = (confirm) => {
+                    if (confirm) {
+                        console.log('Data submitted: ', $scope.questions);
+                        // $scope.updateInterview($scope.candidates);
+
+                    }
+                };
+
+                swal(options).then(handler);
+
+            }
+            else {
+                swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+            }
+        };
+    }
+
+    function useVerifyInterview3($scope, $http) {
+        return () => {
+            console.log("### interviewController.VERIFY ###");
+            return $scope.interviewForm3.$valid;
+        };
+    }
+
+    function useIsShowInterviewResultError3($scope, $http) {
+        return () => {
+            return ($scope.interviewForm3.$submitted || $scope.interviewForm3.interview_result.$dirty) && $scope.interviewForm3.interview_result.$invalid;
+        };
+    }
+
+    function useIsShowReasonError3($scope, $http) {
+        return () => {
+            return ($scope.interviewForm3.$submitted || $scope.interviewForm3.reason.$dirty) && $scope.interviewForm3.reason.$invalid;
+        };
+    }
+
+    function useIsShowInterviewerError3($scope, $http) {
+        return () => {
+            return $scope.interviewForm3.$submitted && $scope.interviewForm3.interviewer.$invalid;
+        };
+    }
+    // list of question Handle
+    function useIsShowInterviewError3($scope, $http) {
+        return (id) => {
+            return ($scope.interviewForm3.$submitted || $scope.interviewForm3[id].$dirty) && $scope.interviewForm3[id].$invalid;
+        };
     }
 
 </script>
