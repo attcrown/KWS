@@ -19,6 +19,20 @@
         $scope.isShowInterviewerError2 = useIsShowInterviewerError2($scope, $http);
 
         $scope.isShowLevelError2 = useIsShowLevelError2($scope, $http);
+        $scope.isShowWantedScoreError2 = useIsShowWantedScoreError2($scope, $http);
+        $scope.isShowTimeInterviewError2 = useIsShowTimeInterviewError2($scope, $http);
+
+        $scope.isShowWantForError2 = useIsShowWantForError2($scope, $http);
+        $scope.isShowScoreWantForError2 = useIsShowScoreWantForError2($scope, $http);
+        $scope.isShowNotWantForError2 = useIsShowNotWantForError2($scope, $http);
+        $scope.isShowScoreNotWantForError2 = useIsShowScoreNotWantForError2($scope, $http);
+        //ตรงนี้
+        $scope.isShowCommentError2 = useIsShowCommentError2($scope, $http);
+        $scope.isShowConcernError2 = useIsShowConcernError2($scope, $http);
+        $scope.isShowEnergyError2 = useIsShowEnergyError2($scope, $http);
+        $scope.isShowLongevityScoreError2 = useIsShowLongevityScoreError2($scope, $http);
+        $scope.isShowLongevitReasonError2 = useIsShowLongevitReasonError2($scope, $http);
+        $scope.isShowMBAError2 = useIsShowMBAError2($scope, $http);
 
         // Interview Round 3
         $scope.requestSaveAnswer3 = useRequestSaveAnswer3($scope, $http);
@@ -35,13 +49,13 @@
             console.log(round);
             switch (round) {
                 case "round1":
-                $scope.requestSaveAnswer1();
+                    $scope.requestSaveAnswer1();
                     break;
                 case "round2":
-                $scope.requestSaveAnswer2();
+                    $scope.requestSaveAnswer2();
                     break;
                 case "round3":
-                $scope.requestSaveAnswer3();
+                    $scope.requestSaveAnswer3();
                     break;
                 default:
                     return 0;
@@ -179,6 +193,19 @@
             return $scope.interviewForm2.$submitted && $scope.interviewForm2.level_candidate.$invalid;
         };
     }
+
+    function useIsShowWantedScoreError2($scope, $http) {
+        return () => {
+            return $scope.interviewForm2.$submitted && $scope.interviewForm2.wanted_score.$invalid;
+        };
+    }
+
+    function useIsShowTimeInterviewError2($scope, $http) {
+        return () => {
+            return ($scope.interviewForm2.$submitted || $scope.interviewForm2.time_interview.$dirty) && $scope.interviewForm2.time_interview.$invalid;
+        };
+    }
+
 
     //interview Round 3
     function useRequestSaveAnswer3($scope, $http) {
