@@ -1,6 +1,3 @@
-<head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-</head>
 <div th:replace="core/admin-lte-3/workspace/hr/candidate/script/controller"></div>
 
 <section ng-controller="CandidateUserController" ng-init="init()">
@@ -9,9 +6,8 @@
     </div>
 
     <div ng-show="mode === 'list'">
-        <!-- <div th:replace="core/admin-lte-3/workspace/hr/candidate/category_fishsix"></div> -->
-        <!-- <div th:replace="core/admin-lte-3/workspace/hr/candidate/category"></div> -->
-        <div th:replace="core/admin-lte-3/workspace/hr/candidate/category2"></div>
+        <div th:replace="core/admin-lte-3/workspace/hr/candidate/category"></div>
+        <!-- <div th:replace="core/admin-lte-3/workspace/hr/candidate/category2"></div> -->
     </div>
 
     <div ng-show="mode === 'next1'">
@@ -27,5 +23,3 @@
         <div th:replace="core/admin-lte-3/workspace/hr/candidate/category_scout"></div>
     </div>
 </section>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>

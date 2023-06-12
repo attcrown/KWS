@@ -4,10 +4,10 @@
     <h3 class="card-title px-3">ข้อมูลส่วนตัว</h3>
   </div>
 
-  <div class="card-body px-5">
+  <div class="card-body mx-4">
     <br />
     <form name="employeeForm" class="form row" novalidate>
-      <div class="row">
+
         <div class="col-md-6">
           <div class="form-group">
             <label>
@@ -90,11 +90,12 @@
           <div class="form-group">
             <label>
               <span class="text-danger">*</span>
-              <span ng-show="!isShowOldError()">เดือน/วัน/ปีเกิด</span>
-              <span class="text-danger" ng-show="isShowOldError()">กรุณาระบุเดือน/วัน/ปีเกิด</span>
+              <span ng-show="!isShowBirth_DayError()">เดือน/วัน/ปีเกิด</span>
+              <span class="text-danger" ng-show="isShowBirth_DayError()">กรุณาระบุเดือน/วัน/ปีเกิด</span>
             </label>
-            <input name="old" type="date" class="form-control" ng-class="{'is-invalid': isShowOldError()}"
-              placeholder="ระบุเดือน/วัน/ปีเกิด" ng-model="selectedEmployeeProfile.old" required />
+            <input name="birth_day" type="date" class="form-control"
+              ng-class="{'is-invalid': isShowBirth_DayError()}" placeholder="ระบุเดือน/วัน/ปีเกิด"
+              ng-model="selectedEmployeeProfile.birth_day" required />
           </div>
         </div>
 
@@ -414,49 +415,8 @@
           </div>
         </div>
 
-      </div>
     </form>
   </div>
-
-  <!-- <form name="employeeForm2" class="form row" novalidate>
-    <div class="col-md-6 px-5">
-      <label>
-        <span class="text-danger">*</span>
-        <span ng-show="!isShowDriveError">ขับรถอะไรได้บ้าง</span>
-        <span class="text-danger" ng-show="isShowDriveError">กรุณาระบุประเภทรถที่ขับ</span>
-      </label>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" ng-model="criteria.car_license" ng-change="checkdrive()"
-          required />
-        <label class="form-check-label">ขับรถยนต์ได้ / มีใบขับขี่</label>
-      </div>
-      <div class="form-check mt-2">
-        <input class="form-check-input" type="checkbox" ng-model="criteria.car_not_license" ng-change="checkdrive()"
-          required />
-        <label class="form-check-label">ขับรถยนต์ได้ / ไม่มีใบขับขี่</label>
-      </div>
-      <div class="form-check mt-2">
-        <input class="form-check-input" type="checkbox" ng-model="criteria.moto_license" ng-change="checkdrive()"
-          required />
-        <label class="form-check-label">ขับมอเตอร์ไซด์ได้ / มีใบขับขี่</label>
-      </div>
-      <div class="form-check mt-2">
-        <input class="form-check-input" type="checkbox" ng-model="criteria.moto_not_license" ng-change="checkdrive()"
-          required />
-        <label class="form-check-label">ขับมอเตอร์ไซด์ได้ / ไม่มีใบขับขี่</label>
-      </div>
-      <div class="form-check mt-2">
-        <input class="form-check-input" type="checkbox" ng-model="criteria.not_drive" ng-change="checkdrive()"
-          required />
-        <label class="form-check-label">ขับรถไม่เป็น</label>
-      </div>
-      <div class="form-check mt-2 mb-5">
-        <input class="form-check-input" type="checkbox" ng-model="criteria.drive_other" ng-change="checkdrive()"
-          required />
-        <label class="form-check-label">อื่นๆ</label>
-      </div>
-    </div>
-  </form> -->
 </div>
 
 <!-- --------------------------ข้อมูลการศึกษา--------------------------------- -->
@@ -467,42 +427,55 @@
   <div class="card-body mx-4">
     <br />
     <form name="employeeForm3" class="form row" novalidate>
+
       <div class="col-md-6">
         <div class="form-group">
           <label>
             <span class="text-danger">*</span>
-            <span ng-show="!isShowCurrentEducationError()">สถาบันการศึกษามัธยมปลาย</span>
-            <span class="text-danger" ng-show="isShowCurrentEducationError()">กรุณาระบุสถาบันการศึกษามัธยมปลาย</span>
+            <span ng-show="!isShoweducation_presentError()">ระดับการศึกษา ณ ปัจจุบัน</span> 
+            <span class="text-danger" ng-show="isShoweducation_presentError()">กรุณาเลือกระดับการศึกษา ณ ปัจจุบัน</span>
           </label>
-          <input name="current_education" type="text" class="form-control"
-            ng-class="{'is-invalid': isShowCurrentEducationError()}" placeholder="ระบุสถาบันการศึกษามัธยมปลาย"
-            ng-model="selectedEmployeeProfile.current_education" required />
+          <select name="education_present" class="form-control" style="width: 100%" ng-class="{'is-invalid': isShoweducation_presentError()}"
+            ng-model="selectedEmployeeProfile.education_present" required>
+            <option value="" disabled selected hidden>
+              --- กรุณาเลือก ---
+            </option>
+            <option ng-repeat="education_present in education_presents | orderBy: 'id'" ng-value="education_present.name">
+              {{ education_present.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-6"></div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>
+            <span >สถาบันการศึกษามัธยมปลาย</span>
+          </label>
+          <input name="current_education" type="text" class="form-control" placeholder="ระบุสถาบันการศึกษามัธยมปลาย"
+            ng-model="selectedEmployeeProfile.current_education" />
         </div>
       </div>
 
       <div class="col-md-6">
         <div class="form-group">
           <label>
-            <span class="text-danger">*</span>
-            <span ng-show="!isShowCurrentBachelorEducationError()">สาขาวิชา</span>
-            <span class="text-danger" ng-show="isShowCurrentBachelorEducationError()">กรุณาระบุสาขาวิชา</span>
+            <span>สาขาวิชา</span>
           </label>
-          <input name="current_bachelor_education" type="text" class="form-control"
-            ng-class="{'is-invalid': isShowCurrentBachelorEducationError()}" placeholder="ระบุสาขาวิชา"
-            ng-model="selectedEmployeeProfile.current_bachelor_education" required />
+          <input name="current_bachelor_education" type="text" class="form-control" placeholder="ระบุสาขาวิชา"
+            ng-model="selectedEmployeeProfile.current_bachelor_education"/>
         </div>
       </div>
 
       <div class="col-md-6">
         <div class="form-group">
           <label>
-            <span class="text-danger">*</span>
-            <span ng-show="!isShowGradeHighschoolError()">เกรดเฉลี่ย</span>
-            <span class="text-danger" ng-show="isShowGradeHighschoolError()">กรุณาระบุเกรดเฉลี่ย</span>
+            <span>เกรดเฉลี่ย</span>
           </label>
-          <input name="grade_highschool" type="number" class="form-control"
-            ng-class="{'is-invalid': isShowGradeHighschoolError()}" placeholder="ระบุเกรดเฉลี่ย"
-            ng-model="selectedEmployeeProfile.grade_highschool" required />
+          <input name="grade_highschool" type="number" class="form-control" placeholder="ระบุเกรดเฉลี่ย"
+            ng-model="selectedEmployeeProfile.grade_highschool"/>
         </div>
       </div>
 
@@ -650,15 +623,21 @@
         <div class="form-group">
           <label>
             <span class="text-danger">*</span>
-            <span ng-show="!isShowCollegeActivitiesError()">ประสบการณ์ทำกิจกรรมในมหาวิทยาลัย</span>
-            <span class="text-danger"
-              ng-show="isShowCollegeActivitiesError()">กรุณาระบุประสบการณ์ทำกิจกรรมในมหาวิทยาลัย</span>
+            <span ng-show="!isShowCollegeActivitiesError()">ประสบการณ์ทำกิจกรรมในมหาวิทยาลัย</span> 
+            <span class="text-danger" ng-show="isShowCollegeActivitiesError()">กรุณาเลือกประสบการณ์ทำกิจกรรมในมหาวิทยาลัย</span>
           </label>
-          <input name="college_activities" type="text" class="form-control"
-            ng-class="{'is-invalid': isShowCollegeActivitiesError()}" placeholder="ระบุประสบการณ์ทำกิจกรรมในมหาวิทยาลัย"
-            ng-model="selectedEmployeeProfile.college_activities" required />
+          <select name="college_activities" class="form-control" style="width: 100%" ng-class="{'is-invalid': isShowCollegeActivitiesError()}"
+            ng-model="selectedEmployeeProfile.college_activities" required>
+            <option value="" disabled selected hidden>
+              --- กรุณาเลือก ---
+            </option>
+            <option ng-repeat="college_activities in college_activitiess | orderBy: 'id'" ng-value="college_activities.name">
+              {{ college_activities.name }}
+            </option>
+          </select>
         </div>
       </div>
+
     </form>
   </div>
 </div>
@@ -1011,7 +990,7 @@
             <span ng-show="!isShowCandidateMBTIError()">ผลการทำแบบทดสอบ 16 Personality (MBTI)</span>
             <span class="text-danger" ng-show="isShowCandidateMBTIError()">กรุณาเลือกผลการทำแบบทดสอบ 16 Personality (MBTI)</span>
           </label>
-          <select name="candidate_MBTI" class="form-control" style="width: 100%"
+          <select name="candidate_MBTI" class="form-control select2" style="width: 100%" data-dropdown-css-class="select2-indigo"
             ng-class="{'is-invalid': isShowCandidateMBTIError()}" ng-model="selectedEmployeeProfile.candidate_MBTI" required>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
             <option ng-repeat="candidate_MBTI in candidate_MBTI | orderBy: 'name'" ng-value="candidate_MBTI.name">
@@ -1048,7 +1027,7 @@
             <span ng-show="!isShowCandidateDISCError()">ผลการทำแบบทดสอบ DISC</span>
             <span class="text-danger" ng-show="isShowCandidateDISCError()">กรุณาเลือกผลการทำแบบทดสอบ DISC</span>
           </label>
-          <select name="candidate_DISC" class="form-control" style="width: 100%"
+          <select name="candidate_DISC" class="form-control select2" style="width: 100%" data-dropdown-css-class="select2-indigo"
             ng-class="{'is-invalid': isShowCandidateDISCError()}" ng-model="selectedEmployeeProfile.candidate_DISC" required>
             <option value="" disabled selected hidden>กรุณาเลือก</option>
             <option ng-repeat="candidate_DISC in candidate_DISC | orderBy: 'name'" ng-value="candidate_DISC.name">
