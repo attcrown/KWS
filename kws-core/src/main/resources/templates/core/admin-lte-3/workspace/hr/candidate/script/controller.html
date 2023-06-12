@@ -1,5 +1,9 @@
-<div th:replace="core/admin-lte-3/workspace/hr/candidate/script/category2-controller"></div>
-<div th:replace="core/admin-lte-3/workspace/hr/candidate/script/category-controller"></div>
+<div
+  th:replace="core/admin-lte-3/workspace/hr/candidate/script/category2-controller"
+></div>
+<div
+  th:replace="core/admin-lte-3/workspace/hr/candidate/script/category-controller"
+></div>
 
 <script th:inline="javascript">
   app.controller("CandidateUserController", [
@@ -22,12 +26,6 @@
         { id: "6", name: "ผู้พิการทางสติปัญญา" },
         { id: "7", name: "ผู้พิการทางการเรียนรู้" },
         { id: "8", name: "ผู้พิการทางการออทิสติก" },
-      ];
-
-      $scope.status = [
-        { id: "1", name: "โสด" },
-        { id: "2", name: "สมรส" },
-        { id: "3", name: "หย่าร้าง" },
       ];
 
       $scope.sick = [
@@ -75,147 +73,88 @@
       ];
 
       $scope.working_style = [
-        { id: "1", name: "Work From Anywhere 100%" },
-        { id: "2", name: "Hybrid (ออฟฟิศ50/ออนไลน์50)" },
-        { id: "3", name: "Office100%" },
-      ];
-
-      $scope.religion = [
-        { id: "1", name: "พุทธ" },
-        { id: "2", name: "คริสต์" },
-        { id: "3", name: "อิสลาม" },
-        { id: "4", name: "พราหมณ์" },
-        { id: "5", name: "ฮินดู" },
-        { id: "6", name: "Other" },
-      ];
-
-      $scope.district= [
-        { id: "1", name: "บางบอน" },
-        { id: "2", name: "คลองบางพราน" },
-        { id: "3", name: "อกหัก" },
-        { id: "4", name: "ทดลอง" },
-        { id: "5", name: "ฮินดู" },
-        { id: "6", name: "Other" },
-      ];
-
-      $scope.county= [
-        { id: "1", name: "บางบอน" },
-        { id: "2", name: "บางใหญ่" },
-        { id: "3", name: "อโศก" },
-        { id: "4", name: "บางเล็ก" },
-        { id: "5", name: "ฮินดู" },
-        { id: "6", name: "Other" },
-      ];
-
-      $scope.province= [
-        { id: "1", name: "กรุงเทพ" },
-        { id: "2", name: "นนทบุรี" },
-        { id: "3", name: "เชียงใหม่" },
-        { id: "4", name: "หาดใหญื" },
-        { id: "5", name: "ฮินดู" },
-        { id: "6", name: "Other" },
-      ];
-
-      $scope.zip_code= [
-        { id: "1", name: "10150" },
-        { id: "2", name: "10111" },
-        { id: "3", name: "10052" },
-        { id: "4", name: "13054" },
-        { id: "5", name: "11111" },
-        { id: "6", name: "22222" },
-      ];
-
-      $scope.Sex = [
-        { id: "1", name: "ชาย" },
-        { id: "2", name: "หญิง" },
-        { id: "3", name: "Other" },
-      ];
-
-      $scope.Driver = [
-        { id: "1", name: "รถยนต์/มีใบขับขี่รถยนต์" },
-        { id: "2", name: "รถยนต์/ไม่มีใบขับขี่รถยนต์" },
-        { id: "3", name: "มอเตอร์ไซค์/มีใบขับขี่มอเตอร์ไซค์" },
-        { id: "4", name: "มอเตอร์ไซค์/ไม่มีใบขับขี่มอเตอร์ไซค์" },
-        { id: "5", name: "ขับขี่พาหนะไม่ได้" },
+        { id: "1", name: "Work From Anywhere 100%"},
+        { id: "2", name: "Hybrid (ออฟฟิศ50/ออนไลน์50)"},
+        { id: "3", name: "Office100%"},
       ];
 
       $scope.employee_type = [
-        { id: "1", name: "Fulltime" },
-        { id: "2", name: "Freelance" },
+        { id: "1", name: "Fulltime"},
+        { id: "2", name: "Freelance"},
       ];
 
       $scope.job_posting = [
-        { id: "1", name: "Facebook page ประกาศรับสมัครงาน" },
-        { id: "2", name: "Post จากกลุ่มFBมหาลัยหรือชมรมต่างๆ (สโมสรนิสิต/สมาคมศิษย์เก่า/ฯลฯ)" },
-        { id: "3", name: "Line Official Account" },
-        { id: "4", name: "Line Openchat" },
-        { id: "5", name: "IG Story ของเพื่อนหรือคนรู้จัก" },
-        { id: "6", name: "Post ที่มาจากหน้า FB ของเพื่อนหรือคนรู้จัก" },
-        { id: "7", name: "คนรู้จักแนะนำ" },
-        { id: "8", name: "จาก Facebook comment (เห็นคนคอมเม้นในโพสบน Facebook)" },
-        { id: "9", name: "LinkedIn" },
+        { id: "1", name: "Facebook page ประกาศรับสมัครงาน"},
+        { id: "2", name: "Post จากกลุ่มFBมหาลัยหรือชมรมต่างๆ (สโมสรนิสิต/สมาคมศิษย์เก่า/ฯลฯ)"},
+        { id: "3", name: "Line Official Account"},
+        { id: "4", name: "Line Openchat"},
+        { id: "5", name: "IG Story ของเพื่อนหรือคนรู้จัก"},
+        { id: "6", name: "Post ที่มาจากหน้า FB ของเพื่อนหรือคนรู้จัก"},
+        { id: "7", name: "คนรู้จักแนะนำ"},
+        { id: "8", name: "จาก Facebook comment (เห็นคนคอมเม้นในโพสบน Facebook)"},
+        { id: "9", name: "LinkedIn"},
       ];
 
       $scope.candidate_MBTI = [
-        { id: "1", name: "INTJ" },
-        { id: "2", name: "INTP" },
-        { id: "3", name: "ENTJ" },
-        { id: "4", name: "ENTP" },
-        { id: "5", name: "INFJ" },
-        { id: "6", name: "INFP" },
-        { id: "7", name: "ENFJ" },
-        { id: "8", name: "ENFP" },
-        { id: "9", name: "ISTJ" },
-        { id: "10", name: "ISFJ" },
-        { id: "11", name: "ESTJ" },
-        { id: "12", name: "ESFJ" },
-        { id: "13", name: "ISTP" },
-        { id: "14", name: "ISFP" },
-        { id: "15", name: "ESTP" },
-        { id: "16", name: "ESFP" },
+        { id: "1", name: "INTJ"},
+        { id: "2", name: "INTP"},
+        { id: "3", name: "ENTJ"},
+        { id: "4", name: "ENTP"},
+        { id: "5", name: "INFJ"},
+        { id: "6", name: "INFP"},
+        { id: "7", name: "ENFJ"},
+        { id: "8", name: "ENFP"},
+        { id: "9", name: "ISTJ"},
+        { id: "10", name: "ISFJ"},
+        { id: "11", name: "ESTJ"},
+        { id: "12", name: "ESFJ"},
+        { id: "13", name: "ISTP"},
+        { id: "14", name: "ISFP"},
+        { id: "15", name: "ESTP"},
+        { id: "16", name: "ESFP"},
       ];
 
       $scope.candidate_DISC = [
-        { id: "1", name: "มนุษย์กลุ่ม D (Dominance)" },
-        { id: "2", name: "มนุษย์กลุ่ม I (Influence)" },
-        { id: "3", name: "มนุษย์กลุ่ม S (Steadiness)" },
-        { id: "4", name: "มนุษย์กลุ่ม C (Compliance)" },
+        { id: "1", name: "มนุษย์กลุ่ม D (Dominance)"},
+        { id: "2", name: "มนุษย์กลุ่ม I (Influence)"},
+        { id: "3", name: "มนุษย์กลุ่ม S (Steadiness)"},
+        { id: "4", name: "มนุษย์กลุ่ม C (Compliance)"},
       ];
 
       $scope.aptitude = [
-        { id: "1", name: "ถนัดงาน Step 0-1 งานคิดไอเดีย" },
-        { id: "2", name: "ถนัดงาน Step 1-2 งานนำไปเดียต่อยอด" },
+        { id: "1", name: "ถนัดงาน Step 0-1 งานคิดไอเดีย"},
+        { id: "2", name: "ถนัดงาน Step 1-2 งานนำไปเดียต่อยอด"},
       ];
 
       $scope.type = [
-        { id: "1", name: "Type 1 : อยากทำงานไปในแต่ละวัน ไม่ได้อยากGrowthอะไรมากมายนัก ทำงานแลกเงินเดือนเอาเวลาแลกเงินเดือน คือทำงานได้ดีนะ แต่ไม่ได้เน้นผลลัพธ์เน้นประสิทธิภาพ เน้นการเติบโตของตัวเอง เหมือน officer ทั่วไป" },
-        { id: "2", name: "Type 2 : อยากเติบโตแหละ แต่ไม่ถึงกับต้องมาให้เรียนรู้อะไรใหม่ๆทุกวัน สัปดาห์ละ 1-2ครั้งได้นะ แต่ถ้ามากไปก็เหนื่อย" },
-        { id: "3", name: "Type 3 : Agressiveกับการเติบโตมาก ฉันอยากเรียนรู้อะไรใหม่ๆทุกวัน มาเลยแม้นอกเวลางาน มีความอยากเรียนเป็นนิสัย อยากเพิ่มประสิทธิภาพให้ตนเอง ทำผลลัพธ์ต่อหน่วยเวลาได้มากกว่าเดิมในทุก ๆ วัน" },
+        { id: "1", name: "Type 1 : อยากทำงานไปในแต่ละวัน ไม่ได้อยากGrowthอะไรมากมายนัก ทำงานแลกเงินเดือนเอาเวลาแลกเงินเดือน คือทำงานได้ดีนะ แต่ไม่ได้เน้นผลลัพธ์เน้นประสิทธิภาพ เน้นการเติบโตของตัวเอง เหมือน officer ทั่วไป"},
+        { id: "2", name: "Type 2 : อยากเติบโตแหละ แต่ไม่ถึงกับต้องมาให้เรียนรู้อะไรใหม่ๆทุกวัน สัปดาห์ละ 1-2ครั้งได้นะ แต่ถ้ามากไปก็เหนื่อย"},
+        { id: "3", name: "Type 3 : Agressiveกับการเติบโตมาก ฉันอยากเรียนรู้อะไรใหม่ๆทุกวัน มาเลยแม้นอกเวลางาน มีความอยากเรียนเป็นนิสัย อยากเพิ่มประสิทธิภาพให้ตนเอง ทำผลลัพธ์ต่อหน่วยเวลาได้มากกว่าเดิมในทุก ๆ วัน"},
       ];
 
       $scope.filling = [
-        { id: "1", name: "Type 1 : ไม่รู้สึกอะไร ไม่สำเร็จก็แค่ลองทำใหม่อีกครั้ง" },
-        { id: "2", name: "Type 2 : ก็รู้สึกหงุดหงิดหรือเศร้านะ แต่เดี๋ยวเริ่มใหม่ได้" },
-        { id: "3", name: "Type 3 : รู้สึกเสียใจและเศร้ามาก รู้สึกอยากล้มเลิกไม่ไปต่อในแผนที่วางไว้ และเปลี่ยนแผนใหม่ทันที" },
+        { id: "1", name: "Type 1 : ไม่รู้สึกอะไร ไม่สำเร็จก็แค่ลองทำใหม่อีกครั้ง"},
+        { id: "2", name: "Type 2 : ก็รู้สึกหงุดหงิดหรือเศร้านะ แต่เดี๋ยวเริ่มใหม่ได้"},
+        { id: "3", name: "Type 3 : รู้สึกเสียใจและเศร้ามาก รู้สึกอยากล้มเลิกไม่ไปต่อในแผนที่วางไว้ และเปลี่ยนแผนใหม่ทันที"},
       ];
 
       $scope.like_working = [
-        { id: "1", name: "Type1:  ฉันชอบทำงานในขอบข่ายที่กำหนดเท่านั้นเพราะอยากโฟกัสอย่างใดอย่างหนึ่ง" },
-        { id: "2", name: "Type2: ฉันชอบทำงานในขอบข่ายของตนเองแต่สามารถช่วยเหลือนอกเหนือจากขอบข่ายงานตัวเองนิดๆหน่อยๆได้ แต่ต้องไม่ยากและมากเกินไป" },
-        { id: "3", name: "Type3: ฉันไม่สนขอบข่ายงานฉันคืออะไร สนแต่ว่างานต้องออกมาดี" },
+        { id: "1", name: "Type1:  ฉันชอบทำงานในขอบข่ายที่กำหนดเท่านั้นเพราะอยากโฟกัสอย่างใดอย่างหนึ่ง"},
+        { id: "2", name: "Type2: ฉันชอบทำงานในขอบข่ายของตนเองแต่สามารถช่วยเหลือนอกเหนือจากขอบข่ายงานตัวเองนิดๆหน่อยๆได้ แต่ต้องไม่ยากและมากเกินไป"},
+        { id: "3", name: "Type3: ฉันไม่สนขอบข่ายงานฉันคืออะไร สนแต่ว่างานต้องออกมาดี"},
       ];
 
       $scope.wont_working = [
-        { id: "1", name: "Type 1 : ขอทำงานRoutineซ้ำ ๆ เดิม ๆ มีระบบวางไว้แล้วให้เดินตามขั้นตอน" },
-        { id: "2", name: "Type 2 : อยากทำงานที่มีระบบ ตามขั้นตอน ชิวบ้างบางเวลา กดดันน้อย เพราะมีระบบอยู่แล้วระดับนึง" },
-        { id: "3", name: "Type 3 : ของานแบบกดดันกลางๆ มีงาน rountine สลับ งานผลลัพธ์ในระยะกลางๆ" },
+        { id: "1", name: "Type 1 : ขอทำงานRoutineซ้ำ ๆ เดิม ๆ มีระบบวางไว้แล้วให้เดินตามขั้นตอน"},
+        { id: "2", name: "Type 2 : อยากทำงานที่มีระบบ ตามขั้นตอน ชิวบ้างบางเวลา กดดันน้อย เพราะมีระบบอยู่แล้วระดับนึง"},
+        { id: "3", name: "Type 3 : ของานแบบกดดันกลางๆ มีงาน rountine สลับ งานผลลัพธ์ในระยะกลางๆ"},
         { id: "4", name: "Type 4 : ของานที่กดดันเพราะมุ่งผลลัพธ์ในระยะ 3 วัน 7 วัน จะเรียกว่าเริ่มบ้างาน ทุ่มเทกว่าคนรอบข้าง" },
         { id: "5", name: "Type 5 : ลุยๆ บางทีก็เหมือนบ้างานเพราะจะมุ่งผลลัพธ์ อยากให้งานเกิด อยากมีเงินเดือนเป็นแสนตอนอายุ 30" },
       ];
 
       $scope.let_pass_work = [
-        { id: "1", name: "Type 1 : งานเสร็จประมาน 20-30% ก็พอ ก็ปล่อยโครงการ/งานนี้ได้แล้ว แล้วค่อยนำข้อผิดพลาด หรือข้อปรับปรุงมาปรับเพิ่มทีหลัง" },
-        { id: "2", name: "Type 2 : งานต้องเสร็จสมบูรณ์100%เท่านั้น ถึงจะปล่อยโครงการ/งานนั้นดำเนินการต่อ" },
+        { id: "1", name: "Type 1 : งานเสร็จประมาน 20-30% ก็พอ ก็ปล่อยโครงการ/งานนี้ได้แล้ว แล้วค่อยนำข้อผิดพลาด หรือข้อปรับปรุงมาปรับเพิ่มทีหลัง"},
+        { id: "2", name: "Type 2 : งานต้องเสร็จสมบูรณ์100%เท่านั้น ถึงจะปล่อยโครงการ/งานนั้นดำเนินการต่อ"},
       ];
 
 
@@ -227,7 +166,7 @@
       $scope.mode = "list"; // ["list", "entry" , "next2"]
       $scope.read = "close";
       $scope.category = ""; // (พนักงาน,ครูFishsix,ครูESC,Scout)
-
+      $scope.isShowDriveError = false;
       $scope.isShowtribe_choiceError = false;
       $scope.isShowelec_choiceError = false;
       $scope.isShowChoiceError = false;
@@ -245,9 +184,7 @@
       $scope.clickcategory2 = false;
       $scope.clickcategory3 = false;
 
-      $scope.checkboxlinkfirst = false;
-
-      $scope.init = function () {
+      $scope.init = function() {
         usecategoryController($scope, $http);
         usecategory2Controller($scope, $http);
         $(".select2").select2({ theme: "bootstrap4" });
@@ -260,34 +197,34 @@
           }
           const element = document.getElementById(elementId);
           var reader = new FileReader();
-          reader.onload = function (event) {
+          reader.onload = function(event) {
             element.src = event.target.result;
           };
           reader.readAsDataURL(file);
           $scope.$apply();
         }
 
-        $(".port-file").on("change", function ($event) {
+        $(".port-file").on("change", function($event) {
           handleFileChange($event, "portPdf", "portPdf");
         });
 
-        $(".cv-file").on("change", function ($event) {
+        $(".cv-file").on("change", function($event) {
           handleFileChange($event, "cvPdf", "cvPdf");
         });
 
-        $(".otherpresent-file").on("change", function ($event) {
+        $(".otherpresent-file").on("change", function($event) {
           handleFileChange($event, "otherpresent", "otherpresent");
         });
 
-        $(".img_MBTI-file").on("change", function ($event) {
+        $(".img_MBTI-file").on("change", function($event) {
           handleFileChange($event, "img_MBTI", "img_MBTI");
         });
 
-        $(".img_profile-file").on("change", function ($event) {
+        $(".img_profile-file").on("change", function($event) {
           handleFileChange($event, "img_profile", "img_profile");
         });
 
-        $(".img_DISC-file").on("change", function ($event) {
+        $(".img_DISC-file").on("change", function($event) {
           handleFileChange($event, "img_DISC", "img_DISC");
         });
       };
@@ -295,32 +232,32 @@
       $scope.removeFile = function (a) {
         $scope.attachment[a] = null;
       };
-
-      $scope.checktribe = function () {
+      
+      $scope.checktribe = function(){
         $scope.sumtribe = 0;
-        if ($scope.criteria.tribe_choice1 == true) {
+        if($scope.criteria.tribe_choice1 == true){
           $scope.sumtribe += 1;
-        } if ($scope.criteria.tribe_choice2 == true) {
+        }if($scope.criteria.tribe_choice2 == true){
           $scope.sumtribe += 1;
-        } if ($scope.criteria.tribe_choice3 == true) {
+        }if($scope.criteria.tribe_choice3 == true){
           $scope.sumtribe += 1;
-        } if ($scope.criteria.tribe_choice4 == true) {
+        }if($scope.criteria.tribe_choice4 == true){
           $scope.sumtribe += 1;
-        } if ($scope.criteria.tribe_choice5 == true) {
+        }if($scope.criteria.tribe_choice5 == true){
           $scope.sumtribe += 1;
-        } if ($scope.criteria.tribe_choice6 == true) {
+        }if($scope.criteria.tribe_choice6 == true){
           $scope.sumtribe += 1;
-        } if ($scope.criteria.tribe_choice7 == true) {
+        }if($scope.criteria.tribe_choice7 == true){
           $scope.sumtribe += 1;
-        } if ($scope.criteria.tribe_choice8 == true) {
+        }if($scope.criteria.tribe_choice8 == true){
           $scope.sumtribe += 1;
-        } if ($scope.criteria.tribe_choice9 == true) {
+        }if($scope.criteria.tribe_choice9 == true){
           $scope.sumtribe += 1;
-        } if ($scope.criteria.tribe_choice10 == true) {
+        }if($scope.criteria.tribe_choice10 == true){
           $scope.sumtribe += 1;
-        } if ($scope.criteria.tribe_choice11 == true) {
+        }if($scope.criteria.tribe_choice11 == true){
           $scope.sumtribe += 1;
-        } if ($scope.criteria.tribe_choice12 == true) {
+        }if($scope.criteria.tribe_choice12 == true){
           $scope.sumtribe += 1;
         }
 
@@ -329,60 +266,62 @@
         } else {
           $scope.isShowtribe_choiceError = true;
         }
+
+        console.log(" = " + $scope.sumtribe);
       }
 
       $scope.checkelec = function () {
-        if (
+        if(
           $scope.criteria.elec_choice1 === true ||
           $scope.criteria.elec_choice2 === true ||
           $scope.criteria.elec_choice3 === true ||
           $scope.criteria.elec_choice4 === true ||
           $scope.criteria.elec_choice5 === true
-        ) {
+        ){
           $scope.isShowelec_choiceError = false;
-        } else { $scope.isShowelec_choiceError = true; }
+        }else{$scope.isShowelec_choiceError = true;}
       }
 
-      $scope.checkchoice = function () {
-        if ($scope.criteria.choice1 == undefined || $scope.criteria.choice1 == null
+      $scope.checkchoice = function(){
+        if($scope.criteria.choice1 == undefined || $scope.criteria.choice1 == null
           && $scope.criteria.choice2 == undefined || $scope.criteria.choice2 == null
-          && $scope.criteria.choice3 == undefined || $scope.criteria.choice3 == null) {
+          && $scope.criteria.choice3 == undefined || $scope.criteria.choice3 == null){
           $scope.isShowChoiceError = true;
-        } else {
+        }else{
           $scope.isShowChoiceError = false;
         }
       }
 
-      $scope.checkpolicy = function () {
-        if ($scope.criteria.policy_decision == undefined || $scope.criteria.policy_decision == null) {
+      $scope.checkpolicy = function(){
+        if($scope.criteria.policy_decision == undefined || $scope.criteria.policy_decision == null){
           $scope.isShowPolicyDecisionError = true;
-        } else { $scope.isShowPolicyDecisionError = false; }
+        }else{$scope.isShowPolicyDecisionError = false;}
       }
 
-      $scope.checkfile = function () {
-        if ($scope.attachment.cvPdf == null) {
+      $scope.checkfile = function(){
+        if($scope.attachment.cvPdf == null){
           $scope.isShowCvFileError = true;
-        } else { $scope.isShowCvFileError = false; }
+        }else{$scope.isShowCvFileError = false;}
 
-        if ($scope.attachment.portPdf == null) {
+        if($scope.attachment.portPdf == null){
           $scope.isShowPortFileError = true;
-        } else { $scope.isShowPortFileError = false; }
+        }else{$scope.isShowPortFileError = false;}
 
-        if ($scope.attachment.otherpresent == null) {
+        if($scope.attachment.otherpresent == null){
           $scope.isShowOtherPresentFileError = true;
-        } else { $scope.isShowOtherPresentFileError = false; }
+        }else{$scope.isShowOtherPresentFileError = false;}
 
-        if ($scope.attachment.img_profile == null) {
+        if($scope.attachment.img_profile == null){
           $scope.isShowImgProfileFileError = true;
-        } else { $scope.isShowImgProfileFileError = false; }
+        }else{$scope.isShowImgProfileFileError = false;}
 
-        if ($scope.attachment.img_MBTI == null) {
+        if($scope.attachment.img_MBTI == null){
           $scope.isShowImgMBTIFileError = true;
-        } else { $scope.isShowImgMBTIFileError = false; }
+        }else{$scope.isShowImgMBTIFileError = false;}
 
-        if ($scope.attachment.img_DISC == null) {
+        if($scope.attachment.img_DISC == null){
           $scope.isShowImgDISCFileError = true;
-        } else { $scope.isShowImgDISCFileError = false; }
+        }else{$scope.isShowImgDISCFileError = false;}
       }
 
       $scope.checkdrive = function () {
@@ -458,15 +397,14 @@
 
       $scope.sum = function () {
         $scope.Cvalue();
-        // $scope.checkdrive();
+        $scope.checkdrive();
         $scope.checkelec();
         $scope.checktribe();
         $scope.checkchoice();
         $scope.checkpolicy();
         $scope.checkfile();
-        // console.log($scope.employeeFrom[lastName]);
       };
-      $scope.tobackpage = function () {
+      $scope.tobackpage = function(){
         $scope.mode = "list";
       }
 
@@ -483,19 +421,14 @@
   .font-bg {
     font-size: 50px;
   }
-
   .btn[disabled] {
-    background-color: #dddddd;
-    /* กำหนดสีเทาที่คุณต้องการ */
-    color: #888888;
-    /* กำหนดสีตัวอักษรที่คุณต้องการ */
+    background-color: #dddddd; /* กำหนดสีเทาที่คุณต้องการ */
+    color: #888888; /* กำหนดสีตัวอักษรที่คุณต้องการ */
     border: #888888;
   }
-
   .red-asterisk {
     color: red;
   }
-
   button.btn {
     transition: background-color 0.3s ease, border-color 0.3s ease;
   }
