@@ -9,6 +9,19 @@
         $scope.isShowInterviewResultError1 = useIsShowInterviewResultError1($scope, $http);
         $scope.isShowReasonError1 = useIsShowReasonError1($scope, $http);
         $scope.isShowInterviewerError1 = useIsShowInterviewerError1($scope, $http);
+        //result
+        $scope.isShowLevelError1 = useIsShowLevelError1($scope, $http);
+        $scope.isShowWantedScoreError1 = useIsShowWantedScoreError1($scope, $http);
+        $scope.isShowTimeInterviewError1 = useIsShowTimeInterviewError1($scope, $http);
+        $scope.isShowWantForError1 = useIsShowWantForError1($scope, $http);
+        $scope.isShowScoreWantForError1 = useIsShowScoreWantForError1($scope, $http);
+        $scope.isShowNotWantForError1 = useIsShowNotWantForError1($scope, $http);
+        $scope.isShowScoreNotWantForError1 = useIsShowScoreNotWantForError1($scope, $http);
+        $scope.isShowCommentError1 = useIsShowCommentError1($scope, $http);
+        $scope.isShowConcernError1 = useIsShowConcernError1($scope, $http);
+        $scope.isShowEnergyError1 = useIsShowEnergyError1($scope, $http);
+        $scope.isShowLongevityScoreError1 = useIsShowLongevityScoreError1($scope, $http);
+        $scope.isShowLongevitReasonError1 = useIsShowLongevitReasonError1($scope, $http);
 
         // Interview Round 2
         $scope.requestSaveAnswer2 = useRequestSaveAnswer2($scope, $http);
@@ -17,22 +30,21 @@
         $scope.isShowInterviewResultError2 = useIsShowInterviewResultError2($scope, $http);
         $scope.isShowReasonError2 = useIsShowReasonError2($scope, $http);
         $scope.isShowInterviewerError2 = useIsShowInterviewerError2($scope, $http);
-
+        //result
         $scope.isShowLevelError2 = useIsShowLevelError2($scope, $http);
         $scope.isShowWantedScoreError2 = useIsShowWantedScoreError2($scope, $http);
         $scope.isShowTimeInterviewError2 = useIsShowTimeInterviewError2($scope, $http);
-
         $scope.isShowWantForError2 = useIsShowWantForError2($scope, $http);
         $scope.isShowScoreWantForError2 = useIsShowScoreWantForError2($scope, $http);
         $scope.isShowNotWantForError2 = useIsShowNotWantForError2($scope, $http);
         $scope.isShowScoreNotWantForError2 = useIsShowScoreNotWantForError2($scope, $http);
-        //ตรงนี้
         $scope.isShowCommentError2 = useIsShowCommentError2($scope, $http);
         $scope.isShowConcernError2 = useIsShowConcernError2($scope, $http);
         $scope.isShowEnergyError2 = useIsShowEnergyError2($scope, $http);
         $scope.isShowLongevityScoreError2 = useIsShowLongevityScoreError2($scope, $http);
         $scope.isShowLongevitReasonError2 = useIsShowLongevitReasonError2($scope, $http);
-        $scope.isShowMBAError2 = useIsShowMBAError2($scope, $http);
+
+
 
         // Interview Round 3
         $scope.requestSaveAnswer3 = useRequestSaveAnswer3($scope, $http);
@@ -41,6 +53,19 @@
         $scope.isShowInterviewResultError3 = useIsShowInterviewResultError3($scope, $http);
         $scope.isShowReasonError3 = useIsShowReasonError3($scope, $http);
         $scope.isShowInterviewerError3 = useIsShowInterviewerError3($scope, $http);
+        //result
+        $scope.isShowLevelError3 = useIsShowLevelError3($scope, $http);
+        $scope.isShowWantedScoreError3 = useIsShowWantedScoreError3($scope, $http);
+        $scope.isShowTimeInterviewError3 = useIsShowTimeInterviewError3($scope, $http);
+        $scope.isShowWantForError3 = useIsShowWantForError3($scope, $http);
+        $scope.isShowScoreWantForError3 = useIsShowScoreWantForError3($scope, $http);
+        $scope.isShowNotWantForError3 = useIsShowNotWantForError3($scope, $http);
+        $scope.isShowScoreNotWantForError3 = useIsShowScoreNotWantForError3($scope, $http);
+        $scope.isShowCommentError3 = useIsShowCommentError3($scope, $http);
+        $scope.isShowConcernError3 = useIsShowConcernError3($scope, $http);
+        $scope.isShowEnergyError3 = useIsShowEnergyError3($scope, $http);
+        $scope.isShowLongevityScoreError3 = useIsShowLongevityScoreError3($scope, $http);
+        $scope.isShowLongevitReasonError3 = useIsShowLongevitReasonError3($scope, $http);
 
     }
     function useRequestSaveAnswer($scope, $http) {
@@ -122,6 +147,78 @@
     function useIsShowInterviewError1($scope, $http) {
         return (id) => {
             return ($scope.interviewForm1.$submitted || $scope.interviewForm1[id].$dirty) && $scope.interviewForm1[id].$invalid;
+        };
+    }
+    //result
+    function useIsShowLevelError1($scope, $http) {
+        return () => {
+            return $scope.interviewForm1.$submitted && $scope.interviewForm1.level_candidate.$invalid;
+        };
+    }
+
+    function useIsShowWantedScoreError1($scope, $http) {
+        return () => {
+            return $scope.interviewForm1.$submitted && $scope.interviewForm1.wanted_score.$invalid;
+        };
+    }
+
+    function useIsShowTimeInterviewError1($scope, $http) {
+        return () => {
+            return ($scope.interviewForm1.$submitted || $scope.interviewForm1.time_interview.$dirty) && $scope.interviewForm1.time_interview.$invalid;
+        };
+    }
+
+    function useIsShowWantForError1($scope, $http) {
+        return () => {
+            return ($scope.interviewForm1.$submitted || $scope.interviewForm1.wanted_for.$dirty) && $scope.interviewForm1.wanted_for.$invalid;
+        };
+    }
+
+    function useIsShowScoreWantForError1($scope, $http) {
+        return () => {
+            return $scope.interviewForm1.$submitted && $scope.interviewForm1.score_wanted_for.$invalid;
+        };
+    }
+
+    function useIsShowNotWantForError1($scope, $http) {
+        return () => {
+            return ($scope.interviewForm1.$submitted || $scope.interviewForm1.not_want_for.$dirty) && $scope.interviewForm1.not_want_for.$invalid;
+        };
+    }
+
+    function useIsShowScoreNotWantForError1($scope, $http) {
+        return () => {
+            return $scope.interviewForm1.$submitted && $scope.interviewForm1.score_not_want_for.$invalid;
+        };
+    }
+
+    function useIsShowCommentError1($scope, $http) {
+        return () => {
+            return ($scope.interviewForm1.$submitted || $scope.interviewForm1.comment.$dirty) && $scope.interviewForm1.comment.$invalid;
+        };
+    }
+
+    function useIsShowConcernError1($scope, $http) {
+        return () => {
+            return ($scope.interviewForm1.$submitted || $scope.interviewForm1.concern.$dirty) && $scope.interviewForm1.concern.$invalid;
+        };
+    }
+
+    function useIsShowEnergyError1($scope, $http) {
+        return () => {
+            return ($scope.interviewForm1.$submitted || $scope.interviewForm1.energy.$dirty) && $scope.interviewForm1.energy.$invalid;
+        };
+    }
+
+    function useIsShowLongevityScoreError1($scope, $http) {
+        return () => {
+            return $scope.interviewForm1.$submitted && $scope.interviewForm1.score_longevity.$invalid;
+        };
+    }
+
+    function useIsShowLongevitReasonError1($scope, $http) {
+        return () => {
+            return ($scope.interviewForm1.$submitted || $scope.interviewForm1.longevity_reason.$dirty) && $scope.interviewForm1.longevity_reason.$invalid;
         };
     }
 
@@ -206,6 +303,64 @@
         };
     }
 
+    function useIsShowWantForError2($scope, $http) {
+        return () => {
+            return ($scope.interviewForm2.$submitted || $scope.interviewForm2.wanted_for.$dirty) && $scope.interviewForm2.wanted_for.$invalid;
+        };
+    }
+
+    function useIsShowScoreWantForError2($scope, $http) {
+        return () => {
+            return $scope.interviewForm2.$submitted && $scope.interviewForm2.score_wanted_for.$invalid;
+        };
+    }
+
+    function useIsShowNotWantForError2($scope, $http) {
+        return () => {
+            return ($scope.interviewForm2.$submitted || $scope.interviewForm2.not_want_for.$dirty) && $scope.interviewForm2.not_want_for.$invalid;
+        };
+    }
+
+    function useIsShowScoreNotWantForError2($scope, $http) {
+        return () => {
+            return $scope.interviewForm2.$submitted && $scope.interviewForm2.score_not_want_for.$invalid;
+        };
+    }
+
+    function useIsShowCommentError2($scope, $http) {
+        return () => {
+            return ($scope.interviewForm2.$submitted || $scope.interviewForm2.comment.$dirty) && $scope.interviewForm2.comment.$invalid;
+        };
+    }
+
+    function useIsShowConcernError2($scope, $http) {
+        return () => {
+            return ($scope.interviewForm2.$submitted || $scope.interviewForm2.concern.$dirty) && $scope.interviewForm2.concern.$invalid;
+        };
+    }
+
+    function useIsShowEnergyError2($scope, $http) {
+        return () => {
+            return ($scope.interviewForm2.$submitted || $scope.interviewForm2.energy.$dirty) && $scope.interviewForm2.energy.$invalid;
+        };
+    }
+
+    function useIsShowLongevityScoreError2($scope, $http) {
+        return () => {
+            return $scope.interviewForm2.$submitted && $scope.interviewForm2.score_longevity.$invalid;
+        };
+    }
+
+    function useIsShowLongevitReasonError2($scope, $http) {
+        return () => {
+            return ($scope.interviewForm2.$submitted || $scope.interviewForm2.longevity_reason.$dirty) && $scope.interviewForm2.longevity_reason.$invalid;
+        };
+    }
+
+
+
+
+
 
     //interview Round 3
     function useRequestSaveAnswer3($scope, $http) {
@@ -266,6 +421,79 @@
     function useIsShowInterviewError3($scope, $http) {
         return (id) => {
             return ($scope.interviewForm3.$submitted || $scope.interviewForm3[id].$dirty) && $scope.interviewForm3[id].$invalid;
+        };
+    }
+
+    //result
+    function useIsShowLevelError3($scope, $http) {
+        return () => {
+            return $scope.interviewForm3.$submitted && $scope.interviewForm3.level_candidate.$invalid;
+        };
+    }
+
+    function useIsShowWantedScoreError3($scope, $http) {
+        return () => {
+            return $scope.interviewForm3.$submitted && $scope.interviewForm3.wanted_score.$invalid;
+        };
+    }
+
+    function useIsShowTimeInterviewError3($scope, $http) {
+        return () => {
+            return ($scope.interviewForm3.$submitted || $scope.interviewForm3.time_interview.$dirty) && $scope.interviewForm3.time_interview.$invalid;
+        };
+    }
+
+    function useIsShowWantForError3($scope, $http) {
+        return () => {
+            return ($scope.interviewForm3.$submitted || $scope.interviewForm3.wanted_for.$dirty) && $scope.interviewForm3.wanted_for.$invalid;
+        };
+    }
+
+    function useIsShowScoreWantForError3($scope, $http) {
+        return () => {
+            return $scope.interviewForm3.$submitted && $scope.interviewForm3.score_wanted_for.$invalid;
+        };
+    }
+
+    function useIsShowNotWantForError3($scope, $http) {
+        return () => {
+            return ($scope.interviewForm3.$submitted || $scope.interviewForm3.not_want_for.$dirty) && $scope.interviewForm3.not_want_for.$invalid;
+        };
+    }
+
+    function useIsShowScoreNotWantForError3($scope, $http) {
+        return () => {
+            return $scope.interviewForm3.$submitted && $scope.interviewForm3.score_not_want_for.$invalid;
+        };
+    }
+
+    function useIsShowCommentError3($scope, $http) {
+        return () => {
+            return ($scope.interviewForm3.$submitted || $scope.interviewForm3.comment.$dirty) && $scope.interviewForm3.comment.$invalid;
+        };
+    }
+
+    function useIsShowConcernError3($scope, $http) {
+        return () => {
+            return ($scope.interviewForm3.$submitted || $scope.interviewForm3.concern.$dirty) && $scope.interviewForm3.concern.$invalid;
+        };
+    }
+
+    function useIsShowEnergyError3($scope, $http) {
+        return () => {
+            return ($scope.interviewForm3.$submitted || $scope.interviewForm3.energy.$dirty) && $scope.interviewForm3.energy.$invalid;
+        };
+    }
+
+    function useIsShowLongevityScoreError3($scope, $http) {
+        return () => {
+            return $scope.interviewForm3.$submitted && $scope.interviewForm3.score_longevity.$invalid;
+        };
+    }
+
+    function useIsShowLongevitReasonError3($scope, $http) {
+        return () => {
+            return ($scope.interviewForm3.$submitted || $scope.interviewForm3.longevity_reason.$dirty) && $scope.interviewForm3.longevity_reason.$invalid;
         };
     }
 

@@ -209,50 +209,243 @@
                                 </div>
 
                             </div>
-                            <div class="row" id="summary" ng-show="isTabSelected(2,'summary')">
+                            <div id="summary" ng-show="isTabSelected(2,'summary')">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-row ">
+                                            <label>
+                                                <span ng-show="!isShowLevelError3()">Level
+                                                    :</span>
+                                                <span class="text-danger" ng-show="isShowLevelError3()">Level *</span>
+                                            </label>
+                                            <select name="level_candidate" class="form-control"
+                                                ng-model="selectedCandidateProfile.level_candidate"
+                                                ng-class="{'is-invalid': isShowLevelError3()}" required>
+                                                <option value="" disabled selected hidden>กรุณาเลือก</option>
+                                                <option ng-repeat="level in levels ">
+                                                    {{level.name}}
+                                                </option>
+                                            </select>
 
-                                <div class="col-sm-4">
-                                    <div class="form-row ">
-                                        <label> Level</label>
-                                        <select name="wanted_score" class="form-control">
-                                            <option value="" disabled selected hidden>กรุณาเลือก</option>
-                                            <option ng-repeat="level in levels " value="">
-                                                {{level.name}}
-                                            </option>
-                                        </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-row ">
+                                            <label>
+                                                <span ng-show="!isShowWantedScoreError3()">คะแนนความอยากได้
+                                                    :</span>
+                                                <span class="text-danger"
+                                                    ng-show="isShowWantedScoreError3()">คะแนนความอยากได้ *</span>
+                                            </label>
+                                            <select name="wanted_score" class="form-control"
+                                                ng-model="selectedCandidateProfile.wanted_score"
+                                                ng-class="{'is-invalid': isShowWantedScoreError3()}" required>
+                                                <option value="" disabled selected hidden>กรุณาเลือก</option>
+                                                <option ng-repeat="score in score ">
+                                                    {{score.id}}
+                                                </option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-row ">
+                                            <label>
+                                                <span ng-show="!isShowTimeInterviewError3()">ใช้เวลาสัมภาษณ์คนนี้กี่นาที
+                                                    :</span>
+                                                <span class="text-danger"
+                                                    ng-show="isShowTimeInterviewError3()">ใช้เวลาสัมภาษณ์คนนี้กี่นาที
+                                                    *</span>
+                                            </label>
+                                            <div class="input-group ">
+
+                                                <input name="time_interview" class="form-control" type='number' min='0'
+                                                    ng-keypress="preventNegativeNumbers($event)"
+                                                    ng-model="selectedCandidateProfile.time_interview"
+                                                    ng-class="{'is-invalid': isShowTimeInterviewError3()}" required>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
-                                    <div class="form-row ">
-                                        <label> คะแนนความอยากได้</label>
-                                        <select name="wanted_score" class="form-control">
-                                            <option value="" disabled selected hidden>กรุณาเลือก</option>
-                                            <option ng-repeat="score in score " value="">
-                                                {{score.id}}
-                                            </option>
-                                        </select>
+                                <div class="row mt-2"
+                                    ng-show="expandOption[2] === 'fullyOpened' || selectedCandidateProfile.interview_status === 'round3'">
+                                    <div class="col-sm-8 ">
+                                        <div class="form-row ">
+                                            <label>
+                                                <span ng-show="!isShowWantForError3()">อยากได้เพราะเรื่องอะไร
+                                                    :</span>
+                                                <span class="text-danger"
+                                                    ng-show="isShowWantForError3()">อยากได้เพราะเรื่องอะไร
+                                                    *</span>
+                                            </label>
+                                            <textarea name="wanted_for" class="form-control" rows="3"
+                                                ng-model="selectedCandidateProfile.wanted_for"
+                                                ng-class="{'is-invalid': isShowWantForError3()}" required></textarea>
+                                        </div>
+
                                     </div>
-                                </div>
-                                <div class="col-sm-8 mt-2">
-                                    <div class="form-row ">
-                                        <label class="text-left">อยากได้เพราะเรื่องอะไร</label>
-                                        <textarea name="wanted_for" class="form-control" rows="3"
-                                            placeholder="{{selectedCandidateProfile.wanted_for}}"></textarea>
+
+                                    <div class="col-sm-4 mt-2">
+                                        <div class="form-row ">
+                                            <label>
+                                                <span ng-show="!isShowScoreWantForError3()">คะแนน
+                                                    :</span>
+                                                <span class="text-danger" ng-show="isShowScoreWantForError3()">คะแนน
+                                                    *</span>
+                                            </label>
+                                            <select name="score_wanted_for" class="form-control"
+                                                ng-model="selectedCandidateProfile.score_wanted_for"
+                                                ng-class="{'is-invalid': isShowScoreWantForError3()}" required>
+                                                <option value="" disabled selected hidden>กรุณาเลือก</option>
+                                                <option ng-repeat="score in score ">
+                                                    {{score.id}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-8 mt-2">
+                                        <div class="form-row ">
+                                            <label>
+                                                <span ng-show="!isShowNotWantForError3()">ไม่อยากได้เพราะกังวลเรื่องอะไร
+                                                    :</span>
+                                                <span class="text-danger"
+                                                    ng-show="isShowNotWantForError3()">ไม่อยากได้เพราะกังวลเรื่องอะไร
+                                                    *</span>
+                                            </label>
+                                            <textarea name="not_want_for" class="form-control" rows="3"
+                                                ng-model="selectedCandidateProfile.not_want_for"
+                                                ng-class="{'is-invalid': isShowNotWantForError3()}" required></textarea>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-sm-4 mt-2">
+                                        <div class="form-row ">
+                                            <label>
+                                                <span ng-show="!isShowScoreNotWantForError3()">คะแนน
+                                                    :</span>
+                                                <span class="text-danger" ng-show="isShowScoreNotWantForError3()">คะแนน
+                                                    *</span>
+                                            </label>
+                                            <select name="score_not_want_for" class="form-control"
+                                                ng-model="selectedCandidateProfile.score_not_want_for"
+                                                ng-class="{'is-invalid': isShowScoreNotWantForError3()}" required>
+                                                <option value="" disabled selected hidden>กรุณาเลือก</option>
+                                                <option ng-repeat="score in score ">
+                                                    {{score.id}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 mt-2">
+                                        <div class="form-row ">
+                                            <label>
+                                                <span ng-show="!isShowCommentError3()">ความเห็นจากคนสัมภาษณ์
+                                                    (+"คิดว่าเค้าจะอยู่กับเรา/บริษัทได้นานไหม")
+                                                    :</span>
+                                                <span class="text-danger"
+                                                    ng-show="isShowCommentError3()">ความเห็นจากคนสัมภาษณ์
+                                                    (+"คิดว่าเค้าจะอยู่กับเรา/บริษัทได้นานไหม")
+                                                    *</span>
+                                            </label>
+
+                                            <textarea name="comment" class="form-control" rows="3"
+                                                ng-model="selectedCandidateProfile.comment"
+                                                ng-class="{'is-invalid': isShowCommentError3()}" required
+                                                placeholder="{{selectedCandidateProfile.comment}}"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 mt-2">
+                                        <div class="form-row ">
+                                            <label>
+                                                <span ng-show="!isShowConcernError3()">concern
+                                                    :</span>
+                                                <span class="text-danger" ng-show="isShowConcernError3()">concern
+                                                    *</span>
+                                            </label>
+
+                                            <textarea name="concern" class="form-control" rows="3"
+                                                ng-model="selectedCandidateProfile.concern"
+                                                ng-class="{'is-invalid': isShowConcernError3()}" required
+                                                placeholder="{{selectedCandidateProfile.concern}}"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 mt-2">
+                                        <div class="form-row ">
+                                            <label>
+                                                <span ng-show="!isShowEnergyError3()">พลังงาน (+ o -)
+                                                    :</span>
+                                                <span class="text-danger" ng-show="isShowEnergyError3()">พลังงาน (+ o -)
+                                                    *</span>
+                                            </label>
+                                            <div class="input-group ">
+                                                <input name="energy" class="form-control"
+                                                    ng-model="selectedCandidateProfile.energy"
+                                                    ng-class="{'is-invalid': isShowEnergyError3()}" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 mt-2">
+                                        <div class="form-row ">
+                                            <label>
+                                                <span
+                                                    ng-show="!isShowLongevityScoreError3()">คะแนนความคาดว่าจะอยู่ยาวในองค์กรนี้
+                                                    :</span>
+                                                <span class="text-danger"
+                                                    ng-show="isShowLongevityScoreError3()">คะแนนความคาดว่าจะอยู่ยาวในองค์กรนี้
+                                                    *</span>
+                                            </label>
+                                            <select name="score_longevity" class="form-control"
+                                                ng-model="selectedCandidateProfile.score_longevity"
+                                                ng-class="{'is-invalid': isShowLongevityScoreError3()}" required>
+                                                <option value="" disabled selected hidden>กรุณาเลือก</option>
+                                                <option ng-repeat="score in score ">
+                                                    {{score.id}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-8 mt-2">
+                                        <div class="form-row ">
+                                            <label>
+                                                <span ng-show="!isShowLongevitReasonError3()">เหตุผล
+                                                    :</span>
+                                                <span class="text-danger" ng-show="isShowLongevitReasonError3()">เหตุผล
+                                                    *</span>
+                                            </label>
+
+                                            <textarea name="longevity_reason" class="form-control" rows="3"
+                                                ng-model="selectedCandidateProfile.longevity_reason"
+                                                ng-class="{'is-invalid': isShowLongevitReasonError3()}" required
+                                                placeholder="{{selectedCandidateProfile.longevity_reason}}"></textarea>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-sm-4 mt-2">
+
+                                        <div class="form-row">
+                                            <label class="text-left">ผู้สมัครยินดีเข้าโปรแกรม Mini MBA หรือไม่</label>
+                                            <div class="form-check">
+                                              <input class="form-check-input" type="radio" name="CanJoinMba" ng-model="selectedCandidateProfile.canJoinMba" value="yes" checked>
+                                              <label class="form-check-label">ยินดีเข้าโปรแกรม Mini MBA</label>
+                                            </div>
+                                            <div class="form-check">
+                                              <input class="form-check-input" type="radio" name="CanJoinMba" ng-model="selectedCandidateProfile.canJoinMba" value="no">
+                                              <label class="form-check-label">ไม่ยินดีเข้าโปรแกรม Mini MBA</label>
+                                            </div>
+                                          </div>
                                     </div>
 
                                 </div>
 
-                                <div class="col-sm-4 mt-2">
-                                    <div class="form-row ">
-                                        <label> คะแนน</label>
-                                        <select name="wanted_score" class="form-control">
-                                            <option value="" disabled selected hidden>กรุณาเลือก</option>
-                                            <option ng-repeat="score in score " value="">
-                                                {{score.id}}
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
                             </div>
                         </fieldset>
                     </form>
@@ -468,7 +661,8 @@
                                             </label>
                                             <div class="input-group ">
 
-                                                <input name="time_interview" class="form-control"
+                                                <input name="time_interview" class="form-control" type='number' min='0'
+                                                    ng-keypress="preventNegativeNumbers($event)"
                                                     ng-model="selectedCandidateProfile.time_interview"
                                                     ng-class="{'is-invalid': isShowTimeInterviewError2()}" required>
                                                 <div class="input-group-append">
@@ -504,11 +698,11 @@
                                                 <span class="text-danger" ng-show="isShowScoreWantForError2()">คะแนน
                                                     *</span>
                                             </label>
-                                            <select name="wanted_score" class="form-control"
-                                                ng-model="selectedCandidateProfile.wanted_score"
+                                            <select name="score_wanted_for" class="form-control"
+                                                ng-model="selectedCandidateProfile.score_wanted_for"
                                                 ng-class="{'is-invalid': isShowScoreWantForError2()}" required>
                                                 <option value="" disabled selected hidden>กรุณาเลือก</option>
-                                                <option ng-repeat="score in score " value="">
+                                                <option ng-repeat="score in score ">
                                                     {{score.id}}
                                                 </option>
                                             </select>
@@ -520,12 +714,13 @@
                                             <label>
                                                 <span ng-show="!isShowNotWantForError2()">ไม่อยากได้เพราะกังวลเรื่องอะไร
                                                     :</span>
-                                                <span class="text-danger" ng-show="isShowNotWantForError2()">ไม่อยากได้เพราะกังวลเรื่องอะไร
+                                                <span class="text-danger"
+                                                    ng-show="isShowNotWantForError2()">ไม่อยากได้เพราะกังวลเรื่องอะไร
                                                     *</span>
                                             </label>
                                             <textarea name="not_want_for" class="form-control" rows="3"
-                                            ng-model="selectedCandidateProfile.wanted_score"
-                                            ng-class="{'is-invalid': isShowNotWantForError2()}" required></textarea>
+                                                ng-model="selectedCandidateProfile.not_want_for"
+                                                ng-class="{'is-invalid': isShowNotWantForError2()}" required></textarea>
                                         </div>
 
                                     </div>
@@ -539,48 +734,81 @@
                                                     *</span>
                                             </label>
                                             <select name="score_not_want_for" class="form-control"
-                                                ng-model="selectedCandidateProfile.wanted_score"
+                                                ng-model="selectedCandidateProfile.score_not_want_for"
                                                 ng-class="{'is-invalid': isShowScoreNotWantForError2()}" required>
                                                 <option value="" disabled selected hidden>กรุณาเลือก</option>
-                                                <option ng-repeat="score in score " value="">
+                                                <option ng-repeat="score in score ">
                                                     {{score.id}}
                                                 </option>
                                             </select>
                                         </div>
                                     </div>
-                                    <!-- ทำถึงตรงนี้
-                                     -->
+
                                     <div class="col-sm-12 mt-2">
                                         <div class="form-row ">
-                                            <label class="text-left">ความเห็นจากคนสัมภาษณ์
-                                                (+"คิดว่าเค้าจะอยู่กับเรา/บริษัทได้นานไหม")</label>
-                                            <textarea name="wanted_for" class="form-control" rows="3"
-                                                placeholder="{{selectedCandidateProfile.wanted_for}}"></textarea>
+                                            <label>
+                                                <span ng-show="!isShowCommentError2()">ความเห็นจากคนสัมภาษณ์
+                                                    (+"คิดว่าเค้าจะอยู่กับเรา/บริษัทได้นานไหม")
+                                                    :</span>
+                                                <span class="text-danger"
+                                                    ng-show="isShowCommentError2()">ความเห็นจากคนสัมภาษณ์
+                                                    (+"คิดว่าเค้าจะอยู่กับเรา/บริษัทได้นานไหม")
+                                                    *</span>
+                                            </label>
+
+                                            <textarea name="comment" class="form-control" rows="3"
+                                                ng-model="selectedCandidateProfile.comment"
+                                                ng-class="{'is-invalid': isShowCommentError2()}" required
+                                                placeholder="{{selectedCandidateProfile.comment}}"></textarea>
                                         </div>
                                     </div>
 
                                     <div class="col-sm-12 mt-2">
                                         <div class="form-row ">
-                                            <label class="text-left">concern</label>
-                                            <textarea name="wanted_for" class="form-control" rows="3"
-                                                placeholder="{{selectedCandidateProfile.wanted_for}}"></textarea>
+                                            <label>
+                                                <span ng-show="!isShowConcernError2()">concern
+                                                    :</span>
+                                                <span class="text-danger" ng-show="isShowConcernError2()">concern
+                                                    *</span>
+                                            </label>
+
+                                            <textarea name="concern" class="form-control" rows="3"
+                                                ng-model="selectedCandidateProfile.concern"
+                                                ng-class="{'is-invalid': isShowConcernError2()}" required
+                                                placeholder="{{selectedCandidateProfile.concern}}"></textarea>
                                         </div>
                                     </div>
 
                                     <div class="col-sm-12 mt-2">
                                         <div class="form-row ">
-                                            <label class="text-left">พลังงาน (+ o -)</label>
-                                            <input name="wanted_for" class="form-control" rows="3"
-                                                placeholder="{{selectedCandidateProfile.wanted_for}}">
+                                            <label>
+                                                <span ng-show="!isShowEnergyError2()">พลังงาน (+ o -)
+                                                    :</span>
+                                                <span class="text-danger" ng-show="isShowEnergyError2()">พลังงาน (+ o -)
+                                                    *</span>
+                                            </label>
+                                            <div class="input-group ">
+                                                <input name="energy" class="form-control"
+                                                    ng-model="selectedCandidateProfile.energy"
+                                                    ng-class="{'is-invalid': isShowEnergyError2()}" required>
+                                            </div>
                                         </div>
                                     </div>
-
                                     <div class="col-sm-4 mt-2">
                                         <div class="form-row ">
-                                            <label> คะแนนความคาดว่าจะอยู่ยาวในองค์กรนี้</label>
-                                            <select name="reason_not_wanted" class="form-control">
+                                            <label>
+                                                <span
+                                                    ng-show="!isShowLongevityScoreError2()">คะแนนความคาดว่าจะอยู่ยาวในองค์กรนี้
+                                                    :</span>
+                                                <span class="text-danger"
+                                                    ng-show="isShowLongevityScoreError2()">คะแนนความคาดว่าจะอยู่ยาวในองค์กรนี้
+                                                    *</span>
+                                            </label>
+                                            <select name="score_longevity" class="form-control"
+                                                ng-model="selectedCandidateProfile.score_longevity"
+                                                ng-class="{'is-invalid': isShowLongevityScoreError2()}" required>
                                                 <option value="" disabled selected hidden>กรุณาเลือก</option>
-                                                <option ng-repeat="score in score " value="">
+                                                <option ng-repeat="score in score ">
                                                     {{score.id}}
                                                 </option>
                                             </select>
@@ -589,9 +817,17 @@
 
                                     <div class="col-sm-8 mt-2">
                                         <div class="form-row ">
-                                            <label class="text-left">เหตุผล</label>
-                                            <textarea name="wanted_for" class="form-control" rows="3"
-                                                placeholder="{{selectedCandidateProfile.wanted_for}}"></textarea>
+                                            <label>
+                                                <span ng-show="!isShowLongevitReasonError2()">เหตุผล
+                                                    :</span>
+                                                <span class="text-danger" ng-show="isShowLongevitReasonError2()">เหตุผล
+                                                    *</span>
+                                            </label>
+
+                                            <textarea name="longevity_reason" class="form-control" rows="3"
+                                                ng-model="selectedCandidateProfile.longevity_reason"
+                                                ng-class="{'is-invalid': isShowLongevitReasonError2()}" required
+                                                placeholder="{{selectedCandidateProfile.longevity_reason}}"></textarea>
                                         </div>
 
                                     </div>
@@ -600,14 +836,14 @@
                                         <div class="form-row">
                                             <label class="text-left">ผู้สมัครยินดีเข้าโปรแกรม Mini MBA หรือไม่</label>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="CanJoinMba">
-                                                <label class="form-check-label">ยินดีเข้าโปรแกรม Mini MBA</label>
+                                              <input class="form-check-input" type="radio" name="CanJoinMba" ng-model="selectedCandidateProfile.canJoinMba" value="yes" checked>
+                                              <label class="form-check-label">ยินดีเข้าโปรแกรม Mini MBA</label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="CanJoinMba">
-                                                <label class="form-check-label">ไม่ยินดีเข้าโปรแกรม Mini MBA</label>
+                                              <input class="form-check-input" type="radio" name="CanJoinMba" ng-model="selectedCandidateProfile.canJoinMba" value="no">
+                                              <label class="form-check-label">ไม่ยินดีเข้าโปรแกรม Mini MBA</label>
                                             </div>
-                                        </div>
+                                          </div>
                                     </div>
 
                                 </div>
@@ -780,49 +1016,243 @@
                                 </div>
                             </div>
 
-                            <div class="row" id="summary" ng-show="isTabSelected(0,'summary')">
-                                <div class="col-sm-4">
-                                    <div class="form-row ">
-                                        <label> Level</label>
-                                        <select name="wanted_score" class="form-control">
-                                            <option value="" disabled selected hidden>กรุณาเลือก</option>
-                                            <option ng-repeat="level in levels " value="">
-                                                {{level.name}}
-                                            </option>
-                                        </select>
+                            <div id="summary" ng-show="isTabSelected(0,'summary')">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-row ">
+                                            <label>
+                                                <span ng-show="!isShowLevelError1()">Level
+                                                    :</span>
+                                                <span class="text-danger" ng-show="isShowLevelError1()">Level *</span>
+                                            </label>
+                                            <select name="level_candidate" class="form-control"
+                                                ng-model="selectedCandidateProfile.level_candidate"
+                                                ng-class="{'is-invalid': isShowLevelError1()}" required>
+                                                <option value="" disabled selected hidden>กรุณาเลือก</option>
+                                                <option ng-repeat="level in levels ">
+                                                    {{level.name}}
+                                                </option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-row ">
+                                            <label>
+                                                <span ng-show="!isShowWantedScoreError1()">คะแนนความอยากได้
+                                                    :</span>
+                                                <span class="text-danger"
+                                                    ng-show="isShowWantedScoreError1()">คะแนนความอยากได้ *</span>
+                                            </label>
+                                            <select name="wanted_score" class="form-control"
+                                                ng-model="selectedCandidateProfile.wanted_score"
+                                                ng-class="{'is-invalid': isShowWantedScoreError1()}" required>
+                                                <option value="" disabled selected hidden>กรุณาเลือก</option>
+                                                <option ng-repeat="score in score ">
+                                                    {{score.id}}
+                                                </option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-row ">
+                                            <label>
+                                                <span ng-show="!isShowTimeInterviewError1()">ใช้เวลาสัมภาษณ์คนนี้กี่นาที
+                                                    :</span>
+                                                <span class="text-danger"
+                                                    ng-show="isShowTimeInterviewError1()">ใช้เวลาสัมภาษณ์คนนี้กี่นาที
+                                                    *</span>
+                                            </label>
+                                            <div class="input-group ">
+
+                                                <input name="time_interview" class="form-control" type='number' min='0'
+                                                    ng-keypress="preventNegativeNumbers($event)"
+                                                    ng-model="selectedCandidateProfile.time_interview"
+                                                    ng-class="{'is-invalid': isShowTimeInterviewError1()}" required>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
-                                    <div class="form-row ">
-                                        <label> คะแนนความอยากได้</label>
-                                        <select name="wanted_score" class="form-control">
-                                            <option value="" disabled selected hidden>กรุณาเลือก</option>
-                                            <option ng-repeat="score in score " value="">
-                                                {{score.id}}
-                                            </option>
-                                        </select>
+                                <div class="row mt-2"
+                                    ng-show="expandOption[0] === 'fullyOpened' || selectedCandidateProfile.interview_status === 'round1'">
+                                    <div class="col-sm-8 ">
+                                        <div class="form-row ">
+                                            <label>
+                                                <span ng-show="!isShowWantForError1()">อยากได้เพราะเรื่องอะไร
+                                                    :</span>
+                                                <span class="text-danger"
+                                                    ng-show="isShowWantForError1()">อยากได้เพราะเรื่องอะไร
+                                                    *</span>
+                                            </label>
+                                            <textarea name="wanted_for" class="form-control" rows="3"
+                                                ng-model="selectedCandidateProfile.wanted_for"
+                                                ng-class="{'is-invalid': isShowWantForError1()}" required></textarea>
+                                        </div>
+
                                     </div>
-                                </div>
-                                <div class="col-sm-8 mt-2">
-                                    <div class="form-row ">
-                                        <label class="text-left">อยากได้เพราะเรื่องอะไร</label>
-                                        <textarea name="wanted_for" class="form-control" rows="3"
-                                            placeholder="{{selectedCandidateProfile.wanted_for}}"></textarea>
+
+                                    <div class="col-sm-4 mt-2">
+                                        <div class="form-row ">
+                                            <label>
+                                                <span ng-show="!isShowScoreWantForError1()">คะแนน
+                                                    :</span>
+                                                <span class="text-danger" ng-show="isShowScoreWantForError1()">คะแนน
+                                                    *</span>
+                                            </label>
+                                            <select name="score_wanted_for" class="form-control"
+                                                ng-model="selectedCandidateProfile.score_wanted_for"
+                                                ng-class="{'is-invalid': isShowScoreWantForError1()}" required>
+                                                <option value="" disabled selected hidden>กรุณาเลือก</option>
+                                                <option ng-repeat="score in score ">
+                                                    {{score.id}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-8 mt-2">
+                                        <div class="form-row ">
+                                            <label>
+                                                <span ng-show="!isShowNotWantForError1()">ไม่อยากได้เพราะกังวลเรื่องอะไร
+                                                    :</span>
+                                                <span class="text-danger"
+                                                    ng-show="isShowNotWantForError1()">ไม่อยากได้เพราะกังวลเรื่องอะไร
+                                                    *</span>
+                                            </label>
+                                            <textarea name="not_want_for" class="form-control" rows="3"
+                                                ng-model="selectedCandidateProfile.not_want_for"
+                                                ng-class="{'is-invalid': isShowNotWantForError1()}" required></textarea>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-sm-4 mt-2">
+                                        <div class="form-row ">
+                                            <label>
+                                                <span ng-show="!isShowScoreNotWantForError1()">คะแนน
+                                                    :</span>
+                                                <span class="text-danger" ng-show="isShowScoreNotWantForError1()">คะแนน
+                                                    *</span>
+                                            </label>
+                                            <select name="score_not_want_for" class="form-control"
+                                                ng-model="selectedCandidateProfile.score_not_want_for"
+                                                ng-class="{'is-invalid': isShowScoreNotWantForError1()}" required>
+                                                <option value="" disabled selected hidden>กรุณาเลือก</option>
+                                                <option ng-repeat="score in score ">
+                                                    {{score.id}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 mt-2">
+                                        <div class="form-row ">
+                                            <label>
+                                                <span ng-show="!isShowCommentError1()">ความเห็นจากคนสัมภาษณ์
+                                                    (+"คิดว่าเค้าจะอยู่กับเรา/บริษัทได้นานไหม")
+                                                    :</span>
+                                                <span class="text-danger"
+                                                    ng-show="isShowCommentError1()">ความเห็นจากคนสัมภาษณ์
+                                                    (+"คิดว่าเค้าจะอยู่กับเรา/บริษัทได้นานไหม")
+                                                    *</span>
+                                            </label>
+
+                                            <textarea name="comment" class="form-control" rows="3"
+                                                ng-model="selectedCandidateProfile.comment"
+                                                ng-class="{'is-invalid': isShowCommentError1()}" required
+                                                placeholder="{{selectedCandidateProfile.comment}}"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 mt-2">
+                                        <div class="form-row ">
+                                            <label>
+                                                <span ng-show="!isShowConcernError1()">concern
+                                                    :</span>
+                                                <span class="text-danger" ng-show="isShowConcernError1()">concern
+                                                    *</span>
+                                            </label>
+
+                                            <textarea name="concern" class="form-control" rows="3"
+                                                ng-model="selectedCandidateProfile.concern"
+                                                ng-class="{'is-invalid': isShowConcernError1()}" required
+                                                placeholder="{{selectedCandidateProfile.concern}}"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12 mt-2">
+                                        <div class="form-row ">
+                                            <label>
+                                                <span ng-show="!isShowEnergyError1()">พลังงาน (+ o -)
+                                                    :</span>
+                                                <span class="text-danger" ng-show="isShowEnergyError1()">พลังงาน (+ o -)
+                                                    *</span>
+                                            </label>
+                                            <div class="input-group ">
+                                                <input name="energy" class="form-control"
+                                                    ng-model="selectedCandidateProfile.energy"
+                                                    ng-class="{'is-invalid': isShowEnergyError1()}" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 mt-2">
+                                        <div class="form-row ">
+                                            <label>
+                                                <span
+                                                    ng-show="!isShowLongevityScoreError1()">คะแนนความคาดว่าจะอยู่ยาวในองค์กรนี้
+                                                    :</span>
+                                                <span class="text-danger"
+                                                    ng-show="isShowLongevityScoreError1()">คะแนนความคาดว่าจะอยู่ยาวในองค์กรนี้
+                                                    *</span>
+                                            </label>
+                                            <select name="score_longevity" class="form-control"
+                                                ng-model="selectedCandidateProfile.score_longevity"
+                                                ng-class="{'is-invalid': isShowLongevityScoreError1()}" required>
+                                                <option value="" disabled selected hidden>กรุณาเลือก</option>
+                                                <option ng-repeat="score in score ">
+                                                    {{score.id}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-8 mt-2">
+                                        <div class="form-row ">
+                                            <label>
+                                                <span ng-show="!isShowLongevitReasonError1()">เหตุผล
+                                                    :</span>
+                                                <span class="text-danger" ng-show="isShowLongevitReasonError1()">เหตุผล
+                                                    *</span>
+                                            </label>
+
+                                            <textarea name="longevity_reason" class="form-control" rows="3"
+                                                ng-model="selectedCandidateProfile.longevity_reason"
+                                                ng-class="{'is-invalid': isShowLongevitReasonError1()}" required
+                                                placeholder="{{selectedCandidateProfile.longevity_reason}}"></textarea>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-sm-4 mt-2">
+
+                                        <div class="form-row">
+                                            <label class="text-left">ผู้สมัครยินดีเข้าโปรแกรม Mini MBA หรือไม่</label>
+                                            <div class="form-check">
+                                              <input class="form-check-input" type="radio" name="CanJoinMba" ng-model="selectedCandidateProfile.canJoinMba" value="yes" checked>
+                                              <label class="form-check-label">ยินดีเข้าโปรแกรม Mini MBA</label>
+                                            </div>
+                                            <div class="form-check">
+                                              <input class="form-check-input" type="radio" name="CanJoinMba" ng-model="selectedCandidateProfile.canJoinMba" value="no">
+                                              <label class="form-check-label">ไม่ยินดีเข้าโปรแกรม Mini MBA</label>
+                                            </div>
+                                          </div>
                                     </div>
 
                                 </div>
 
-                                <div class="col-sm-4 mt-2">
-                                    <div class="form-row ">
-                                        <label> คะแนน</label>
-                                        <select name="wanted_score" class="form-control">
-                                            <option value="" disabled selected hidden>กรุณาเลือก</option>
-                                            <option ng-repeat="score in score " value="">
-                                                {{score.id}}
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
                             </div>
                         </fieldset>
                     </form>
@@ -867,25 +1297,33 @@
                 </button>
             </div>
             <div class="modal-body">
+                <!-- round  -->
                 <div class="container-fluid px-5">
                     <div class="row">
                         <div class="col-sm-12 mt-2  ">
                             <div class="form-row ">
                                 <label>
-                                    <span ng-show="!isShowReasonError()">เหตุผลผ่าน/ไม่ผ่านสัมภาษณ์ : *</span>
-                                    <span class="text-danger" ng-show="isShowReasonError()">เหตุผลผ่าน/ไม่ผ่านสัมภาษณ์ *
-                                        :</span>
+                                    <span ng-show="!isShowReasonError1()">เหตุผลผ่าน/ไม่ผ่านสัมภาษณ์ :</span>
+                                    <span class="text-danger" ng-show="isShowReasonError1()">เหตุผลผ่าน/ไม่ผ่านสัมภาษณ์
+                                        * :</span>
                                 </label>
                                 <textarea name="reason" class="form-control " ng-model="selectedCandidateProfile.reason"
-                                    ng-class="{'is-invalid': isShowReasonError()}" rows='1' required></textarea>
+                                    ng-class="{'is-invalid': isShowReasonError1()}" rows='1' required></textarea>
                             </div>
                         </div>
                         <div class="col-sm-2 mt-2">
                             <div class="form-row ">
-                                <label> คะแนนความอยากได้</label>
-                                <select name="wanted_score" class="form-control">
+                                <label>
+                                    <span ng-show="!isShowWantedScoreError1()">คะแนนความอยากได้
+                                        :</span>
+                                    <span class="text-danger" ng-show="isShowWantedScoreError1()">คะแนนความอยากได้
+                                        *</span>
+                                </label>
+                                <select name="wanted_score" class="form-control"
+                                    ng-model="selectedCandidateProfile.wanted_score"
+                                    ng-class="{'is-invalid': isShowWantedScoreError1()}" required>
                                     <option value="" disabled selected hidden>กรุณาเลือก</option>
-                                    <option ng-repeat="score in score " value="">
+                                    <option ng-repeat="score in score ">
                                         {{score.id}}
                                     </option>
                                 </select>
@@ -894,10 +1332,16 @@
 
                         <div class="col-sm-2 mt-2">
                             <div class="form-row ">
-                                <label> Level</label>
-                                <select name="wanted_score" class="form-control">
+                                <label>
+                                    <span ng-show="!isShowLevelError1()">Level
+                                        :</span>
+                                    <span class="text-danger" ng-show="isShowLevelError1()">Level *</span>
+                                </label>
+                                <select name="level_candidate" class="form-control"
+                                    ng-model="selectedCandidateProfile.level_candidate"
+                                    ng-class="{'is-invalid': isShowLevelError1()}" required>
                                     <option value="" disabled selected hidden>กรุณาเลือก</option>
-                                    <option ng-repeat="level in levels " value="">
+                                    <option ng-repeat="level in levels ">
                                         {{level.name}}
                                     </option>
                                 </select>
@@ -907,30 +1351,45 @@
                             <div class="form-row ">
                                 <div class="input-group ">
                                     <label class="text-left">ใช้เวลาสัมภาษณ์คนนี้กี่นาที</label>
-                                    <input name="wanted_for" type='number' min='0'
-                                        ng-keypress="preventNegativeNumbers($event)" class="form-control" rows="3"
-                                        placeholder="{{selectedCandidateProfile.wanted_for}}">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text"><i class="fas fa-clock"></i></span>
-                                    </div>
+                                    <input name="time_interview" class="form-control" type='number' min='0'
+                                    ng-keypress="preventNegativeNumbers($event)"
+                                    ng-model="selectedCandidateProfile.time_interview"
+                                    ng-class="{'is-invalid': isShowTimeInterviewError1()}" required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                                </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-8 mt-2">
                             <div class="form-row ">
-                                <label class="text-left">อยากได้เพราะเรื่องอะไร</label>
+                                <label>
+                                    <span ng-show="!isShowWantForError1()">อยากได้เพราะเรื่องอะไร
+                                        :</span>
+                                    <span class="text-danger"
+                                        ng-show="isShowWantForError1()">อยากได้เพราะเรื่องอะไร
+                                        *</span>
+                                </label>
                                 <textarea name="wanted_for" class="form-control" rows="1"
-                                    placeholder="{{selectedCandidateProfile.wanted_for}}"></textarea>
+                                    ng-model="selectedCandidateProfile.wanted_for"
+                                    ng-class="{'is-invalid': isShowWantForError1()}" required></textarea>
                             </div>
 
                         </div>
 
                         <div class="col-sm-4 mt-2">
                             <div class="form-row ">
-                                <label> คะแนน</label>
-                                <select name="wanted_score" class="form-control">
+                                <label>
+                                    <span ng-show="!isShowScoreWantForError1()">คะแนน
+                                        :</span>
+                                    <span class="text-danger" ng-show="isShowScoreWantForError1()">คะแนน
+                                        *</span>
+                                </label>
+                                <select name="score_wanted_for" class="form-control"
+                                    ng-model="selectedCandidateProfile.score_wanted_for"
+                                    ng-class="{'is-invalid': isShowScoreWantForError1()}" required>
                                     <option value="" disabled selected hidden>กรุณาเลือก</option>
-                                    <option ng-repeat="score in score " value="">
+                                    <option ng-repeat="score in score ">
                                         {{score.id}}
                                     </option>
                                 </select>
@@ -939,19 +1398,33 @@
 
                         <div class="col-sm-8 mt-2">
                             <div class="form-row ">
-                                <label class="text-left">ไม่อยากได้เพราะกังวลเรื่องอะไร</label>
-                                <textarea name="wanted_for" class="form-control" rows="1"
-                                    placeholder="{{selectedCandidateProfile.wanted_for}}"></textarea>
+                                <label>
+                                    <span ng-show="!isShowNotWantForError1()">ไม่อยากได้เพราะกังวลเรื่องอะไร
+                                        :</span>
+                                    <span class="text-danger"
+                                        ng-show="isShowNotWantForError1()">ไม่อยากได้เพราะกังวลเรื่องอะไร
+                                        *</span>
+                                </label>
+                                <textarea name="not_want_for" class="form-control" rows="1"
+                                    ng-model="selectedCandidateProfile.not_want_for"
+                                    ng-class="{'is-invalid': isShowNotWantForError1()}" required></textarea>
                             </div>
 
                         </div>
 
                         <div class="col-sm-4 mt-2">
                             <div class="form-row ">
-                                <label> คะแนน</label>
-                                <select name="reason_not_wanted" class="form-control">
+                                <label>
+                                    <span ng-show="!isShowScoreNotWantForError1()">คะแนน
+                                        :</span>
+                                    <span class="text-danger" ng-show="isShowScoreNotWantForError1()">คะแนน
+                                        *</span>
+                                </label>
+                                <select name="score_not_want_for" class="form-control"
+                                    ng-model="selectedCandidateProfile.score_not_want_for"
+                                    ng-class="{'is-invalid': isShowScoreNotWantForError1()}" required>
                                     <option value="" disabled selected hidden>กรุณาเลือก</option>
-                                    <option ng-repeat="score in score " value="">
+                                    <option ng-repeat="score in score ">
                                         {{score.id}}
                                     </option>
                                 </select>
@@ -959,35 +1432,70 @@
                         </div>
                         <div class="col-sm-12 mt-2">
                             <div class="form-row ">
-                                <label class="text-left">ความเห็นจากคนสัมภาษณ์
-                                    (+"คิดว่าเค้าจะอยู่กับเรา/บริษัทได้นานไหม")</label>
-                                <textarea name="wanted_for" class="form-control" rows="1"
-                                    placeholder="{{selectedCandidateProfile.wanted_for}}"></textarea>
+                                <label>
+                                    <span ng-show="!isShowCommentError1()">ความเห็นจากคนสัมภาษณ์
+                                        (+"คิดว่าเค้าจะอยู่กับเรา/บริษัทได้นานไหม")
+                                        :</span>
+                                    <span class="text-danger"
+                                        ng-show="isShowCommentError1()">ความเห็นจากคนสัมภาษณ์
+                                        (+"คิดว่าเค้าจะอยู่กับเรา/บริษัทได้นานไหม")
+                                        *</span>
+                                </label>
+
+                                <textarea name="comment" class="form-control" rows="1"
+                                    ng-model="selectedCandidateProfile.comment"
+                                    ng-class="{'is-invalid': isShowCommentError1()}" required
+                                    placeholder="{{selectedCandidateProfile.comment}}"></textarea>
                             </div>
                         </div>
 
                         <div class="col-sm-12 mt-2">
                             <div class="form-row ">
-                                <label class="text-left">concern</label>
-                                <textarea name="wanted_for" class="form-control" rows="2"
-                                    placeholder="{{selectedCandidateProfile.wanted_for}}"></textarea>
+                                <label>
+                                    <span ng-show="!isShowConcernError1()">concern
+                                        :</span>
+                                    <span class="text-danger" ng-show="isShowConcernError1()">concern
+                                        *</span>
+                                </label>
+
+                                <textarea name="concern" class="form-control" rows="2"
+                                    ng-model="selectedCandidateProfile.concern"
+                                    ng-class="{'is-invalid': isShowConcernError1()}" required
+                                    placeholder="{{selectedCandidateProfile.concern}}"></textarea>
                             </div>
                         </div>
 
                         <div class="col-sm-12 mt-2">
                             <div class="form-row ">
-                                <label class="text-left">พลังงาน (+ o -)</label>
-                                <input name="wanted_for" class="form-control"
-                                    placeholder="{{selectedCandidateProfile.wanted_for}}">
+                                <label>
+                                    <span ng-show="!isShowEnergyError1()">พลังงาน (+ o -)
+                                        :</span>
+                                    <span class="text-danger" ng-show="isShowEnergyError1()">พลังงาน (+ o -)
+                                        *</span>
+                                </label>
+                                <div class="input-group ">
+                                    <input name="energy" class="form-control"
+                                        ng-model="selectedCandidateProfile.energy"
+                                        ng-class="{'is-invalid': isShowEnergyError1()}" required>
+                                </div>
                             </div>
                         </div>
 
                         <div class="col-sm-4 mt-2">
                             <div class="form-row ">
-                                <label> คะแนนความคาดว่าจะอยู่ยาวในองค์กรนี้</label>
-                                <select name="reason_not_wanted" class="form-control">
-                                    <option value="" disabled selected hidden>กรุณาเลือก</option>
-                                    <option ng-repeat="score in score " value="">
+                                <label>
+                                    <span
+                                        ng-show="!isShowLongevityScoreError1()">คะแนนความคาดว่าจะอยู่ยาวในองค์กรนี้
+                                        :</span>
+                                    <span class="text-danger"
+                                        ng-show="isShowLongevityScoreError1()">คะแนนความคาดว่าจะอยู่ยาวในองค์กรนี้
+                                        *</span>
+                                </label>
+                                <select name="score_longevity" class="form-control"
+                                    ng-model="selectedCandidateProfile.score_longevity"
+                                    ng-class="{'is-invalid': isShowLongevityScoreError1()}" required>
+                                    <option value="" disabled ng-selected="isShowLongevityScoreError1()"  hidden>กรุณาเลือก</option>
+                                    <option ng-repeat="score in score ">
                                         {{score.id}}
                                     </option>
                                 </select>
@@ -996,9 +1504,17 @@
 
                         <div class="col-sm-8 mt-2">
                             <div class="form-row ">
-                                <label class="text-left">เหตุผล</label>
-                                <textarea name="wanted_for" class="form-control" rows="1"
-                                    placeholder="{{selectedCandidateProfile.wanted_for}}"></textarea>
+                                <label>
+                                    <span ng-show="!isShowLongevitReasonError1()">เหตุผล
+                                        :</span>
+                                    <span class="text-danger" ng-show="isShowLongevitReasonError1()">เหตุผล
+                                        *</span>
+                                </label>
+
+                                <textarea name="longevity_reason" class="form-control" rows="3"
+                                    ng-model="selectedCandidateProfile.longevity_reason"
+                                    ng-class="{'is-invalid': isShowLongevitReasonError1()}" required
+                                    placeholder="{{selectedCandidateProfile.longevity_reason}}"></textarea>
                             </div>
 
                         </div>
@@ -1007,14 +1523,14 @@
                             <div class="form-row">
                                 <label class="text-left">ผู้สมัครยินดีเข้าโปรแกรม Mini MBA หรือไม่</label>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="CanJoinMba">
-                                    <label class="form-check-label">ยินดีเข้าโปรแกรม Mini MBA</label>
+                                  <input class="form-check-input" type="radio" name="CanJoinMba" ng-model="selectedCandidateProfile.canJoinMba" value="yes" checked>
+                                  <label class="form-check-label">ยินดีเข้าโปรแกรม Mini MBA</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="CanJoinMba">
-                                    <label class="form-check-label">ไม่ยินดีเข้าโปรแกรม Mini MBA</label>
+                                  <input class="form-check-input" type="radio" name="CanJoinMba" ng-model="selectedCandidateProfile.canJoinMba" value="no">
+                                  <label class="form-check-label">ไม่ยินดีเข้าโปรแกรม Mini MBA</label>
                                 </div>
-                            </div>
+                              </div>
                         </div>
                     </div>
                 </div>
