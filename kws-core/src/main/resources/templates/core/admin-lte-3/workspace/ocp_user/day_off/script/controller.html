@@ -1,0 +1,33 @@
+<div th:replace="core/admin-lte-3/workspace/ocp_user/day_off/script/entry-controller"></div>
+
+<script th:inline="javascript">
+    app.controller("dayOffUserController", ["$scope", "$http", ($scope, $http) => {
+        $scope.mode = 'list';
+        $scope.employeeInformation = {
+            'id': '1',
+            'firstName': 'arin',
+            'lastName': 'salabsi',
+            'email': "techanddata@knoware.com",
+            'business': 'Center',
+            'nickname': 'ออโต้',
+            'position': 'HR',
+            'ocp_oc_reports': [
+                { 'id': '1', 'type': 'วันทำงาน', 'date_work': '10/8/2023', 'date_report': '11/8/2023', 'time_report': '18.00 P.M.', 'ocp_leader': 'Approve', 'oc_leader': 'Approve', 'ocp_awareness': 'Approve', 'oc_awareness': 'Approve', },
+                { 'id': '2', 'type': 'วันสลับวันหยุด', 'date_work': '12/8/2023', 'date_report': '12/8/2023', 'time_report': '19.00  P.M.', 'ocp_leader': 'Disapprove', 'oc_leader': 'Disapprove', 'ocp_awareness': 'Approve', 'oc_awareness': 'Disapprove', },
+                { 'id': '3', 'type': 'วันลา', 'date_work': '13/8/2023', 'date_report': '13/8/2023', 'time_report': '17.00 P.M.', 'ocp_leader': 'waiting', 'oc_leader': 'waiting', 'ocp_awareness': 'Approve', 'oc_awareness': 'Approve', },
+
+            ]
+        };
+        $scope.leave_types = [
+            { 'id': '1', 'type': 'ลากิจ' },
+            { 'id': '2', 'type': 'ลาป่วย' },
+            { 'id': '3', 'type': 'ลาพักร้อน' },
+            { 'id': '4', 'type': 'leave without pay' },
+        ]
+        $scope.init = function () {
+            useControllerEntry($scope, $http);
+            $('.select2').select2({ theme: 'bootstrap4' });
+        }
+    }
+    ]);
+</script>

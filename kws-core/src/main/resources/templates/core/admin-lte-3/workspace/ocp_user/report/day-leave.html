@@ -1,0 +1,115 @@
+<div class="card mx-3">
+    <div class="card-header text-right">
+        <h3 class="card-title">เวลา</h3>
+    </div>
+    
+    <div class="card-body mx-3">
+        <form name="employeeForm" class="form row" novalidate>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>รหัสพนักงาน</span>
+                    </label>
+                    <input name="id" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                        ng-model="employeeInformation.id" disabled />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>Email</span>
+                    </label>
+                    <input name="Email" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                        ng-model="employeeInformation.email" disabled />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>ชื่อ - นามสกุล</span>
+                    </label>
+                    <input name="name" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                        ng-model="employeeInformation.firstName + ' ' + employeeInformation.lastName" disabled />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>ชื่อเล่น</span>
+                    </label>
+                    <input name="nickname" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                        ng-model="employeeInformation.nickname" disabled />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>ตำแหน่ง</span>
+                    </label>
+                    <input name="position" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                        ng-model="employeeInformation.position" disabled />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>สังกัด</span>
+                    </label>
+                    <input name="business" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                        ng-model="employeeInformation.business" disabled />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>วันทำงาน</span>
+                    </label>
+                    <input name="days_work" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                        ng-model="employeeInformation.days_work" disabled />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>เวลาทำงาน</span>
+                    </label>
+                    <div class="input-group">
+                        <input name="time_work" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                            ng-model="employeeInformation.time_work" disabled />
+                        <div class="input-group-append">
+                            <div class="input-group-text"><i class="fa fa-clock"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>
+                        <span ng-show="!isShowLeaveTypeError()">ประเภทวันลา</span>
+                        <span class="text-danger" ng-show="isShowLeaveTypeError()">ประเภทวันลา</span>
+                      </label>
+                      <select name="leave_type" class="form-control" style="width: 100%" ng-model="selectedReport.leave_type" disabled>
+                        <option value="{{ selectedReport.leave_type }}">{{ selectedReport.leave_type }}</option>
+                      </select>
+                   
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>
+                      <span ng-show="!isShowDaySwitchError()">วันที่ลา</span>
+                    </label>
+                    <input name="day_leave" type="date" class="form-control"
+                      ng-class="{'is-invalid': isShowDaySwitchError()}" placeholder="electedReport.day_leave"
+                      ng-model="selectedReport.day_leave" disabled />
+                  </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div class=" mx-3 text-right">
+    <button class="btn btn-outline-danger" ng-click="toListMode()"><i class="fa fa-caret-left"></i> ย้อนกลับ</button>
+    <button class="btn btn-outline-primary" ng-click="requestSave()"><i class="fa fa-save"></i> บันทึก</button>
+</div>
