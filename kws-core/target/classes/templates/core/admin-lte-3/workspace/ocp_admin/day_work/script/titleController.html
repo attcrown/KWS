@@ -1,0 +1,7 @@
+<script th:inline="javascript">
+    function TitleController($scope, $http) {
+        $scope.user_log = {id: "KR0001", firstname: "วงศ์วริศ" ,lastname:'ชววิวรรธน์' ,email:'issrrar@gmail.com'};
+        $scope.sum_userlog_name = $scope.user_log.firstname+' '+$scope.user_log.lastname;
+        console.log($scope.user_log);
+    }
+</script>  
