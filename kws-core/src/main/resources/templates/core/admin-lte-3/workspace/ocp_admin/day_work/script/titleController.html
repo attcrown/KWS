@@ -1,7 +1,54 @@
 <script th:inline="javascript">
     function TitleController($scope, $http) {
+        $scope.titleForward=[];
+        $scope.forworddata=[];
+        $scope.routinedata=[];
+
         $scope.user_log = {id: "KR0001", firstname: "วงศ์วริศ" ,lastname:'ชววิวรรธน์' ,email:'issrrar@gmail.com'};
         $scope.sum_userlog_name = $scope.user_log.firstname+' '+$scope.user_log.lastname;
-        console.log($scope.user_log);
+        $scope.TypeWorks = [
+            {id:1,work:'Need'},{id:2,work:'Want'},{id:3,work:'Optional'}
+        ];
+        $scope.LevelWorks = [
+            {id:1 , lv:'⭐'},
+            {id:2 , lv:'⭐⭐'},
+            {id:3 , lv:'⭐⭐⭐'},
+            {id:4 , lv:'⭐⭐⭐⭐'},
+            {id:5 , lv:'⭐⭐⭐⭐⭐'},
+        ];
+        $scope.results = [
+            {id:1 , status:'สำเร็จ'},
+            {id:2 , status:'ไม่สำเร็จ'},
+        ];
+
+        $scope.pushForward = function(){
+            $scope.forworddata.push({});
+        }
+        $scope.pushRoution = function(){
+            $scope.routinedata.push({});
+        }
+        $scope.delForward = function(a) {
+            var index = $scope.forworddata.indexOf(a);
+            if (index !== -1) {
+                $scope.forworddata.splice(index, 1);
+            }
+        };
+        $scope.delRoution= function(a) {
+            var index = $scope.routinedata.indexOf(a);
+            if (index !== -1) {
+                $scope.routinedata.splice(index, 1);
+            }
+        };
+
+        $scope.saveTitle = function(){
+            if($scope.employeeForword.$valid){
+                console.log('save>>');
+                $scope.employeeForword.$submitted = true;
+            }
+            console.log($scope.titleForward);
+            console.log($scope.forworddata);
+            console.log($scope.routinedata);
+            
+        }
     }
 </script>  
