@@ -81,8 +81,10 @@
                     <label>
                         <span>วันที่ทำงาน</span>
                     </label>
-                    <input name="day_work" type="date" class="form-control" placeholder="ไม่มีข้อมูล"
-                        ng-model="user_log.day_work" required />
+                    <input name="day_work" type="date" class="form-control" 
+                        placeholder="ไม่มีข้อมูล"
+                        ng-class="{'is-invalid': !selectdate}"
+                        ng-model="selectdate" required />
                 </div>
             </div>
         </form>
@@ -94,7 +96,7 @@
 <div class="card mx-3">
     <div class="card-header">
         <h3 class="card-title px-3 " style="color: #d81b60; font-size: 20px">
-            <b>Forword</b> 
+            <b>Forward</b> 
         </h3>
     </div>
     <div class="card-body mx-3">
@@ -160,6 +162,7 @@
                         <input name="time" type="number" class="form-control" 
                             placeholder="ระบุเวลาเป็นนาที"
                             ng-class="{'is-invalid': !forworddata.time}"
+                            ng-change="sumtime_forward(forworddata.time)"
                             ng-model="forworddata.time" required />
                     </div>
                 </div>
@@ -214,7 +217,7 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <hr style="border-top: 4px solid rgb(156, 153, 153); margin: 10px 0;">
+                    <hr style="border-top: 2px solid rgb(156, 153, 153); margin: 10px 0;">
                 </div>
                 
 
@@ -232,8 +235,8 @@
                         <label>
                             <span>รวมเวลา</span>
                         </label>
-                        <input name="sum_forword" type="number" class="form-control" placeholder="ไม่มีข้อมูล"
-                            ng-model="sum_forword" disabled />
+                        <input name="sum_forward" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                            ng-model="sum_forward" disabled />
                     </div>
                 </div>
             </div>
@@ -261,7 +264,9 @@
                         <label>
                             <span>ลำดับความสำคัญของงาน</span>
                         </label>
-                        <select name="typeName" class="form-control" style="width: 100%" ng-model="routinedata.typeWork">
+                        <select name="typeName" class="form-control" 
+                        ng-class="{'is-invalid': !routinedata.typeWork}"
+                        style="width: 100%" ng-model="routinedata.typeWork">
                             <option value="" disabled selected hidden>
                                 --- กรุณาเลือก ---
                             </option>
@@ -275,8 +280,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>
-                            <span ng-show="routinedata.ocp">OCP</span>
-                            <span class="text-danger" ng-show="!routinedata.ocp">กรุณากรอกข้อมูล OCP</span>
+                            <span>OCP</span>                    
                         </label>
                         <textarea name="ocp" type="text" class="form-control" 
                             placeholder="ระบุ OCP"
@@ -289,7 +293,9 @@
                         <label>
                             <span>AC</span>
                         </label>
-                        <textarea name="ac" type="text" class="form-control" placeholder="ระบุ AC" ng-model="routinedata.ac"
+                        <textarea name="ac" type="text" class="form-control" 
+                        ng-class="{'is-invalid': !routinedata.ac}"
+                        placeholder="ระบุ AC" ng-model="routinedata.ac"
                             required></textarea>
                     </div>
                 </div>
@@ -298,7 +304,9 @@
                         <label>
                             <span>Link</span>
                         </label>
-                        <input name="linkweb" type="text" class="form-control" placeholder="ระบุ Link"
+                        <input name="linkweb" type="text" class="form-control" 
+                        ng-class="{'is-invalid': !routinedata.link}"
+                        placeholder="ระบุ Link"
                             ng-model="routinedata.link" required />
                     </div>
                 </div>
@@ -307,8 +315,11 @@
                         <label>
                             <span>นาทีการทำงาน</span>
                         </label>
-                        <input name="time" type="number" class="form-control" placeholder="ระบุเวลาเป็นนาที"
-                            ng-model="routinedata.time" required />
+                        <input name="time" type="number" class="form-control" 
+                        ng-class="{'is-invalid': !routinedata.time}"
+                        placeholder="ระบุเวลาเป็นนาที"
+                        ng-change="sumtime_routine(routinedata.time)"
+                        ng-model="routinedata.time" required />
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -316,7 +327,9 @@
                         <label>
                             <span>เลเวลของงาน</span>
                         </label>
-                        <select name="level" class="form-control" style="width: 100%" ng-model="routinedata.LevelWork">
+                        <select name="level" class="form-control" style="width: 100%" 
+                        ng-model="routinedata.LevelWork"
+                        ng-class="{'is-invalid': !routinedata.LevelWork}">
                             <option value="" disabled selected hidden>
                                 --- กรุณาเลือก ---
                             </option>
@@ -332,8 +345,8 @@
                         <label>
                             <span>ผลการทำงาน</span>
                         </label>
-                        <select name="level" class="form-control" style="width: 100%" ng-model="routinedata.result"
-                            disabled>
+                        <select name="level" class="form-control" style="width: 100%" 
+                        ng-model="routinedata.result" disabled>
                             <option value="" disabled selected hidden>
                                 --- กรุณาเลือก ---
                             </option>
@@ -359,7 +372,7 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <hr style="border-top: 4px solid rgb(156, 153, 153); margin: 10px 0;">
+                    <hr style="border-top: 2px solid rgb(156, 153, 153); margin: 10px 0;">
                 </div>
             </div>
 
@@ -375,8 +388,8 @@
                         <label>
                             <span>รวมเวลา</span>
                         </label>
-                        <input name="sum_forword" type="number" class="form-control" placeholder="ไม่มีข้อมูล"
-                            ng-model="sum_forword" disabled />
+                        <input name="sum_routine" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                            ng-model="sum_routine" disabled />
                     </div>
                 </div>
             </div>
@@ -392,9 +405,127 @@
     </div>
     <div class="card-body mx-3">
         <form name="employeeForWork" class="form row" novalidate>
+            <div class="form row mx-0" ng-repeat="forworkdata in forworkdata | orderBy: 'id'">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>
+                            <span>ลำดับความสำคัญของงาน</span>
+                        </label>
+                        <select name="typeName" class="form-control" 
+                        ng-class="{'is-invalid': !forworkdata.typeWork}"
+                        style="width: 100%" ng-model="forworkdata.typeWork">
+                            <option value="" disabled selected hidden>
+                                --- กรุณาเลือก ---
+                            </option>
+                            <option ng-repeat="TypeWorks in TypeWorks | orderBy: 'id'" ng-value="TypeWorks.work">
+                                {{ TypeWorks.work }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-8"></div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>
+                            <span>OCP</span>                    
+                        </label>
+                        <textarea name="ocp" type="text" class="form-control" 
+                            placeholder="ระบุ OCP"
+                            ng-class="{'is-invalid': !forworkdata.ocp}"
+                            ng-model="forworkdata.ocp" required></textarea>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>
+                            <span>AC</span>
+                        </label>
+                        <textarea name="ac" type="text" class="form-control" 
+                        ng-class="{'is-invalid': !forworkdata.ac}"
+                        placeholder="ระบุ AC" ng-model="forworkdata.ac"
+                            required></textarea>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>
+                            <span>Link</span>
+                        </label>
+                        <input name="linkweb" type="text" class="form-control" 
+                        ng-class="{'is-invalid': !forworkdata.link}"
+                        placeholder="ระบุ Link"
+                            ng-model="forworkdata.link" required />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>
+                            <span>นาทีการทำงาน</span>
+                        </label>
+                        <input name="time" type="number" class="form-control" 
+                        ng-class="{'is-invalid': !forworkdata.time}"
+                        placeholder="ระบุเวลาเป็นนาที"
+                        ng-change="sumtime_forwork(forworkdata.time)"
+                        ng-model="forworkdata.time" required />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>
+                            <span>เลเวลของงาน</span>
+                        </label>
+                        <select name="level" class="form-control" style="width: 100%" 
+                        ng-model="forworkdata.LevelWork"
+                        ng-class="{'is-invalid': !forworkdata.LevelWork}">
+                            <option value="" disabled selected hidden>
+                                --- กรุณาเลือก ---
+                            </option>
+                            <option ng-repeat="LevelWorks in LevelWorks | orderBy: 'id'" ng-value="LevelWorks.id">
+                                {{ LevelWorks.lv }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>
+                            <span>ผลการทำงาน</span>
+                        </label>
+                        <select name="level" class="form-control" style="width: 100%" 
+                        ng-model="forworkdata.result" disabled>
+                            <option value="" disabled selected hidden>
+                                --- กรุณาเลือก ---
+                            </option>
+                            <option ng-repeat="results in results | orderBy: 'id'" ng-value="results.status">
+                                {{ results.status }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <label>
+                        <span>หมายเหตุ</span>
+                    </label>
+                    <input name="time" type="number" class="form-control" placeholder="ระบุเวลาเป็นนาที"
+                        ng-model="forworkdata.because" disabled />
+                </div>
+
+                <div class="col-md-12">
+                    <div class="d-flex justify-content-end mx-2">
+                        <button class="btn btn-outline-danger" ng-click="delForwork(forworkdata)">
+                            <i class="fa fa-trash kws-table-action-icon"></i> ลบข้อ
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <hr style="border-top: 2px solid rgb(156, 153, 153); margin: 10px 0;">
+                </div>
+            </div>
+
             <div class="col-md-12">
                 <div>
-                    <button class="btn btn-outline-success" ng-click="">
+                    <button class="btn btn-outline-success" ng-click="pushForwork()">
                         <i class="fa fa-plus-circle" aria-hidden="true"></i> เพิ่มข้อ
                     </button>
                 </div>
@@ -404,8 +535,8 @@
                         <label>
                             <span>รวมเวลา</span>
                         </label>
-                        <input name="sum_forword" type="number" class="form-control" placeholder="ไม่มีข้อมูล"
-                            ng-model="sum_forword" disabled />
+                        <input name="sum_forwork" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                            ng-model="sum_forwork" disabled />
                     </div>
                 </div>
             </div>
@@ -427,8 +558,8 @@
                         <label>
                             <span>รวมเวลาทั้งหมด</span>
                         </label>
-                        <input name="sum_forword" type="number" class="form-control" placeholder="ไม่มีข้อมูล"
-                            ng-model="sum_forword" disabled />
+                        <input name="sum_time_all" type="text" class="form-control text-center" placeholder="ไม่มีข้อมูล"
+                            ng-model="sum_time_all" disabled />
                     </div>
                 </div>
             </div>
@@ -476,7 +607,7 @@
 </div>
 
 <div class="text-right mx-3 pb-4">
-    <button class="btn btn-outline-info" ng-click="saveTitle()">
+    <button class="btn btn-outline-info" ng-click="requestSave() ;saveTitle()">
         <i class="fa fa-save" aria-hidden="true"></i> บันทึก
     </button>
 </div>
