@@ -1,0 +1,99 @@
+<div class="card mx-3">
+    <!-- <div class="card-header">
+      <h3 class="card-title px-3">ข้อมูลส่วนตัว</h3>
+    </div> -->
+    <div class="card-body mx-3">
+        <form name="employeeForm" class="form row" novalidate>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>รหัสพนักงาน</span>
+                    </label>
+                    <input name="Iduser" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                        ng-model="user_log.id" disabled />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>Email</span>
+                    </label>
+                    <input name="Email" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                        ng-model="user_log.email" disabled />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>ชื่อ - นามสกุล</span>
+                    </label>
+                    <input name="name" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                        ng-model="sum_userlog_name" disabled />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>ชื่อเล่น</span>
+                    </label>
+                    <input name="nickname" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                        ng-model="user_log.nickname" disabled />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>ตำแหน่ง</span>
+                    </label>
+                    <input name="position" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                        ng-model="user_log.position" disabled />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>สังกัด</span>
+                    </label>
+                    <input name="business" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                        ng-model="user_log.business" disabled />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>วันทำงาน</span>
+                    </label>
+                    <input name="days_work" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                        ng-model="user_log.days_work" disabled />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>เวลาทำงาน</span>
+                    </label>
+                    <input name="time_work" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                        ng-model="user_log.time_work" disabled />
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>วันหยุด</span>
+                    </label>
+                    <input name="day_work" type="date" class="form-control" 
+                        placeholder="ไม่มีข้อมูล"
+                        ng-class="{'is-invalid': !selectdate}"
+                        ng-model="selectdate" required />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="text-right mx-3 pb-4">
+    <button class="btn btn-outline-info" ng-click="requestSave() ;saveTitle()">
+        <i class="fa fa-save" aria-hidden="true"></i> บันทึก
+    </button>
+</div>

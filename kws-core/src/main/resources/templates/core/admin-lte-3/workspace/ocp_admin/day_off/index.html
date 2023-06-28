@@ -1,5 +1,12 @@
-<div>
-    <h1>
-        Day_Off
-    </h1>
-</div>
+<div th:replace="core/admin-lte-3/workspace/ocp_admin/day_off/script/controller"></div>
+
+<section ng-controller="DayWorkAdminController" ng-init="init()">
+    <div ng-if="isLoading" class="kws-loader">
+        <div class="kws-loader-spin"></div>
+    </div>
+
+    <div ng-show="mode === 'list'">
+        <div th:replace="core/admin-lte-3/workspace/ocp_admin/day_off/title"></div>
+    </div>
+
+</section>

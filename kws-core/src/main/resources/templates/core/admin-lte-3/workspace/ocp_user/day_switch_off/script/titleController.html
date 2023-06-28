@@ -15,6 +15,7 @@
         $scope.sum_time=[];
         $scope.sum_time_work = 0;
         $scope.selectdate;
+        $scope.selectdate_switch;
 
         $scope.requestSave = useRequestSave($scope, $http);
         $scope.verify = useVerify($scope, $http);
@@ -35,15 +36,23 @@
             {id:1 , status:'สำเร็จ'},
             {id:2 , status:'ไม่สำเร็จ'},
         ];
-        $scope.$watch(
-        "selectdate",
-        function (newVal, oldVal) {
-            if (newVal !== oldVal && newVal instanceof Date) {
-            $scope.sum_time.selectdate = newVal
-                .toISOString()
-                .substring(0, 10);
+        $scope.$watch("selectdate",function (newVal, oldVal) 
+            {
+                if (newVal !== oldVal && newVal instanceof Date) {
+                $scope.sum_time.selectdate = newVal
+                    .toISOString()
+                    .substring(0, 10);
+                }
             }
-        }
+        );
+        $scope.$watch("selectdate_switch",function (newVal, oldVal) 
+            {
+                if (newVal !== oldVal && newVal instanceof Date) {
+                $scope.sum_time.selectdate_switch = newVal
+                    .toISOString()
+                    .substring(0, 10);
+                }
+            }
         );
 
         $scope.pushForward = function(){

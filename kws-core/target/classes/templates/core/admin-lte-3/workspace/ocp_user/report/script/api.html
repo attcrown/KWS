@@ -1,0 +1,51 @@
+<script th:inline="javascript">
+    function useApi($scope, $http) {
+        $scope.search = useSearch($scope, $http);
+        $scope.deleteOcOcp = useDeleteOcOcp($scope, $http);
+
+    }
+    function useSearch($scope, $http) {
+        return () => {
+            console.log("OC/OCP search");
+        };
+    }
+    function useDeleteOcOcp($scope, $http) {
+        return (ocOcp) => {
+            console.log("### requestDeleteOcOcp ###");
+            console.log(ocOcp);
+            const options = {
+                title: "ยืนยันการลบข้อมูลคำถาม",
+                text: 'พิมพ์คำว่า "Confirm" และ กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                content: "input",
+                icon: "warning",
+                buttons: ["ยกเลิก", "ตกลง"],
+                dangerMode: true
+            };
+
+            const confirmHandler = (value) => {
+                if (value === "Confirm") {
+                    //delete report
+                    //$scope.removeStudent(studentProfile);
+
+                    var index = $scope.employeeInformation.ocp_oc_reports.findIndex(function (item) {
+                        return item.id === ocOcp;
+                    });
+
+                    if (index >= 0 && index < $scope.employeeInformation.ocp_oc_reports.length) {
+                        $scope.employeeInformation.ocp_oc_reports.splice(index, 1);
+                        $scope.$apply();
+                    } else {
+                        console.log('Invalid index, item cannot be deleted');
+                    }
+
+
+                } else {
+                    swal("คุณพิมพ์ไม่ถูกต้อง", "ยกเลิกการลบข้อมูล", "error");
+                }
+            };
+
+            swal(options).then(confirmHandler);
+        };
+
+    }
+</script>

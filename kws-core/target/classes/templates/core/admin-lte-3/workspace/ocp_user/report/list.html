@@ -1,0 +1,67 @@
+<div class="mt-2  shadow text-center" style="border-radius: 10px;">
+    <table class="table">
+        <thead style="background-color: #EAECF0; border-radius: 10px;">
+            <tr>
+                <td scope="col" class='p14'>ประเภทวันทำงาน</td>
+                <td scope="col" class='p14'>วันที่ทำงาน</td>
+                <td scope="col" class='p14'>วันที่ลง Outcome Plan</td>
+                <td scope="col" class='p14'>เวลาที่ลง Outcome Plan</td>
+                <td scope="col" class='p14'>ผลการลง OCP <br>
+                    (Leader)</td>
+                <td scope="col" class='p14'>ผลการลง OC<br>
+                    (Leader)</td>
+                <td scope="col" class='p14'>ผลการลง OCP<br>
+                    (Awareness)</td>
+                <td scope="col" class='p14'>ผลการลง OC<br>
+                    (Awareness)</td>
+                <td scope="col" class='p14'>แก้ไขข้อมูล</td>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- <tr ng-if="!search_table">
+                <td colspan="9" class="text-center">ไม่มีข้อมูล</td>
+            </tr> -->
+            <tr ng-repeat="ocp_oc_report in employeeInformation.ocp_oc_reports  ">
+                <td scope="row">{{ ocp_oc_report.type}}</td>
+                <td class="p-2">{{ ocp_oc_report.date_work }}</td>
+                <td class="p-2">{{ ocp_oc_report.date_report }}</td>
+                <td class="p-2">{{ ocp_oc_report.time_report }}</td>
+
+                <td class="p-1" style="text-align: center;vertical-align: middle;">
+                    <span  ng-class ="getButtonClass(ocp_oc_report.ocp_leader)">
+                        <i class="fa fa-circle fa-xs"></i>
+                         {{ ocp_oc_report.ocp_leader }}
+                    </span>
+                </td>
+                <td class="p-1 " style="text-align: center;vertical-align: middle;">
+                    <span  ng-class ="getButtonClass(ocp_oc_report.oc_leader)">
+                        <i class="fa fa-circle fa-xs"></i>
+                         {{ ocp_oc_report.oc_leader }}
+                    </span>
+                </td>
+                <td class="p-1 " style="text-align: center;vertical-align: middle;">
+                    <span  ng-class ="getButtonClass(ocp_oc_report.ocp_awareness)">
+                        <i class="fa fa-circle fa-xs"></i>
+                         {{ ocp_oc_report.ocp_awareness }}
+                    </span>
+                </td>
+                <td class="p-1 " style="text-align: center;vertical-align: middle;">
+                    <span  ng-class ="getButtonClass(ocp_oc_report.oc_awareness)">
+                        <i class="fa fa-circle fa-xs"></i>
+                         {{ ocp_oc_report.oc_awareness }}
+                    </span>
+                </td>
+
+                <td class="p-2">
+                    <button class="btn btn-sm btn-outline-warning" ng-click="editReport(ocp_oc_report)">
+                        <i class="fas fa-edit" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn  btn-sm btn-outline-danger" ng-click="deleteOcOcp(ocp_oc_report.id)">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>

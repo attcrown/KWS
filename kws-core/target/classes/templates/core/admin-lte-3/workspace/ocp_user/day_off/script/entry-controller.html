@@ -1,0 +1,49 @@
+<script th:inline="javascript">
+    function useControllerEntry($scope, $http) {
+        $scope.requestSave = useRequestSave($scope, $http);
+        $scope.verify = useVerify($scope, $http);
+        $scope.isShowDayOffError = useIsShowDayOffError($scope, $http);
+    }
+    function useRequestSave($scope, $http) {
+        return () => {
+            console.log("### dayleave.requestSave ###");
+
+            $scope.employeeForm.$submitted = true;
+
+            if ($scope.verify()) {
+                const options = {
+                    title: "ยืนยันการบันทึกข้อมูล ?",
+                    text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                    icon: "warning",
+                    buttons: ["ยกเลิก", "ตกลง"],
+                    dangerMode: true
+                };
+
+                const handler = (confirm) => {
+                    if (confirm) {
+                        //save data
+                    }
+                };
+
+                swal(options).then(handler);
+            } else {
+                swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+            }
+        };
+    }
+
+    function useVerify($scope, $http) {
+        return () => {
+            return $scope.employeeForm.$valid;
+        };
+    }
+
+    // ****************************** validate ****************************** //
+    function useIsShowDayOffError($scope, $http) {
+        return () => {
+            return ($scope.employeeForm.$submitted || $scope.employeeForm.day_switch.$dirty) && $scope.employeeForm.day_switch.$invalid;
+        };
+    }
+
+   
+</script>

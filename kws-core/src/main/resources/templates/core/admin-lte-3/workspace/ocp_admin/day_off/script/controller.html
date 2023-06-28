@@ -1,0 +1,19 @@
+<div th:replace="core/admin-lte-3/workspace/ocp_admin/day_off/script/titleController"></div>
+
+<script th:inline="javascript">
+    app.controller("DayWorkAdminController", ["$scope","$http",($scope, $http) => {
+            $scope.mode = 'list';
+            
+            $scope.init = function () {
+                TitleController($scope, $http);
+            }
+        }
+    ]);
+</script>
+
+<style>
+.underline {
+    border-bottom: 1px solid;
+    color: black;
+}
+</style>
