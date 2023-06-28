@@ -1,4 +1,110 @@
-<div>
-    <h1>report</h1>
-    <h1>report123</h1>
-</div>
+<head>
+    <div th:replace="core/admin-lte-3/workspace/ocp_admin/report/script/controller"></div>
+</head>
+
+
+<section ng-controller="adminReportController" ng-init="init()">
+    <div ng-if="isLoading" class="kws-loader">
+        <div class="kws-loader-spin"></div>
+    </div>
+    <div ng-show="mode === 'list'" >
+        <div th:replace="core/admin-lte-3/workspace/ocp_admin/report/search"></div>
+        <div th:replace="core/admin-lte-3/workspace/ocp_admin/report/list"></div>
+    </div>
+
+    <div ng-show="mode === 'day_switch'" >
+        <div th:replace="core/admin-lte-3/workspace/ocp_admin/report/day-switch"></div>
+    </div>
+    <div ng-show="mode === 'day_off'" >
+        <div th:replace="core/admin-lte-3/workspace/ocp_admin/report/day-off"></div>
+    </div>
+
+    <div ng-show="mode === 'day_leave'" >
+        <div th:replace="core/admin-lte-3/workspace/ocp_admin/report/day-leave"></div>
+    </div>
+
+    <div ng-show="mode === 'work'">
+        <div th:replace="core/admin-lte-3/workspace/ocp_admin/report/day-work"></div>
+    </div>
+
+
+    <style>
+        body {
+            margin-top: 16px;
+            margin-bottom: 16px;
+            /* background-color: #ffbe76; */
+        }
+
+        .my-custom-scrollbar {
+            position: relative;
+            max-height: 350px;
+            overflow: auto;
+        }
+
+        .table-wrapper-scroll-y {
+            display: block;
+        }
+
+        .p14 {
+            font-size: 14px;
+        }
+
+        .p20 {
+            font-size: 20px;
+        }
+
+        .p500 {
+            font-weight: 500;
+        }
+
+        span {
+            font-size: 12px;
+            padding-left: 3px;
+            padding-right: 3px;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            border-radius: 16px;
+            width: max-content;
+
+        }
+
+        .filterButton {
+            display: flex;
+            height: 55px;
+            padding: 12px 24px;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            border-radius: 20px;
+            border: 2px solid #DB5C2D;
+            background: #FFF;
+            box-shadow: 0px 3px 2px 0px rgba(0, 0, 0, 0.25);
+            color: #DB5C2D;
+            font-size: 20px;
+            outline: none;  
+        }
+        .filterButton.active,
+        .filterButton:hover {
+            background-color: #DB5C2D;
+            color: white;
+            outline:0;
+        }
+        .filterButton:focus {outline:0;}
+
+        .bgApprove {
+            background: #ECFDF3;
+            color: #10A561;
+        }
+
+        .bgWait {
+            background: #FDFBEC;
+
+            color: #A87E29;
+        }
+
+        .bgDisapprove {
+            background: #ECDCE2;
+            color: #CE1817;
+        }
+    </style>
