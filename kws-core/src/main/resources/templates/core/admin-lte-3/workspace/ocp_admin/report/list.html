@@ -1,11 +1,15 @@
-<div class="mt-2  shadow text-center" style="border-radius: 10px;">
+<div class="my-2  shadow text-center" style="border-radius: 10px;">
+    <div class="table-wrapper-scroll-y my-custom-scrollbar">
     <table class="table">
         <thead style="background-color: #EAECF0; border-radius: 10px;">
             <tr>
                 <td scope="col" class='p14'>ประเภทวันทำงาน</td>
                 <td scope="col" class='p14'>วันที่ทำงาน</td>
-                <td scope="col" class='p14'>วันที่ลง Outcome Plan</td>
+           
                 <td scope="col" class='p14'>เวลาที่ลง Outcome Plan</td>
+                <td scope="col" class='p14'>สังกัด</td>
+                <td scope="col" class='p14'>ชื่อเล่น</td>
+                <td scope="col" class='p14'>ชื่อเล่น - นามสกุล</td>
                 <td scope="col" class='p14'>ผลการลง OCP <br>
                     (Leader)</td>
                 <td scope="col" class='p14'>ผลการลง OC<br>
@@ -14,19 +18,21 @@
                     (Awareness)</td>
                 <td scope="col" class='p14'>ผลการลง OC<br>
                     (Awareness)</td>
-                <td scope="col" class='p14'>แก้ไขข้อมูล</td>
+                <td scope="col" class='p14'>ตรวจสอบ</td>
             </tr>
         </thead>
         <tbody>
             <!-- <tr ng-if="!search_table">
                 <td colspan="9" class="text-center">ไม่มีข้อมูล</td>
             </tr> -->
-            <tr ng-repeat="ocp_oc_report in employeeInformation.ocp_oc_reports  ">
+            <tr ng-repeat="ocp_oc_report in ocp_oc_reports " ng-if ="filter === 'all' ||filter ===ocp_oc_report.business"> 
+                
                 <td scope="row">{{ ocp_oc_report.type}}</td>
-                <td class="p-2">{{ ocp_oc_report.date_work }}</td>
-                <td class="p-2">{{ ocp_oc_report.date_report }}</td>
+                <td class="p-2">{{ ocp_oc_report.date_work }}</td>             
                 <td class="p-2">{{ ocp_oc_report.time_report }}</td>
-
+                <td class="p-2">{{ ocp_oc_report.business }}</td>
+                <td class="p-2">{{ ocp_oc_report.nickname }}</td>
+                <td class="p-2">{{ ocp_oc_report.name }} {{ ocp_oc_report.lastName}}</td>
                 <td class="p-1" style="text-align: center;vertical-align: middle;">
                     <span  ng-class ="getButtonClass(ocp_oc_report.ocp_leader)">
                         <i class="fa fa-circle fa-xs"></i>
@@ -53,15 +59,16 @@
                 </td>
 
                 <td class="p-2">
-                    <button class="btn btn-sm btn-outline-warning" ng-click="editReport(ocp_oc_report)">
-                        <i class="fas fa-edit" aria-hidden="true"></i>
+                    <button class="btn btn-sm btn-outline-success" ng-click="viewReport(ocp_oc_report)">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="1.25em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:#2ab514}</style><path d="M64 80c-8.8 0-16 7.2-16 16V416c0 8.8 7.2 16 16 16H384c8.8 0 16-7.2 16-16V96c0-8.8-7.2-16-16-16H64zM0 96C0 60.7 28.7 32 64 32H384c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zM337 209L209 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L303 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg> 
                     </button>
                     <button class="btn  btn-sm btn-outline-danger" ng-click="deleteOcOcp(ocp_oc_report.id)">
                         <i class="fa fa-trash" aria-hidden="true"></i>
                     </button>
                 </td>
             </tr>
+            
         </tbody>
     </table>
-
+</div>
 </div>

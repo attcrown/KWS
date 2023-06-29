@@ -6,7 +6,7 @@
     }
     function useSearch($scope, $http) {
         return () => {
-            console.log("OC/OCP search");
+            console.log("OC/OCP admin search");
         };
     }
     function useDeleteOcOcp($scope, $http) {
@@ -27,12 +27,12 @@
                     //delete report
                     //$scope.removeStudent(studentProfile);
 
-                    var index = $scope.employeeInformation.ocp_oc_reports.findIndex(function (item) {
+                    var index = $scope.ocp_oc_reports.findIndex(function (item) {
                         return item.id === ocOcp;
                     });
 
-                    if (index >= 0 && index < $scope.employeeInformation.ocp_oc_reports.length) {
-                        $scope.employeeInformation.ocp_oc_reports.splice(index, 1);
+                    if (index >= 0 && index < $scope.ocp_oc_reports.length) {
+                        $scope.ocp_oc_reports.splice(index, 1);
                         $scope.$apply();
                     } else {
                         console.log('Invalid index, item cannot be deleted');

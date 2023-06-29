@@ -1,0 +1,153 @@
+ <div th:replace="core/admin-lte-3/workspace/ocp_admin/report/script/api"></div> 
+
+<script th:inline="javascript">
+    app.controller("adminReportController", ["$scope", "$http", ($scope, $http) => {
+
+        $scope.mode = 'list';
+        $scope.selectedReport;
+        $scope.filter = 'all';
+
+        $scope.ocp_oc_reports = [
+            {
+                'id': '1', 'firstName': 'arin',
+                'lastName': 'salabsi',
+                'email': "techanddata@knoware.com",
+                'business': 'Center',
+                'nickname': 'HR', 'type': 'วันทำงาน', 'date_work': '10/8/2023', 'date_report': '11/8/2023', 'time_report': '18.00 P.M.', 'ocp_leader': 'Approve', 'oc_leader': 'Approve', 'ocp_awareness': 'Approve', 'oc_awareness': 'Approve',
+            },
+            {
+                'id': '2', 'firstName': 'arin2',
+                'lastName': 'salabsi',
+                'email': "techanddata@knoware.com",
+                'business': 'PGG',
+                'nickname': 'HR', 'type': 'วันสลับวันหยุด', 'date_work': '12/8/2023', 'date_report': '12/8/2023', 'time_report': '19.00  P.M.', 'ocp_leader': 'Disapprove', 'oc_leader': 'Disapprove', 'ocp_awareness': 'Approve', 'oc_awareness': 'Disapprove',
+            },
+            {
+                'id': '3', 'firstName': 'arin3',
+                'lastName': 'salabsi',
+                'email': "techanddata@knoware.com",
+                'business': 'Center',
+                'nickname': 'HR', 'type': 'วันลา', 'date_work': '13/8/2023', 'date_report': '13/8/2023', 'time_report': '17.00 P.M.', 'ocp_leader': 'waiting', 'oc_leader': 'waiting', 'ocp_awareness': 'Approve', 'oc_awareness': 'Approve', 'leave_type': 'ลากิจ', 'day_leave': '6/12/2023'
+            },
+            {
+                'id': '4', 'firstName': 'arin4',
+                'lastName': 'salabsi',
+                'email': "techanddata@knoware.com",
+                'business': 'KNOW - ARE',
+                'nickname': 'HR', 'type': 'วันหยุด', 'date_work': '13/8/2023', 'date_report': '13/8/2023', 'time_report': '17.00 P.M.', 'ocp_leader': 'waiting', 'oc_leader': 'waiting', 'ocp_awareness': 'Approve', 'oc_awareness': 'Approve',
+            },
+            {
+                'id': '5', 'firstName': 'arin4',
+                'lastName': 'salabsi',
+                'email': "techanddata@knoware.com",
+                'business': 'CCN',
+                'nickname': 'HR', 'type': 'วันหยุด', 'date_work': '13/8/2023', 'date_report': '13/8/2023', 'time_report': '17.00 P.M.', 'ocp_leader': 'waiting', 'oc_leader': 'waiting', 'ocp_awareness': 'Approve', 'oc_awareness': 'Approve',
+            },
+            {
+                'id': '6', 'firstName': 'arin4',
+                'lastName': 'salabsi',
+                'email': "techanddata@knoware.com",
+                'business': 'Center',
+                'nickname': 'HR', 'type': 'วันหยุด', 'date_work': '13/8/2023', 'date_report': '13/8/2023', 'time_report': '17.00 P.M.', 'ocp_leader': 'waiting', 'oc_leader': 'waiting', 'ocp_awareness': 'Approve', 'oc_awareness': 'Approve',
+            },
+            {
+                'id': '7', 'firstName': 'arin4',
+                'lastName': 'salabsi',
+                'email': "techanddata@knoware.com",
+                'business': 'NxGn',
+                'nickname': 'HR', 'type': 'วันหยุด', 'date_work': '13/8/2023', 'date_report': '13/8/2023', 'time_report': '17.00 P.M.', 'ocp_leader': 'waiting', 'oc_leader': 'waiting', 'ocp_awareness': 'Approve', 'oc_awareness': 'Approve',
+            },
+            {
+                'id': '8', 'firstName': 'arin4',
+                'lastName': 'salabsi',
+                'email': "techanddata@knoware.com",
+                'business': 'Fishsix',
+                'nickname': 'HR', 'type': 'วันหยุด', 'date_work': '13/8/2023', 'date_report': '13/8/2023', 'time_report': '17.00 P.M.', 'ocp_leader': 'waiting', 'oc_leader': 'waiting', 'ocp_awareness': 'Approve', 'oc_awareness': 'Approve',
+            },
+            {
+                'id': '9', 'firstName': 'arin4',
+                'lastName': 'salabsi',
+                'email': "techanddata@knoware.com",
+                'business': 'ESC',
+                'nickname': 'HR', 'type': 'วันหยุด', 'date_work': '13/8/2023', 'date_report': '13/8/2023', 'time_report': '17.00 P.M.', 'ocp_leader': 'waiting', 'oc_leader': 'waiting', 'ocp_awareness': 'Approve', 'oc_awareness': 'Approve',
+            },
+        ]
+
+        $scope.businesses = [
+        { text: "Center"},
+    { text: "KNOW - ARE"},
+    { text: "Fishsix"},
+    { text: "ESC"},
+    { text: "CCN"},
+    { text: "NxGn"},
+    { text: "PGG"}
+        ]
+
+        $scope.work_types = [
+            { 'id': '1', 'type': 'วันทำงาน' },
+            { 'id': '2', 'type': 'วันสลับวันหยุด' },
+            { 'id': '3', 'type': 'วันหยุด' },
+            { 'id': '4', 'type': 'วันลา' },
+        ]
+
+        $scope.init = function () {
+            console.log("report start");
+            $('.select2').select2({ theme: 'bootstrap4' });
+            useApi($scope, $http);
+
+        };
+
+        $scope.toListMode = function () {
+            $scope.mode = 'list'
+            $scope.selectedReport = null;
+
+        };
+
+        $scope.viewReport = function (report) {
+            $scope.selectedReport = report;
+            console.log($scope.selectedReport);
+            if (report.type === 'วันทำงาน') {
+                $scope.mode = 'work';
+            } else if (report.type === 'วันสลับวันหยุด') {
+                $scope.mode = 'day_switch'
+
+            } else if (report.type === 'วันหยุด') {
+                $scope.mode = 'day_off'
+
+            }
+            else if (report.type === 'วันลา') {
+                $scope.mode = 'day_leave'
+            } else {
+                return '';
+            }
+        };
+
+        $scope.filterList = function (filter) {
+            if( $scope.filter == filter.text)
+            {
+                $scope.filter = 'all';
+                console.log("Filtering by:",  $scope.filter);
+            }
+            else{
+                $scope.filter = filter.text;
+                console.log("Filtering by:",  $scope.filter);
+              
+            }
+           
+
+        };
+
+        $scope.getButtonClass = function (ocp_leader) {
+            if (ocp_leader === 'Approve') {
+                return 'bgApprove';
+            } else if (ocp_leader === 'Disapprove') {
+                return 'bgDisapprove';
+            } else if (ocp_leader === 'waiting') {
+                return 'bgWait';
+            } else {
+                return '';
+            }
+        };
+
+    }]);
+</script>
