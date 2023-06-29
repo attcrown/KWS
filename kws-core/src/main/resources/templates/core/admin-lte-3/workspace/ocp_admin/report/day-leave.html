@@ -1,1 +1,169 @@
-ลา
+<div class="card mx-3">
+    <div class="card-header text-right">
+        <h3 class="card-title">เวลา</h3>
+    </div>
+
+    <div class="card-body mx-3">
+        <form name="employeeForm" class="form row" novalidate>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>รหัสพนักงาน</span>
+                    </label>
+                    <input name="id" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                        ng-model="employeeInformation.id" disabled />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>Email</span>
+                    </label>
+                    <input name="Email" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                        ng-model="employeeInformation.email" disabled />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>ชื่อ - นามสกุล</span>
+                    </label>
+                    <input name="name" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                        ng-model="sum_userlog_name" disabled />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>ชื่อเล่น</span>
+                    </label>
+                    <input name="nickname" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                        ng-model="employeeInformation.nickname" disabled />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>ตำแหน่ง</span>
+                    </label>
+                    <input name="position" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                        ng-model="employeeInformation.position" disabled />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>สังกัด</span>
+                    </label>
+                    <input name="business" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                        ng-model="employeeInformation.business" disabled />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>วันทำงาน</span>
+                    </label>
+                    <input name="days_work" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                        ng-model="employeeInformation.days_work" disabled />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>เวลาทำงาน</span>
+                    </label>
+                    <div class="input-group">
+                        <input name="time_work" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                            ng-model="employeeInformation.time_work" disabled />
+                        <div class="input-group-append">
+                            <div class="input-group-text"><i class="fa fa-clock"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>
+                        <span ng-show="!isShowLeaveTypeError()">ประเภทวันลา</span>
+                        <span class="text-danger" ng-show="isShowLeaveTypeError()">ประเภทวันลา</span>
+                    </label>
+                    <select name="leave_type" class="form-control" style="width: 100%"
+                        ng-model="selectedReport.leave_type" disabled>
+                        <option value="{{ selectedReport.leave_type }}">{{ selectedReport.leave_type }}</option>
+                    </select>
+
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>
+                        <span ng-show="!isShowDaySwitchError()">วันที่ลา</span>
+                    </label>
+                    <input name="day_leave" type="date" class="form-control"
+                        ng-class="{'is-invalid': isShowDaySwitchError()}" placeholder="electedReport.day_leave"
+                        ng-model="selectedReport.day_leave" disabled />
+                </div>
+            </div>
+            <div class="col-md-6"></div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>
+                        <span>สถานะ</span>
+                    </label>
+                    <div>
+                        <button class="btn btn-outline-success p-1" ng-click="toListMode()"><i class="fa fa-check"></i>
+                            Approve</button>
+                        <button class="btn btn-outline-danger p-1" ng-click="requestSave()">
+                            <svg class ='red'xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>.red{fill:#dc3545} </style><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
+                            Disapprove</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>
+                        <span>เหตุผลเพราะอะไรถึง Disapprove</span>
+                    </label>
+                    <input name="day_leave" type="date" class="form-control"
+                        ng-class="{'is-invalid': isShowLeaderDisapproveReasonError()}"
+                        placeholder="selectedReport.leaderDisapproveReason"
+                        ng-model="selectedReport.leaderDisapproveReason" />
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>
+                        <span>สถานะ</span>
+                    </label>
+                    <div>
+                        <button class="btn btn-outline-success p-1" ng-click="toListMode()"><i class="fa fa-check"></i>
+                            Approve</button>
+                        <button class="btn btn-outline-danger p-1" ng-click="requestSave()">
+                            <svg class ='red'xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>.red{fill:#dc3545} </style><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
+                            Disapprove</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>
+                        <span>เหตุผลเพราะอะไรถึง Disapprove</span>
+                    </label>
+                    <input name="day_leave" type="date" class="form-control"
+                        ng-class="{'is-invalid': isShowLeaderDisapproveReasonError()}"
+                        placeholder="selectedReport.leaderDisapproveReason"
+                        ng-model="selectedReport.leaderDisapproveReason" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class=" mx-3 text-right">
+    <button class="btn btn-outline-danger" ng-click="toListMode()"><i class="fa fa-caret-left"></i> ย้อนกลับ</button>
+    <button class="btn btn-outline-primary" ng-click="requestSave()"><i class="fa fa-save"></i> บันทึก</button>
+</div>
