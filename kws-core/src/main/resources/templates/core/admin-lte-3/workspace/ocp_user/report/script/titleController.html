@@ -1,0 +1,59 @@
+<script th:inline="javascript">
+    function TitleController($scope, $http) {
+        $scope.entryMode = "add";
+        
+
+        $scope.requestSave = useRequestSave($scope, $http);
+        $scope.verify = useVerify($scope, $http);
+
+        // $scope.user_log = {id: "KR0001", firstname: "วงศ์วริศ" ,lastname:'ชววิวรรธน์' ,email:'issrrar@gmail.com'};    
+        
+        function useVerify($scope, $http) {
+            return () => {
+            if (
+                $scope.employeeForword.$valid &&
+                $scope.employeeRoutine.$valid &&
+                $scope.employeeForWork.$valid &&
+                $scope.employeeForm.$valid
+            ) {
+                return true;
+            }
+            };
+        }
+
+        function useRequestSave($scope, $http) {            
+            return () => {
+                var ans = "8 hr"
+                if($scope.sum_time_all != ans){
+                    swal("กรุณาระบุเวลาทำงานให้ครบ 8 ชม.", "กรุณาระบุข้อมูลให้ถูกต้อง", "error");
+                    return;
+                }
+                console.log("Save");
+                $scope.employeeForm.$submitted = true;
+                $scope.employeeRoutine.$submitted = true;
+                $scope.employeeForWork.$submitted = true;
+                $scope.employeeForword.$submitted = true;
+                if ($scope.verify()) {
+                    const options = {
+                    title:
+                        $scope.entryMode === "add"
+                        ? "ยืนยันการบันทึกข้อมูล ?"
+                        : "ยืนยันการแก้ไขข้อมูล",
+                    text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                    icon: "warning",
+                    buttons: ["ยกเลิก", "ตกลง"],
+                    dangerMode: true,
+                    };
+                    const handler = (confirm) => {
+                        if (confirm) {
+                            window.location.pathname = "/kws-console/views/workspace/core/ocp_admin/report";
+                        }
+                    };
+                    swal(options).then(handler);
+                } else {
+                    swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+                }
+            }
+        }
+    }
+</script>  
