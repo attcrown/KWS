@@ -1,8 +1,8 @@
 <div class="card mx-3">
-    <div class="card-header text-right">
-        <h3 class="card-title">เวลา</h3>
-    </div>
-    
+    <div class="card-header float-right text-right">
+        <span style="background-color:#ECFDF3;color: #11B168;">{{selectedReport.date_report}} {{selectedReport.time_report}}</span>
+        
+      </div>
     <div class="card-body mx-3">
         <form name="employeeForm" class="form row" novalidate>
             <div class="col-md-6">
@@ -88,8 +88,10 @@
                         <span ng-show="!isShowLeaveTypeError()">ประเภทวันลา</span>
                         <span class="text-danger" ng-show="isShowLeaveTypeError()">ประเภทวันลา</span>
                       </label>
-                      <select name="leave_type" class="form-control" style="width: 100%" ng-model="selectedReport.leave_type" disabled>
-                        <option value="{{ selectedReport.leave_type }}">{{ selectedReport.leave_type }}</option>
+                      <select name="leave_type" class="form-control" 
+                      style="width: 100%" ng-model="selectedReport.leave_type" >
+                      <option selected disabled>{{ selectedReport.leave_type}}</option>
+                        <option ng-repeat="leave_type in leave_types" >{{ leave_type.type}}</option>
                       </select>
                    
                 </div>
@@ -100,8 +102,8 @@
                       <span ng-show="!isShowDaySwitchError()">วันที่ลา</span>
                     </label>
                     <input name="day_leave" type="date" class="form-control"
-                      ng-class="{'is-invalid': isShowDaySwitchError()}" placeholder="electedReport.day_leave"
-                      ng-model="selectedReport.day_leave" disabled />
+                      ng-class="{'is-invalid': isShowDaySwitchError()}" placeholder="selectedReport.day_leave"
+                      ng-model="selectedReport.day_leave"  />
                   </div>
             </div>
 

@@ -9,7 +9,7 @@
                 <td scope="col" class='p14'>เวลาที่ลง Outcome Plan</td>
                 <td scope="col" class='p14'>สังกัด</td>
                 <td scope="col" class='p14'>ชื่อเล่น</td>
-                <td scope="col" class='p14'>ชื่อเล่น - นามสกุล</td>
+                <td scope="col" class='p14'>ชื่อจริง - นามสกุล</td>
                 <td scope="col" class='p14'>ผลการลง OCP <br>
                     (Leader)</td>
                 <td scope="col" class='p14'>ผลการลง OC<br>
@@ -25,14 +25,14 @@
             <!-- <tr ng-if="!search_table">
                 <td colspan="9" class="text-center">ไม่มีข้อมูล</td>
             </tr> -->
-            <tr ng-repeat="ocp_oc_report in ocp_oc_reports " ng-if ="filter === 'all' ||filter ===ocp_oc_report.business"> 
+            <tr ng-repeat="ocp_oc_report in ocp_oc_reports " ng-if ="filter === 'all' || filter ===ocp_oc_report.business"> 
                 
                 <td scope="row">{{ ocp_oc_report.type}}</td>
                 <td class="p-2">{{ ocp_oc_report.date_work }}</td>             
                 <td class="p-2">{{ ocp_oc_report.time_report }}</td>
                 <td class="p-2">{{ ocp_oc_report.business }}</td>
                 <td class="p-2">{{ ocp_oc_report.nickname }}</td>
-                <td class="p-2">{{ ocp_oc_report.name }} {{ ocp_oc_report.lastName}}</td>
+                <td class="p-2">{{ ocp_oc_report.firstName }} {{ ocp_oc_report.lastName}}</td>
                 <td class="p-1" style="text-align: center;vertical-align: middle;">
                     <span  ng-class ="getButtonClass(ocp_oc_report.ocp_leader)">
                         <i class="fa fa-circle fa-xs"></i>

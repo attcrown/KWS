@@ -21,7 +21,7 @@
             <!-- <tr ng-if="!search_table">
                 <td colspan="9" class="text-center">ไม่มีข้อมูล</td>
             </tr> -->
-            <tr ng-repeat="ocp_oc_report in employeeInformation.ocp_oc_reports  ">
+            <tr ng-repeat="ocp_oc_report in employeeInformation.ocp_oc_reports  | orderBy :'ocp_oc_report.date_report':true">
                 <td scope="row">{{ ocp_oc_report.type}}</td>
                 <td class="p-2">{{ ocp_oc_report.date_work }}</td>
                 <td class="p-2">{{ ocp_oc_report.date_report }}</td>

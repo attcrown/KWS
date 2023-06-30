@@ -1,1 +1,98 @@
-หยุด
+<div class="card mx-3">
+    <!-- <div class="card-header">
+      <h3 class="card-title px-3">ข้อมูลส่วนตัว</h3>
+    </div> -->
+    <div class="card-body mx-3">
+        <form name="employeeForm" class="form row" novalidate>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>รหัสพนักงาน</span>
+                    </label>
+                    <input name="Iduser" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                        ng-model="selectedReport.id" disabled />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>Email</span>
+                    </label>
+                    <input name="Email" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                        ng-model="selectedReport.email" disabled />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>ชื่อ - นามสกุล</span>
+                    </label>
+                    <input name="name" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                        ng-model="sum_userlog_name" disabled />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>ชื่อเล่น</span>
+                    </label>
+                    <input name="nickname" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                        ng-model="selectedReport.nickname" disabled />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>ตำแหน่ง</span>
+                    </label>
+                    <input name="position" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                        ng-model="selectedReport.position" disabled />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>สังกัด</span>
+                    </label>
+                    <input name="business" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                        ng-model="selectedReport.business" disabled />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>วันทำงาน</span>
+                    </label>
+                    <input name="days_work" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                        ng-model="selectedReport.days_work" disabled />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>เวลาทำงาน</span>
+                    </label>
+                    <input name="time_work" type="text" class="form-control" placeholder="ไม่มีข้อมูล"
+                        ng-model="selectedReport.time_work" disabled />
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>
+                        <span>วันหยุด</span>
+                    </label>
+                    <input name="day_work" type="date" class="form-control" 
+                        placeholder="ไม่มีข้อมูล"
+                      
+                        ng-model="selectdate" disabled required />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class=" mx-3 text-right">
+    <button class="btn btn-outline-danger" ng-click="toListMode()"><i class="fa fa-caret-left"></i> ย้อนกลับ</button>
+  
+</div>

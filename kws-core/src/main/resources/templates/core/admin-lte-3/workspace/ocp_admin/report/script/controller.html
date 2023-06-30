@@ -1,5 +1,5 @@
- <div th:replace="core/admin-lte-3/workspace/ocp_admin/report/script/api"></div> 
-
+<div th:replace="core/admin-lte-3/workspace/ocp_admin/report/script/api"></div>
+<div th:replace="core/admin-lte-3/workspace/ocp_admin/report/script/day-leave-controller"></div>
 <script th:inline="javascript">
     app.controller("adminReportController", ["$scope", "$http", ($scope, $http) => {
 
@@ -27,7 +27,8 @@
                 'lastName': 'salabsi',
                 'email': "techanddata@knoware.com",
                 'business': 'Center',
-                'nickname': 'HR', 'type': 'วันลา', 'date_work': '13/8/2023', 'date_report': '13/8/2023', 'time_report': '17.00 P.M.', 'ocp_leader': 'waiting', 'oc_leader': 'waiting', 'ocp_awareness': 'Approve', 'oc_awareness': 'Approve', 'leave_type': 'ลากิจ', 'day_leave': '6/12/2023'
+                'nickname': 'HR', 'type': 'วันลา', 'date_work': '13/8/2023', 'date_report': '13/8/2023', 'time_report': '17.00 P.M.', 'ocp_leader': 'Approve', 'oc_leader': 'waiting', 'ocp_awareness': 'Approve', 'oc_awareness': 'Approve', 'leave_type': 'ลากิจ', 'day_leave': '6/12/2023'
+
             },
             {
                 'id': '4', 'firstName': 'arin4',
@@ -71,16 +72,32 @@
                 'business': 'ESC',
                 'nickname': 'HR', 'type': 'วันหยุด', 'date_work': '13/8/2023', 'date_report': '13/8/2023', 'time_report': '17.00 P.M.', 'ocp_leader': 'waiting', 'oc_leader': 'waiting', 'ocp_awareness': 'Approve', 'oc_awareness': 'Approve',
             },
+            {
+                'id': '3', 'firstName': 'arin3',
+                'lastName': 'salabsi',
+                'email': "techanddata@knoware.com",
+                'business': 'Center',
+                'nickname': 'HR', 'type': 'วันลา', 'date_work': '13/8/2023', 'date_report': '13/8/2023', 'time_report': '17.00 P.M.', 'ocp_leader': 'waiting', 'oc_leader': 'waiting', 'ocp_awareness': 'Approve', 'oc_awareness': 'Approve', 'leave_type': 'ลากิจ', 'day_leave': '6/12/2023'
+
+            },
+            {
+                'id': '3', 'firstName': 'arin3',
+                'lastName': 'salabsi',
+                'email': "techanddata@knoware.com",
+                'business': 'Center',
+                'nickname': 'HR', 'type': 'วันลา', 'date_work': '13/8/2023', 'date_report': '13/8/2023', 'time_report': '17.00 P.M.', 'ocp_leader': 'waiting', 'oc_leader': 'waiting', 'ocp_awareness': 'Approve', 'oc_awareness': 'Approve', 'leave_type': 'ลากิจ', 'day_leave': '6/12/2023'
+
+            },
         ]
 
         $scope.businesses = [
-        { text: "Center"},
-    { text: "KNOW - ARE"},
-    { text: "Fishsix"},
-    { text: "ESC"},
-    { text: "CCN"},
-    { text: "NxGn"},
-    { text: "PGG"}
+            { text: "Center" },
+            { text: "KNOW - ARE" },
+            { text: "Fishsix" },
+            { text: "ESC" },
+            { text: "CCN" },
+            { text: "NxGn" },
+            { text: "PGG" }
         ]
 
         $scope.work_types = [
@@ -94,6 +111,7 @@
             console.log("report start");
             $('.select2').select2({ theme: 'bootstrap4' });
             useApi($scope, $http);
+            dayLeaveController($scope, $http);
 
         };
 
@@ -123,19 +141,74 @@
         };
 
         $scope.filterList = function (filter) {
-            if( $scope.filter == filter.text)
-            {
+            if ($scope.filter == filter.text) {
                 $scope.filter = 'all';
-                console.log("Filtering by:",  $scope.filter);
+                console.log("Filtering by:", $scope.filter);
             }
-            else{
+            else {
                 $scope.filter = filter.text;
-                console.log("Filtering by:",  $scope.filter);
-              
+                console.log("Filtering by:", $scope.filter);
+
             }
-           
+
 
         };
+        //leader 
+        $scope.approveLeader = function (report) {
+            console.log(report.ocp_leader);
+            if (report.ocp_leader == 'waiting' || report.ocp_leader == 'Disapprove') {
+                report.ocp_leader = 'Approve';
+                if (report.type == 'วันลา') { report.oc_leader = 'Approve'; }
+            } else if (report.ocp_leader === 'Approve') {
+                report.ocp_leader = 'waiting';
+                if (report.type == 'วันลา') { report.oc_leader = 'waiting'; }
+            }
+            else {
+                return '';
+            }
+        };
+
+        $scope.disapproveLeader = function (report) {
+            if (report.ocp_leader == 'waiting' || report.ocp_leader == 'Approve') {
+                report.ocp_leader = 'Disapprove';
+                if (report.type == 'วันลา') { report.oc_leader = 'Disapprove'; }
+            } else if (report.ocp_leader === 'Disapprove') {
+                report.ocp_leader = 'waiting';
+                if (report.type == 'วันลา') { report.oc_leader = 'waiting'; }
+            }
+            else {
+                return '';
+            }
+        };
+
+        //awareness
+        $scope.approveAwareness = function (report) {
+            console.log(report.ocp_leader);
+            if (report.ocp_awareness == 'waiting' || report.ocp_awareness == 'Disapprove') {
+                report.ocp_awareness = 'Approve';
+                if (report.type == 'วันลา') { report.oc_awareness = 'Approve'; }
+            } else if (report.ocp_awareness === 'Approve') {
+                report.ocp_awareness = 'waiting';
+                if (report.type == 'วันลา') { report.oc_awareness = 'waiting'; }
+            }
+            else {
+                return '';
+            }
+        };
+
+        $scope.disapproveAwareness = function (report) {
+            if (report.ocp_awareness == 'waiting' || report.ocp_awareness == 'Approve') {
+                report.ocp_awareness = 'Disapprove';
+                if (report.type == 'วันลา') { report.oc_awareness = 'Disapprove'; }
+            } else if (report.ocp_awareness === 'Disapprove') {
+                report.ocp_awareness = 'waiting';
+                if (report.type == 'วันลา') { report.oc_awareness = 'waiting'; }
+            }
+            else {
+                return '';
+            }
+        };
+
 
         $scope.getButtonClass = function (ocp_leader) {
             if (ocp_leader === 'Approve') {

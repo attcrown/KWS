@@ -1,0 +1,55 @@
+<script th:inline="javascript">
+    function dayLeaveController($scope, $http) {
+        $scope.requestSaveDayLeave = useRequestSaveDayLeave($scope, $http);
+        $scope.verifyDayLeave = useVerifyDayLeave($scope, $http);
+        $scope.isShowLeaderDisapproveReasonError = useIsShowLeaderDisapproveReasonError($scope, $http);
+        $scope.isShowAwarenessDisapproveReasonError = useIsShowAwarenessDisapproveReasonError($scope, $http);
+    }
+
+    function useRequestSaveDayLeave($scope, $http) {
+        return () => {
+            console.log("### dayleave.requestSave ###");
+
+            $scope.dayLeaveForm.$submitted = true;
+
+            if ($scope.verifyDayLeave()) {
+                const options = {
+                    title: "ยืนยันการบันทึกข้อมูล ?",
+                    text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                    icon: "warning",
+                    buttons: ["ยกเลิก", "ตกลง"],
+                    dangerMode: true
+                };
+
+                const handler = (confirm) => {
+                    if (confirm) {
+                        //save data
+                    }
+                };
+
+                swal(options).then(handler);
+            } else {
+                swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+            }
+        };
+    }
+
+    function useVerifyDayLeave($scope, $http) {
+        return () => {
+            return $scope.dayLeaveForm.$valid;
+        };
+    }
+
+    // ****************************** validate ****************************** //
+    function useIsShowLeaderDisapproveReasonError($scope, $http) {
+        return () => {
+            return ($scope.dayLeaveForm.$submitted || $scope.dayLeaveForm.disapprove_reason_Leader.$dirty) && $scope.dayLeaveForm.disapprove_reason_Leader.$invalid;
+        };
+    }
+
+    function useIsShowAwarenessDisapproveReasonError($scope, $http) {
+        return () => {
+            return ($scope.dayLeaveForm.$submitted || $scope.dayLeaveForm.disapprove_reason_awareness.$dirty) && $scope.dayLeaveForm.disapprove_reason_awareness.$invalid;
+        };
+    }
+</script>
