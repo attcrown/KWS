@@ -14,21 +14,36 @@
             'email': "techanddata@knoware.com",
             'business': 'Center',
             'nickname': 'HR',
-            position: 'Programmer',
-            days_work : 'จ. - ศ.',
-            time_work : '08.00am - 18.00pm',
+            'position': 'Programmer',
+            'days_work': 'จ. - ศ.',
+            'time_work': '08.00am - 18.00pm',
             'ocp_oc_reports': [
-                { 'id': '1', 'type': 'วันทำงาน', 'date_work': '10/8/2023', 'date_report': '11/8/2023', 'time_report': '18.00 P.M.', 'ocp_leader': 'Approve', 'oc_leader': 'Approve', 'ocp_awareness': 'Approve', 'oc_awareness': 'Approve', },
+                {
+                    'id': '1', 'type': 'วันทำงาน', 'date_work': '10/8/2023', 'date_report': '11/8/2023',
+                    'time_report': '18.00 P.M.', 'ocp_leader': 'Approve', 'oc_leader': 'Approve',
+                    'ocp_awareness': 'Approve', 'oc_awareness': 'Approve',
+                },
                 { 'id': '2', 'type': 'วันสลับวันหยุด', 'date_work': '12/8/2023', 'date_report': '12/8/2023', 'time_report': '19.00  P.M.', 'ocp_leader': 'Disapprove', 'oc_leader': 'Disapprove', 'ocp_awareness': 'Approve', 'oc_awareness': 'Disapprove', },
-                { 'id': '3', 'type': 'วันลา', 'date_work': '13/8/2023', 'date_report': '13/8/2023', 'time_report': '17.00 P.M.', 'ocp_leader': 'waiting', 'oc_leader': 'waiting', 'ocp_awareness': 'Approve', 'oc_awareness': 'Approve','leave_type':'ลากิจ','day_leave':'6/12/2023' },
+                { 'id': '3', 'type': 'วันลา', 'date_work': '13/8/2023', 'date_report': '13/8/2023', 'time_report': '17.00 P.M.', 'ocp_leader': 'waiting', 'oc_leader': 'waiting', 'ocp_awareness': 'Approve', 'oc_awareness': 'Approve', 'leave_type': 'ลากิจ', 'day_leave': '6/12/2023' },
                 { 'id': '4', 'type': 'วันหยุด', 'date_work': '13/8/2023', 'date_report': '13/8/2023', 'time_report': '17.00 P.M.', 'ocp_leader': 'waiting', 'oc_leader': 'waiting', 'ocp_awareness': 'Approve', 'oc_awareness': 'Approve', },
             ]
         };
         $scope.work_types = [
+            { 'id': '0', 'type': 'ทั้งหมด ' },
             { 'id': '1', 'type': 'วันทำงาน' },
-            { 'id': '2', 'type': 'วันสลับวันหยุด' },
-            { 'id': '3', 'type': 'วันหยุด' },
-            { 'id': '4', 'type': 'วันลา' },
+            { 'id': '2', 'type': 'วันทำงานที่ใช้ชั่วโมงสะสมด้วย' },
+            { 'id': '3', 'type': 'วันหยุดประจำสัปดาห์' },
+            { 'id': '4', 'type': 'วันหยุดนักขัตฤกษ์' },
+            { 'id': '5', 'type': 'วันหยุดแต่ทำงาน (เพราะสลับวันหยุด)' },
+            { 'id': '6', 'type': 'วันหยุดแต่ทำงาน (เพราะสะสมชั่วโมง)' },
+            { 'id': '7', 'type': 'ลากิจแบบใช้สิทธิ์ลากิจ' },
+            { 'id': '8', 'type': 'ลากิจแบบใช้ชั่วโมงสะสม' },
+            { 'id': '9', 'type': 'ลากิจแบบ Leave without pay (LWOP)' },
+            { 'id': '10', 'type': 'วันลากิจแบบสลับวันหยุด' },
+            { 'id': '11', 'type': 'วันลาป่วยแบบใช้สิทธิ์ลาป่วย' },
+            { 'id': '12', 'type': 'วันลาป่วยแบบใช้ชั่วโมงสะสม' },
+            { 'id': '13', 'type': 'ลาป่วยแบบ Leave without pay (LWOP)' },
+            { 'id': '14', 'type': 'ลาพักร้อน' },
         ];
 
         $scope.leave_types = [
@@ -36,8 +51,57 @@
             { 'id': '2', 'type': 'ลาป่วย' },
             { 'id': '3', 'type': 'ลาพักร้อน' },
             { 'id': '4', 'type': 'leave without pay' },
-        ]
-        
+        ];
+
+        $scope.workPriorities = [
+            { id: 1, name: 'Need' },
+            { id: 2, name: 'Want' },
+            { id: 3, name: 'Optional' }
+        ];
+        $scope.workTypes = [
+            { id: 1, name: 'Forward' },
+            { id: 2, name: 'Routine' },
+            { id: 3, name: 'หน้างาน' }
+        ];
+        $scope.workCategories = [
+            { id: 1, name: 'งานด้านการขาย' },
+            { id: 2, name: 'งานด้านการเจรจาและโน้มน้าวใจ' },
+            { id: 3, name: 'งานด้านเอกสาร' },
+            { id: 4, name: 'งานด้านการประสานงาน' },
+            { id: 5, name: 'งานด้านการออกแบบ' },
+            { id: 6, name: 'งานด้านการบริการลูกค้า' },
+            { id: 7, name: 'งานด้านการสอน' },
+            { id: 8, name: 'งานด้านการตลาด' },
+            { id: 9, name: 'งานด้านการวิเคราะห์' },
+            { id: 10, name: 'งานด้านการทำระบบ' },
+            { id: 11, name: 'งานด้านการวางแผน' },
+            { id: 12, name: 'งานด้านบัญชี' },
+            { id: 13, name: 'งานด้านการให้คำปรึกษา' },
+            { id: 14, name: 'งานด้านการเป็นกระบวนการหรือพิธีกร' },
+            { id: 15, name: 'งานด้านกิจกรรมกลุ่ม' },
+            { id: 16, name: 'งานด้านการนำเสนอ' },
+            { id: 17, name: 'งานด้านการรับสมัครและคัดเลือกพนักงาน' },
+            { id: 18, name: 'งานด้านการเขียน' },
+            { id: 19, name: 'งานด้านการจดบันทึก' },
+            { id: 20, name: 'งานด้านการบริหารทีม' },
+            { id: 21, name: 'งานด้านกฎ' },
+            { id: 22, name: 'งานด้านเทคโนโลยี' },
+
+        ];
+
+        $scope.LevelWorks = [
+            { id: 1, lv: '⭐' },
+            { id: 2, lv: '⭐⭐' },
+            { id: 3, lv: '⭐⭐⭐' },
+            { id: 4, lv: '⭐⭐⭐⭐' },
+            { id: 5, lv: '⭐⭐⭐⭐⭐' },
+        ];
+        $scope.results = [
+            { id: 1, status: 'สำเร็จ' },
+            { id: 2, status: 'ไม่สำเร็จ' },
+        ];
+
+
         $scope.init = function () {
             console.log("report start");
             $('.select2').select2({ theme: 'bootstrap4' });
@@ -48,27 +112,43 @@
         $scope.toListMode = function () {
             $scope.mode = 'list'
             $scope.selectedReport = null;
-            
+
         };
+
+   
 
         $scope.editReport = function (report) {
             $scope.selectedReport = report;
             $scope.user_log = report;
             console.log($scope.selectedReport);
-            console.log('user_log>>',$scope.user_log);
+            console.log('user_log>>', $scope.user_log);
             if (report.type === 'วันทำงาน') {
                 $scope.mode = 'work';
             } else if (report.type === 'วันสลับวันหยุด') {
                 $scope.mode = 'day_switch'
-                
+
             } else if (report.type === 'วันหยุด') {
                 $scope.mode = 'day_off'
-                
-            } 
+
+            }
             else if (report.type === 'วันลา') {
                 $scope.mode = 'day_leave'
             } else {
                 return '';
+            }
+        };
+
+
+        $scope.getReportButtonClass = function (status) {
+            switch (status) {
+                case 'pending':
+                    return 'btn btn-warning';
+                case 'approved':
+                    return 'btn btn-success';
+                case 'rejected':
+                    return 'btn btn-danger';
+                default:
+                    return 'btn btn-default'; 
             }
         };
 
@@ -83,155 +163,141 @@
                 return '';
             }
         };
-
+        //ocp details
         //-----------Day-work-------------------------------
         let time_forward = 0;
         let time_routine = 0;
         let time_forwork = 0;
-        $scope.forworddata=[];
-        $scope.routinedata=[];
-        $scope.forworkdata=[];
+        $scope.workInputs = [];
+        $scope.routinedata = [];
+        $scope.forworkdata = [];
         $scope.sum_forward = 0;
         $scope.sum_routine = 0;
         $scope.sum_forwork = 0;
         $scope.sum_time_all = "0";
 
-        $scope.sum_time=[];
+        $scope.sum_time = [];
         $scope.sum_time_work = 0;
         $scope.selectdate;
 
-        $scope.sum_userlog_name = $scope.employeeInformation.firstName+' '+$scope.employeeInformation.lastName;
-        $scope.TypeWorks = [
-            {id:1,work:'Need'},{id:2,work:'Want'},{id:3,work:'Optional'}
-        ];
-        $scope.LevelWorks = [
-            {id:1 , lv:'⭐'},
-            {id:2 , lv:'⭐⭐'},
-            {id:3 , lv:'⭐⭐⭐'},
-            {id:4 , lv:'⭐⭐⭐⭐'},
-            {id:5 , lv:'⭐⭐⭐⭐⭐'},
-        ];
-        $scope.results = [
-            {id:1 , status:'สำเร็จ'},
-            {id:2 , status:'ไม่สำเร็จ'},
-        ];
+        $scope.sum_userlog_name = $scope.employeeInformation.firstName + ' ' + $scope.employeeInformation.lastName;
+
 
         $scope.$watch(
-        "selectdate",
-        function (newVal, oldVal) {
-            if (newVal !== oldVal && newVal instanceof Date) {
-            $scope.sum_time.selectdate = newVal
-                .toISOString()
-                .substring(0, 10);
+            "selectdate",
+            function (newVal, oldVal) {
+                if (newVal !== oldVal && newVal instanceof Date) {
+                    $scope.sum_time.selectdate = newVal
+                        .toISOString()
+                        .substring(0, 10);
+                }
             }
-        }
         );
 
-        $scope.pushForward = function(){
-            $scope.forworddata.push({});
+        $scope.pushForward = function () {
+            $scope.workInputs.push({});
         }
-        $scope.pushRoution = function(){
+        $scope.pushRoution = function () {
             $scope.routinedata.push({});
         }
-        $scope.pushForwork = function(){
+        $scope.pushForwork = function () {
             $scope.forworkdata.push({});
         }
 
-        $scope.delForward = function(a) {
-            var index = $scope.forworddata.indexOf(a);
+        $scope.delForward = function (a) {
+            var index = $scope.workInputs.indexOf(a);
             if (index !== -1) {
-                $scope.forworddata.splice(index, 1);
+                $scope.workInputs.splice(index, 1);
             }
         };
-        
-        $scope.delRoution= function(a) {
+
+        $scope.delRoution = function (a) {
             var index = $scope.routinedata.indexOf(a);
             if (index !== -1) {
                 $scope.routinedata.splice(index, 1);
             }
         };
-        $scope.delForwork = function(a) {
+        $scope.delForwork = function (a) {
             var index = $scope.forworkdata.indexOf(a);
             if (index !== -1) {
                 $scope.forworkdata.splice(index, 1);
             }
         };
-        $scope.sumtime_forward = function(a) {
+        $scope.sumtime_forward = function (a) {
             $scope.sum_forward = 0;
-            for(let x=0; x < $scope.forworddata.length; x++){
-                if($scope.forworddata[x].time){
-                    $scope.sum_forward += $scope.forworddata[x].time;
+            for (let x = 0; x < $scope.workInputs.length; x++) {
+                if ($scope.workInputs[x].time) {
+                    $scope.sum_forward += $scope.workInputs[x].time;
                 }
-            } 
+            }
             time_forward = $scope.sum_forward;
             $scope.sum_forward = $scope.hour_min($scope.sum_forward)
             $scope.sumtime_all();
         };
 
-        $scope.sumtime_routine = function(a) {
+        $scope.sumtime_routine = function (a) {
             $scope.sum_routine = 0;
-            for(let x=0; x < $scope.routinedata.length; x++){
-                if($scope.routinedata[x].time){
+            for (let x = 0; x < $scope.routinedata.length; x++) {
+                if ($scope.routinedata[x].time) {
                     $scope.sum_routine += $scope.routinedata[x].time;
                 }
-            } 
+            }
             time_routine = $scope.sum_routine;
             $scope.sum_routine = $scope.hour_min($scope.sum_routine);
             $scope.sumtime_all();
         };
 
-        $scope.sumtime_forwork = function(a) {
+        $scope.sumtime_forwork = function (a) {
             $scope.sum_forwork = 0;
-            for(let x=0; x < $scope.forworkdata.length; x++){
-                if($scope.forworkdata[x].time){
+            for (let x = 0; x < $scope.forworkdata.length; x++) {
+                if ($scope.forworkdata[x].time) {
                     $scope.sum_forwork += $scope.forworkdata[x].time;
                 }
-            } 
+            }
             time_forwork = $scope.sum_forwork;
             $scope.sum_forwork = $scope.hour_min($scope.sum_forwork);
             $scope.sumtime_all();
         };
 
-        $scope.sumtime_all = function(){
+        $scope.sumtime_all = function () {
             let num = time_forwork + time_routine + time_forward;
             $scope.sum_time_all = $scope.hour_min(num);
         }
 
-        $scope.hour_min = function(t){
+        $scope.hour_min = function (t) {
             let sum;
             let sace;
-            if(t < 60){
-                return t+' min';
-            }else if(t > 59){
-                sum = parseInt(t/60) ;
-                sace = t%60;
-                if(sace == 0){
-                    return sum+' hr';
-                }else if(sace < 10){
-                    sace = "0"+sace;
-                    return sum+'.'+sace+' hr';
-                }else if(sace > 9){
-                    return sum+'.'+sace+' hr';
+            if (t < 60) {
+                return t + ' min';
+            } else if (t > 59) {
+                sum = parseInt(t / 60);
+                sace = t % 60;
+                if (sace == 0) {
+                    return sum + ' hr';
+                } else if (sace < 10) {
+                    sace = "0" + sace;
+                    return sum + '.' + sace + ' hr';
+                } else if (sace > 9) {
+                    return sum + '.' + sace + ' hr';
                 }
-                else{console.log('Error');}
+                else { console.log('Error'); }
             }
         }
 
-        $scope.saveTitle = function(){
-            if( $scope.employeeForword.$valid &&
-                $scope.employeeRoutine.$valid &&
-                $scope.employeeForWork.$valid &&
-                $scope.employeeForm.$valid)
-                {
-                console.log('save>>');
-                $scope.employeeForword.$submitted = true;
-                
-            }
-            console.log($scope.forworddata);
-            console.log($scope.routinedata);
-            console.log($scope.forworkdata);
-            console.log($scope.selectdate);
-            console.log($scope.sum_time);
+        $scope.saveTitle = function () {
+            // if ($scope.employeeForword.$valid &&
+            //     $scope.employeeRoutine.$valid &&
+            //     $scope.employeeForWork.$valid &&
+            //     $scope.employeeForm.$valid) {
+            //     console.log('save>>');
+            //     $scope.employeeForword.$submitted = true;
+
+            // }
+            // console.log($scope.workInputs);
+            // console.log($scope.routinedata);
+            // console.log($scope.forworkdata);
+            // console.log($scope.selectdate);
+            // console.log($scope.sum_time);
         };
         //------------END-------------------------------------
 

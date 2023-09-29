@@ -1,0 +1,21 @@
+<div class="card mt-2  mx-3 " style="border-radius: 10px;">
+    <div class="row p-4">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>
+                    ประเภทวันทำงาน
+                </label>
+                <select name="work_type" class="form-control " style="width: 100%" 
+                    ng-model="selectWorkType">
+                    <option value="" disabled selected hidden>กรุณาเลือก</option>
+                    <option ng-repeat="work_type in work_types | orderBy: 'name'" ng-value="work_type.id">
+                        {{ work_type.type }}
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

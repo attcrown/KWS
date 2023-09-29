@@ -1,19 +1,93 @@
 <div th:replace="core/admin-lte-3/workspace/ocp_user/day_work/script/titleController"></div>
 
 <script th:inline="javascript">
-    app.controller("DayWorkAdminController", ["$scope","$http",($scope, $http) => {
-            $scope.mode = 'list';
-            
-            $scope.init = function () {
-                TitleController($scope, $http);
-            }
+    app.controller("ocpController", ["$scope", "$http", ($scope, $http) => {
+        $scope.mode = 'select';
+        $scope.selectWorkType = '';
+        $scope.reportDate = '';
+   
+        $scope.work_types = [
+            { 'id': '0', 'type': 'ทั้งหมด ' },
+            { 'id': '1', 'type': 'วันทำงาน' },
+            { 'id': '2', 'type': 'วันทำงานที่ใช้ชั่วโมงสะสมด้วย' },
+            { 'id': '3', 'type': 'วันหยุดประจำสัปดาห์' },
+            { 'id': '4', 'type': 'วันหยุดนักขัตฤกษ์' },
+            { 'id': '5', 'type': 'วันหยุดแต่ทำงาน (เพราะสลับวันหยุด)' },
+            { 'id': '6', 'type': 'วันหยุดแต่ทำงาน (เพราะสะสมชั่วโมง)' },
+            { 'id': '7', 'type': 'ลากิจแบบใช้สิทธิ์ลากิจ' },
+            { 'id': '8', 'type': 'ลากิจแบบใช้ชั่วโมงสะสม' },
+            { 'id': '9', 'type': 'ลากิจแบบ Leave without pay (LWOP)' },
+            { 'id': '10', 'type': 'วันลากิจแบบสลับวันหยุด' },
+            { 'id': '11', 'type': 'วันลาป่วยแบบใช้สิทธิ์ลาป่วย' },
+            { 'id': '12', 'type': 'วันลาป่วยแบบใช้ชั่วโมงสะสม' },
+            { 'id': '13', 'type': 'ลาป่วยแบบ Leave without pay (LWOP)' },
+            { 'id': '14', 'type': 'ลาพักร้อน' },
+        ];
+
+        $scope.leave_types = [
+            { 'id': '1', 'type': 'ลากิจ' },
+            { 'id': '2', 'type': 'ลาป่วย' },
+            { 'id': '3', 'type': 'ลาพักร้อน' },
+            { 'id': '4', 'type': 'leave without pay' },
+        ];
+
+        $scope.workPriorities = [
+            { id: 1, name: 'Need' },
+            { id: 2, name: 'Want' },
+            { id: 3, name: 'Optional' }
+        ];
+        $scope.workTypes = [
+            { id: 1, name: 'Forward' },
+            { id: 2, name: 'Routine' },
+            { id: 3, name: 'หน้างาน' }
+        ];
+        $scope.workCategories = [
+            { id: 1, name: 'งานด้านการขาย' },
+            { id: 2, name: 'งานด้านการเจรจาและโน้มน้าวใจ' },
+            { id: 3, name: 'งานด้านเอกสาร' },
+            { id: 4, name: 'งานด้านการประสานงาน' },
+            { id: 5, name: 'งานด้านการออกแบบ' },
+            { id: 6, name: 'งานด้านการบริการลูกค้า' },
+            { id: 7, name: 'งานด้านการสอน' },
+            { id: 8, name: 'งานด้านการตลาด' },
+            { id: 9, name: 'งานด้านการวิเคราะห์' },
+            { id: 10, name: 'งานด้านการทำระบบ' },
+            { id: 11, name: 'งานด้านการวางแผน' },
+            { id: 12, name: 'งานด้านบัญชี' },
+            { id: 13, name: 'งานด้านการให้คำปรึกษา' },
+            { id: 14, name: 'งานด้านการเป็นกระบวนการหรือพิธีกร' },
+            { id: 15, name: 'งานด้านกิจกรรมกลุ่ม' },
+            { id: 16, name: 'งานด้านการนำเสนอ' },
+            { id: 17, name: 'งานด้านการรับสมัครและคัดเลือกพนักงาน' },
+            { id: 18, name: 'งานด้านการเขียน' },
+            { id: 19, name: 'งานด้านการจดบันทึก' },
+            { id: 20, name: 'งานด้านการบริหารทีม' },
+            { id: 21, name: 'งานด้านกฎ' },
+            { id: 22, name: 'งานด้านเทคโนโลยี' },
+
+        ];
+
+        $scope.LevelWorks = [
+            { id: 1, lv: '⭐' },
+            { id: 2, lv: '⭐⭐' },
+            { id: 3, lv: '⭐⭐⭐' },
+            { id: 4, lv: '⭐⭐⭐⭐' },
+            { id: 5, lv: '⭐⭐⭐⭐⭐' },
+        ];
+        $scope.results = [
+            { id: 1, status: 'สำเร็จ' },
+            { id: 2, status: 'ไม่สำเร็จ' },
+        ]
+        $scope.init = function () {
+            TitleController($scope, $http);
         }
+    }
     ]);
 </script>
 
 <style>
-.underline {
-    border-bottom: 1px solid;
-    color: black;
-}
+    .underline {
+        border-bottom: 1px solid;
+        color: black;
+    }
 </style>
