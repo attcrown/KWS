@@ -1,0 +1,150 @@
+<script th:inline="javascript">
+    function useEntryController($scope, $http) {
+        $scope.requestSave = useRequestSave($scope, $http);
+        $scope.verify = useVerify($scope, $http);
+        $scope.isShowWorkTypeError = useIsShowWorkTypeError($scope, $http);
+        $scope.isShowDateWorkError = useIsShowDateWorkError($scope, $http);
+        $scope.isShowSwitchedDateError = useIsShowSwitchedDateError($scope, $http);
+        $scope.isShowTypeNameError = useIsShowTypeNameError($scope, $http);
+        $scope.isShowWorkPriorityError = useIsShowWorkPriorityError($scope, $http);
+        $scope.isShowWorkCategoryError = useIsShowWorkCategoryError($scope, $http);
+        $scope.isShowKPIError = useIsShowKPIError($scope, $http);
+        $scope.isShowOcError = useIsShowOcError($scope, $http);
+        $scope.isShowAcError = useIsShowAcError($scope, $http);
+        $scope.isShowWorkLevelError = useIsShowWorkLevelError($scope, $http);
+        $scope.isShowCardLinkError = useIsShowCardLinkError($scope, $http);
+        $scope.isShowTimeError = useIsShowTimeError($scope, $http);
+
+    }
+
+    function useRequestSave($scope, $http) {
+        return () => {
+            console.log("### reportController.requestSave ###");
+            console.log($scope.reportHeader)
+            $scope.reportHeader.$submitted = true;
+            console.log($scope.workReport)
+            $scope.workReport.$submitted = true;
+            if ($scope.verify()) {
+                const options = {
+                    title: $scope.entryMode === "add" ? "ยืนยันการบันทึกข้อมูล OC/OCP ?" : "ยืนยันการแก้ไขข้อมูล OC/OCP",
+                    text: 'กดปุ่ม "ตกลง" เพื่อยืนยัน',
+                    icon: "warning",
+                    buttons: ["ยกเลิก", "ตกลง"],
+                    dangerMode: true
+                };
+
+                swal(options)
+                    .then(confirm => {
+                        if (confirm) {
+                            if ($scope.entryMode === 'add') {
+                                $scope.createSchool($scope.selectedSchool);
+                            } else if ($scope.entryMode === 'edit') {
+                                $scope.updateSchool($scope.selectedSchool);
+                            }
+                        }
+                    });
+            } else {
+                swal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลให้ครบถ้วน", "error");
+            }
+        };
+    }
+
+    function useVerify($scope, $http) {
+        return () => {
+            return $scope.reportHeader.$valid && $scope.workReport.$valid ;
+        };
+    }
+
+    // ****************************** validate ****************************** //
+    function useIsShowWorkTypeError($scope, $http) {
+        return () => {
+            return  ($scope.reportHeader.$submitted || $scope.reportHeader.workType.$dirty) && $scope.reportHeader.workType.$invalid;
+        };
+    }
+    function useIsShowDateWorkError($scope, $http) {
+        return () => {
+            return  ($scope.reportHeader.$submitted || $scope.reportHeader.reportDate.$dirty) && $scope.reportHeader.reportDate.$invalid;
+        };
+    }
+
+    function useIsShowSwitchedDateError($scope, $http) {
+        return () => {
+            return ($scope.reportHeader.$submitted || $scope.reportHeader.switchedDate.$dirty) && $scope.reportHeader.switchedDate.$invalid;
+        };
+    }
+
+
+    // ****************************** report val ****************************** //
+    function useIsShowTypeNameError($scope, $http) {
+        return (name) => {
+           
+            return ($scope.workReport.$submitted )
+                && $scope.workReport[name].$invalid;
+
+        };
+    }
+    function useIsShowWorkPriorityError($scope, $http) {
+        return (name) => {
+           
+            return ($scope.workReport.$submitted )
+                && $scope.workReport[name].$invalid;
+
+        };
+    }
+    function useIsShowWorkCategoryError($scope, $http) {
+        return (name) => {
+           
+            return ($scope.workReport.$submitted )
+                && $scope.workReport[name].$invalid;
+
+        };
+    }
+    function useIsShowKPIError($scope, $http) {
+        return (name) => {
+           
+            return ($scope.workReport.$submitted )
+                && $scope.workReport[name].$invalid;
+
+        };
+    }
+    function useIsShowOcError($scope, $http) {
+        return (name) => {
+           
+            return ($scope.workReport.$submitted )
+                && $scope.workReport[name].$invalid;
+
+        };
+    }
+    function useIsShowAcError($scope, $http) {
+        return (name) => {
+           
+            return ($scope.workReport.$submitted )
+                && $scope.workReport[name].$invalid;
+
+        };
+    }
+    function useIsShowWorkLevelError($scope, $http) {
+        return (name) => {
+           
+            return ($scope.workReport.$submitted )
+                && $scope.workReport[name].$invalid;
+
+        };
+    }
+    function useIsShowCardLinkError($scope, $http) {
+        return (name) => {
+           
+            return ($scope.workReport.$submitted )
+                && $scope.workReport[name].$invalid;
+
+        };
+    }
+    function useIsShowTimeError($scope, $http) {
+        return (name) => {
+           
+            return ($scope.workReport.$submitted )
+                && $scope.workReport[name].$invalid;
+
+        };
+    }
+</script>

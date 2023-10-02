@@ -1,40 +1,67 @@
-          
 <div class="card mt-2  mx-3 " style="border-radius: 10px;">
- 
-    <div class="row p-4">
-        <div class="col-md-3">
-            <div class="form-group">
-                <label>
-                    ประเภทวันทำงาน
-                </label>
-                <select name="work_type" class="form-control " style="width: 100%" 
-                    ng-model="selectWorkType">
-                    <option value="" disabled selected hidden>กรุณาเลือก</option>
-                    <option ng-repeat="work_type in work_types | orderBy: 'name'" ng-value="work_type.id">
-                        {{ work_type.type }}
-                    </option>
-                </select>
-            </div>
-        </div>
-        <div class="col-md-3">
-           
-            <div class="form-group">
-                <label>
-                    วันที่ทำงาน
-                </label>
-                <input name="id" type="date" class="form-control " ng-model="reportDate" style="width: 100%" >
-            </div>
-       
-        </div>
+    <form name="reportHeader">
+        <div class="row p-4">
 
-    </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowWorkTypeError()">ประเภทวันทำงาน</span>
+                        <span class="text-danger" ng-show="isShowWorkTypeError()">ประเภทวันทำงาน *</span>
+                    </label>
+                    <select name="workType" class="form-control " ng-class="{'is-invalid': isShowWorkTypeError()}"
+                        style="width: 100%" ng-model="selectWorkType" required>
+                        <option value="" disabled selected hidden>กรุณาเลือก</option>
+                        <option ng-repeat="work_type in work_types | orderBy: 'name'" ng-value="work_type.id">
+                            {{ work_type.type }}
+                        </option>
+                    </select>
+
+
+                </div>
+            </div>
+            <div class="col-md-3">
+
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowDateWorkError()">วันที่ทำงาน</span>
+                        <span class="text-danger" ng-show="isShowDateWorkError()">วันที่ทำงาน *</span>
+                    </label>
+
+                    <input name="reportDate" type="date" class="form-control " ng-model="reportDate"
+                        ng-class="{'is-invalid': isShowDateWorkError()}" required style="width: 100%">
+                </div>
+
+            </div>
+
+            <div class="col-md-3" ng-if="selectWorkType==='5' 
+        || selectWorkType==='6'
+        || selectWorkType==='10'">
+                <div class="form-group">
+                    <label>
+                        <span class="text-danger">*</span>
+                        <span ng-show="!isShowSwitchedDateError()">วันที่สลับวันหยุด</span>
+                        <span class="text-danger" ng-show="isShowSwitchedDateError()">วันที่สลับวันหยุด *</span>
+                    </label>
+
+                    <input name="switchedDate" type="date" class="form-control "
+                        ng-class="{'is-invalid': isShowSwitchedDateError()}" ng-model="switchDate" style="width: 100%"
+                        required>
+                </div>
+
+            </div>
+        </div>
+    </form>
 </div>
 
 <div class="card mx-3">
-
     <div class="card-header">
-        <p class="p20 p500" style="color: #D81B60;">ข้อมูลพนักงาน</p>
+        <h3 class="card-title  " style="color: #d81b60; font-size: 20px">
+            <b>ข้อมูลพนักงาน</b>
+        </h3>
     </div>
+
     <div class="card-body mx-3">
         <div class="row ">
             <div class="col-md-6 mt-2">
@@ -78,264 +105,13 @@
     </div>
 </div>
 
-<div class="card mx-3"  ng-if="selectWorkType==='1'">
-    <div class="card-header">
-        <h3 class="card-title  " style="color: #d81b60; font-size: 20px">
-            <b>OC/OCP</b>
-        </h3>
-    </div>
-         <div class="card collapsed-card m-2 shadow-sm border-dark"
-        ng-repeat="workInput in workInputs | orderBy: 'id'  track by $index"> 
-        <div class="card-header rounded ">
-            <div style="text-align: center; ">
 
-                <p class="card-text text-left text-dark p20">ข้อที่ {{$index + 1}}
-                    <button type="button" class="btn btn-tool float-right " data-card-widget="collapse"
-                        style="color: rgb(0, 0, 0);">
-                        <i class="fas fa-plus fa-2x mt-1"></i></button>
-                </p>
+<div th:replace="core/admin-lte-3/workspace/ocp_user/day_work/work-day"></div>
 
-            </div>
-
-        </div>
-        <div class="card-body">
-            <div ng-form="ocOcpReport">
-
-                    <div class="form row mx-0">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>
-                                    <span>รูปแบบงาน</span>
-                                </label>
-                                <select name="typeName" class="form-control" style="width: 100%"
-                                    ng-model="selectedReport.typeWork" ng-class="{'is-invalid': !workInput.typeWork}"
-                                    required>
-                                    <option value="" disabled selected hidden>
-                                        --- กรุณาเลือก ---
-                                    </option>
-                                    <option ng-repeat="workType in workTypes | orderBy: 'id'" ng-value="TypeWorks.work">
-                                        {{ workType.name }}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>
-                                    <span>ความสำคัญของงาน</span>
-                                </label>
-                                <select name="typeName" class="form-control" style="width: 100%"
-                                    ng-model="selectedReport.workPriority"
-                                    ng-class="{'is-invalid': !workInputs.typeWork}" required>
-                                    <option value="" disabled selected hidden>
-                                        --- กรุณาเลือก ---
-                                    </option>
-                                    <option ng-repeat="workPriority in workPriorities | orderBy: 'id'"
-                                        ng-value="TypeWorks.name">
-                                        {{ workPriority.name }}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>
-                                    <span>ลักษณะงาน</span>
-                                </label>
-                                <select name="typeName" class="form-control" style="width: 100%"
-                                    ng-model="selectedReport.workCategory"
-                                    ng-class="{'is-invalid': !workInputs.workCategory}" required>
-                                    <option value="" disabled selected hidden>
-                                        --- กรุณาเลือก ---
-                                    </option>
-                                    <option ng-repeat="workCategory in workCategories | orderBy: 'id'"
-                                        ng-value="TypeWorks.name">
-                                        {{ workCategory.name }}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>
-                                    <span>ตรงกับ KPI</span>
-                                </label>
-                                <select name="typeName" class="form-control" style="width: 100%"
-                                    ng-model="selectedReport.workCategory"
-                                    ng-class="{'is-invalid': !workInputs.workCategory}" required>
-                                    <option value="" disabled selected hidden>
-                                        --- กรุณาเลือก ---
-                                    </option>
-                                    <option ng-repeat="workCategory in workCategories | orderBy: 'id'"
-                                        ng-value="TypeWorks.name">
-                                        {{ workCategory.name }}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>
-                                    <span>OC</span>
-                                </label>
-                                <textarea name="ocp" type="text" class="form-control" placeholder="ระบุ OC"
-                                    ng-class="{'is-invalid': !workInput.ocp}" ng-model="workInput.ocp"
-                                    required></textarea>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>
-                                    <span>AC</span>
-                                </label>
-                                <textarea name="ac" type="text" class="form-control" placeholder="ระบุ AC"
-                                    ng-model="workInput.ac" ng-class="{'is-invalid': !workInput.ac}"
-                                    required></textarea>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>
-                                    <span>ระดับของงาน</span>
-                                </label>
-                                <select name="level" class="form-control" style="width: 100%"
-                                    ng-model="selectedReport.workLevel"
-                                    ng-class="{'is-invalid': !workInput.LevelWork}" required>
-                                    <option value="" disabled selected hidden>
-                                        --- กรุณาเลือก ---
-                                    </option>
-                                    <option ng-repeat="LevelWorks in LevelWorks | orderBy: 'id'"
-                                        ng-value="LevelWorks.id">
-                                        {{ LevelWorks.lv }}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>
-                                    <span>การ์ดงาน</span>
-                                </label>
-                                <input name="linkweb" type="text" class="form-control" placeholder="ระบุ Link"
-                                    ng-model="workInputs.link" ng-class="{'is-invalid': !workInputs.link}" required />
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>
-                                    <span>นาทีการทำงาน</span>
-                                </label>
-                                <input name="time" type="number" class="form-control" placeholder="ระบุเวลาเป็นนาที"
-                                    ng-class="{'is-invalid': !workInput.time}"
-                                    ng-change="sumtime_forward(workInput.time)" ng-model="workInput.time"
-                                    required />
-                            </div>
-                        </div>
-                 
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>
-                                    <span>ผลการทำงาน</span>
-                                </label>
-                                <select name="level" class="form-control" style="width: 100%"
-                                    ng-model="workInputs.result" disabled>
-                                    <option value="" disabled selected hidden>
-                                        --- กรุณาเลือก ---
-                                    </option>
-                                    <option ng-repeat="results in results | orderBy: 'id'" ng-value="results.status">
-                                        {{ results.status }}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <label>
-                                <span>เหตุผล</span>
-                            </label>
-                            <input name="time" type="number" class="form-control" placeholder="ระบุเวลาเป็นนาที"
-                                ng-model="workInputs.because" disabled />
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>
-                                    <span>เวลาในการทำงานจริง</span>
-                                </label>
-                                <input name="time" type="number" class="form-control" placeholder="ระบุเวลาเป็นนาที"
-                                    ng-class="{'is-invalid': !workInputs.time}"
-                                    ng-change="sumtime_forward(workInputs.time)" ng-model="workInputs.time"
-                                    required />
-                            </div>
-                        </div>
-                    
-                         <div class="col-md-12">
-                            <div class="d-flex justify-content-end mx-2">
-                                <button class="btn btn-outline-danger" ng-click="delReport(workInput)">
-                                    <i class="fa fa-trash kws-table-action-icon"></i> ลบข้อ
-                                </button>
-                            </div>
-                        </div>
-                         <div class="col-md-12">
-                            <hr style="border-top: 2px solid rgb(156, 153, 153); margin: 10px 0;">
-                        </div>
-
-
-                    </div>
-            
-            </div>
-        </div>
-
-    </div>
-
-
-     <div class="card-body mx-3">
-        <div class="col-md-12">
-            <div class="d-flex align-items-center flex-column text-center">
-                <div class="mt-auto">
-
-                    <button class="btn btn-outline-success" ng-click="pushReport()">
-                        <i class="fa fa-plus" aria-hidden="true"></i> เพิ่มข้อ
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div> 
-</div>
-
-
-<div class="card mx-3" ng-if="selectWorkType==='1'">
-    <div class="card-header">
-        <h3 class="card-title" style="color: #d81b60; font-size: 20px">
-            <b>เวลาทั้งหมด</b>
-        </h3>
-    </div>
-    <div class="row p-4">
-        <div class="col-md-2">
-            <div class="form-group">
-                <label>
-                    รวมเวลาทำงาน
-                </label>
-                <input name="workTime" class="form-control " style="width: 100%" disabled
-                    ng-model="employeeInformation.workTime">
-               
-            </div>
-        </div>
-        <div class="col-md-2">
-            <div class="form-group">
-                <label>
-                    เวลาทำงานจริง
-                </label>
-                <input name="actualWorkTime" class="form-control " style="width: 100%" disabled
-                ng-model="employeeInformation.actualWorkTime">
-            </div>
-        </div>
-
-    </div>
-</div>
 
 
 
 <div class="text-right mx-3 pb-4">
-    <button class="btn btn-outline-danger" ng-click="toListMode()"><i class="fa fa-caret-left"></i> ย้อนกลับ</button>
     <button class="btn btn-outline-primary" ng-click="requestSave() ;saveTitle()">
         <i class="fa fa-save" aria-hidden="true"></i> บันทึก
     </button>

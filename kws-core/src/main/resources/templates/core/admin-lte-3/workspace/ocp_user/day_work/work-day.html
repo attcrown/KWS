@@ -1,0 +1,261 @@
+<form name="workReport">
+    <div class="card mx-3" ng-if="selectWorkType==='1'
+|| selectWorkType==='2'
+|| selectWorkType==='5'
+|| selectWorkType==='6'
+|| selectWorkType==='8'
+|| selectWorkType==='10'
+|| selectWorkType==='12'">
+        <div class="card-header">
+            <h3 class="card-title  " style="color: #d81b60; font-size: 20px">
+                <b>OC/OCP</b>
+            </h3>
+        </div>
+        <div class="card  m-2 shadow-sm border-dark"
+            ng-repeat="workInput in workInputs | orderBy: 'id'  track by $index">
+            <div class="card-header rounded ">
+                <div style="text-align: center; ">
+
+                    <p class="card-text text-left text-dark p20">ข้อที่ {{$index + 1}}
+                        <button type="button" class="btn btn-tool float-right " data-card-widget="collapse"
+                            style="color: rgb(0, 0, 0);">
+                            <i class="fas fa-minus fa-2x mt-1"></i></button>
+                    </p>
+
+                </div>
+
+            </div>
+            <div class="card-body">
+
+                <div class="form row mx-0">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowTypeNameError('typeName' + $index)">รูปแบบงาน</span>
+                                <span class="text-danger" ng-show="isShowTypeNameError('typeName' + $index)">รูปแบบงาน
+                                    *</span>
+
+                            </label>
+                            <select name="typeName{{$index}}" class="form-control" style="width: 100%"
+                                ng-model="report.typeWork"
+                                ng-class="{'is-invalid': isShowTypeNameError('typeName' + $index)}" required>
+                                <option value="" disabled selected hidden>
+                                    --- กรุณาเลือก ---
+                                </option>
+                                <option ng-repeat="workType in workTypes | orderBy: 'id'" ng-value="workType.id">
+                                    {{ workType.name }}
+                                </option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowWorkPriorityError('workPriority' + $index)">ความสำคัญของงาน</span>
+                                <span class="text-danger"
+                                    ng-show="isShowWorkPriorityError('workPriority' + $index)">ความสำคัญของงาน
+                                    *</span>
+
+                            </label>
+                            <select name="workPriority{{$index}}" class="form-control" style="width: 100%"
+                                ng-model="report.workPriority"
+                                ng-class="{'is-invalid': isShowWorkPriorityError('workPriority' + $index)}" required>
+                                <option value="" disabled selected hidden>
+                                    --- กรุณาเลือก ---
+                                </option>
+                                <option ng-repeat="workPriority in workPriorities | orderBy: 'id'"
+                                    ng-value="workPriority.id">
+                                    {{ workPriority.name }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowWorkCategoryError('workCategory' + $index)">ลักษณะงาน</span>
+                                <span class="text-danger" ng-show="isShowWorkCategoryError('workCategory' + $index)">ลักษณะงาน
+                                    *</span>
+                           
+                            </label>
+                            <select name="workCategory{{$index}}" class="form-control" style="width: 100%"
+                                ng-model="report.workCategory"
+                                ng-class="{'is-invalid': isShowWorkCategoryError('workCategory' + $index)}" required>
+                                <option value="" disabled selected hidden>
+                                    --- กรุณาเลือก ---
+                                </option>
+                                <option ng-repeat="workCategory in workCategories | orderBy: 'id'"
+                                    ng-value="workCategory.id">
+                                    {{ workCategory.name }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowKPIError('kpi' + $index)">ตรงกับ KPI</span>
+                                <span class="text-danger" ng-show="isShowKPIError('kpi' + $index)">ตรงกับ KPI
+                                    *</span>
+                                
+                            </label>
+                            <select name="kpi{{$index}}" class="form-control" style="width: 100%" ng-model="report.kpi"
+                            ng-class="{'is-invalid': isShowKPIError('kpi' + $index)}" required>
+                                <option value="" disabled selected hidden>
+                                    --- กรุณาเลือก ---
+                                </option>
+                                <option ng-repeat="kpi in kpis | orderBy: 'id'"
+                                    ng-value="kpi.id">
+                                    {{ kpi.name }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowOcError('oc' + $index)">OC</span>
+                                <span class="text-danger" ng-show="isShowOcError('oc' + $index)">OC
+                                    *</span>
+                                
+                            </label>
+                            <textarea name="oc{{$index}}" type="text" class="form-control" placeholder="ระบุ OC"
+                            ng-class="{'is-invalid': isShowOcError('oc' + $index)}" ng-model="report.oc" required></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowAcError('ac' + $index)">AC</span>
+                                <span class="text-danger" ng-show="isShowAcError('ac' + $index)">AC
+                                    *</span>
+                                
+                            </label>
+                            <textarea name="ac{{$index}}" type="text" class="form-control" placeholder="ระบุ AC"
+                                ng-model="report.ac"ng-class="{'is-invalid': isShowAcError('ac' + $index)}"  required></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowWorkLevelError('level' + $index)">ระดับของงาน</span>
+                                <span class="text-danger" ng-show="isShowWorkLevelError('level' + $index)">ระดับของงาน
+                                    *</span>
+                                
+                               
+                            </label>
+                            <select name="level{{$index}}" class="form-control" style="width: 100%"
+                                ng-model="report.workLevel" 
+                                ng-class="{'is-invalid': isShowWorkLevelError('level' + $index)}"
+                                required>
+                                <option value="" disabled selected hidden>
+                                    --- กรุณาเลือก ---
+                                </option>
+                                <option ng-repeat="LevelWorks in LevelWorks | orderBy: 'id'" ng-value="LevelWorks.id">
+                                    {{ LevelWorks.name }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowCardLinkError('cardLink' + $index)">การ์ดงาน</span>
+                                <span class="text-danger" ng-show="isShowCardLinkError('cardLink' + $index)">การ์ดงาน
+                                    *</span>
+
+                            </label>
+                            <input name="cardLink{{$index}}" type="text" class="form-control" placeholder="ระบุ Link"
+                                ng-model="workInputs.link" 
+                                ng-class="{'is-invalid': isShowCardLinkError('level' + $index)}" required />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>
+                                <span class="text-danger">*</span>
+                                <span ng-show="!isShowTimeError('time' + $index)">นาทีการทำงาน</span>
+                                <span class="text-danger" ng-show="isShowTimeError('time' + $index)">นาทีการทำงาน
+                                    *</span>
+
+                            </label>
+                            <input name="time{{$index}}" type="number" class="form-control" 
+                            placeholder="ระบุเวลาเป็นนาที" min="0"
+                            ng-class="{'is-invalid': isShowTimeError('time' +$index)}" 
+                            ng-change="sumtime_forward(workInput.time)"
+                            ng-model="report.time" required />
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <hr style="border-top: 1px solid rgb(156, 153, 153); margin: 10px 0;">
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="d-flex justify-content-center mx-2">
+                            <button class="btn btn-outline-danger" ng-click="delReport(workInput)">
+                                <i class="fa fa-trash kws-table-action-icon"></i> ลบข้อ
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <div class="card-body mx-3">
+            <div class="col-md-12">
+                <div class="d-flex align-items-center flex-column text-center">
+                    <div class="mt-auto">
+
+                        <button class="btn btn-outline-success" ng-click="pushReport()">
+                            <i class="fa fa-plus" aria-hidden="true"></i> เพิ่มข้อ
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mx-3">
+        <div class="card-header">
+            <h3 class="card-title" style="color: #d81b60; font-size: 20px">
+                <b>เวลาทั้งหมด</b>
+            </h3>
+        </div>
+        <div class="row p-4">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>
+                        รวมเวลาทำงาน
+                    </label>
+                    <input name="workTime" class="form-control " style="width: 100%" disabled
+                        ng-model="employeeInformation.workTime">
+
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>
+                        เวลาทำงานจริง
+                    </label>
+                    <input name="actualWorkTime" class="form-control " style="width: 100%" disabled
+                        ng-model="employeeInformation.actualWorkTime">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
