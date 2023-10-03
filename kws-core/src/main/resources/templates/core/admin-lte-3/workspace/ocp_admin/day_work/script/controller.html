@@ -1,19 +1,29 @@
-<div th:replace="core/admin-lte-3/workspace/ocp_admin/day_work/script/titleController"></div>
+<!-- <div th:replace="core/admin-lte-3/workspace/ocp_admin/day_work/script/titleController"></div> -->
 
 <script th:inline="javascript">
-    app.controller("DayWorkAdminController", ["$scope","$http",($scope, $http) => {
-            $scope.mode = 'list';
-            
-            $scope.init = function () {
-                TitleController($scope, $http);
-            }
+    app.controller("DayWorkAdminController", ["$scope", "$http", ($scope, $http) => {
+        $scope.mode = 'list';
+
+        $scope.employee_reports = [
+            {
+                'employeeCode': 'KR-001', 'firstName': 'arin', 'lastName': 'salabsi',   'nickname': 'Auto'  , 'business': 'Center',        
+                'work_day': 2, 'sick_leave_day': 0, 'personal_leave_day': 3, 'switch_work_day': 1,
+                 'ocpStatus': 'ลงหลัง 8.00 น.', 'ocStatus': 'ลงภายในเวลางาน', 
+                 'reportCount': 'ลงครบถ้วน', 'responsibilityStatus': 'ไม่มีการหัก', 'responsibilityDeductStatus': ''
+              
+                 
+            },
+        ]
+        $scope.init = function () {
+            //TitleController($scope, $http);
         }
+    }
     ]);
 </script>
 
 <style>
-.underline {
-    border-bottom: 1px solid;
-    color: black;
-}
+    .underline {
+        border-bottom: 1px solid;
+        color: black;
+    }
 </style>

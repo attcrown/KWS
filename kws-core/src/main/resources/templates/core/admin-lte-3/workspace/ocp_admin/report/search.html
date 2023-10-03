@@ -19,7 +19,7 @@
                 <select name="work_type" class="form-control " style="width: 100%"
                     ng-model="employeeInformations.work_type" >
                     <option value="" disabled selected hidden>กรุณาเลือก</option>
-                    <option ng-repeat="work_type in work_types | orderBy: 'name'" >
+                    <option ng-repeat="work_type in work_types | orderBy: 'id'" >
                         {{ work_type.type }}
                     </option>
                 </select>
