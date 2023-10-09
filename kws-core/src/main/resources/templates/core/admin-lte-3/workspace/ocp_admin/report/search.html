@@ -38,19 +38,35 @@
                 </select>
             </div>
         </div>
-
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>
+                    สังกัด
+                </label>
+                <select name="work_type" class="form-control " style="width: 100%" ng-model="employeeInformations.name">
+                    <option value="" disabled selected hidden>กรุณาเลือก</option>
+                    <option ng-repeat="bizUnit in bizUnits | orderBy: 'name'">
+                      
+                    </option>
+                </select>
+            </div>
+        </div> <div class="col-md-3">
+            <div class="form-group">
+                <label>
+                    สถานะการตรวจสอบ
+                </label>
+                <select name="work_type" class="form-control " style="width: 100%" ng-model="employeeInformations.name">
+                    <option value="" disabled selected hidden>กรุณาเลือก</option>
+                    <option ng-repeat="status in statuses | orderBy: 'name'">
+                        {{ status.text }}
+                    </option>
+                </select>
+            </div>
+        </div>
     </div>
     <div class="card-footer text-right">
         <button class="btn btn-outline-primary" ng-click="search()"><i class="fa fa-search"></i> ค้นหา</button>
     </div>
 </div>
-<div class="d-flex flex-row bd-highlight mb-3">
-    <div  class="d-flex flex-row bd-highlight mb-3">
-        <div id="filterBtnContainer" ng-repeat="business in businesses">
-            <button class="filterButton ml-2 "
-            ng-class="{'active': business.text == filter}" 
-            ng-click="filterList(business)">{{ business.text }}</button>
-        </div>
-    </div>
-</div>
+
 

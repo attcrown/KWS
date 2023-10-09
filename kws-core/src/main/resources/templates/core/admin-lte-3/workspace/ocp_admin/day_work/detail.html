@@ -1,0 +1,262 @@
+<div class="row">
+    <div class="col-md-3">
+        <div class="container">
+            <div class="input-group">
+                <input type="text" class="form-control" id="date-range" placeholder="Select Date Range">
+                <div class="input-group-append">
+                    <span class="input-group-text">
+                        <i class="fa fa-calendar"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="card shadow-none" style="border-radius: 32px">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3 text-center">
+                                <img class="img-size-60 img-fluid" ng-src="{{ s }}" />
+                            </div>
+                            <div class="col-md-9">
+                                <strong>{{"Arin Salabsi"}}</strong>
+
+                                <hr />
+                                รหัสพนักงาน : {{"KR - 001"}} สังกัด : {{"Center"}} ชื่อ : {{"อริน สลับสี"}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 " >
+                <div class="card " style="border-radius: 32px ;background: #F95738;" >
+                    <div class="des-label px-3">ลงทั้งหมด</div>
+                    <div class="time-label  text-center">{{ 10 }} </div>
+                    <p class="text-right px-2" style="color: #FFF;">ครั้ง</p>
+                </div>
+
+            </div>
+
+            <div class="col-md-3 " >
+                <div class="card " style="border-radius: 32px ;background: #F4D35E;">
+                    <div class="des-label px-3">ลงภายในเวลางาน</div>
+                    <div class="time-label  text-center">{{ 10 }} </div>
+                    <p class="text-right px-2" style="color: #FFF;">ครั้ง</p>
+                </div>
+
+            </div>
+
+            <div class="col-md-3 ">
+                <div class="card " style="border-radius: 32px ;background: #083D77;">
+                    <div class="des-label px-3">ลงหลังเที่ยงคืน</div>
+                    <div class="time-label  text-center">{{ 10 }} </div>
+                    <p class="text-right px-2" style="color: #FFF;">ครั้ง</p>
+                </div>
+            
+            </div>
+            <div class="col-md-3 ">
+                <div class="card " style="border-radius: 32px ;background: #EE964B;">
+                    <div class="des-label px-3">ลงหลัง 8.00 น.</div>
+                    <div class="time-label  text-center">{{ 10 }} </div>
+                    <p class="text-right px-2" style="color: #FFF;">ครั้ง</p>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="my-2  shadow text-center" style="border-radius: 10px;">
+    <div class="table-wrapper-scroll-y my-custom-scrollbar table-responsive">
+    <table class="table  table-hover text-nowrap">
+        <thead style="background-color: #EAECF0; border-radius: 10px;">
+            <tr>
+                <td scope="col" class='p14'>ประเภทวันทำงาน</td>
+                <td scope="col" class='p14'>วันที่ทำงาน</td>
+           
+                <td scope="col" class='p14'>เวลาที่ลง Outcome Plan (OCP)</td>
+                <td scope="col" class='p14'>เวลาที่ลง Outcome (OC)</td>
+                <td scope="col" class='p14'>ผลการลง OCP <br>
+                    (Leader)</td>
+                <td scope="col" class='p14'>ผลการลง OC<br>
+                    (Leader)</td>
+                <td scope="col" class='p14'>ผลการลง OCP<br>
+                    (Awareness)</td>
+                <td scope="col" class='p14'>ผลการลง OC<br>
+                    (Awareness)</td>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <!-- <tr ng-if="!search_table">
+                <td colspan="9" class="text-center">ไม่มีข้อมูล</td>
+            </tr> -->
+            <tr ng-repeat="ocp_oc_report in ocp_oc_reports " > 
+                
+                <td scope="row">{{ ocp_oc_report.type}}</td>
+                <td class="p-2">{{ ocp_oc_report.date_work }}</td>             
+                <td class="p-2">{{ ocp_oc_report.time_report }}</td>
+                <td class="p-2">{{ ocp_oc_report.time_report }}</td>
+                <td class="p-1" style="text-align: center;vertical-align: middle;">
+                    <span  ng-class ="getButtonClass(ocp_oc_report.ocp_leader)">
+                        <i class="fa fa-circle fa-xs"></i>
+                         {{ ocp_oc_report.ocp_leader }}
+                    </span>
+                </td>
+                <td class="p-1 " style="text-align: center;vertical-align: middle;">
+                    <span  ng-class ="getButtonClass(ocp_oc_report.oc_leader)">
+                        <i class="fa fa-circle fa-xs"></i>
+                         {{ ocp_oc_report.oc_leader }}
+                    </span>
+                </td>
+                <td class="p-1 " style="text-align: center;vertical-align: middle;">
+                    <span  ng-class ="getButtonClass(ocp_oc_report.ocp_awareness)">
+                        <i class="fa fa-circle fa-xs"></i>
+                         {{ ocp_oc_report.ocp_awareness }}
+                    </span>
+                </td>
+                <td class="p-1 " style="text-align: center;vertical-align: middle;">
+                    <span  ng-class ="getButtonClass(ocp_oc_report.oc_awareness)">
+                        <i class="fa fa-circle fa-xs"></i>
+                         {{ ocp_oc_report.oc_awareness }}
+                    </span>
+                </td>
+
+               
+            </tr>
+            
+        </tbody>
+    </table>
+</div>
+</div>
+
+
+<div class="d-flex flex-row-reverse bd-highlight"  style="gap: 10px;
+">
+ 
+    <button class="btn btn-outline-primary p400 p20 " data-toggle="modal" data-target="#responsibilityForm"
+      >
+        หักค่าประกัน
+    </button>
+
+    <button class="btn btn-outline-danger  p400 p20" ng-style="{ 'border-width': '2px'}"
+        ng-click="toListMode()">
+        <i class="fa fa-caret-left" aria-hidden="true"></i></i> 
+        ย้อนกลับ
+    </button>
+</div>
+<div class="modal fade" id="responsibilityForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog  modal-lg  modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <div class="modal-body text-center d-block">
+                <i class="fa fa-exclamation-circle text-warning" style="font-size: 100px;" aria-hidden="true"></i>
+                <div class="container mt-3">
+                    <div class="row">
+
+
+                        <div class="col-md-3">
+
+                        </div>
+                        <div class="col-md-6 p-0">
+                            <p class="p20 p400" style="white-space: nowrap"> พนักงานท่านนี้ได้ลงหลัง 8.00 น. เกิน 3
+                                ครั้ง</p>
+                            <p class="p15 p400">ต้องการหักค่าประกันความรับผิดชอบหรือไม่</p>
+                        </div>
+                        <div class="col-md-3">
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="container mt-4 ">
+                    <div class="row">
+
+
+                        <div class="col-md-3">
+
+                        </div>
+                        <div class="col-md-6 text-left p-0">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                    id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    หักค่าประกันความรับผิดชอบ
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                    id="flexRadioDefault2" checked>
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    ไม่หักค่าประกันความรับผิดชอบ
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="container my-4 ">
+                    <div class="row">
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form row">
+                                <label>
+                                    <span>เหตุผลที่ไม่หักตามกฎ</span>
+
+                                </label>
+                                <textarea name="responsibilityDeductStatus" class="form-control"
+                                    ng-model="employee_reports.responsibilityDeductStatus" placeholder="">
+                        </textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">ย้อนกลับ</button>
+                <button type="button" class="btn btn-outline-primary" ng-click="sendResponsibilityDeductStatus()">
+                    <i class="fa fa-save text-primary" aria-hidden="true"></i> บันทึก</button>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#date-range').daterangepicker({
+            opens: 'left',
+            drops: 'down',
+            autoApply: true,
+            locale: {
+                format: 'YYYY-MM-DD',
+                separator: ' - ',
+                applyLabel: 'Apply',
+                cancelLabel: 'Cancel',
+                fromLabel: 'From',
+                toLabel: 'To',
+                customRangeLabel: 'Custom',
+                daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+                monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                firstDay: 0
+            }
+        });
+    });
+    
+</script>

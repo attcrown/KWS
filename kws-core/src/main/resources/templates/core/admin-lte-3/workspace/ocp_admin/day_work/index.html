@@ -1,13 +1,27 @@
 <div th:replace="core/admin-lte-3/workspace/ocp_admin/day_work/script/controller"></div>
 
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+</head>
 <section ng-controller="DayWorkAdminController" ng-init="init()">
     <div ng-if="isLoading" class="kws-loader">
         <div class="kws-loader-spin"></div>
     </div>
 
     <div ng-show="mode === 'list'">
+
         <div th:replace="core/admin-lte-3/workspace/ocp_admin/day_work/search"></div>
         <div th:replace="core/admin-lte-3/workspace/ocp_admin/day_work/list"></div>
+    </div>
+    <div ng-show="mode === 'detail'">
+
+        <div th:replace="core/admin-lte-3/workspace/ocp_admin/day_work/detail"></div>
+
     </div>
 
 </section>
@@ -20,24 +34,53 @@
     }
 
     .gray-text {
-color: gray; 
-}
+        color: gray;
+    }
+
+    hr {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        border: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .time-label {
+        max-height: 48px;
+        color: #FFF;
+        font-size: 48px;
+        font-weight: 400;
+
+    }
+
+    .des-label {
+        color: #FFF;
+        font-size: 20px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+
+    }
 
     .p14 {
         font-size: 14px;
     }
+
     .p15 {
         font-size: 15px;
     }
+
     .p20 {
         font-size: 20px;
-    } 
+    }
+
     .p24 {
         font-size: 24px;
     }
+
     .p400 {
         font-weight: 400;
     }
+
     .p500 {
         font-weight: 500;
     }

@@ -122,20 +122,21 @@
             $scope.user_log = report;
             console.log($scope.selectedReport);
             console.log('user_log>>', $scope.user_log);
-            if (report.type === 'วันทำงาน') {
-                $scope.mode = 'work';
-            } else if (report.type === 'วันสลับวันหยุด') {
-                $scope.mode = 'day_switch'
+            $scope.mode = 'detail';
+            // if (report.type === 'วันทำงาน') {
+            //     $scope.mode = 'work';
+            // } else if (report.type === 'วันสลับวันหยุด') {
+            //     $scope.mode = 'day_switch'
 
-            } else if (report.type === 'วันหยุด') {
-                $scope.mode = 'day_off'
+            // } else if (report.type === 'วันหยุด') {
+            //     $scope.mode = 'day_off'
 
-            }
-            else if (report.type === 'วันลา') {
-                $scope.mode = 'day_leave'
-            } else {
-                return '';
-            }
+            // }
+            // else if (report.type === 'วันลา') {
+            //     $scope.mode = 'day_leave'
+            // } else {
+            //     return '';
+            // }
         };
 
 

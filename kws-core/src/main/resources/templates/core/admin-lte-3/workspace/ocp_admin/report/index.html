@@ -7,25 +7,16 @@
     <div ng-if="isLoading" class="kws-loader">
         <div class="kws-loader-spin"></div>
     </div>
-    <div ng-show="mode === 'list'" >
+    <div ng-show="mode === 'list'">
+        <div th:replace="core/admin-lte-3/workspace/ocp_admin/report/dashboard"></div>
         <div th:replace="core/admin-lte-3/workspace/ocp_admin/report/search"></div>
         <div th:replace="core/admin-lte-3/workspace/ocp_admin/report/list"></div>
     </div>
 
-    <div ng-show="mode === 'day_switch'" >
-        <div th:replace="core/admin-lte-3/workspace/ocp_admin/report/day-switch"></div>
-    </div>
-    <div ng-show="mode === 'day_off'" >
-        <div th:replace="core/admin-lte-3/workspace/ocp_admin/report/day-off"></div>
+    <div ng-show="mode === 'detail'">
+        <div th:replace="core/admin-lte-3/workspace/ocp_admin/report/detail"></div>
     </div>
 
-    <div ng-show="mode === 'day_leave'" >
-        <div th:replace="core/admin-lte-3/workspace/ocp_admin/report/day-leave"></div>
-    </div>
-
-    <div ng-show="mode === 'work'">
-        <div th:replace="core/admin-lte-3/workspace/ocp_admin/report/day-work"></div>
-    </div>
 
 
     <style>
@@ -44,6 +35,7 @@
         .table-wrapper-scroll-y {
             display: block;
         }
+
         .is-approve {
             background-color: #2AB514;
             color: #fff;
@@ -52,6 +44,20 @@
         .is-disapprove {
             background-color: #DC3545;
             color: #fff;
+        }
+
+        .time-label {
+            color: #FFF;
+            font-size: 32px;
+            font-weight: 400;
+
+        }
+
+        .des-label {
+            color: #FFF;
+            font-size: 16px;
+            font-weight: 400;
+
         }
 
         .p14 {
@@ -69,10 +75,16 @@
         .p400 {
             font-weight: 400;
         }
+
         .p500 {
             font-weight: 500;
         }
-
+        hr {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        border: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
         span {
             font-size: 12px;
             padding-left: 3px;
@@ -85,32 +97,9 @@
 
         }
 
-        .filterButton {
-            display: flex;
-            height: 55px;
-            padding: 12px 24px;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            border-radius: 20px;
-            border: 2px solid #DB5C2D;
-            background: #FFF;
-            box-shadow: 0px 3px 2px 0px rgba(0, 0, 0, 0.25);
-            color: #DB5C2D;
-            font-size: 20px;
-            outline: none;  
-        }
-        .filterButton.active,
-        .filterButton:hover {
-            background-color: #DB5C2D;
-            color: white;
-            outline:0;
-        }
-        .filterButton:focus {outline:0;}
-
         .bgApprove {
             background: #ECFDF3;
-            color: #10A561;
+            color: #11B168;
         }
 
         .bgWait {
@@ -123,4 +112,5 @@
             background: #ECDCE2;
             color: #CE1817;
         }
+
     </style>

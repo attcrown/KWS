@@ -1,6 +1,6 @@
 <div class="my-2  shadow text-center" style="border-radius: 10px;">
-    <div class="table-wrapper-scroll-y my-custom-scrollbar">
-        <table class="table">
+    <div class="table-wrapper-scroll-y my-custom-scrollbar table-responsive">
+        <table class="table  table-hover text-nowrap">
             <thead style="background-color: #EAECF0; border-radius: 10px;">
                 <tr>
                     <td scope="col" class='p14'>รหัสพนักงาน</td>
@@ -41,18 +41,8 @@
 
 
                     <td class="p-2">
-                        <button class="btn btn-sm btn-outline-warning" ng-click="viewReport(employee_report)"
-                            data-toggle="modal" data-target="#responsibilityForm">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="1.25em"
-                                viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                <style>
-                                    svg {
-                                        fill: #FFC107
-                                    }
-                                </style>
-                                <path
-                                    d="M64 80c-8.8 0-16 7.2-16 16V416c0 8.8 7.2 16 16 16H384c8.8 0 16-7.2 16-16V96c0-8.8-7.2-16-16-16H64zM0 96C0 60.7 28.7 32 64 32H384c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zM337 209L209 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L303 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z" />
-                            </svg>
+                        <button class="btn btn-sm btn-outline-primary" ng-click="viewReport(employee_report)">
+                            <i class="fa fa-eye text-primary" aria-hidden="true"></i>
                         </button>
 
                     </td>
@@ -60,89 +50,5 @@
 
             </tbody>
         </table>
-    </div>
-</div>
-<div class="modal fade" id="responsibilityForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog  modal-lg  modal-dialog-centered" role="document">
-        <div class="modal-content">
-
-            <div class="modal-body text-center d-block">
-                <i class="fa fa-exclamation-circle text-warning" style="font-size: 100px;" aria-hidden="true"></i>
-                <div class="container mt-3">
-                    <div class="row">
-
-
-                        <div class="col-md-3">
-
-                        </div>
-                        <div class="col-md-6 p-0">
-                            <p class="p20 p400" style="white-space: nowrap"> พนักงานท่านนี้ได้ลงหลัง 8.00 น. เกิน 3 ครั้ง</p>
-                            <p class="p15 p400">ต้องการหักค่าประกันความรับผิดชอบหรือไม่</p>
-                        </div>
-                        <div class="col-md-3">
-
-                        </div>
-
-                    </div>
-
-                </div>
-                <div class="container mt-3 ">
-                    <div class="row">
-
-
-                        <div class="col-md-3">
-
-                        </div>
-                        <div class="col-md-6 text-left p-0">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                    id="flexRadioDefault1">
-                                <label class="form-check-label" for="flexRadioDefault1">
-                                    หักค่าประกันความรับผิดชอบ
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                    id="flexRadioDefault2" checked>
-                                <label class="form-check-label" for="flexRadioDefault2">
-                                    ไม่หักค่าประกันความรับผิดชอบ
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-
-                        </div>
-
-                    </div>
-
-                </div>
-                <div class="container my-5 ">
-                    <div class="row">
-                        <div class="col-md-3">
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form row">
-                                <label>
-                                    <span>เหตุผลที่ไม่หักตามกฎ</span>
-
-                                </label>
-                                <textarea name="responsibilityDeductStatus" class="form-control"
-                                    ng-model="employee_reports.responsibilityDeductStatus" placeholder="">
-                        </textarea>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                        </div>
-                    </div>
-                </div>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">ย้อนกลับ</button>
-                <button type="button" class="btn btn-outline-primary" ng-click="sendResponsibilityDeductStatus()"> 
-                    <i class="fa fa-save text-primary" aria-hidden="true"></i> บันทึก</button>
-            </div>
-            <div class="modal-footer">
-
-            </div>
-        </div>
     </div>
 </div>

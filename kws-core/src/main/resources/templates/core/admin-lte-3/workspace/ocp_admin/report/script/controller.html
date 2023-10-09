@@ -99,6 +99,14 @@
             { text: "NxGn" },
             { text: "PGG" }
         ]
+        $scope.statuses = [
+            { text: "Approve" },
+            { text: "Disapprove" },
+            { text: "Waiting" },
+            { text: "Edited" },
+            { text: "All" },
+          
+        ]
 
         $scope.work_types = [
             { 'id': '0', 'type': 'ทั้งหมด ' },
@@ -134,35 +142,21 @@
 
         $scope.viewReport = function (report) {
             $scope.selectedReport = report;
-            console.log($scope.selectedReport);
-            if (report.type === 'วันทำงาน') {
-                $scope.mode = 'work';
-            } else if (report.type === 'วันสลับวันหยุด') {
-                $scope.mode = 'day_switch'
-
-            } else if (report.type === 'วันหยุด') {
-                $scope.mode = 'day_off'
-
-            }
-            else if (report.type === 'วันลา') {
-                $scope.mode = 'day_leave'
-            } else {
-                return '';
-            }
+            $scope.mode = 'detail';
         };
 
-        $scope.filterList = function (filter) {
-            if ($scope.filter == filter.text) {
-                $scope.filter = 'all';
-                console.log("Filtering by:", $scope.filter);
+        
+        $scope.getReportButtonClass = function (status) {
+            switch (status) {
+                case 'pending':
+                    return 'btn btn-outline-warning';
+                case 'approved':
+                    return 'btn btn-outline-success';
+                case 'rejected':
+                    return 'btn btn-outline-danger';
+                default:
+                    return 'btn btn-outline-default'; 
             }
-            else {
-                $scope.filter = filter.text;
-                console.log("Filtering by:", $scope.filter);
-
-            }
-
-
         };
         //leader 
         $scope.approveLeader = function (report) {

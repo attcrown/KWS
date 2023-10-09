@@ -6,17 +6,73 @@
 
         $scope.employee_reports = [
             {
-                'employeeCode': 'KR-001', 'firstName': 'arin', 'lastName': 'salabsi',   'nickname': 'Auto'  , 'business': 'Center',        
+                'employeeCode': 'KR-001', 'firstName': 'arin', 'lastName': 'salabsi', 'nickname': 'Auto', 'business': 'Center',
                 'work_day': 2, 'sick_leave_day': 0, 'personal_leave_day': 3, 'switch_work_day': 1,
-                 'ocpStatus': 'ลงหลัง 8.00 น.', 'ocStatus': 'ลงภายในเวลางาน', 
-                 'reportCount': 'ลงครบถ้วน', 'responsibilityStatus': 'ไม่มีการหัก', 'responsibilityDeductStatus': ''
-              
-                 
+                'ocpStatus': 'ลงหลัง 8.00 น.', 'ocStatus': 'ลงภายในเวลางาน',
+                'reportCount': 'ลงครบถ้วน', 'responsibilityStatus': 'ไม่มีการหัก', 'responsibilityDeductStatus': ''
+
+
             },
+        ]
+
+
+        $scope.ocp_oc_reports = [
+        
+            {
+                'id': '4', 'firstName': 'arin4',
+                'lastName': 'salabsi',
+                'email': "techanddata@knoware.com",
+                'business': 'KNOW - ARE',
+                'nickname': 'HR', 'type': 'วันทำงาน', 'date_work': '13/8/2023', 'date_report': '13/8/2023', 'time_report': '17.00 P.M.', 'ocp_leader': 'waiting', 'oc_leader': 'waiting', 'ocp_awareness': 'Approve', 'oc_awareness': 'Approve',
+            },
+            {
+                'id': '5', 'firstName': 'arin4',
+                'lastName': 'salabsi',
+                'email': "techanddata@knoware.com",
+                'business': 'CCN',
+                'nickname': 'HR', 'type': 'วันทำงาน', 'date_work': '13/8/2023', 'date_report': '13/8/2023', 'time_report': '17.00 P.M.', 'ocp_leader': 'waiting', 'oc_leader': 'waiting', 'ocp_awareness': 'Approve', 'oc_awareness': 'Approve',
+            },
+            {
+                'id': '6', 'firstName': 'arin4',
+                'lastName': 'salabsi',
+                'email': "techanddata@knoware.com",
+                'business': 'Center',
+                'nickname': 'HR', 'type': 'วันทำงาน', 'date_work': '13/8/2023', 'date_report': '13/8/2023', 'time_report': '17.00 P.M.', 'ocp_leader': 'waiting', 'oc_leader': 'waiting', 'ocp_awareness': 'Approve', 'oc_awareness': 'Approve',
+            },
+            {
+                'id': '7', 'firstName': 'arin4',
+                'lastName': 'salabsi',
+                'email': "techanddata@knoware.com",
+                'business': 'NxGn',
+                'nickname': 'HR', 'type': 'วันหยุด', 'date_work': '13/8/2023', 'date_report': '13/8/2023', 'time_report': '17.00 P.M.', 'ocp_leader': 'waiting', 'oc_leader': 'waiting', 'ocp_awareness': 'Approve', 'oc_awareness': 'Approve',
+            },
+      
         ]
         $scope.init = function () {
             //TitleController($scope, $http);
         }
+
+        $scope.viewReport = function (employee) {
+            $scope.mode = 'detail';
+            console.log(employee)
+        }
+        $scope.toListMode = function () {
+            $scope.mode = 'list';
+       
+        }
+
+        
+        $scope.getButtonClass = function (ocp_leader) {
+            if (ocp_leader === 'Approve') {
+                return 'bgApprove';
+            } else if (ocp_leader === 'Disapprove') {
+                return 'bgDisapprove';
+            } else if (ocp_leader === 'waiting') {
+                return 'bgWait';
+            } else {
+                return '';
+            }
+        };
     }
     ]);
 </script>
