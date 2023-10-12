@@ -6,7 +6,7 @@
         $scope.mode = 'list';
         $scope.selectedReport;
         $scope.filter = 'all';
-
+        $scope.isApproved = {};
         $scope.ocp_oc_reports = [
             {
                 'id': '1', 'firstName': 'arin',
@@ -105,7 +105,7 @@
             { text: "Waiting" },
             { text: "Edited" },
             { text: "All" },
-          
+
         ]
 
         $scope.work_types = [
@@ -145,18 +145,28 @@
             $scope.mode = 'detail';
         };
 
-        
-        $scope.getReportButtonClass = function (status) {
-            switch (status) {
-                case 'pending':
-                    return 'btn btn-outline-warning';
-                case 'approved':
-                    return 'btn btn-outline-success';
-                case 'rejected':
-                    return 'btn btn-outline-danger';
-                default:
-                    return 'btn btn-outline-default'; 
+        $scope.onButtonGroupClick = function ($event, name) {
+            let clickedElement = $event.target || $event.srcElement;
+
+            if (clickedElement.nodeName === "BUTTON") {
+                if (clickedElement.id == 'approve') {
+                    $scope.isApproved[name] = true;
+                }
+                else if (clickedElement.id == 'disapprove') {
+                    $scope.isApproved[name] = false;
+                }
+
+                console.log($scope.isApproved)
+
+                let isCertainButtonAlreadyActive = clickedElement.parentElement.querySelector(".active");
+
+                if (isCertainButtonAlreadyActive) {
+                    isCertainButtonAlreadyActive.classList.remove("active");
+                }
+
+                clickedElement.className += " active";
             }
+
         };
         //leader 
         $scope.approveLeader = function (report) {
