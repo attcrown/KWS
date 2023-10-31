@@ -60,6 +60,8 @@
         </div>
     </form>
 </div>
+
+<!-- sticky https://www.w3schools.com/howto/howto_js_sticky_header.asp -->
 <div class="card mx-3">
     <div class="card-header">
         <h3 class="card-title  " style="color: #d81b60; font-size: 20px">
@@ -135,10 +137,13 @@
 </div>
 
 <div class="card mx-3">
-    <div class="card-header">
-        <h3 class="card-title  " style="color: #d81b60; font-size: 20px">
+    <div class="card-header" style="justify-content: space-between;">
+        <h3 class="card-title  " style="color: #d81b60; font-size: 20px; ">
             <b>OC/OCP</b>
-        </h3>
+
+        </h3> <button type="button" class="close" data-toggle="modal" data-target="#infoModal">
+            <i class="fas fa-info-circle  "></i></button>
+        </button>
     </div>
     <div class="card   m-2 shadow-sm border-dark"
         ng-repeat="ocp_oc_report in ocp_oc_reports | orderBy: 'id'  track by $index">
@@ -230,7 +235,8 @@
                 <div class="col-md-3" style="text-align: end;">
                     <label> &nbsp; </label>
                     <br>
-                    <button class="btn btn-outline-primary mt-auto  ">
+                    <button class="btn btn-outline-primary mt-auto  " data-toggle="modal" data-target="#historyModal"
+                        ng-click="getHistory(ocp_oc_report)">
                         <i class="fa fa-eye "></i>
                         ประวัติแก้ไข</button>
                 </div>
@@ -259,11 +265,11 @@
                             <i class="fa fa-check kws-table-action-icon"></i>
                             Approved</button>
                         <button class="btn btn-outline-danger" id="disapprove">
-    
+
                             <i class="fa fa-times kws-table-action-icon"></i>
                             Disapproved</button>
                     </div>
-                
+
                 </div>
                 <div class="col-md-3">
                     <label>เหตุผลเพราะอะไรถึง Disapprove</label>
@@ -279,7 +285,7 @@
                             <i class="fa fa-check kws-table-action-icon"></i>
                             Approved</button>
                         <button class="btn btn-outline-danger" id="disapprove">
-    
+
                             <i class="fa fa-times kws-table-action-icon"></i>
                             Disapproved</button>
                     </div>
@@ -461,4 +467,75 @@
     <button class="btn btn-outline-primary" ng-click="requestSave() ;saveTitle()">
         <i class="fa fa-save" aria-hidden="true"></i> บันทึก
     </button>
+</div>
+
+<!-- modal -->
+
+<div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="historyModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="width: 50%;">
+        <div class="modal-content">
+            <div class="modal-header d-block">
+                ประวัติการแก้ไข OC/OCP
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" style="font-size: 20px;">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body  d-block">
+
+                <div class="card mx-auto " style="width: 75%; border: 2px solid #000000; ">
+                    <div class="card-header text-left" style="border-bottom: 2px solid #000000">
+                        OC ครั้งที่ 1
+                    </div>
+                    <div class="card-body text-left">
+
+                        <div class="mt-3">
+                            <p>ผลการทำงาน : {{ result|| "..."}} </p>
+                        </div>
+                        <div class="mt-3">
+                            <p>เหตุผล : {{ reason|| "..."}} </p>
+                        </div>
+                        <div class="mt-3">
+                            <p>เวลาทำงานจริง : {{ realWorkTime|| "..."}} </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="width: 75%;">
+        <div class="modal-content">
+
+            <div class="modal-body  d-block">
+
+                <div class="mt-3">
+                    <h3>Checklist การตรวจสอบ OCP/OC <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                            <span aria-hidden="true" style="font-size: 20px;">&times;</span>
+                        </button></h3>
+
+                </div>
+                <div class="mt-3">
+                    <p>1. บลาๆๆๆๆๆๆๆๆๆๆๆ</p>
+                </div>
+                <div class="mt-3">
+                    <p>1. บลาๆๆๆๆๆๆๆๆๆๆๆ</p>
+                </div>
+                <div class="mt-3">
+                    <p>1. บลาๆๆๆๆๆๆๆๆๆๆๆ</p>
+                </div>
+                <div class="mt-3">
+                    <p>1. บลาๆๆๆๆๆๆๆๆๆๆๆ</p>
+                </div>
+                <div class="mt-3">
+                    <p>1. บลาๆๆๆๆๆๆๆๆๆๆๆ</p>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
 </div>

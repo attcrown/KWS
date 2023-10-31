@@ -7,6 +7,42 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            var data = google.visualization.arrayToDataTable([
+            ['วันทำงาน', 'จำนวนวัน'],
+                ['สลับวันหยุด', 1],
+                ['วันลา', 2],
+                ['วันหยุด', 2],
+                ['วันทำงาน', 15],
+            ]);
+
+            var options = {
+
+                height: 250,
+                width: 350,
+                pieSliceText: 'value',
+                legend: { alignment: 'center' },
+                chartArea: {
+                    left: "3%",
+                    top: "3%",
+                    height: "100%",
+                    width: "100%"
+                }
+
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+            chart.draw(data, options);
+        }
+    </script>
+
 </head>
 <section ng-controller="DayWorkAdminController" ng-init="init()">
     <div ng-if="isLoading" class="kws-loader">
@@ -55,9 +91,9 @@
     .des-label {
         color: #FFF;
         font-size: 20px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
 
     }
 

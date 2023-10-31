@@ -1,0 +1,33 @@
+<div class=" card mt-2 shadow" style="border-radius: 10px;">
+    <div class="card-header">
+        <p class="p20 p500" style="color: #D81B60;">All Report OCP/OC</p>
+    </div>
+    <div class="row p-4">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>
+                    ประเภทวันทำงาน
+                </label>
+                <select name="work_type" class="form-control " style="width: 100%"
+                    ng-model="employeeInformation.work_type">
+                    <option value="" disabled selected hidden>กรุณาเลือก</option>
+                    <option ng-repeat="work_type in work_types | orderBy: 'name'">
+                        {{ work_type.type }}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>
+                    วันที่ทำงาน
+                </label>
+                 <input name="id" type="date" class="form-control " style="width: 100%">
+            </div>
+        </div>
+      
+    </div>
+    <div class="card-footer text-right">
+        <button class="btn btn-outline-primary" ng-click="search()"><i class="fa fa-search"></i> ค้นหา</button>
+    </div>
+</div>

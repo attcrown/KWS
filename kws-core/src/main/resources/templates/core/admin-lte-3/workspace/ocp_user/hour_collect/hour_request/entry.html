@@ -1,0 +1,83 @@
+<div class="card mx-3">
+    <div class="card-header">
+        <h3 class="card-title  " style="color: #d81b60; font-size: 20px">
+            <b>ข้อมูลพนักงาน</b>
+        </h3>
+    </div>
+
+    <div class="card-body mx-3">
+        <div class="row ">
+            <div class="col-md-6 mt-2">
+                <p class="card-text text-left"><strong>รหัสพนักงาน :</strong> <span
+                        class="gray-text">{{employeeInformation.id}}</span></p>
+            </div>
+
+            <div class="col-md-6 mt-2">
+                <p class="card-text text-left"><strong>Email :</strong> <span
+                        class="gray-text">{{employeeInformation.email}}</span>
+                </p>
+
+            </div>
+            <div class="col-md-6 mt-2">
+                <p class="card-text text-left"><strong>ชื่อ - นามสกุล :</strong> <span
+                        class="gray-text">{{employeeInformation.firstName }} {{employeeInformation.lastName }}</span>
+                </p>
+            </div>
+            <div class="col-md-6 mt-2">
+                <p class="card-text text-left"><strong>ชื่อเล่น :</strong> <span
+                        class="gray-text">{{employeeInformation.nickname}}</span>
+                </p>
+            </div>
+            <div class="col-md-6 mt-2">
+                <p class="card-text text-left"><strong>ตำแหน่ง :</strong> <span
+                        class="gray-text">{{employeeInformation.position}}</span>
+                </p>
+            </div>
+            <div class="col-md-6 mt-2">
+                <p class="card-text text-left"><strong>สังกัด :</strong> <span
+                        class="gray-text">{{employeeInformation.business}}</span>
+                </p>
+            </div>
+            <div class="col-md-6 mt-2">
+                <p class="card-text text-left"><strong>รูปแบบการทำงาน :</strong> <span
+                        class="gray-text">{{employeeInformation.time_work}}</span>
+                </p>
+            </div>
+            <div class="col-md-6 mt-2">
+                <p class="card-text text-left"><strong>Level พนักงาน :</strong> <span
+                        class="gray-text">{{employeeInformation.level}}</span>
+                </p>
+            </div>
+            <div class="col-md-6 mt-2">
+                <p class="card-text text-left"><strong>เผ่าหลัก :</strong> <span
+                        class="gray-text">{{employeeInformation.primaryTribe}}</span>
+                </p>
+            </div>
+            <div class="col-md-6 mt-2">
+                <p class="card-text text-left"><strong>เผ่ารอง :</strong> <span
+                        class="gray-text">{{employeeInformation.secondaryTribe}}</span>
+                </p>
+            </div>
+            <div class="col-md-6 mt-2">
+                <p class="card-text text-left"><strong>จุดแข็ง :</strong> <span
+                        class="gray-text">{{employeeInformation.strength}}</span>
+                </p>
+            </div>
+            <div class="col-md-6 mt-2">
+                <p class="card-text text-left"><strong>จุดอ่อน :</strong> <span
+                        class="gray-text">{{employeeInformation.weakness}}</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div th:replace="core/admin-lte-3/workspace/ocp_user/hour_collect/hour_request/work-day"></div>
+
+
+<div class="text-right mx-3 pb-4">
+    <button class="btn btn-outline-primary" ng-click="requestSave() ;saveTitle()">
+        <i class="fa fa-save" aria-hidden="true"></i> บันทึก
+    </button>
+</div>
